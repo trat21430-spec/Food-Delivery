@@ -20,6 +20,18 @@
 
 ---
 
+## 👥 Danh sách thành viên nhóm
+
+| Vai trò | Họ và tên | MSSV |
+|:-:|---|:-:|
+| 👑 Leader | Hồ Anh Nhật | `QE200301` |
+| 🧑‍💻 Member | Trương Thanh Trà | `QE200100` |
+| 🧑‍💻 Member | Đào Cao Duy | `QE190089` |
+| 🧑‍💻 Member | Huỳnh Nguyễn Quốc Huy | `QE200031` |
+| 🧑‍💻 Member | Võ Thảo Nguyên | `QE200064` |
+
+---
+
 ## 📚 Mục lục
 
 | # | Chủ đề |
