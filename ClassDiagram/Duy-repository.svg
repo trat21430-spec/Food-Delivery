@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="340" viewBox="0 0 1900 340">
+  <rect width="1900" height="340" fill="#111111"/>
+  <g fill="none" stroke="#b8b8b8" stroke-width="2">
+    <path d="M790 62V120H52V260"/>
+    <path d="M790 62V135H292V260"/>
+    <path d="M790 62V150H522V260"/>
+    <path d="M790 62V165H792V260"/>
+    <path d="M790 62V120H1042V260"/>
+    <path d="M790 62V110H1292V260"/>
+    <path d="M790 62V95H1562V260"/>
+    <path d="M790 62V80H1810V260"/>
+  </g>
+  <g fill="#f5f5f5">
+    <path d="M52 260l-6-12h12z"/><path d="M292 260l-6-12h12z"/>
+    <path d="M522 260l-6-12h12z"/><path d="M792 260l-6-12h12z"/>
+    <path d="M1042 260l-6-12h12z"/><path d="M1292 260l-6-12h12z"/>
+    <path d="M1562 260l-6-12h12z"/><path d="M1810 260l-6-12h12z"/>
+  </g>
+  <g fill="#111111" stroke="#b8b8b8" stroke-width="2">
+    <rect x="730" y="8" width="120" height="54"/>
+    <rect x="0" y="260" width="122" height="70"/>
+    <rect x="220" y="260" width="142" height="70"/>
+    <rect x="460" y="260" width="142" height="70"/>
+    <rect x="720" y="260" width="142" height="70"/>
+    <rect x="960" y="260" width="142" height="70"/>
+    <rect x="1200" y="260" width="142" height="70"/>
+    <rect x="1480" y="260" width="164" height="70"/>
+    <rect x="1720" y="260" width="180" height="70"/>
+  </g>
+  <g fill="#ffffff" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">
+    <text x="790" y="40">CsvRepository</text>
+    <text x="61" y="300">CustomerRepository</text>
+    <text x="291" y="300">RestaurantRepository</text>
+    <text x="531" y="300">MenuItemRepository</text>
+    <text x="791" y="300">DriverRepository</text>
+    <text x="1031" y="300">OrderRepository</text>
+    <text x="1271" y="300">OrderItemRepository</text>
+    <text x="1562" y="300">DeliveryRouteRepository</text>
+    <text x="1810" y="300">SimulationRunRepository</text>
+  </g>
+</svg>
