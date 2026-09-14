@@ -1,0 +1,90 @@
+@startuml
+left to right direction
+skinparam defaultFontName "Arial"
+skinparam handwritten false
+
+' Tùy chỉnh giao diện chuyên nghiệp cho báo cáo Word
+skinparam usecase {
+    BackgroundColor #E7F5FF
+    BorderColor #1971C2
+    ArrowColor #495057
+    FontColor #000000
+}
+skinparam actor {
+    BackgroundColor #FFFFFF
+    BorderColor #1971C2
+}
+skinparam rectangle {
+    BorderColor #495057
+    BorderStyle dashed
+    FontColor #495057
+    FontSize 14
+}
+
+' ==========================================
+' ĐỊNH NGHĨA ACTOR
+' ==========================================
+actor "Customer" as cust
+actor "Restaurant" as rest
+
+actor "Driver" as driv
+actor "Dispatcher System\n<<System>>" as disp
+actor "Researcher / Tester" as res
+
+' ==========================================
+' KHUNG HỆ THỐNG VÀ USE CASE
+' ==========================================
+rectangle "System Boundary: Food Delivery Network Simulation" {
+    
+    usecase "UC01: Browse Menu & Stock" as UC01
+    usecase "UC02: Place Order" as UC02
+    usecase "UC03: Cancel Order (PENDING)" as UC03
+    usecase "UC04: Track Order Status" as UC04
+    usecase "Deduct MenuItem Stock" as UC_Stock
+
+    usecase "UC05: Manage Menu Items" as UC05
+    usecase "UC06: Update Stock Qty" as UC06
+    usecase "UC07: Confirm Order (5 mins)" as UC07
+
+    usecase "UC08: Toggle Online Status" as UC08
+    usecase "UC09: Receive Dispatched Order" as UC09
+    usecase "UC10: Update Delivery Progress" as UC10
+
+    usecase "UC11: Auto-Dispatch Driver" as UC11
+    usecase "Find Nearest Driver" as UC_Find
+
+    usecase "UC12: Generate CSV Data" as UC12
+    usecase "UC13: Run Concurrency Sim" as UC13
+    usecase "UC14: Select Lock Mechanism" as UC14
+    usecase "UC15: Post-Verify Race Conditions" as UC15
+    usecase "UC16: View Throughput Report" as UC16
+}
+
+' ==========================================
+' LIÊN KẾT (Tự động chia 2 bên)
+' ==========================================
+cust -- UC01
+cust -- UC02
+cust -- UC03
+cust -- UC04
+UC02 ..> UC_Stock : <<include>>
+
+rest -- UC05
+rest -- UC06
+rest -- UC07
+
+' Ép các Actor này sang bên phải
+UC08 -- driv
+UC09 -- driv
+UC10 -- driv
+
+UC11 -- disp
+UC11 ..> UC_Find : <<include>>
+UC11 ..> UC09 : <<notify>>
+
+UC12 -- res
+UC13 -- res
+UC16 -- res
+UC13 ..> UC14 : <<include>>
+UC13 ..> UC15 : <<include>>
+@enduml
