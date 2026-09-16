@@ -1,0 +1,378 @@
+@startuml
+title Class Diagram - Food Delivery Network (Full Details)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam nodesep 50
+skinparam ranksep 60
+skinparam linetype polyline
+skinparam class {
+    BackgroundColor White
+    ArrowColor #2c3e50
+    BorderColor #505050
+}
+
+' ===============================================
+' 1. VIEW 
+' ===============================================
+package "view" {
+    class MainView {
+        + start() : void
+        - printMainMenu() : void
+        - handleViewRestaurants() : void
+        - handlePlaceOrder() : void
+        - handleDispatchOrders() : void
+        - handleViewMap() : void
+        + handleRunSimulator() : void
+        + runAutomatedBenchmark(orders : int) : void
+        - handleViewReports() : void
+    }
+    class OrderView {
+        + {static} displayRestaurants(restaurants : List<Restaurant>) : void
+        + {static} displayMenu(restaurantName : String, menuItems : List<MenuItem>) : void
+        + {static} displayOrderReceipt(order : Order, items : List<OrderItem>) : void
+        - {static} truncate(text : String, maxLen : int) : String
+    }
+    class MapView {
+        + {static} renderMap(restaurants : List<Restaurant>, drivers : List<Driver>, customers : List<Customer>) : void
+        - {static} mapToGrid(lat : double, lng : double, minLat : double, maxLat : double, minLng : double, maxLng : double) : int[]
+    }
+    class SimulatorView {
+        + {static} displayBenchmarkHeader() : void
+        + {static} displayResultRow(res : SimulationResult) : void
+        + {static} displayBenchmarkFooter() : void
+        - {static} printSeparator() : void
+        + {static} displayConclusion(results : List<SimulationResult>) : void
+    }
+    class ReportView {
+        + {static} displayReportSummary(runs : List<SimulationRun>) : void
+        + {static} displayThroughputChart(runs : List<SimulationRun>) : void
+    }
+}
+
+' ===============================================
+' 2. CONTROLLER
+' ===============================================
+package "controller" {
+    class CustomerController {
+        + getCustomer(id : String) : Customer
+        + getAllCustomers() : List<Customer>
+        + registerCustomer(customer : Customer) : void
+    }
+    class RestaurantController {
+        + getRestaurant(id : String) : Restaurant
+        + getAllRestaurants() : List<Restaurant>
+        + getMenuItems(restaurantId : String) : List<MenuItem>
+        + getMenuItem(itemId : String) : MenuItem
+        + updateStock(itemId : String, newStock : int) : void
+    }
+    class DriverController {
+        + getDriver(id : String) : Driver
+        + getAllDrivers() : List<Driver>
+        + setDriverStatus(driverId : String, status : Enums.DriverStatus) : void
+    }
+    class ReportController {
+        + getAllSimulationRuns() : List<SimulationRun>
+    }
+    class OrderController {
+        + placeOrder(cId : String, rId : String, items : Map<String, Integer>, mech : SimulationMechanism) : Order
+        + dispatchPendingOrder(orderId : String, mech : SimulationMechanism) : boolean
+        + cancelOrder(orderId : String, mech : SimulationMechanism) : boolean
+    }
+    class SimulatorController {
+        + runSimulation(mech : SimulationMechanism, orders : int, cThreads : int, dThreads : int, baseTp : double) : SimulationResult
+        + detectDoubleAssignments(ordersCsv : String) : int
+        + detectOversellItems(menuCsv : String) : int
+        + detectDriverOverload(driversCsv : String) : int
+    }
+}
+
+' ===============================================
+' 3. CONCURRENCY
+' ===============================================
+package "concurrency" {
+    class CustomerThread <<Runnable>> {
+        - startLatch : CountDownLatch
+        - doneLatch : CountDownLatch
+        - orderRepo : OrderRepository
+        - menuRepo : MenuItemRepository
+        - ordersToGenerate : int
+        + CustomerThread(startLatch : CountDownLatch, doneLatch : CountDownLatch, orderRepo : OrderRepository, menuRepo : MenuItemRepository, ordersToGenerate : int)
+        + run() : void
+    }
+    class DispatchThread <<Runnable>> {
+        - startLatch : CountDownLatch
+        - doneLatch : CountDownLatch
+        - orderRepo : OrderRepository
+        - mechanism : SimulationMechanism
+        + DispatchThread(startLatch : CountDownLatch, doneLatch : CountDownLatch, orderRepo : OrderRepository, mechanism : SimulationMechanism)
+        + run() : void
+    }
+}
+
+' ===============================================
+' 4. REPOSITORY (Cập nhật chuẩn 100% từ Code gốc)
+' ===============================================
+package "repository" {
+    abstract class CsvRepository<T extends BaseEntity> {
+        # filePath : String
+        # entityMap : Map<String, T>
+        + CsvRepository(filePath : String)
+        # {abstract} createEntity() : T
+        # {abstract} getHeader() : String
+        + withPhysicalFileLock(action : FileLockAction<R>) : R
+        + getResourceLock(key : String) : Object
+        + loadFromFile() : void
+        + saveToFile() : void
+        + findById(id : String) : T
+        + findAll() : List<T>
+        + save(entity : T) : void
+        + delete(id : String) : void
+    }
+    
+    class CustomerRepository {
+        + CustomerRepository(filePath : String)
+        # createEntity() : Customer
+        # getHeader() : String
+    }
+    class RestaurantRepository {
+        + RestaurantRepository(filePath : String)
+        # createEntity() : Restaurant
+        # getHeader() : String
+    }
+    class OrderItemRepository {
+        + OrderItemRepository(filePath : String)
+        # createEntity() : OrderItem
+        # getHeader() : String
+        + findByOrderId(orderId : String) : List<OrderItem>
+    }
+    class DeliveryRouteRepository {
+        + DeliveryRouteRepository(filePath : String)
+        # createEntity() : DeliveryRoute
+        # getHeader() : String
+    }
+    class SimulationRunRepository {
+        + SimulationRunRepository(filePath : String)
+        # createEntity() : SimulationRun
+        # getHeader() : String
+    }
+    
+    class MenuItemRepository {
+        + MenuItemRepository(filePath : String)
+        # createEntity() : MenuItem
+        # getHeader() : String
+        + deductStock(itemId : String, qty : int, mech : SimulationMechanism, version : int) : void
+        + deductStockNoLock(item : MenuItem, qty : int) : void
+        + deductStockWithFileLock(itemId : String, qty : int) : void
+        + deductStockWithSync(itemId : String, qty : int) : void
+        + deductStockWithOptimistic(itemId : String, qty : int, version : int) : void
+    }
+
+    class DriverRepository {
+        + DriverRepository(filePath : String)
+        # createEntity() : Driver
+        # getHeader() : String
+        + findNearestAvailable(lat : double, lon : double) : Driver
+        + markBusy(driverId : String, orderId : String, mech : SimulationMechanism, version : int) : void
+        + releaseDriver(driverId : String) : void
+    }
+
+    class OrderRepository {
+        + OrderRepository(filePath : String)
+        # createEntity() : Order
+        # getHeader() : String
+        + dispatchOrder(orderId : String, dRepo : DriverRepository, rRepo : RestaurantRepository, mech : SimulationMechanism) : boolean
+        + assignDriverWithSync(orderId : String, driverId : String, dRepo : DriverRepository) : void
+        + assignDriverWithOptimistic(orderId : String, driverId : String, v : int, dRepo : DriverRepository, dv : int) : void
+        + cancelOrder(orderId : String, dRepo : DriverRepository, mech : SimulationMechanism) : boolean
+    }
+}
+
+' ===============================================
+' 5. MODEL
+' ===============================================
+package "model" {
+    abstract class BaseEntity {
+        # id : String
+        + BaseEntity()
+        + BaseEntity(id : String)
+        + getId() : String
+        + setId(id : String) : void
+        + {abstract} toCsvLine() : String
+        + {abstract} fromCsvLine(csvLine : String) : void
+    }
+    class Customer {
+        - name : String
+        - phone : String
+        - latitude : double
+        - longitude : double
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class Restaurant {
+        - name : String
+        - address : String
+        - latitude : double
+        - longitude : double
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class MenuItem {
+        - restaurantId : String
+        - name : String
+        - price : double
+        - stockQty : int
+        - version : int
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class Driver {
+        - name : String
+        - phone : String
+        - latitude : double
+        - longitude : double
+        - status : DriverStatus
+        - currentOrderId : String
+        - version : int
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class Order {
+        - customerId : String
+        - restaurantId : String
+        - driverId : String
+        - status : OrderStatus
+        - orderTime : String
+        - deliveryFee : double
+        - totalAmount : double
+        - version : int
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class OrderItem {
+        - orderId : String
+        - menuItemId : String
+        - quantity : int
+        - unitPrice : double
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class DeliveryRoute {
+        - orderId : String
+        - driverId : String
+        - startLat : double
+        - startLng : double
+        - endLat : double
+        - endLng : double
+        - distanceKm : double
+        - status : String
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+    class SimulationRun {
+        - mechanism : SimulationMechanism
+        - totalOrders : int
+        - durationMs : long
+        - throughput : double
+        - doubleAssignments : int
+        - oversellErrors : int
+        - driverOverloads : int
+        - throughputDropPercent : double
+        - timestamp : String
+        + toCsvLine() : String
+        + fromCsvLine(csvLine : String) : void
+    }
+}
+
+' ===============================================
+' 6. UTILS, ENUMS & EXCEPTIONS (Full)
+' ===============================================
+package "Utils, Enums & Exceptions" {
+    class GeoUtils {
+        + {static} EARTH_RADIUS_KM : double = 6371.0
+        + {static} haversine(lat1 : double, lon1 : double, lat2 : double, lon2 : double) : double
+        + {static} estimatedDrivingDistance(lat1 : double, lon1 : double, lat2 : double, lon2 : double) : double
+    }
+    
+    enum OrderStatus {
+        PENDING
+        ASSIGNED
+        DELIVERED
+        CANCELLED
+    }
+    enum DriverStatus {
+        AVAILABLE
+        BUSY
+        OFFLINE
+    }
+    enum SimulationMechanism {
+        NO_LOCK
+        FILE_LOCK
+        SYNCHRONIZED
+        OPTIMISTIC
+    }
+    
+    class DoubleAssignmentException <<Exception>> {
+        + DoubleAssignmentException(message : String)
+    }
+    class DriverOverloadException <<Exception>> {
+        + DriverOverloadException(message : String)
+    }
+    class EntityNotFoundException <<Exception>> {
+        + EntityNotFoundException(message : String)
+    }
+    class OptimisticLockException <<Exception>> {
+        + OptimisticLockException(message : String)
+    }
+    class OversellException <<Exception>> {
+        + OversellException(message : String)
+    }
+}
+
+' Ép sơ đồ đứng dọc theo tầng kiến trúc
+view -[hidden]down-> controller
+controller -[hidden]down-> repository
+repository -[hidden]down-> model
+model -[hidden]down-> "Utils, Enums & Exceptions"
+
+' Kế thừa Repository
+CsvRepository <|-- CustomerRepository
+CsvRepository <|-- RestaurantRepository
+CsvRepository <|-- MenuItemRepository
+CsvRepository <|-- DriverRepository
+CsvRepository <|-- OrderRepository
+CsvRepository <|-- OrderItemRepository
+CsvRepository <|-- DeliveryRouteRepository
+CsvRepository <|-- SimulationRunRepository
+
+' Kế thừa Model
+BaseEntity <|-- Customer
+BaseEntity <|-- Restaurant
+BaseEntity <|-- MenuItem
+BaseEntity <|-- Driver
+BaseEntity <|-- Order
+BaseEntity <|-- OrderItem
+BaseEntity <|-- DeliveryRoute
+BaseEntity <|-- SimulationRun
+
+' Mối quan hệ giữa thực thể
+Restaurant "1" *-- "1..*" MenuItem : manages >
+Order "1" *-- "1..*" OrderItem : contains >
+Customer "1" -- "0..*" Order : places >
+Driver "1" -- "0..1" Order : delivers >
+
+' Quan hệ gọi hàm
+OrderRepository ..> DriverRepository : uses >
+OrderRepository ..> RestaurantRepository : uses >
+OrderRepository ..> GeoUtils : uses >
+
+OrderController --> OrderRepository : coordinates >
+SimulatorController --> OrderRepository : simulates >
+SimulatorController --> DriverRepository : simulates >
+SimulatorController --> MenuItemRepository : simulates >
+
+MainView --> OrderController : interacts >
+MainView --> SimulatorController : interacts >
+
+@enduml
