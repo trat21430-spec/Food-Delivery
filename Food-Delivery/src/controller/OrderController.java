@@ -1,147 +1,69 @@
 package controller;
 
-import model.LockMechanism;
-import model.Order;
-import model.OrderItem;
-
-import repository.OrderRepository;
-
+import model.*;
+import model.Enums.LockMechanism;
+import model.Enums.OrderStatus;
+import repository.*;
+import exception.*;
 import java.util.List;
 
 public class OrderController {
-
     private final OrderRepository orderRepository;
+    private final MenuItemRepository menuItemRepository;
+    private final DriverRepository driverRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    public OrderController(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderController() {
+        this.orderRepository = new OrderRepository();
+        this.menuItemRepository = new MenuItemRepository();
+        this.driverRepository = new DriverRepository();
+        this.restaurantRepository = new RestaurantRepository();
+        this.orderItemRepository = new OrderItemRepository();
     }
 
-    /**
-     * Create a new order.
-     */
-    public Order placeOrder(String customerId,
-                            String restaurantId,
-                            List<OrderItem> items) {
-
-        if (customerId == null || customerId.isBlank()) {
-            return null;
-        }
-
-        if (restaurantId == null || restaurantId.isBlank()) {
-            return null;
-        }
-
-        if (items == null || items.isEmpty()) {
-            return null;
-        }
-
-        return orderRepository.createOrder(
-                customerId,
-                restaurantId,
-                items
-        );
+    public OrderController(OrderRepository orderRepo, MenuItemRepository itemRepo, DriverRepository driverRepo,
+            RestaurantRepository restRepo, OrderItemRepository orderItemRepo) {
+        this.orderRepository = orderRepo;
+        this.menuItemRepository = itemRepo;
+        this.driverRepository = driverRepo;
+        this.restaurantRepository = restRepo;
+        this.orderItemRepository = orderItemRepo;
     }
 
-    /**
-     * Confirm an order.
-     */
-    public boolean confirmOrder(String orderId) {
-
-        if (orderId == null || orderId.isBlank()) {
-            return false;
+    public Order placeOrderAndDispatch(String customerId, String restaurantId, String menuItemId, int quantity,
+            LockMechanism mechanism) throws Exception {
+        // 1. Deduct stock in MenuItemRepository (handles Oversell check)
+        boolean stockDeducted = menuItemRepository.deductStock(menuItemId, quantity, mechanism);
+        if (!stockDeducted) {
+            throw new OversellException(menuItemId, quantity, 0);
         }
-
-        return orderRepository.confirmOrder(orderId);
-    }
-
-    /**
-     * Cancel an order.
-     *
-     * Repository checks whether cancellation is allowed.
-     */
-    public boolean cancelOrder(String orderId) {
-
-        if (orderId == null || orderId.isBlank()) {
-            return false;
+          MenuItem item = menuItemRepository.findById(menuItemId);
+        double totalAmount = item != null ? item.getPrice() * quantity : 10.0;
+        // 2. Create Pending Order
+        String orderId = "O" + System.currentTimeMillis() + "_" + (int)(Math.random() * 1000);
+        Order order = new Order(orderId, customerId, restaurantId, "", OrderStatus.PENDING, totalAmount, 2.0, java.time.LocalDateTime.now(), java.time.LocalDateTime.now(), 1L);
+        orderRepository.save(order);
+        // 3. Save OrderItem
+        String orderItemId = "OI" + System.currentTimeMillis() + "_" + (int)(Math.random() * 1000);
+        OrderItem orderItem = new OrderItem(orderItemId, orderId, menuItemId, quantity, item != null ? item.getPrice() : 10.0, java.time.LocalDateTime.now(), java.time.LocalDateTime.now(), 1L);
+        orderItemRepository.save(orderItem);
+        // 4. Find Nearest Available Driver
+        Restaurant restaurant = restaurantRepository.findById(restaurantId);
+        double restLat = restaurant != null ? restaurant.getLatitude() : 21.0285;
+        double restLon = restaurant != null ? restaurant.getLongitude() : 105.8542;
+        Driver driver = driverRepository.findNearestAvailable(restLat, restLon);
+        if (driver == null) {
+            throw new EntityNotFoundException("Driver", "AVAILABLE_NEARBY");
         }
-
-        return orderRepository.cancelOrder(orderId);
-    }
-
-    /**
-     * Dispatch driver for an order.
-     *
-     * Controller chooses the synchronization mechanism.
-     * Actual assignment logic remains in Repository.
-     */
-    public boolean dispatchDriver(String orderId,
-                                  LockMechanism mechanism) {
-
-        if (orderId == null || orderId.isBlank()) {
-            return false;
-        }
-
-        if (mechanism == null) {
-            mechanism = LockMechanism.NO_LOCK;
-        }
-
-        switch (mechanism) {
-
-            case NO_LOCK:
-                return orderRepository.assignDriverNoLock(orderId);
-
-            case FILE_LOCK:
-                return orderRepository.assignDriverWithFileLock(orderId);
-
-            case SYNCHRONIZED:
-                return orderRepository.assignDriverWithSync(orderId);
-
-            case OPTIMISTIC:
-                return orderRepository.assignDriverWithOptimistic(orderId);
-
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * Get order by ID.
-     */
-    public Order getOrder(String orderId) {
-
-        if (orderId == null || orderId.isBlank()) {
-            return null;
-        }
-
+         5. Assign Driver to Order (handles Double Assignment check)
+        orderRepository.assignDriver(orderId, driver.getId(), mechanism);
+        // 6. Mark Driver as Busy (handles Driver Overload check)
+        driverRepository.markBusy(driver.getId(), orderId, mechanism);
         return orderRepository.findById(orderId);
     }
 
-    /**
-     * Mark order as delivered.
-     */
-    public boolean markDelivered(String orderId) {
-
-        if (orderId == null || orderId.isBlank()) {
-            return false;
-        }
-
-        return orderRepository.markDelivered(orderId);
-    }
-
-    /**
-     * Complete normal order flow.
-     */
-    public boolean completeOrder(String orderId,
-                                 LockMechanism mechanism) {
-
-        if (!confirmOrder(orderId)) {
-            return false;
-        }
-
-        if (!dispatchDriver(orderId, mechanism)) {
-            return false;
-        }
-
-        return markDelivered(orderId);
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 }
