@@ -1,24 +1,25 @@
 package model;
 
-public class Enums {
+public class Enums{
     public enum DriverStatus {
         AVAILABLE,
         BUSY,
         OFFLINE
-    }
 
-    public enum OrderStatus {
+    }
+public enum OrderStatus {
         PENDING,
-        CONFIRMED,
+        ACCEPTED,
+        IN_PROGRESS,
         DISPATCHED,
         DELIVERED,
         CANCELLED
     }
 
     public enum LockMechanism {
-        NO_LOCK,
-        SYNCHRONIZED,
-        OPTIMISTIC,
-        FILE_LOCK
+       NO_LOCK,
+       SYNCHRONIZED,
+       OPTIMISTIC,
+       FILE_LOCK
     }
 }
