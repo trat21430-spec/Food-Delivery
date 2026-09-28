@@ -29,6 +29,7 @@
 | 🧑‍💻 Member | Đào Cao Duy | `QE190089` |
 | 🧑‍💻 Member | Huỳnh Nguyễn Quốc Huy | `QE200031` |
 | 🧑‍💻 Member | Võ Thảo Nguyên | `QE200064` |
+| 🧑‍💻 Member || Đỗ Tấn Vũ | `QE170159` |
 
 ---
 
