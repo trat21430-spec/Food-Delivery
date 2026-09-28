@@ -13,6 +13,10 @@ import model.DeliveryRoute;
 
 public class DeliveryRouteRepository extends CsvRepository<DeliveryRoute> {
 
+    public DeliveryRouteRepository() {
+        super("data/delivery_routes.csv");
+    }
+
     public DeliveryRouteRepository(String filePath) {
         super(filePath);
     }

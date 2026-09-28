@@ -56,7 +56,7 @@ public class OrderController {
         if (driver == null) {
             throw new EntityNotFoundException("Driver", "AVAILABLE_NEARBY");
         }
-         5. Assign Driver to Order (handles Double Assignment check)
+        // 5. Assign Driver to Order (handles Double Assignment check)
         orderRepository.assignDriver(orderId, driver.getId(), mechanism);
         // 6. Mark Driver as Busy (handles Driver Overload check)
         driverRepository.markBusy(driver.getId(), orderId, mechanism);

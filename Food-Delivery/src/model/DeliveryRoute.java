@@ -35,7 +35,25 @@ public class DeliveryRoute extends BaseEntity {
     public void setDistanceKm(double distanceKm) {
         this.distanceKm = distanceKm;
     }
-        @Override
+    public int getEstimatedMinutes() {
+        return estimatedMinutes;
+    }
+    public void setEstimatedMinutes(int estimatedMinutes) {
+        this.estimatedMinutes = estimatedMinutes;
+    }
+    public String getRoutePathJson() {
+        return routePathJson;
+    }
+    public void setRoutePathJson(String routePathJson) {
+        this.routePathJson = routePathJson != null ? routePathJson : "[]";
+    }
+    public String getStatus() {
+        return routePathJson;
+    }
+    public void setStatus(String status) {
+        this.routePathJson = status;
+    }
+    @Override
     public String toCsvLine() {
         return String.join(",",
             id,

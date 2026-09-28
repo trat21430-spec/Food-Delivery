@@ -13,6 +13,10 @@ import model.Customer;
 
 public class CustomerRepository extends CsvRepository<Customer> {
 
+    public CustomerRepository() {
+        super("data/customers.csv");
+    }
+
     public CustomerRepository(String filePath) {
         super(filePath);
     }

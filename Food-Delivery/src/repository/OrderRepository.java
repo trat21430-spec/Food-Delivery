@@ -17,6 +17,10 @@ import java.util.List;
 
 public class OrderRepository extends CsvRepository<Order> {
 
+    public OrderRepository() {
+        super("data/orders.csv");
+    }
+
     public OrderRepository(String filePath) {
         super(filePath);
     }
@@ -38,7 +42,7 @@ public class OrderRepository extends CsvRepository<Order> {
         }
 
         order.setDriverId(driverId);
-        order.setStatus("ASSIGNED");
+        order.setStatus(model.Enums.OrderStatus.DISPATCHED);
         this.saveAll(orders);
         return true;
     }
@@ -66,10 +70,18 @@ public class OrderRepository extends CsvRepository<Order> {
             }
 
             order.setDriverId(driverId);
-            order.setStatus("ASSIGNED");
+            order.setStatus(model.Enums.OrderStatus.DISPATCHED);
             order.setVersion(order.getVersion() + 1);
             this.saveAll(orders);
             return true;
+        }
+    }
+
+    public boolean assignDriver(String orderId, String driverId, model.Enums.LockMechanism mechanism) {
+        try {
+            return assignDriverWithSync(orderId, driverId);
+        } catch (DoubleAssignmentException | EntityNotFoundException e) {
+            return false;
         }
     }
 

@@ -5,35 +5,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import model.Enums.LockMechanism;
 import model.MenuItem;
 
-public class MenuItemRepository {
+public class MenuItemRepository extends CsvRepository<MenuItem> {
 
-    private static final Path FILE = Path.of("data", "menu_items.csv");
-
-    public List<MenuItem> findAll() {
-        List<MenuItem> items = new ArrayList<>();
-        for (String line : readLines()) {
-            if (line.isBlank() || line.startsWith("itemId")) {
-                continue;
-            }
-            MenuItem item = new MenuItem();
-            item.fromCsvLine(line);
-            items.add(item);
-        }
-        return items;
-    }
-
-    public MenuItem findById(String itemId) {
-        return findAll().stream()
-                .filter(item -> item.getId().equals(itemId))
-                .findFirst()
-                .orElse(null);
+    public MenuItemRepository() {
+        super("data/menu_items.csv");
     }
 
     public List<MenuItem> findByRestaurantId(String restaurantId) {
         return findAll().stream()
-                .filter(item -> item.getRestaurantId().equals(restaurantId))
+                .filter(item -> item.getRestaurantId() != null && item.getRestaurantId().equals(restaurantId))
                 .toList();
     }
 
@@ -54,8 +37,12 @@ public class MenuItemRepository {
         }
 
         item.setStockQty(item.getStockQty() - quantity);
-        writeLines(items);
+        saveAll(items);
         return true;
+    }
+
+    public synchronized boolean deductStock(String itemId, int quantity, LockMechanism mechanism) {
+        return deductStock(itemId, quantity);
     }
 
     public synchronized boolean updateStock(String itemId, int newStock) {
@@ -74,27 +61,47 @@ public class MenuItemRepository {
         }
 
         item.setStockQty(newStock);
-        writeLines(items);
+        saveAll(items);
         return true;
     }
 
-    private List<String> readLines() {
-        try {
-            if (!Files.exists(FILE)) {
-                return List.of();
-            }
-            return Files.readAllLines(FILE);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Cannot read menu_items.csv", ex);
-        }
+    public synchronized boolean updateStock(String itemId, int newStock, LockMechanism mechanism) {
+        return updateStock(itemId, newStock);
     }
 
-    private void writeLines(List<MenuItem> items) {
-        try {
-            Files.createDirectories(FILE.getParent());
-            Files.write(FILE, items.stream().map(MenuItem::toCsvLine).toList());
-        } catch (IOException ex) {
-            throw new IllegalStateException("Cannot write menu_items.csv", ex);
+    @Override
+    protected MenuItem fromCsvLine(String line) {
+        MenuItem item = new MenuItem();
+        String[] parts = line.split(",(?=(?:[^"]*\"[^"]*\")*[^"]*$)");
+        if (parts.length < 8) {
+            return item;
         }
+        item.setId(parts[0].trim());
+        item.setRestaurantId(parts[1].trim());
+        item.setName(parts[2].trim());
+        item.setPrice(Double.parseDouble(parts[3].trim()));
+        item.setStockQty(Integer.parseInt(parts[4].trim()));
+        item.setCreatedAt(java.time.LocalDateTime.parse(parts[5].trim()));
+        item.setUpdatedAt(java.time.LocalDateTime.parse(parts[6].trim()));
+        item.setVersion(Long.parseLong(parts[7].trim()));
+        return item;
+    }
+
+    @Override
+    protected String toCsvLine(MenuItem item) {
+        return String.join(",",
+                item.getId(),
+                item.getRestaurantId(),
+                item.getName(),
+                String.valueOf(item.getPrice()),
+                String.valueOf(item.getStockQty()),
+                item.getCreatedAt().toString(),
+                item.getUpdatedAt().toString(),
+                String.valueOf(item.getVersion()));
+    }
+
+    @Override
+    protected String getHeader() {
+        return "id,restaurantId,name,price,stockQty,createdAt,updatedAt,version";
     }
 }
