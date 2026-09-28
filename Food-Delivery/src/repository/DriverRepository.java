@@ -8,29 +8,12 @@ import java.util.Comparator;
 import java.util.List;
 import model.Driver;
 import model.Enums.DriverStatus;
+import model.Enums.LockMechanism;
 
-public class DriverRepository {
+public class DriverRepository extends CsvRepository<Driver> {
 
-    private static final Path FILE = Path.of("data", "drivers.csv");
-
-    public List<Driver> findAll() {
-        List<Driver> drivers = new ArrayList<>();
-        for (String line : readLines()) {
-            if (line.isBlank() || line.startsWith("driverId")) {
-                continue;
-            }
-            Driver driver = new Driver();
-            driver.fromCsvLine(line);
-            drivers.add(driver);
-        }
-        return drivers;
-    }
-
-    public Driver findById(String driverId) {
-        return findAll().stream()
-                .filter(driver -> driver.getId().equals(driverId))
-                .findFirst()
-                .orElse(null);
+    public DriverRepository() {
+        super("data/drivers.csv");
     }
 
     public Driver findNearestAvailable(double latitude, double longitude) {
@@ -48,6 +31,22 @@ public class DriverRepository {
         return updateStatus(driverId, DriverStatus.BUSY);
     }
 
+    public synchronized boolean assignDriver(String driverId, LockMechanism mechanism) {
+        return updateStatus(driverId, DriverStatus.BUSY);
+    }
+
+    public synchronized boolean markBusy(String driverId, String orderId, LockMechanism mechanism) {
+        List<Driver> drivers = findAll();
+        Driver driver = drivers.stream().filter(item -> item.getId().equals(driverId)).findFirst().orElse(null);
+        if (driver == null) {
+            return false;
+        }
+        driver.setStatus(DriverStatus.BUSY);
+        driver.setCurrentOrderId(orderId);
+        saveAll(drivers);
+        return true;
+    }
+
     public synchronized boolean updateStatus(String driverId, DriverStatus status) {
         List<Driver> drivers = findAll();
         Driver driver = drivers.stream()
@@ -60,7 +59,7 @@ public class DriverRepository {
         }
 
         driver.setStatus(status);
-        writeLines(drivers);
+        saveAll(drivers);
         return true;
     }
 
@@ -72,24 +71,8 @@ public class DriverRepository {
         return updateStatus(driverId, DriverStatus.OFFLINE);
     }
 
-    private List<String> readLines() {
-        try {
-            if (!Files.exists(FILE)) {
-                return List.of();
-            }
-            return Files.readAllLines(FILE);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Cannot read drivers.csv", ex);
-        }
-    }
-
-    private void writeLines(List<Driver> drivers) {
-        try {
-            Files.createDirectories(FILE.getParent());
-            Files.write(FILE, drivers.stream().map(Driver::toCsvLine).toList());
-        } catch (IOException ex) {
-            throw new IllegalStateException("Cannot write drivers.csv", ex);
-        }
+    public synchronized boolean updateStatus(String driverId, DriverStatus status, LockMechanism mechanism) {
+        return updateStatus(driverId, status);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -100,5 +83,45 @@ public class DriverRepository {
                 * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return 6371 * c;
+    }
+
+    @Override
+    protected Driver fromCsvLine(String line) {
+        Driver driver = new Driver();
+        String[] parts = line.split(",(?=(?:[^"]*\"[^"]*\")*[^"]*$)");
+        if (parts.length < 10) {
+            return driver;
+        }
+        driver.setId(parts[0].trim());
+        driver.setName(parts[1].trim());
+        driver.setPhone(parts[2].trim());
+        driver.setStatus(DriverStatus.valueOf(parts[3].trim()));
+        driver.setLatitude(Double.parseDouble(parts[4].trim()));
+        driver.setLongitude(Double.parseDouble(parts[5].trim()));
+        driver.setCurrentOrderId(parts[6].trim());
+        driver.setCreatedAt(java.time.LocalDateTime.parse(parts[7].trim()));
+        driver.setUpdatedAt(java.time.LocalDateTime.parse(parts[8].trim()));
+        driver.setVersion(Long.parseLong(parts[9].trim()));
+        return driver;
+    }
+
+    @Override
+    protected String toCsvLine(Driver driver) {
+        return String.join(",",
+                driver.getId(),
+                driver.getName(),
+                driver.getPhone(),
+                driver.getStatus().name(),
+                String.valueOf(driver.getLatitude()),
+                String.valueOf(driver.getLongitude()),
+                driver.getCurrentOrderId(),
+                driver.getCreatedAt().toString(),
+                driver.getUpdatedAt().toString(),
+                String.valueOf(driver.getVersion()));
+    }
+
+    @Override
+    protected String getHeader() {
+        return "id,name,phone,status,latitude,longitude,currentOrderId,createdAt,updatedAt,version";
     }
 }

@@ -38,9 +38,9 @@ public abstract class CsvRepository<T extends BaseEntity> {
             String line;
             boolean isHeader = true;
             while ((line = reader.readLine()) != null) {
-                if (isHeader) { 
-                    isHeader = false; 
-                    continue; 
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
                 }
                 if (!line.trim().isEmpty()) {
                     list.add(this.fromCsvLine(line));
@@ -54,9 +54,19 @@ public abstract class CsvRepository<T extends BaseEntity> {
 
     public synchronized T findById(String id) {
         return this.findAll().stream()
-                .filter(e -> e.getId().equals(id))
+                .filter(e -> e.getId() != null && e.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public synchronized void save(T entity) {
+        if (entity == null) {
+            return;
+        }
+        List<T> entities = findAll();
+        entities.removeIf(e -> e.getId() != null && e.getId().equals(entity.getId()));
+        entities.add(entity);
+        saveAll(entities);
     }
 
     public synchronized void saveAll(List<T> entities) {
@@ -64,6 +74,9 @@ public abstract class CsvRepository<T extends BaseEntity> {
             writer.write(this.getHeader());
             writer.newLine();
             for (T entity : entities) {
+                if (entity == null) {
+                    continue;
+                }
                 writer.write(this.toCsvLine(entity));
                 writer.newLine();
             }
