@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery Concurrency Simulator | LAB211</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="icon">🛵</span>
+                <div>
+                    <h1>Food Delivery Network Simulation</h1>
+                    <p class="subtitle">LAB211 - FPT University | MVC & Concurrency Race Condition Benchmark</p>
+                </div>
+            </div>
+            <div class="status-badge">
+                <span class="pulse-dot"></span> System Active (CSV Physical Storage)
+            </div>
+        </header>
+        <!-- Metrics Dashboard Banner -->
+        <div class="metrics-grid">
+            <div class="card metric-card">
+                <div class="metric-value" id="val-customers">--</div>
+                <div class="metric-label">Total Customers</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value" id="val-restaurants">--</div>
+                <div class="metric-label">Total Restaurants</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value" id="val-drivers">--</div>
+                <div class="metric-label">Active Drivers</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value" id="val-orders">--</div>
+                <div class="metric-label">Total Orders</div>
+            </div>
+        </div>
+        <!-- Main Content Area: Map & Control Panel -->
+        <div class="main-grid">
+            <!-- Left: Interactive Map -->
+            <div class="card map-card">
+                <div class="card-header">
+                    <h2>🗺️ Live Geographic Dispatch Map (Hanoi Area)</h2>
+                    <div class="legend">
+                        <span class="legend-item"><span class="dot customer"></span> Customer</span>
+                        <span class="legend-item"><span class="dot restaurant"></span> Restaurant</span>
+                        <span class="legend-item"><span class="dot driver"></span> Driver</span>
+                    </div>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="mapCanvas" width="700" height="420"></canvas>
+                </div>
+            </div>
+            <!-- Right: Concurrency Simulation Controller -->
+            <div class="card sim-card">
+                <div class="card-header">
+                    <h2>⚡ Concurrency Simulator Control</h2>
+                </div>
+                <div class="control-panel">
+                    <label for="mech-select">Select Lock Mechanism:</label>
+                    <select id="mech-select" class="form-control">
+                        <option value="NO_LOCK">NO_LOCK (Baseline - Race Conditions)</option>
+                        <option value="SYNCHRONIZED">SYNCHRONIZED (Per-Resource Key)</option>
+                        <option value="OPTIMISTIC" selected>OPTIMISTIC (Version Column Check)</option>
+                        <option value="FILE_LOCK">FILE_LOCK (OS FileChannel Lock)</option>
+                    </select>
+                    <button id="btn-run-sim" class="btn primary-btn">
+                        🚀 Run Concurrency Benchmark (500 Orders)
+                    </button>
+                </div>
+                <div class="sim-status" id="sim-status">
+                    Ready to run simulation benchmark. Select mechanism and press run.
+                </div>
+                <div class="recent-run-card" id="recent-run-details">
+                    <h3>Latest Benchmark Result</h3>
+                    <div class="result-row"><span>Mechanism:</span> <strong id="res-mech">-</strong></div>
+                    <div class="result-row"><span>Throughput:</span> <strong id="res-tp">- ops/sec</strong></div>
+                    <div class="result-row"><span>Duration:</span> <strong id="res-dur">- ms</strong></div>
+                    <div class="result-row"><span>Double Assignment Errors:</span> <span class="badge error"
+                            id="res-double">0</span></div>
+                    <div class="result-row"><span>Oversell Errors:</span> <span class="badge error"
+                            id="res-oversell">0</span></div>
+                    <div class="result-row"><span>Driver Overload Errors:</span> <span class="badge error"
+                            id="res-overload">0</span></div>
+                </div>
+            </div>
+        </div>
+        <!-- Analytics & Comparison Section -->
+        <div class="analytics-grid">
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h2>📊 Throughput (Ops/Sec) Comparison</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h2>⚠️ Race Condition Error Rates (%)</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="errorChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Detailed Benchmark Table -->
+        <div class="card table-card">
+            <div class="card-header">
+                <h2>📋 Concurrency Mechanisms Benchmark Results Table</h2>
+            </div>
+            <div class="table-wrapper">
+                <table id="benchmarkTable">
+                    <thead>
+                        <tr>
+                            <th>Mechanism</th>
+                            <th>Total Orders</th>
+                            <th>Duration (ms)</th>
+                            <th>Throughput (op/s)</th>
+                            <th>Double Assign</th>
+                            <th>Oversell</th>
+                            <th>Driver Overload</th>
+                            <th>Total Errors</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

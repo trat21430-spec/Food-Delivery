@@ -5,13 +5,14 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
     protected String id;
     protected LocalDateTime createdAt;
-    protected LocalDateTime updatedAt;
+    protected LocalDateTimeup updatedAt;
     protected long version;
 
     public BaseEntity() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.version = 1L;
+
     }
 
     public BaseEntity(String id, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
@@ -28,19 +29,17 @@ public abstract class BaseEntity {
 
     public void setId(String id) {
         this.id = id;
-
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public LocalDateTime getUpcreatedAt() {
         return updatedAt;
     }
 
@@ -59,7 +58,6 @@ public abstract class BaseEntity {
     public void increaseVersion() {
         this.version++;
         this.updatedAt = LocalDateTime.now();
-
     }
 
     public abstract String toCsvLine();

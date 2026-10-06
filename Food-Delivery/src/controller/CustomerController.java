@@ -13,7 +13,7 @@ public class CustomerController {
     private final OrderRepository orderRepository;
 
     public CustomerController(CustomerRepository customerRepository,
-                              OrderRepository orderRepository) {
+            OrderRepository orderRepository) {
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
     }
