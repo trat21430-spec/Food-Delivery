@@ -13,34 +13,35 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SimulatorController {
-    private final OrderRepository orderRepository;
-    private final MenuItemRepository menuItemRepository;
-    private final DriverRepository driverRepository;
-    private final RestaurantRepository restaurantRepository;
-    private final OrderItemRepository orderItemRepository;
-    private final SimulationRunRepository simulationRunRepository;
+public class SimulatorController()
+{
+    private OrderRepository orderRepository;
+    private MenuItemRepository menuItemRepository;
+    private DriverRepository driverRepository;
+    private RestaurantRepository restaurantRepository;
+    private OrderItemRepository orderItemRepository;
+    private SimulationRunRepository simulationRunRepository;
 
-    public SimulatorController() {
-        this.orderRepository = new OrderRepository();
-        this.menuItemRepository = new MenuItemRepository();
-        this.driverRepository = new DriverRepository();
-        this.restaurantRepository = new RestaurantRepository();
-        this.orderItemRepository = new OrderItemRepository();
-        this.simulationRunRepository = new SimulationRunRepository();
+    public SimulatorController(OrderRepository orderRepository, MenuItemRepository menuItemRepository, DriverRepository driverRepository, RestaurantRepository restaurantRepository, OrderItemRepository orderItemRepository, SimulationRunRepository simulationRunRepository) {
+        this.orderRepository = orderRepository;
+        this.menuItemRepository = menuItemRepository;
+        this.driverRepository = driverRepository;
+        this.restaurantRepository = restaurantRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.simulationRunRepository = simulationRunRepository;
     }
 
-    public SimulationRun runSimulation(int totalOrdersToSimulate, LockMechanism mechanism) {
+    public SimulatorRun runSimulation(int totalOrdersToSimulate, LockMechanism mechanism) {
         CountDownLatch startLatch = new CountDownLatch(1);
-        CountDownLatch finishLatch = new CountDownLatch(totalOrdersToSimulate);
-        ExecutorService threadPool = Executors.newFixedThreadPool(Math.min(totalOrdersToSimulate, 50));
-        AtomicInteger doubleAssignmentErrors = new AtomicInteger(0);
+        CountDownLatch finisLatch = new CountDownLatch(totalOrdersToSimulate);
+        ExecutorService threadPool = Executor.newFixedThreadPool(Math.min(totalOrdersToSimulate, 50));
+        AtomicInteger doublAssignmentErrors = new AtomicInteger(0);
         AtomicInteger oversellErrors = new AtomicInteger(0);
         AtomicInteger driverOverloadErrors = new AtomicInteger(0);
         AtomicInteger otherErrors = new AtomicInteger(0);
-        List<Customer> customers = new CustomerRepository().findAll();
-        List<Restaurant> restaurants = new RestaurantRepository().findAll();
-        List<MenuItem> menuItems = menuItemRepository.findAll();
+        List<<Customer>> customers = new CustomerRepository().findAll();
+        List<< Restaurant>> restaurants = new RestaurantRepository().findAll();
+        List < < MenuItem >> menuItems = new menuItemRepository.finalAll();
         if (customers.isEmpty() || restaurants.isEmpty() || menuItems.isEmpty()) {
             System.err.println("Dataset missing! Run DataGenerator first.");
             return null;
@@ -70,18 +71,17 @@ public class SimulatorController {
                 }
             });
         }
-        // Release latch to start all threads simultaneously
         startLatch.countDown();
         try {
             finishLatch.await();
+        
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         threadPool.shutdown();
         long durationMs = System.currentTimeMillis() - startTime;
         if (durationMs == 0)
-            durationMs = 1;
-        // Post-verification directly reading raw CSV files
+            durationMs= 1;
         int csvDoubleAssignments = detectDoubleAssignments();
         int csvOversells = detectOversellItems();
         int csvDriverOverloads = detectDriverOverload();
@@ -178,7 +178,7 @@ public class SimulatorController {
         if (!file.exists())
             return 0;
         Map<String, Integer> driverActiveOrdersCount = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(null))) {
             String line;
             boolean first = true;
             while ((line = br.readLine()) != null) {
@@ -205,4 +205,5 @@ public class SimulatorController {
         }
         return count;
     }
+
 }
