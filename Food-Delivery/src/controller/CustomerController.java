@@ -27,7 +27,8 @@ public class CustomerController {
             return false;
         }
 
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
+        return true;
     }
 
     /**

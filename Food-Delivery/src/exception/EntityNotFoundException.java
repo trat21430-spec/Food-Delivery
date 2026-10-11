@@ -8,6 +8,12 @@ public class EntityNotFoundException extends Exception {
         super(message);
     }
 
+    public EntityNotFoundException(String message) {
+        super(message);
+        this.entityName = null;
+        this.entityId = null;
+    }
+
     public EntityNotFoundException(String entityName, String entityId) {
         super(String.format("%s not found with identifier/criteria: [%s]", entityName, entityId));
         this.entityName = entityName;

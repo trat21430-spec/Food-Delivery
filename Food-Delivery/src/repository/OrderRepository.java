@@ -12,8 +12,10 @@ package repository;
 import exception.DoubleAssignmentException;
 import exception.EntityNotFoundException;
 import exception.OptimisticLockException;
+import model.Enums.OrderStatus;
 import model.Order;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderRepository extends CsvRepository<Order> {
 
@@ -77,6 +79,12 @@ public class OrderRepository extends CsvRepository<Order> {
         }
     }
 
+    public List<Order> findByCustomerId(String customerId) {
+        return this.findAll().stream()
+                .filter(order -> order.getCustomerId() != null && order.getCustomerId().equals(customerId))
+                .collect(Collectors.toList());
+    }
+
     public boolean assignDriver(String orderId, String driverId, model.Enums.LockMechanism mechanism) {
         try {
             return assignDriverWithSync(orderId, driverId);
@@ -87,29 +95,29 @@ public class OrderRepository extends CsvRepository<Order> {
 
     @Override
     protected Order fromCsvLine(String line) {
-        String[] parts = line.split(",");
+        String[] parts = line.split(",", -1);
         Order order = new Order();
         order.setId(parts[0].trim());
         order.setCustomerId(parts[1].trim());
         order.setRestaurantId(parts[2].trim());
         order.setDriverId(parts[3].trim());
-        order.setStatus(parts[4].trim());
+        order.setStatus(OrderStatus.valueOf(parts[4].trim()));
         order.setTotalAmount(Double.parseDouble(parts[5].trim()));
         if (parts.length > 6) {
-            order.setVersion(Integer.parseInt(parts[6].trim()));
+            order.setVersion(Long.parseLong(parts[6].trim()));
         }
         return order;
     }
 
     @Override
     protected String toCsvLine(Order o) {
-        return String.join(",", 
-                o.getId(), 
-                o.getCustomerId(), 
+        return String.join(",",
+                o.getId(),
+                o.getCustomerId(),
                 o.getRestaurantId(),
-                o.getDriverId() == null ? "" : o.getDriverId(), 
-                o.getStatus(),
-                String.valueOf(o.getTotalAmount()), 
+                o.getDriverId() == null ? "" : o.getDriverId(),
+                o.getStatus().name(),
+                String.valueOf(o.getTotalAmount()),
                 String.valueOf(o.getVersion()));
     }
 

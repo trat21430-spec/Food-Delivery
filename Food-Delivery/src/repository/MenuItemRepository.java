@@ -72,7 +72,7 @@ public class MenuItemRepository extends CsvRepository<MenuItem> {
     @Override
     protected MenuItem fromCsvLine(String line) {
         MenuItem item = new MenuItem();
-        String[] parts = line.split(",(?=(?:[^"]*\"[^"]*\")*[^"]*$)");
+        String[] parts = line.split(",", -1);
         if (parts.length < 8) {
             return item;
         }
