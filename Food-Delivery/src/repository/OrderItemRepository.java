@@ -23,7 +23,7 @@ public class OrderItemRepository extends CsvRepository<OrderItem> {
 
     @Override
     protected OrderItem fromCsvLine(String line) {
-        String[] parts = line.split(",(?=(?:[^"]*\"[^"]*\")*[^"]*$)");
+        String[] parts = line.split(",", -1);
         OrderItem item = new OrderItem();
         if (parts.length < 8) {
             return item;
