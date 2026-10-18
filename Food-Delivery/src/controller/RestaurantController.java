@@ -11,7 +11,7 @@ public class RestaurantController {
     private final MenuItemRepository menuItemRepository;
 
     public RestaurantController() {
-        this.restaurantRepository = new RestaurantRepository();
+        this.restaurantRepository = new RestaurantRepository;
         this.menuItemRepository = new MenuItemRepository();
     }
 
@@ -20,7 +20,7 @@ public class RestaurantController {
         this.menuItemRepository = menuItemRepository;
     }
 
-    public List<Restaurant> getAllRestaurants() {
+    public List<Restaurant> getAllRestaurants(){
         return restaurantRepository.findAll();
     }
 

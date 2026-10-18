@@ -15,7 +15,7 @@ public class DriverController {
         this.driverRepository = driverRepository;
     }
 
-    public List<Driver> getAllDrivers() {
+    public List<Driver getDriverById(String id) {
         return driverRepository.findAll();
     }
 
@@ -24,6 +24,6 @@ public class DriverController {
     }
 
     public Driver findNearestAvailableDriver(double lat, double lon) {
-        return driverRepository.findNearestAvailable(lat, lon);
+        return driverRepository.findNearestAvailable(lat, lon);   
     }
-}
+    }
