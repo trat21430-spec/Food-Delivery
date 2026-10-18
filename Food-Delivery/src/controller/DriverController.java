@@ -15,10 +15,14 @@ public class DriverController {
         this.driverRepository = driverRepository;
     }
 
+<<<<<<< HEAD
     /**
      * Get all drivers.
      */
     public List<Driver> getAllDrivers() {
+=======
+    public List<Driver getDriverById(String id) {
+>>>>>>> cd0cd2a (push code)
         return driverRepository.findAll();
     }
 
@@ -33,6 +37,10 @@ public class DriverController {
      * Find the nearest available driver to a given coordinate.
      */
     public Driver findNearestAvailableDriver(double lat, double lon) {
-        return driverRepository.findNearestAvailable(lat, lon);
+        return driverRepository.findNearestAvailable(lat, lon);   
     }
+    }
+<<<<<<< HEAD
 }
+=======
+>>>>>>> cd0cd2a (push code)

@@ -1,24 +1,16 @@
 package repository;
-
 import model.Customer;
-
-/**
- * Repository for Customer entities backed by customers.csv.
- */
 public class CustomerRepository extends CsvRepository<Customer> {
-
-    @Override
-    protected String getCsvFilePath() {
-        return "data/customers.csv";
+    private static final String FILE_PATH = "data/customers.csv";
+    private static final String HEADER = "id,name,phone,address,latitude,longitude,createdAt,updatedAt,version";
+    public CustomerRepository() {
+        super(FILE_PATH, HEADER);
     }
-
-    @Override
-    protected String getCsvHeader() {
-        return "id,name,phone,address,latitude,longitude,createdAt,updatedAt,version";
+    public CustomerRepository(String customFilePath) {
+        super(customFilePath, HEADER);
     }
-
     @Override
-    protected Customer createEmpty() {
+    protected Customer createEntity() {
         return new Customer();
     }
 }
