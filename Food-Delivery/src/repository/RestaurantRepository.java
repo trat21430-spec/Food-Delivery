@@ -16,7 +16,7 @@ public class RestaurantRepository extends CsvRepository<Restaurant> {
     @Override
     protected Restaurant fromCsvLine(String line) {
         Restaurant restaurant = new Restaurant();
-        String[] parts = line.split(",(?=(?:[^"]*\"[^"]*\")*[^"]*$)");
+        String[] parts = line.split(",", -1);
         if (parts.length < 9) {
             return restaurant;
         }

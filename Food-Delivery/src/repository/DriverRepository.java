@@ -88,7 +88,7 @@ public class DriverRepository extends CsvRepository<Driver> {
     @Override
     protected Driver fromCsvLine(String line) {
         Driver driver = new Driver();
-        String[] parts = line.split(",(?=(?:[^"]*\"[^"]*\")*[^"]*$)");
+        String[] parts = line.split(",", -1);
         if (parts.length < 10) {
             return driver;
         }
