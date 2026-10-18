@@ -11,7 +11,7 @@ public class RestaurantController {
     private final MenuItemRepository menuItemRepository;
 
     public RestaurantController() {
-        this.restaurantRepository = new RestaurantRepository;
+        this.restaurantRepository = new RestaurantRepository();
         this.menuItemRepository = new MenuItemRepository();
     }
 

@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SimulatorController()
+public class SimulatorController
 {
     private OrderRepository orderRepository;
     private MenuItemRepository menuItemRepository;
@@ -31,17 +31,26 @@ public class SimulatorController()
         this.simulationRunRepository = simulationRunRepository;
     }
 
-    public SimulatorRun runSimulation(int totalOrdersToSimulate, LockMechanism mechanism) {
+    public SimulatorController() {
+        this.orderRepository = new OrderRepository();
+        this.menuItemRepository = new MenuItemRepository();
+        this.driverRepository = new DriverRepository();
+        this.restaurantRepository = new RestaurantRepository();
+        this.orderItemRepository = new OrderItemRepository();
+        this.simulationRunRepository = new SimulationRunRepository();
+    }
+
+    public SimulationRun runSimulation(int totalOrdersToSimulate, LockMechanism mechanism) {
         CountDownLatch startLatch = new CountDownLatch(1);
-        CountDownLatch finisLatch = new CountDownLatch(totalOrdersToSimulate);
-        ExecutorService threadPool = Executor.newFixedThreadPool(Math.min(totalOrdersToSimulate, 50));
-        AtomicInteger doublAssignmentErrors = new AtomicInteger(0);
+        CountDownLatch finishLatch = new CountDownLatch(totalOrdersToSimulate);
+        ExecutorService threadPool = Executors.newFixedThreadPool(Math.min(totalOrdersToSimulate, 50));
+        AtomicInteger doubleAssignmentErrors = new AtomicInteger(0);
         AtomicInteger oversellErrors = new AtomicInteger(0);
         AtomicInteger driverOverloadErrors = new AtomicInteger(0);
         AtomicInteger otherErrors = new AtomicInteger(0);
-        List<<Customer>> customers = new CustomerRepository().findAll();
-        List<< Restaurant>> restaurants = new RestaurantRepository().findAll();
-        List < < MenuItem >> menuItems = new menuItemRepository.finalAll();
+        List<Customer> customers = new CustomerRepository().findAll();
+        List<Restaurant> restaurants = new RestaurantRepository().findAll();
+        List<MenuItem> menuItems = menuItemRepository.findAll();
         if (customers.isEmpty() || restaurants.isEmpty() || menuItems.isEmpty()) {
             System.err.println("Dataset missing! Run DataGenerator first.");
             return null;
@@ -58,6 +67,9 @@ public class SimulatorController()
                     Restaurant rest = restaurants.get(index % restaurants.size());
                     MenuItem item = menuItems.get(index % menuItems.size());
                     orderController.placeOrderAndDispatch(cust.getId(), rest.getId(), item.getId(), 1, mechanism);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    otherErrors.incrementAndGet();
                 } catch (DoubleAssignmentException e) {
                     doubleAssignmentErrors.incrementAndGet();
                 } catch (OversellException e) {
@@ -178,7 +190,7 @@ public class SimulatorController()
         if (!file.exists())
             return 0;
         Map<String, Integer> driverActiveOrdersCount = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(null))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             boolean first = true;
             while ((line = br.readLine()) != null) {
