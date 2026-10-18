@@ -28,3 +28,4 @@ public class SimulatorView {
         System.out.println("\n[Conclusion]:");
     }
 }
+p

@@ -1,33 +1,31 @@
 package view;
 
-import java.util.List;
 import model.MenuItem;
 import model.Order;
-import model.OrderItem;
-import model.Restaurant;
+import java.util.List;
 
 public class OrderView {
-    public void displayRestaurants(List<Restaurant> restaurants) {
-        System.out.println("=== Restaurants list ===");
-        System.out.printf("%-10s | %-20s | %-30s\n", "ID", "Restaurant name", "Locate");
-        System.out.println("-------------------------------------");
-        System.out.println("-------------------------------------");
+    public void displayMenu(String restaurantName, List<MenuItem> items) {
+        System.out.println("\n=== MENU FOR RESTAURANT: " + restaurantName + " ===");
+        System.out.printf("%-10s | %-25s | %-10s | %-8s | %-8s\n", "ID", "Name", "Price ($)", "Stock", "Version");
+        System.out.println("------------------------------------------------------------------");
+        for (MenuItem item : items) {
+            System.out.printf("%-10s | %-25s | $%-9.2f | %-8d | %-8d\n",
+                    item.getId(), item.getName(), item.getPrice(), item.getStockQty(), item.getVersion());
+        }
+        System.out.println();
     }
 
-    public void displayMenu(String restaurantName, List<MenuItem> menuItems) {
-        System.out.println("\n=== Menu: " + restaurantName + " ===");
-        System.out.printf("%-10s | %-25s |%-10s |%-10s | %-10s\n", "FoodCode", "FoodName", "Price($)", "Inventory");
-    }
-
-    public void displayOrderReceipt(Order order, List<OrderItem> items) {
-        System.out.println("\n==================== Receiption Order ============");
-        System.out.println("OrderCode: " + order.getId());
-        System.out.println("====================================================");
-    }
-
-    private String truncate(String text, int maxLen) {
-        if (text == null) return "";
-        if (text.length() <= maxLen) return text;
-        return text.substring(0, maxLen - 3) + "...";
+    public void displayOrders(List<Order> orders) {
+        System.out.println("\n=== SYSTEM ORDERS LIST ===");
+        System.out.printf("%-18s | %-12s | %-12s | %-12s | %-12s | %-10s\n", "Order ID", "Customer", "Restaurant",
+                "Driver", "Status", "Amount");
+        System.out.println("----------------------------------------------------------------------------------------");
+        for (Order o : orders) {
+            System.out.printf("%-18s | %-12s | %-12s | %-12s | %-12s | $%-9.2f\n",
+                    o.getId(), o.getCustomerId(), o.getRestaurantId(),
+                    o.getDriverId().isEmpty() ? "UNASSIGNED" : o.getDriverId(), o.getStatus(), o.getTotalAmount());
+        }
+        System.out.println();
     }
 }
