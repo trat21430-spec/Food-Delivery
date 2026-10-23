@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1100" width="1100" height="1100">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .boundary { fill: none; stroke: #ffffff; stroke-width: 2; rx: 8; }
+      .boundary-title { fill: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; text-anchor: middle; }
+
+      .actor-head { fill: none; stroke: #ffffff; stroke-width: 2; }
+      .actor-body { stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+      .actor-text { fill: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 500; text-anchor: middle; }
+
+      .uc-ellipse { fill: none; stroke: #ffffff; stroke-width: 1.8; }
+      .uc-text { fill: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 500; text-anchor: middle; dominant-baseline: middle; }
+
+      .conn-solid { stroke: #ffffff; stroke-width: 1.8; opacity: 0.9; }
+      .conn-dash { stroke: #ffffff; stroke-width: 1.5; stroke-dasharray: 5,5; }
+      .rel-text { fill: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; text-anchor: middle; }
+
+      .title { fill: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 22px; font-weight: bold; text-anchor: middle; }
+      .sub-title { fill: #94a3b8; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+    </style>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- Dark Background -->
+  <rect width="1100" height="1100" class="bg" />
+
+  <!-- Titles -->
+  <text x="550" y="45" class="title">MODEL LAYER USE CASE DIAGRAM</text>
+  <text x="550" y="70" class="sub-title">Food Delivery Network Simulation (LAB211 - Model &amp; Repository Only)</text>
+
+  <!-- System Boundary Box -->
+  <rect x="220" y="100" width="820" height="950" class="boundary" />
+  <text x="630" y="135" class="boundary-title">Model Layer System</text>
+
+  <!-- ================= ACTORS ON LEFT MARGIN ================= -->
+
+  <!-- 1. Customer Model Actor -->
+  <g transform="translate(100, 220)">
+    <circle cx="0" cy="-20" r="16" class="actor-head"/>
+    <line x1="0" y1="-4" x2="0" y2="28" class="actor-body"/>
+    <line x1="-20" y1="8" x2="20" y2="8" class="actor-body"/>
+    <line x1="0" y1="28" x2="-16" y2="56" class="actor-body"/>
+    <line x1="0" y1="28" x2="16" y2="56" class="actor-body"/>
+    <text x="0" y="76" class="actor-text">Customer Model</text>
+  </g>
+
+  <!-- 2. MenuItem Repo Actor -->
+  <g transform="translate(100, 420)">
+    <circle cx="0" cy="-20" r="16" class="actor-head"/>
+    <line x1="0" y1="-4" x2="0" y2="28" class="actor-body"/>
+    <line x1="-20" y1="8" x2="20" y2="8" class="actor-body"/>
+    <line x1="0" y1="28" x2="-16" y2="56" class="actor-body"/>
+    <line x1="0" y1="28" x2="16" y2="56" class="actor-body"/>
+    <text x="0" y="76" class="actor-text">MenuItem Repo</text>
+  </g>
+
+  <!-- 3. Driver Repo Actor -->
+  <g transform="translate(100, 640)">
+    <circle cx="0" cy="-20" r="16" class="actor-head"/>
+    <line x1="0" y1="-4" x2="0" y2="28" class="actor-body"/>
+    <line x1="-20" y1="8" x2="20" y2="8" class="actor-body"/>
+    <line x1="0" y1="28" x2="-16" y2="56" class="actor-body"/>
+    <line x1="0" y1="28" x2="16" y2="56" class="actor-body"/>
+    <text x="0" y="76" class="actor-text">Driver Repo</text>
+  </g>
+
+  <!-- 4. Order Repo Actor -->
+  <g transform="translate(100, 840)">
+    <circle cx="0" cy="-20" r="16" class="actor-head"/>
+    <line x1="0" y1="-4" x2="0" y2="28" class="actor-body"/>
+    <line x1="-20" y1="8" x2="20" y2="8" class="actor-body"/>
+    <line x1="0" y1="28" x2="-16" y2="56" class="actor-body"/>
+    <line x1="0" y1="28" x2="16" y2="56" class="actor-body"/>
+    <text x="0" y="76" class="actor-text">Order Repo</text>
+  </g>
+
+  <!-- 5. CSV Verifier Actor -->
+  <g transform="translate(100, 980)">
+    <circle cx="0" cy="-16" r="14" class="actor-head"/>
+    <line x1="0" y1="0" x2="0" y2="22" class="actor-body"/>
+    <line x1="-16" y1="8" x2="16" y2="8" class="actor-body"/>
+    <line x1="0" y1="22" x2="-12" y2="44" class="actor-body"/>
+    <line x1="0" y1="22" x2="12" y2="44" class="actor-body"/>
+    <text x="0" y="62" class="actor-text">CSV Verifier</text>
+  </g>
+
+  <!-- ================= MODEL USE CASE ELLIPSES ================= -->
+
+  <!-- Customer Model Use Cases -->
+  <g transform="translate(420, 180)">
+    <ellipse cx="0" cy="0" rx="120" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Create/Update Customer Profile</text>
+  </g>
+
+  <!-- MenuItem Model Use Cases -->
+  <g transform="translate(420, 360)">
+    <ellipse cx="0" cy="0" rx="115" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Fetch Menu Items</text>
+  </g>
+
+  <g transform="translate(820, 360)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Access MenuItem Records</text>
+  </g>
+
+  <g transform="translate(420, 430)">
+    <ellipse cx="0" cy="0" rx="115" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Store MenuItem Data</text>
+  </g>
+
+  <g transform="translate(820, 430)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Map Data to Entities</text>
+  </g>
+
+  <!-- Driver Model Use Cases -->
+  <g transform="translate(420, 580)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Manage Driver Assignments</text>
+  </g>
+
+  <g transform="translate(820, 580)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Update Driver Status</text>
+  </g>
+
+  <g transform="translate(420, 660)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Update Driver Availability</text>
+  </g>
+
+  <!-- Order Model Use Cases -->
+  <g transform="translate(420, 780)">
+    <ellipse cx="0" cy="0" rx="120" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Process New Orders</text>
+  </g>
+
+  <g transform="translate(820, 780)">
+    <ellipse cx="0" cy="0" rx="120" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Create Order Record</text>
+  </g>
+
+  <g transform="translate(420, 850)">
+    <ellipse cx="0" cy="0" rx="120" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Update Order Status</text>
+  </g>
+
+  <g transform="translate(820, 850)">
+    <ellipse cx="0" cy="0" rx="120" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Audit Trail Entry</text>
+  </g>
+
+  <!-- CSV Verifier Use Cases -->
+  <g transform="translate(420, 960)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Validate CSV Menu Data</text>
+  </g>
+
+  <g transform="translate(820, 960)">
+    <ellipse cx="0" cy="0" rx="125" ry="25" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Parse CSV Format</text>
+  </g>
+
+  <!-- CONNECTORS -->
+  <line x1="125" y1="210" x2="300" y2="180" class="conn-solid"/>
+  <line x1="125" y1="410" x2="305" y2="360" class="conn-solid"/>
+  <line x1="125" y1="420" x2="305" y2="430" class="conn-solid"/>
+  <line x1="125" y1="630" x2="295" y2="580" class="conn-solid"/>
+  <line x1="125" y1="640" x2="295" y2="660" class="conn-solid"/>
+  <line x1="125" y1="830" x2="300" y2="780" class="conn-solid"/>
+  <line x1="125" y1="840" x2="300" y2="850" class="conn-solid"/>
+  <line x1="125" y1="980" x2="295" y2="960" class="conn-solid"/>
+
+  <!-- DASHED INCLUDES -->
+  <line x1="535" y1="360" x2="695" y2="360" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="615" y="350" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="535" y1="430" x2="695" y2="430" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="615" y="420" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="545" y1="580" x2="695" y2="580" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="620" y="570" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="540" y1="780" x2="700" y2="780" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="620" y="770" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="540" y1="850" x2="700" y2="850" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="620" y="840" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="545" y1="960" x2="695" y2="960" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="620" y="950" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+</svg>

@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 950" width="1400" height="950">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .class-box { fill: #1e293b; stroke: #38bdf8; stroke-width: 2; rx: 8; }
+      .class-box-base { fill: #0f172a; stroke: #f59e0b; stroke-width: 2.5; rx: 8; }
+      .class-box-repo { fill: #1e293b; stroke: #818cf8; stroke-width: 2; rx: 8; }
+      .class-box-ctrl { fill: #1e293b; stroke: #2dd4bf; stroke-width: 2; rx: 8; }
+      .class-box-view { fill: #1e293b; stroke: #f472b6; stroke-width: 2; rx: 8; }
+
+      .header-text { fill: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .header-text-base { fill: #fbbf24; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
+      .header-text-repo { fill: #c084fc; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .header-text-ctrl { fill: #2dd4bf; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .header-text-view { fill: #f472b6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+
+      .member-text { fill: #cbd5e1; font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; }
+      .divider { stroke: #334155; stroke-width: 1.5; }
+
+      .conn-line { stroke: #94a3b8; stroke-width: 1.8; fill: none; }
+      .conn-inherit { stroke: #f59e0b; stroke-width: 2; fill: none; }
+      .main-title { fill: #38bdf8; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; font-weight: bold; text-anchor: middle; }
+      .sub-title { fill: #94a3b8; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+    </style>
+
+    <marker id="inherit-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <polygon points="0 0, 10 5, 0 10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    </marker>
+    <marker id="repo-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <polygon points="0 0, 10 5, 0 10" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="950" class="bg" />
+
+  <!-- Main Title -->
+  <text x="700" y="40" class="main-title">FULL UML CLASS DIAGRAM SPECIFICATION</text>
+  <text x="700" y="65" class="sub-title">Food Delivery Network Simulation (LAB211 - MVC Architecture)</text>
+
+  <!-- BaseEntity (Parent Top Center) -->
+  <g transform="translate(560, 90)">
+    <rect x="0" y="0" width="280" height="100" class="class-box-base"/>
+    <text x="140" y="24" class="header-text-base">BaseEntity</text>
+    <line x1="0" y1="32" x2="280" y2="32" class="divider"/>
+    <text x="12" y="48" class="member-text"># id: String</text>
+    <text x="12" y="63" class="member-text"># createdAt, updatedAt: LocalDateTime</text>
+    <text x="12" y="78" class="member-text"># version: long</text>
+    <line x1="0" y1="85" x2="280" y2="85" class="divider"/>
+  </g>
+
+  <!-- ENTITY CLASSES ROW (Top) -->
+
+  <!-- Customer -->
+  <g transform="translate(40, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">Customer</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- name: String</text>
+    <text x="8" y="61" class="member-text">- phone: String</text>
+    <text x="8" y="76" class="member-text">- address: String</text>
+    <text x="8" y="91" class="member-text">- lat, lon: double</text>
+  </g>
+
+  <!-- Restaurant -->
+  <g transform="translate(205, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">Restaurant</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- name: String</text>
+    <text x="8" y="61" class="member-text">- address: String</text>
+    <text x="8" y="76" class="member-text">- lat, lon: double</text>
+    <text x="8" y="91" class="member-text">- rating: double</text>
+  </g>
+
+  <!-- MenuItem -->
+  <g transform="translate(370, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">MenuItem</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- restId: String</text>
+    <text x="8" y="61" class="member-text">- name: String</text>
+    <text x="8" y="76" class="member-text">- price: double</text>
+    <text x="8" y="91" class="member-text">- stockQty: int</text>
+  </g>
+
+  <!-- Driver -->
+  <g transform="translate(535, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">Driver</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- name, phone: String</text>
+    <text x="8" y="61" class="member-text">- status: DriverStatus</text>
+    <text x="8" y="76" class="member-text">- lat, lon: double</text>
+    <text x="8" y="91" class="member-text">- currentOrderId: String</text>
+  </g>
+
+  <!-- Order -->
+  <g transform="translate(700, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">Order</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- customerId: String</text>
+    <text x="8" y="61" class="member-text">- restaurantId: String</text>
+    <text x="8" y="76" class="member-text">- driverId: String</text>
+    <text x="8" y="91" class="member-text">- status: OrderStatus</text>
+  </g>
+
+  <!-- OrderItem -->
+  <g transform="translate(865, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">OrderItem</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- orderId: String</text>
+    <text x="8" y="61" class="member-text">- menuItemId: String</text>
+    <text x="8" y="76" class="member-text">- quantity: int</text>
+    <text x="8" y="91" class="member-text">- price: double</text>
+  </g>
+
+  <!-- DeliveryRoute -->
+  <g transform="translate(1030, 230)">
+    <rect x="0" y="0" width="150" height="110" class="class-box"/>
+    <text x="75" y="22" class="header-text">DeliveryRoute</text>
+    <line x1="0" y1="30" x2="150" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- orderId: String</text>
+    <text x="8" y="61" class="member-text">- driverId: String</text>
+    <text x="8" y="76" class="member-text">- distanceKm: double</text>
+    <text x="8" y="91" class="member-text">- estMinutes: int</text>
+  </g>
+
+  <!-- SimulationRun -->
+  <g transform="translate(1195, 230)">
+    <rect x="0" y="0" width="165" height="110" class="class-box"/>
+    <text x="82" y="22" class="header-text">SimulationRun</text>
+    <line x1="0" y1="30" x2="165" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">- mechanism: LockMech</text>
+    <text x="8" y="61" class="member-text">- throughput: double</text>
+    <text x="8" y="76" class="member-text">- doubleAssign: int</text>
+    <text x="8" y="91" class="member-text">- totalErrors: int</text>
+  </g>
+
+  <!-- REPOSITORY LAYER (Middle) -->
+  <g transform="translate(520, 390)">
+    <rect x="0" y="0" width="360" height="110" class="class-box-repo"/>
+    <text x="180" y="24" class="header-text-repo">CsvRepository&lt;T extends BaseEntity&gt;</text>
+    <line x1="0" y1="32" x2="360" y2="32" class="divider"/>
+    <text x="12" y="48" class="member-text"># filePath, header: String</text>
+    <text x="12" y="63" class="member-text">+ findAll(): List&lt;T&gt;  |  + findById(id): T</text>
+    <text x="12" y="78" class="member-text">+ save(entity): void  |  + updateWithOptimisticLock(): void</text>
+    <text x="12" y="93" class="member-text">+ executeWithFileLock(action): void</text>
+  </g>
+
+  <!-- Specific Repositories -->
+  <g transform="translate(150, 540)">
+    <rect x="0" y="0" width="240" height="90" class="class-box-repo"/>
+    <text x="120" y="22" class="header-text-repo">MenuItemRepository</text>
+    <line x1="0" y1="30" x2="240" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">+ deductStock(id, qty, mech)</text>
+    <text x="8" y="63" class="member-text">- deductStockOptimistic()</text>
+    <text x="8" y="80" class="member-text">- deductStockSynchronized()</text>
+  </g>
+
+  <g transform="translate(420, 540)">
+    <rect x="0" y="0" width="260" height="90" class="class-box-repo"/>
+    <text x="130" y="22" class="header-text-repo">DriverRepository</text>
+    <line x1="0" y1="30" x2="260" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">+ findNearestAvailable(lat, lon)</text>
+    <text x="8" y="63" class="member-text">+ markBusy(driverId, orderId, mech)</text>
+    <text x="8" y="80" class="member-text">- markBusyOptimistic()</text>
+  </g>
+
+  <g transform="translate(710, 540)">
+    <rect x="0" y="0" width="250" height="90" class="class-box-repo"/>
+    <text x="125" y="22" class="header-text-repo">OrderRepository</text>
+    <line x1="0" y1="30" x2="250" y2="30" class="divider"/>
+    <text x="8" y="46" class="member-text">+ assignDriver(orderId, driverId, mech)</text>
+    <text x="8" y="63" class="member-text">- assignDriverOptimistic()</text>
+    <text x="8" y="80" class="member-text">- assignDriverSynchronized()</text>
+  </g>
+
+  <!-- CONTROLLERS & VIEWS (Bottom) -->
+  <g transform="translate(200, 700)">
+    <rect x="0" y="0" width="300" height="100" class="class-box-ctrl"/>
+    <text x="150" y="24" class="header-text-ctrl">OrderController</text>
+    <line x1="0" y1="32" x2="300" y2="32" class="divider"/>
+    <text x="12" y="50" class="member-text">+ placeOrderAndDispatch(cust, rest, item, qty, mech)</text>
+    <text x="12" y="68" class="member-text">+ getAllOrders(): List&lt;Order&gt;</text>
+  </g>
+
+  <g transform="translate(560, 700)">
+    <rect x="0" y="0" width="310" height="100" class="class-box-ctrl"/>
+    <text x="155" y="24" class="header-text-ctrl">SimulatorController</text>
+    <line x1="0" y1="32" x2="310" y2="32" class="divider"/>
+    <text x="12" y="48" class="member-text">+ runSimulation(count, mech): SimulationRun</text>
+    <text x="12" y="63" class="member-text">+ detectDoubleAssignments(): int</text>
+    <text x="12" y="78" class="member-text">+ detectOversellItems(): int</text>
+    <text x="12" y="93" class="member-text">+ detectDriverOverload(): int</text>
+  </g>
+
+  <g transform="translate(900, 700)">
+    <rect x="0" y="0" width="280" height="100" class="class-box-view"/>
+    <text x="140" y="24" class="header-text-view">MainView &amp; MapView</text>
+    <line x1="0" y1="32" x2="280" y2="32" class="divider"/>
+    <text x="12" y="50" class="member-text">+ startMenu(): void</text>
+    <text x="12" y="68" class="member-text">+ renderAsciiMap(customers, rest, drivers)</text>
+    <text x="12" y="86" class="member-text">+ renderComparisonTable(runs)</text>
+  </g>
+
+  <!-- INHERITANCE LINES TO BASEENTITY -->
+  <line x1="115" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="280" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="445" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="610" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="775" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="940" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="1105" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+  <line x1="1275" y1="230" x2="700" y2="190" class="conn-inherit" marker-end="url(#inherit-arrow)"/>
+
+  <!-- REPOSITORY INHERITANCE LINES TO CSVREPOSITORY -->
+  <line x1="270" y1="540" x2="700" y2="500" class="conn-line" marker-end="url(#repo-arrow)"/>
+  <line x1="550" y1="540" x2="700" y2="500" class="conn-line" marker-end="url(#repo-arrow)"/>
+  <line x1="835" y1="540" x2="700" y2="500" class="conn-line" marker-end="url(#repo-arrow)"/>
+
+</svg>

@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run FoodDelivery (Main)",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "NHOM_01_LAB211_FoodDelivery",
+            "console": "integratedTerminal",
+            "encoding": "UTF-8",
+            "workingDirectory": "${workspaceFolder}",
+            "javaExec": "C:\\Program Files\\Java\\jdk1.8.0_202\\bin\\java.exe"
+        },
+        {
+            "type": "java",
+            "name": "Run SystemVerificationTest",
+            "request": "launch",
+            "mainClass": "util.SystemVerificationTest",
+            "projectName": "NHOM_01_LAB211_FoodDelivery",
+            "console": "integratedTerminal",
+            "encoding": "UTF-8",
+            "workingDirectory": "${workspaceFolder}",
+            "javaExec": "C:\\Program Files\\Java\\jdk1.8.0_202\\bin\\java.exe"
+        }
+    ]
+}

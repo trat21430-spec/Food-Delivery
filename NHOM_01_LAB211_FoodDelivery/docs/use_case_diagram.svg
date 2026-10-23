@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" width="1000" height="1200">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .grid { stroke: #e2e8f0; stroke-width: 0.8; }
+      .boundary { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+      .tab-header { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+      .tab-text { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; }
+
+      .actor-line { stroke: #1e293b; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .actor-text { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600; text-anchor: middle; }
+
+      .uc-ellipse { fill: #ffffff; stroke: #334155; stroke-width: 1.8; }
+      .uc-text { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 500; text-anchor: middle; dominant-baseline: middle; }
+
+      .conn-actor { stroke: #475569; stroke-width: 1.5; }
+      .conn-dash { stroke: #475569; stroke-width: 1.5; stroke-dasharray: 5,5; }
+      .rel-text { fill: #334155; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; text-anchor: middle; }
+    </style>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5" fill="none" stroke="#475569" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- Background Paper -->
+  <rect width="1000" height="1200" class="bg"/>
+
+  <!-- Subtle Grid Lines (Graph Paper Style) -->
+  <g class="grid">
+    <path d="
+      M 0,40 H 1000 M 0,80 H 1000 M 0,120 H 1000 M 0,160 H 1000 M 0,200 H 1000 M 0,240 H 1000 M 0,280 H 1000 M 0,320 H 1000 M 0,360 H 1000 M 0,400 H 1000 M 0,440 H 1000 M 0,480 H 1000 M 0,520 H 1000 M 0,560 H 1000 M 0,600 H 1000 M 0,640 H 1000 M 0,680 H 1000 M 0,720 H 1000 M 0,760 H 1000 M 0,800 H 1000 M 0,840 H 1000 M 0,880 H 1000 M 0,920 H 1000 M 0,960 H 1000 M 0,1000 H 1000 M 0,1040 H 1000 M 0,1080 H 1000 M 0,1120 H 1000 M 0,1160 H 1000
+      M 40,0 V 1200 M 80,0 V 1200 M 120,0 V 1200 M 160,0 V 1200 M 200,0 V 1200 M 240,0 V 1200 M 280,0 V 1200 M 320,0 V 1200 M 360,0 V 1200 M 400,0 V 1200 M 440,0 V 1200 M 480,0 V 1200 M 520,0 V 1200 M 560,0 V 1200 M 600,0 V 1200 M 640,0 V 1200 M 680,0 V 1200 M 720,0 V 1200 M 760,0 V 1200 M 800,0 V 1200 M 840,0 V 1200 M 880,0 V 1200 M 920,0 V 1200 M 960,0 V 1200
+    "/>
+  </g>
+
+  <!-- System Boundary Box -->
+  <rect x="180" y="80" width="760" height="1060" class="boundary"/>
+
+  <!-- System Tab Header Top Left -->
+  <path d="M 180,80 L 180,120 L 520,120 L 540,80 Z" class="tab-header"/>
+  <text x="200" y="107" class="tab-text">Food Delivery Simulation (FDS)</text>
+
+  <!-- Horizontal Divider Line inside Boundary -->
+  <line x1="180" y1="360" x2="940" y2="360" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="180" y1="620" x2="940" y2="620" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="180" y1="860" x2="940" y2="860" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- ================= ACTORS (LEFT SIDE VERTICAL) ================= -->
+
+  <!-- 1. Customer Actor -->
+  <g transform="translate(80, 200)">
+    <circle cx="0" cy="-24" r="16" class="actor-line"/>
+    <line x1="0" y1="-8" x2="0" y2="28" class="actor-line"/>
+    <line x1="-22" y1="4" x2="22" y2="4" class="actor-line"/>
+    <line x1="0" y1="28" x2="-18" y2="60" class="actor-line"/>
+    <line x1="0" y1="28" x2="18" y2="60" class="actor-line"/>
+    <text x="0" y="82" class="actor-text">Customer</text>
+  </g>
+
+  <!-- 2. Restaurant Actor -->
+  <g transform="translate(80, 460)">
+    <circle cx="0" cy="-24" r="16" class="actor-line"/>
+    <line x1="0" y1="-8" x2="0" y2="28" class="actor-line"/>
+    <line x1="-22" y1="4" x2="22" y2="4" class="actor-line"/>
+    <line x1="0" y1="28" x2="-18" y2="60" class="actor-line"/>
+    <line x1="0" y1="28" x2="18" y2="60" class="actor-line"/>
+    <text x="0" y="82" class="actor-text">Restaurant</text>
+  </g>
+
+  <!-- 3. Driver Actor -->
+  <g transform="translate(80, 720)">
+    <circle cx="0" cy="-24" r="16" class="actor-line"/>
+    <line x1="0" y1="-8" x2="0" y2="28" class="actor-line"/>
+    <line x1="-22" y1="4" x2="22" y2="4" class="actor-line"/>
+    <line x1="0" y1="28" x2="-18" y2="60" class="actor-line"/>
+    <line x1="0" y1="28" x2="18" y2="60" class="actor-line"/>
+    <text x="0" y="82" class="actor-text">Driver</text>
+  </g>
+
+  <!-- 4. Dispatcher / System Admin Actor -->
+  <g transform="translate(80, 960)">
+    <circle cx="0" cy="-24" r="16" class="actor-line"/>
+    <line x1="0" y1="-8" x2="0" y2="28" class="actor-line"/>
+    <line x1="-22" y1="4" x2="22" y2="4" class="actor-line"/>
+    <line x1="0" y1="28" x2="-18" y2="60" class="actor-line"/>
+    <line x1="0" y1="28" x2="18" y2="60" class="actor-line"/>
+    <text x="0" y="82" class="actor-text">Dispatcher System</text>
+  </g>
+
+  <!-- ================= USE CASE ELLIPSES ================= -->
+
+  <!-- Customer Use Cases -->
+  <g transform="translate(360, 160)">
+    <ellipse cx="0" cy="0" rx="90" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">view available menu</text>
+  </g>
+
+  <g transform="translate(360, 230)">
+    <ellipse cx="0" cy="0" rx="90" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">track status request</text>
+  </g>
+
+  <g transform="translate(710, 230)">
+    <ellipse cx="0" cy="0" rx="90" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">send request</text>
+  </g>
+
+  <g transform="translate(360, 300)">
+    <ellipse cx="0" cy="0" rx="90" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Place Order</text>
+  </g>
+
+  <g transform="translate(710, 300)">
+    <ellipse cx="0" cy="0" rx="90" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">Cancel Order</text>
+  </g>
+
+  <!-- Restaurant Use Cases -->
+  <g transform="translate(360, 430)">
+    <ellipse cx="0" cy="0" rx="100" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">manage menu items</text>
+  </g>
+
+  <g transform="translate(360, 520)">
+    <ellipse cx="0" cy="0" rx="100" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">update stock quantity</text>
+  </g>
+
+  <!-- Driver Use Cases -->
+  <g transform="translate(360, 680)">
+    <ellipse cx="0" cy="0" rx="100" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">update online status</text>
+  </g>
+
+  <g transform="translate(360, 770)">
+    <ellipse cx="0" cy="0" rx="100" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">receive dispatched order</text>
+  </g>
+
+  <!-- Dispatcher / System Use Cases -->
+  <g transform="translate(360, 930)">
+    <ellipse cx="0" cy="0" rx="105" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">auto-dispatch driver</text>
+  </g>
+
+  <g transform="translate(360, 1020)">
+    <ellipse cx="0" cy="0" rx="105" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">run concurrency simulation</text>
+  </g>
+
+  <g transform="translate(710, 1020)">
+    <ellipse cx="0" cy="0" rx="105" ry="24" class="uc-ellipse"/>
+    <text x="0" y="0" class="uc-text">detect race conditions</text>
+  </g>
+
+  <!-- ================= CONNECTORS (SOLID & DASHED) ================= -->
+
+  <!-- Customer Solid Connections -->
+  <line x1="102" y1="180" x2="270" y2="160" class="conn-actor"/>
+  <line x1="102" y1="200" x2="270" y2="230" class="conn-actor"/>
+  <line x1="102" y1="220" x2="270" y2="300" class="conn-actor"/>
+
+  <!-- Restaurant Solid Connections -->
+  <line x1="102" y1="440" x2="260" y2="430" class="conn-actor"/>
+  <line x1="102" y1="470" x2="260" y2="520" class="conn-actor"/>
+
+  <!-- Driver Solid Connections -->
+  <line x1="102" y1="700" x2="260" y2="680" class="conn-actor"/>
+  <line x1="102" y1="730" x2="260" y2="770" class="conn-actor"/>
+
+  <!-- Dispatcher System Solid Connections -->
+  <line x1="102" y1="940" x2="255" y2="930" class="conn-actor"/>
+  <line x1="102" y1="970" x2="255" y2="1020" class="conn-actor"/>
+
+  <!-- Relationship: track status request -- <<include>> --> send request -->
+  <line x1="450" y1="230" x2="610" y2="230" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="530" y="222" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+  <!-- Relationship: Cancel Order -- <<extends>> --> Place Order -->
+  <line x1="620" y1="300" x2="460" y2="300" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="540" y="292" class="rel-text">&lt;&lt;extends&gt;&gt;</text>
+
+  <!-- Relationship: run concurrency simulation -- <<include>> --> detect race conditions -->
+  <line x1="465" y1="1020" x2="595" y2="1020" class="conn-dash" marker-end="url(#arrow)"/>
+  <text x="530" y="1012" class="rel-text">&lt;&lt;include&gt;&gt;</text>
+
+</svg>

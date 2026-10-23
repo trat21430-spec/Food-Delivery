@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Use Case Diagram (Standard No Include/Extend) - LAB211</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        h1 {
+            color: #38bdf8;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .diagram-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 1200px;
+            width: 100%;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SƠ ĐỒ USE CASE DIAGRAM (CHUẨN KHÔNG INCLUDE / EXTEND)</h1>
+        <div class="subtitle">Food Delivery Network Concurrency Simulation | FPT University (Nhóm 01)</div>
+    </div>
+
+    <div class="diagram-box">
+        <div class="mermaid">
+graph LR
+    subgraph SystemBoundary ["Food Delivery Network Simulation System"]
+        UC01(("Browse Menu & Restaurants"))
+        UC02(("Place Food Order"))
+        UC03(("Cancel Pending Order"))
+        UC04(("Track Order Status"))
+
+        UC05(("Manage Menu Items"))
+        UC06(("Update Item Stock Quantity"))
+        UC07(("Confirm Customer Order"))
+
+        UC08(("Toggle Online/Offline Status"))
+        UC09(("Receive Dispatched Order"))
+        UC10(("Update GPS Coordinates"))
+        UC11(("Mark Order Delivered"))
+
+        UC12(("Auto-Dispatch Nearest Driver"))
+        UC13(("Run Concurrency Simulation"))
+        UC14(("Select Lock Mechanism"))
+        UC15(("Post-Verify Race Conditions"))
+        UC16(("View Benchmark Report"))
+    end
+
+    Customer["👤 Customer"]
+    Restaurant["🏪 Restaurant"]
+    Driver["🛵 Driver"]
+    Dispatcher["⚙️ Dispatcher System"]
+
+    Customer --- UC01
+    Customer --- UC02
+    Customer --- UC03
+    Customer --- UC04
+
+    Restaurant --- UC05
+    Restaurant --- UC06
+    Restaurant --- UC07
+
+    Driver --- UC08
+    Driver --- UC09
+    Driver --- UC10
+    Driver --- UC11
+
+    Dispatcher --- UC12
+    Dispatcher --- UC13
+    Dispatcher --- UC14
+    Dispatcher --- UC15
+    Dispatcher --- UC16
+        </div>
+    </div>
+
+    <div class="footer">
+        Đã cập nhật theo chuẩn vẽ Use Case đơn giản (không có quan hệ include/extend).
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</body>
+</html>
