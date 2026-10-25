@@ -42,7 +42,7 @@ public abstract class CsvRepository<T extends BaseEntity> implements IRepository
     public String getHeader() {
         return this.header;
     }
-
+    
     public void setHeader(String header) {
         this.header = header;
     }
