@@ -127,7 +127,31 @@ public class MainView implements IView {
         }
 
         this.orderView.renderMenu(menu);
-        MenuItem chosenItem = menu.get(0);
+        System.out.println("Select a menu item:");
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.get(i);
+            System.out.printf("%d. %s (Stock: %d)%n", i + 1, item.getName(), item.getStockQty());
+        }
+
+        MenuItem chosenItem = null;
+        while (chosenItem == null) {
+            System.out.print("Enter item number [1-" + menu.size() + "] (0 to cancel): ");
+            String itemChoice = this.scanner.nextLine().trim();
+            try {
+                int itemIndex = Integer.parseInt(itemChoice);
+                if (itemIndex == 0) {
+                    System.out.println("Order cancelled.");
+                    return;
+                }
+                if (itemIndex >= 1 && itemIndex <= menu.size()) {
+                    chosenItem = menu.get(itemIndex - 1);
+                } else {
+                    System.out.println("Invalid item number. Choose a number shown in the menu.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
 
         System.out.println("Selected Customer: " + cust.getName() + " (" + cust.getId() + ")");
         System.out.println("Selected Restaurant: " + rest.getName() + " (" + rest.getId() + ")");
