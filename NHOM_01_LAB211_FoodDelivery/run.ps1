@@ -1,13 +1,16 @@
-$env:JAVA_HOME = "C:\Program Files\Java\jdk1.8.0_202"
-$java = "$env:JAVA_HOME\bin\java.exe"
-$javac = "$env:JAVA_HOME\bin\javac.exe"
+$javac = "javac"
+$java = "java"
+if (Test-Path "C:\Program Files\Java\jdk1.8.0_202\bin\javac.exe") {
+    $javac = "C:\Program Files\Java\jdk1.8.0_202\bin\javac.exe"
+    $java = "C:\Program Files\Java\jdk1.8.0_202\bin\java.exe"
+}
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 if (-not (Test-Path "bin")) { 
     New-Item -ItemType Directory -Path "bin" -Force | Out-Null 
 }
 
-Write-Host "[INFO] Dang bien dich du an bang JDK 1.8..." -ForegroundColor Cyan
+Write-Host "[INFO] Dang bien dich du an..." -ForegroundColor Cyan
 & $javac -encoding UTF-8 -d bin -sourcepath src src/Main.java
 
 if ($LASTEXITCODE -eq 0) {

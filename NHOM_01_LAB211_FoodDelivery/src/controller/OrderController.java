@@ -2,6 +2,8 @@ package controller;
 
 import model.Order;
 import model.OrderStatus;
+import model.MenuItem;
+import model.OrderItem;
 import model.LockMechanism;
 import repository.OrderRepository;
 import repository.MenuItemRepository;
@@ -64,6 +66,20 @@ public class OrderController {
 
     public Order getOrderById(String orderId) {
         return this.orderRepository.findById(orderId);
+    }
+
+    /**
+     * READ OrderItems for a specific order.
+     */
+    public List<OrderItem> getOrderItemsByOrderId(String orderId) {
+        return this.orderItemRepository.findByOrderId(orderId);
+    }
+
+    /**
+     * READ MenuItem by ID.
+     */
+    public MenuItem getMenuItemById(String menuItemId) {
+        return this.menuItemRepository.findById(menuItemId);
     }
 
     /**

@@ -307,4 +307,8 @@ public class SimulatorController {
         }
         return count;
     }
+
+    public List<SimulationRun> getAllSimulationRuns() {
+        return this.simulationRunRepository.findAll();
+    }
 }
