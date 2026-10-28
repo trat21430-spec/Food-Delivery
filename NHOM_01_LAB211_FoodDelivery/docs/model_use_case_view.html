@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Functional Use Case Diagram - LAB211</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        h1 {
+            color: #38bdf8;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .diagram-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 1200px;
+            width: 100%;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SƠ ĐỒ USE CASE CHỨC NĂNG TẦNG MODEL — LAB211</h1>
+        <div class="subtitle">Food Delivery Network Concurrency Simulation | Model Layer Functional Architecture</div>
+    </div>
+
+    <div class="diagram-box">
+        <div class="mermaid">
+graph LR
+    subgraph ModelLayer ["Model & Repository Functional Core Layer"]
+
+        subgraph CustomerSubsystem ["1. Customer Model Subsystem"]
+            MUC01(("MUC01: Save Customer Record"))
+            MUC02(("MUC02: Parse/Serialize Customer CSV"))
+            MUC03(("MUC03: Get Geo Coordinates (Lat/Lon)"))
+        end
+
+        subgraph MenuItemSubsystem ["2. Restaurant & MenuItem Subsystem"]
+            MUC04(("MUC04: Query Menu by Restaurant"))
+            MUC05(("MUC05: Validate Stock Quantity"))
+            MUC06(("MUC06: Deduct Stock with Lock Check"))
+            MUC07(("MUC07: Increment MenuItem Version"))
+        end
+
+        subgraph DriverSubsystem ["3. Driver & Haversine Subsystem"]
+            MUC08(("MUC08: Compute Haversine Distance"))
+            MUC09(("MUC09: Find Nearest Available Driver"))
+            MUC10(("MUC10: Update Status (AVAILABLE/BUSY)"))
+            MUC11(("MUC11: Link Order & Version++"))
+        end
+
+        subgraph OrderSubsystem ["4. Order & OrderItem Subsystem"]
+            MUC12(("MUC12: Create Pending Order & OrderItems"))
+            MUC13(("MUC13: Assign Driver to Order"))
+            MUC14(("MUC14: Update Order Status Lifecycle"))
+            MUC15(("MUC15: Calculate Total & Delivery Fee"))
+        end
+
+        subgraph VerificationSubsystem ["5. Concurrency Verification Subsystem"]
+            MUC16(("MUC16: Scan CSV for Double Assignment"))
+            MUC17(("MUC17: Scan CSV for Oversell Items"))
+            MUC18(("MUC18: Scan CSV for Driver Overload"))
+            MUC19(("MUC19: Calculate Throughput & Error Rate"))
+        end
+    end
+
+    CustomerRepo["CustomerRepository"]
+    MenuItemRepo["MenuItemRepository"]
+    DriverRepo["DriverRepository"]
+    OrderRepo["OrderRepository"]
+    GeoUtils["GeoUtils (Haversine)"]
+    Verifier["CSV Post-Verifier"]
+
+    CustomerRepo --> MUC01
+    CustomerRepo --> MUC02
+
+    MenuItemRepo --> MUC04
+    MenuItemRepo --> MUC05
+    MenuItemRepo --> MUC06
+    MUC06 -. "<<include>>" .-> MUC07
+
+    DriverRepo --> MUC09
+    DriverRepo --> MUC10
+    DriverRepo --> MUC11
+    GeoUtils --> MUC08
+    MUC09 -. "<<include>>" .-> MUC08
+
+    OrderRepo --> MUC12
+    OrderRepo --> MUC13
+    OrderRepo --> MUC14
+    MUC12 -. "<<include>>" .-> MUC15
+
+    Verifier --> MUC16
+    Verifier --> MUC17
+    Verifier --> MUC18
+    Verifier --> MUC19
+        </div>
+    </div>
+
+    <div class="footer">
+        Đã xuất thành công từ Hệ thống AI Antigravity Agent cho Dự án LAB211 (Model Functional Use Case).
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</body>
+</html>

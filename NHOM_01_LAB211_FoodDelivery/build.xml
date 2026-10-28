@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NHOM_01_LAB211_FoodDelivery" default="run" basedir=".">
+    <description>Food Delivery Network Simulation (LAB211)</description>
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build/classes"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="main.class" value="Main"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.8" target="1.8" encoding="UTF-8" includeantruntime="false"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${dist.dir}/FoodDelivery.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}" classpath="${build.dir}" fork="true">
+            <jvmarg value="-Dfile.encoding=UTF-8"/>
+        </java>
+    </target>
+</project>

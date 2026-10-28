@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 950" width="1300" height="950">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .card { fill: #1e293b; stroke: #334155; stroke-width: 1.8; rx: 10; }
+      .header-title { fill: #38bdf8; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; font-weight: bold; text-anchor: middle; }
+      .header-sub { fill: #94a3b8; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+
+      .m-badge { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; }
+      .m-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #f8fafc; }
+      .m-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #cbd5e1; }
+
+      .week-box { fill: #0f172a; stroke: #38bdf8; stroke-width: 1.5; rx: 6; }
+      .week-box-cp { fill: #451a03; stroke: #f97316; stroke-width: 2; rx: 6; }
+      .week-num { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #38bdf8; }
+      .week-num-cp { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #fb923c; }
+      .week-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; }
+      .week-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #94a3b8; }
+      .week-assign { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #38bdf8; }
+
+      .grid-line { stroke: #334155; stroke-width: 1; stroke-dasharray: 4,4; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1300" height="950" class="bg"/>
+
+  <!-- Main Header -->
+  <text x="650" y="45" class="header-title">PHÂN CÔNG NHÓM 6 THÀNH VIÊN &amp; LỊCH TRÌNH 10 TUẦN</text>
+  <text x="650" y="70" class="header-sub">Food Delivery Network Simulation (LAB211 - FPT University)</text>
+
+  <!-- ================= LEFT COLUMN: 6 MEMBERS ROLES ================= -->
+  <text x="30" y="110" font-family="Segoe UI" font-size="16" font-weight="bold" fill="#38bdf8">👥 PHÂN CÔNG VAI TRÒ 6 THÀNH VIÊN</text>
+
+  <!-- Member 1 -->
+  <g transform="translate(30, 130)">
+    <rect width="360" height="115" class="card"/>
+    <rect x="15" y="15" width="80" height="24" rx="4" fill="#0284c7"/>
+    <text x="55" y="31" class="m-badge" text-anchor="middle">Member 1</text>
+    <text x="105" y="31" class="m-title">Leader / Core Architect</text>
+    <text x="15" y="58" class="m-desc">• Kiến trúc MVC, BaseEntity, GeoUtils (Haversine)</text>
+    <text x="15" y="76" class="m-desc">• Generic CsvRepository, Code Review &amp; Integration</text>
+    <text x="15" y="94" class="m-desc">• Khảo sát Race Condition &amp; Quản lý nộp ZIP</text>
+  </g>
+
+  <!-- Member 2 -->
+  <g transform="translate(30, 260)">
+    <rect width="360" height="115" class="card"/>
+    <rect x="15" y="15" width="80" height="24" rx="4" fill="#16a34a"/>
+    <text x="55" y="31" class="m-badge" text-anchor="middle">Member 2</text>
+    <text x="105" y="31" class="m-title">Data Engine &amp; MenuItem Repo</text>
+    <text x="15" y="58" class="m-desc">• DataGenerator.java (sinh 18.700 dòng CSV)</text>
+    <text x="15" y="76" class="m-desc">• MenuItemRepository (Trừ kho &amp; Khóa 4 cơ chế)</text>
+    <text x="15" y="94" class="m-desc">• CustomerRepository, RestaurantRepository</text>
+  </g>
+
+  <!-- Member 3 -->
+  <g transform="translate(30, 390)">
+    <rect width="360" height="115" class="card"/>
+    <rect x="15" y="15" width="80" height="24" rx="4" fill="#9333ea"/>
+    <text x="55" y="31" class="m-badge" text-anchor="middle">Member 3</text>
+    <text x="105" y="31" class="m-title">Concurrency &amp; Driver Dispatch</text>
+    <text x="15" y="58" class="m-desc">• DriverRepository (Haversine nearest &amp; mark busy)</text>
+    <text x="15" y="76" class="m-desc">• OrderRepository (Gán tài xế &amp; Khóa 4 cơ chế)</text>
+    <text x="15" y="94" class="m-desc">• Custom Exceptions (Oversell, DoubleAssign, etc.)</text>
+  </g>
+
+  <!-- Member 4 -->
+  <g transform="translate(30, 520)">
+    <rect width="360" height="115" class="card"/>
+    <rect x="15" y="15" width="80" height="24" rx="4" fill="#ea580c"/>
+    <text x="55" y="31" class="m-badge" text-anchor="middle">Member 4</text>
+    <text x="105" y="31" class="m-title">Simulator &amp; Verification Lead</text>
+    <text x="15" y="58" class="m-desc">• SimulatorController (CountDownLatch 1.000 đơn)</text>
+    <text x="15" y="76" class="m-desc">• Hậu kiểm trực tiếp CSV (detectDoubleAssign...)</text>
+    <text x="15" y="94" class="m-desc">• Đo đạc Throughput ops/sec &amp; % Drop</text>
+  </g>
+
+  <!-- Member 5 -->
+  <g transform="translate(30, 650)">
+    <rect width="360" height="115" class="card"/>
+    <rect x="15" y="15" width="80" height="24" rx="4" fill="#0891b2"/>
+    <text x="55" y="31" class="m-badge" text-anchor="middle">Member 5</text>
+    <text x="105" y="31" class="m-title">MVC View &amp; Web Dashboard</text>
+    <text x="15" y="58" class="m-desc">• CLI MainView, MapView (ASCII Grid 2D), SimulatorView</text>
+    <text x="15" y="76" class="m-desc">• Embedded WebServer.java (HttpServer backend 8080)</text>
+    <text x="15" y="94" class="m-desc">• Web Dashboard Frontend (HTML5/Canvas/Chart.js)</text>
+  </g>
+
+  <!-- Member 6 -->
+  <g transform="translate(30, 780)">
+    <rect width="360" height="115" class="card"/>
+    <rect x="15" y="15" width="80" height="24" rx="4" fill="#e11d48"/>
+    <text x="55" y="31" class="m-badge" text-anchor="middle">Member 6</text>
+    <text x="105" y="31" class="m-title">Technical Report &amp; QA Lead</text>
+    <text x="15" y="58" class="m-desc">• report.md / report.docx (Báo cáo 15+ trang)</text>
+    <text x="15" y="76" class="m-desc">• slide_content.md / slide.pptx (Slide 8 trang)</text>
+    <text x="15" y="94" class="m-desc">• Sơ đồ UML &amp; Đóng gói AI Logs 6 thành viên</text>
+  </g>
+
+  <!-- ================= RIGHT COLUMN: 10-WEEK TIMELINE ROADMAP ================= -->
+  <text x="430" y="110" font-family="Segoe UI" font-size="16" font-weight="bold" fill="#38bdf8">📅 LỊCH TRÌNH TIẾN ĐỘ 10 TUẦN (SPRINT TIMELINE)</text>
+
+  <!-- Tuần 1-2 -->
+  <g transform="translate(430, 130)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 1–2</text>
+    <text x="110" y="30" class="week-title">Phân Tích Yêu Cầu, Vẽ Sơ Đồ &amp; Sinh 18.000+ Dòng CSV</text>
+    <text x="110" y="48" class="week-text">Phân tích 3 rủi ro Data Race; Vẽ Use Case &amp; Class Diagram; Viết DataGenerator.java sinh 8 file CSV</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">M1, M2, M3, M6</text>
+  </g>
+
+  <!-- Tuần 3 -->
+  <g transform="translate(430, 205)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 3</text>
+    <text x="110" y="30" class="week-title">Xây Dựng Tầng Model Layer &amp; GeoUtils (Haversine)</text>
+    <text x="110" y="48" class="week-text">Triển khai 8 Entity kế thừa BaseEntity (id, createdAt, updatedAt, version); Viết GeoUtils tính khoảng cách</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">M1, M5, M6</text>
+  </g>
+
+  <!-- Tuần 4 (Checkpoint 1) -->
+  <g transform="translate(430, 280)">
+    <rect width="840" height="65" class="card" stroke="#f97316"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box-cp"/>
+    <text x="55" y="36" class="week-num-cp" text-anchor="middle">Tuần 4 ⚠️</text>
+    <text x="110" y="30" class="week-title" fill="#fb923c">CHECKPOINT 1: Repository Layer &amp; 4 Cơ Chế Khóa Đồng Bộ</text>
+    <text x="110" y="48" class="week-text">Viết CsvRepository generic; Triển khai deductStock, findNearestAvailable, assignDriver cho 4 cơ chế khóa</text>
+    <text x="760" y="38" class="week-assign" fill="#fb923c" text-anchor="end">M1, M2, M3 (Checkpoint)</text>
+  </g>
+
+  <!-- Tuần 5 -->
+  <g transform="translate(430, 355)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 5</text>
+    <text x="110" y="30" class="week-title">Tầng Controller Layer &amp; Kiểm Thử Đơn Luồng (Single-thread)</text>
+    <text x="110" y="48" class="week-text">Xây dựng OrderController điều phối đặt hàng -> dispatch tài xế; Pass 100% test case đơn luồng</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">M1, M3, M4</text>
+  </g>
+
+  <!-- Tuần 6 -->
+  <g transform="translate(430, 430)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 6</text>
+    <text x="110" y="30" class="week-title">Tầng View Layer CLI &amp; Embedded WebServer Backend (Port 8080)</text>
+    <text x="110" y="48" class="week-text">Dựng MainView CLI, MapView ASCII grid 2D, SimulatorView 8 cột; Dựng WebServer API REST</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">M5, M1, M2</text>
+  </g>
+
+  <!-- Tuần 7 -->
+  <g transform="translate(430, 505)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 7</text>
+    <text x="110" y="30" class="week-title">Kiểm Thử Độc Lập 4 Cơ Chế Đồng Bộ Hóa</text>
+    <text x="110" y="48" class="week-text">Test độc lập NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK trên 3 file CSV hot spot; Đo Latency</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">M1, M2, M3, M4</text>
+  </g>
+
+  <!-- Tuần 8 (Checkpoint 2) -->
+  <g transform="translate(430, 580)">
+    <rect width="840" height="65" class="card" stroke="#f97316"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box-cp"/>
+    <text x="55" y="36" class="week-num-cp" text-anchor="middle">Tuần 8 ⚠️</text>
+    <text x="110" y="30" class="week-title" fill="#fb923c">CHECKPOINT 2: Simulator Tool (CountDownLatch 1.000 Đơn) &amp; Hậu Kiểm CSV</text>
+    <text x="110" y="48" class="week-text">Lập trình SimulatorController đa luồng; Viết 3 hàm quét hậu kiểm CSV; Render Bảng so sánh 8 cột trên CLI &amp; Web</text>
+    <text x="760" y="38" class="week-assign" fill="#fb923c" text-anchor="end">M4, M2, M3, M5 (Checkpoint)</text>
+  </g>
+
+  <!-- Tuần 9 -->
+  <g transform="translate(430, 655)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 9</text>
+    <text x="110" y="30" class="week-title">Chạy Thực Nghiệm Full &amp; Viết Báo Cáo Nghiên Cứu (Report &amp; Slide)</text>
+    <text x="110" y="48" class="week-text">Chạy 1.000 orders x 4 mechanisms x 3 lần; Viết report.md (15+ trang) giải đáp Big Question &amp; Slide 8 trang</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">M6, M1, M5</text>
+  </g>
+
+  <!-- Tuần 10 -->
+  <g transform="translate(430, 730)">
+    <rect width="840" height="65" class="card"/>
+    <rect x="15" y="12" width="80" height="40" class="week-box"/>
+    <text x="55" y="36" class="week-num" text-anchor="middle">Tuần 10</text>
+    <text x="110" y="30" class="week-title">AI Reflection Logs, Review Toàn Bộ &amp; Đóng Gói ZIP Nộp Bài</text>
+    <text x="110" y="48" class="week-text">Mỗi người viết AI Log cá nhân (≥ 500 từ); Clean Compile từ đầu; Đóng gói NHOM_01_LAB211_FoodDelivery.zip</text>
+    <text x="760" y="38" class="week-assign" text-anchor="end">Cả 6 Thành viên (M1 - M6)</text>
+  </g>
+
+</svg>

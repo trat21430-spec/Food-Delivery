@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Full UML Class Diagram - Food Delivery Simulation (LAB211)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        h1 {
+            color: #38bdf8;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .diagram-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 1400px;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FULL UML CLASS DIAGRAM SPECIFICATION — LAB211</h1>
+        <div class="subtitle">Food Delivery Network Concurrency Simulation | MVC Architecture (FPT University - Nhóm 01)</div>
+    </div>
+
+    <div class="diagram-box">
+        <div class="mermaid">
+classDiagram
+    class BaseEntity {
+        #String id
+        #LocalDateTime createdAt
+        #LocalDateTime updatedAt
+        #long version
+        +BaseEntity()
+        +BaseEntity(String, LocalDateTime, LocalDateTime, long)
+        +getId() String
+        +setId(String) void
+        +getCreatedAt() LocalDateTime
+        +getUpdatedAt() LocalDateTime
+        +getVersion() long
+        +setVersion(long) void
+        +incrementVersion() void
+        +toCsvLine()* String
+        +fromCsvLine(String)* void
+    }
+
+    class Customer {
+        -String name
+        -String phone
+        -String address
+        -double latitude
+        -double longitude
+        +getName() String
+        +getPhone() String
+        +getAddress() String
+        +getLatitude() double
+        +getLongitude() double
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class Restaurant {
+        -String name
+        -String address
+        -double latitude
+        -double longitude
+        -double rating
+        +getName() String
+        +getAddress() String
+        +getLatitude() double
+        +getLongitude() double
+        +getRating() double
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class MenuItem {
+        -String restaurantId
+        -String name
+        -double price
+        -int stockQty
+        +getRestaurantId() String
+        +getName() String
+        +getPrice() double
+        +getStockQty() int
+        +setStockQty(int) void
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class Driver {
+        -String name
+        -String phone
+        -DriverStatus status
+        -double latitude
+        -double longitude
+        -String currentOrderId
+        +getName() String
+        +getStatus() DriverStatus
+        +setStatus(DriverStatus) void
+        +getCurrentOrderId() String
+        +setCurrentOrderId(String) void
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class Order {
+        -String customerId
+        -String restaurantId
+        -String driverId
+        -OrderStatus status
+        -double totalAmount
+        -double deliveryFee
+        +getCustomerId() String
+        +getRestaurantId() String
+        +getDriverId() String
+        +setDriverId(String) void
+        +getStatus() OrderStatus
+        +setStatus(OrderStatus) void
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class OrderItem {
+        -String orderId
+        -String menuItemId
+        -int quantity
+        -double price
+        +getOrderId() String
+        +getMenuItemId() String
+        +getQuantity() int
+        +getPrice() double
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class DeliveryRoute {
+        -String orderId
+        -String driverId
+        -double distanceKm
+        -int estimatedMinutes
+        -String routePathJson
+        +getDistanceKm() double
+        +getEstimatedMinutes() int
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class SimulationRun {
+        -LockMechanism mechanism
+        -int totalOrders
+        -long durationMs
+        -double throughputOpsPerSec
+        -int doubleAssignments
+        -int oversells
+        -int driverOverloads
+        -int totalErrors
+        +getMechanism() LockMechanism
+        +getThroughputOpsPerSec() double
+        +getTotalErrors() int
+        +toCsvLine() String
+        +fromCsvLine(String) void
+    }
+
+    class GeoUtils {
+        -EARTH_RADIUS_KM double = 6371.0
+        +haversineDistance(double, double, double, double)$ double
+    }
+
+    class CsvRepository~T~ {
+        #String filePath
+        #String header
+        -ConcurrentHashMap~String, Object~ keyLocks
+        +CsvRepository(String, String)
+        +findAll() List~T~
+        +findById(String) T
+        +save(T) void
+        +saveAll(List~T~) void
+        +deleteById(String) void
+        +getKeyLock(String) Object
+        +executeWithFileLock(Runnable) void
+        +updateWithOptimisticLock(T, long) void
+    }
+
+    class CustomerRepository {
+        +CustomerRepository()
+    }
+
+    class RestaurantRepository {
+        +RestaurantRepository()
+    }
+
+    class MenuItemRepository {
+        +findByRestaurantId(String) List~MenuItem~
+        +deductStock(String, int, LockMechanism) boolean
+        -deductStockNoLock(String, int) boolean
+        -deductStockSynchronized(String, int) boolean
+        -deductStockOptimistic(String, int) boolean
+        -deductStockFileLock(String, int) boolean
+    }
+
+    class DriverRepository {
+        +findNearestAvailable(double, double) Driver
+        +markBusy(String, String, LockMechanism) boolean
+        -markBusyNoLock(String, String) boolean
+        -markBusySynchronized(String, String) boolean
+        -markBusyOptimistic(String, String) boolean
+        -markBusyFileLock(String, String) boolean
+    }
+
+    class OrderRepository {
+        +assignDriver(String, String, LockMechanism) boolean
+        -assignDriverNoLock(String, String) boolean
+        -assignDriverSynchronized(String, String) boolean
+        -assignDriverOptimistic(String, String) boolean
+        -assignDriverFileLock(String, String) boolean
+    }
+
+    class OrderItemRepository {
+        +findByOrderId(String) List~OrderItem~
+    }
+
+    class DeliveryRouteRepository {
+        +DeliveryRouteRepository()
+    }
+
+    class SimulationRunRepository {
+        +SimulationRunRepository()
+    }
+
+    class OrderController {
+        -OrderRepository orderRepository
+        -MenuItemRepository menuItemRepository
+        -DriverRepository driverRepository
+        -RestaurantRepository restaurantRepository
+        -OrderItemRepository orderItemRepository
+        +placeOrderAndDispatch(String, String, String, int, LockMechanism) Order
+        +getAllOrders() List~Order~
+    }
+
+    class SimulatorController {
+        -OrderRepository orderRepository
+        -MenuItemRepository menuItemRepository
+        -DriverRepository driverRepository
+        -SimulationRunRepository simulationRunRepository
+        +runSimulation(int, LockMechanism) SimulationRun
+        +detectDoubleAssignments() int
+        +detectOversellItems() int
+        +detectDriverOverload() int
+    }
+
+    class MainView {
+        -CustomerController customerController
+        -RestaurantController restaurantController
+        -DriverController driverController
+        -OrderController orderController
+        -SimulatorController simulatorController
+        -MapView mapView
+        -SimulatorView simulatorView
+        +startMenu() void
+    }
+
+    class MapView {
+        -ROWS int = 15
+        -COLS int = 45
+        +renderAsciiMap(List~Customer~, List~Restaurant~, List~Driver~) void
+    }
+
+    class SimulatorView {
+        +renderComparisonTable(List~SimulationRun~) void
+    }
+
+    BaseEntity <|-- Customer
+    BaseEntity <|-- Restaurant
+    BaseEntity <|-- MenuItem
+    BaseEntity <|-- Driver
+    BaseEntity <|-- Order
+    BaseEntity <|-- OrderItem
+    BaseEntity <|-- DeliveryRoute
+    BaseEntity <|-- SimulationRun
+
+    CsvRepository <|-- CustomerRepository
+    CsvRepository <|-- RestaurantRepository
+    CsvRepository <|-- MenuItemRepository
+    CsvRepository <|-- DriverRepository
+    CsvRepository <|-- OrderRepository
+    CsvRepository <|-- OrderItemRepository
+    CsvRepository <|-- DeliveryRouteRepository
+    CsvRepository <|-- SimulationRunRepository
+
+    OrderController --> OrderRepository
+    OrderController --> MenuItemRepository
+    OrderController --> DriverRepository
+    OrderController --> RestaurantRepository
+
+    SimulatorController --> OrderController
+    SimulatorController --> SimulationRunRepository
+
+    MainView --> OrderController
+    MainView --> SimulatorController
+    MainView --> MapView
+    MainView --> SimulatorView
+
+    Restaurant "1" -- "1..*" MenuItem : offers
+    Order "1" -- "1..*" OrderItem : contains
+    Customer "1" -- "0..*" Order : places
+    Driver "1" -- "0..*" Order : delivers
+        </div>
+    </div>
+
+    <div class="footer">
+        Đã xuất thành công từ Hệ thống AI Antigravity Agent cho Dự án LAB211 (Full Class Diagram).
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</body>
+</html>
