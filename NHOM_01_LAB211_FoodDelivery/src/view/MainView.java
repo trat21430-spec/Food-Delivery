@@ -60,56 +60,63 @@ public class MainView implements IView {
                 continue;
             }
             this.printMainMenu();
-            System.out.print("Enter your choice [0-9]: ");
+            System.out.print("Chọn chức năng (Choose an option): ");
             String choice = this.scanner.nextLine().trim();
 
-            switch (choice) {
-                case "1":
-                    this.handlePlaceOrderFlow();
-                    break;
-                case "2":
-                    this.handleCancelOrderFlow();
-                    break;
-                case "3":
-                    this.handleViewOrdersFlow();
-                    break;
-                case "4":
-                    this.handleRestaurantMenuFlow();
-                    break;
-                case "5":
-                    this.handleDriverManagementFlow();
-                    break;
-                case "6":
-                    this.handleDisplayAsciiMap();
-                    break;
-                case "7":
-                    this.handleRunSimulatorBenchmark();
-                    break;
-                case "8":
-                    this.handleDataGeneration();
-                    break;
-                case "9":
-                    System.out.println("Logged out: " + this.currentSession.getDisplayName());
-                    this.currentSession = null;
-                    break;
-                case "0":
-                    System.out.println("Exiting Food Delivery Network Simulation. Goodbye!");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Invalid selection. Please choose an option from 0 to 9.");
+            if (choice.equals("0")) {
+                System.out.println("Đã thoát chương trình (Exiting Food Delivery Network Simulation).");
+                running = false;
+            } else if (this.currentSession.getRole() == AccountRole.CUSTOMER) {
+                switch (choice) {
+                    case "1":
+                        this.handlePlaceOrderFlow();
+                        break;
+                    case "2":
+                        this.handleCancelOrderFlow();
+                        break;
+                    case "3":
+                        this.handleViewOrdersFlow();
+                        break;
+                    case "4":
+                        this.handleRestaurantMenuFlow();
+                        break;
+                    case "5":
+                        this.handleLogout();
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ (Invalid selection).");
+                }
+            } else if (this.currentSession.getRole() == AccountRole.DRIVER) {
+                switch (choice) {
+                    case "1":
+                        this.handleViewOrdersFlow();
+                        break;
+                    case "2":
+                        this.handleDriverManagementFlow();
+                        break;
+                    case "3":
+                        this.handleLogout();
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ (Invalid selection).");
+                }
             }
         }
     }
 
+    private void handleLogout() {
+        System.out.println("Đã đăng xuất (Logged out): " + this.currentSession.getDisplayName());
+        this.currentSession = null;
+    }
+
     private boolean handleAuthenticationMenu() {
         System.out.println("\n==============================================");
-        System.out.println(" FOOD DELIVERY - ACCOUNT");
+        System.out.println(" TÀI KHOẢN (ACCOUNT) - FOOD DELIVERY");
         System.out.println("==============================================");
-        System.out.println("1. Log in");
-        System.out.println("2. Register as Customer or Driver");
-        System.out.println("0. Exit");
-        System.out.print("Choose [0-2]: ");
+        System.out.println("1. Đăng nhập (Log in)");
+        System.out.println("2. Đăng ký Customer hoặc Driver (Register)");
+        System.out.println("0. Thoát (Exit)");
+        System.out.print("Chọn [0-2] (Choose): ");
         String choice = this.scanner.nextLine().trim();
         if (choice.equals("1")) {
             this.handleLogin();
@@ -118,15 +125,15 @@ public class MainView implements IView {
         } else if (choice.equals("0")) {
             return false;
         } else {
-            System.out.println("Invalid selection.");
+            System.out.println("Lựa chọn không hợp lệ (Invalid selection).");
         }
         return true;
     }
 
     private AccountRole readAccountRole() {
-        System.out.println("1. Customer");
-        System.out.println("2. Driver");
-        System.out.print("Choose account type [1-2]: ");
+        System.out.println("1. Khách hàng (Customer)");
+        System.out.println("2. Tài xế (Driver)");
+        System.out.print("Chọn loại tài khoản [1-2] (Choose account type): ");
         String choice = this.scanner.nextLine().trim();
         if (choice.equals("1")) {
             return AccountRole.CUSTOMER;
@@ -134,7 +141,7 @@ public class MainView implements IView {
         if (choice.equals("2")) {
             return AccountRole.DRIVER;
         }
-        System.out.println("Invalid account type.");
+        System.out.println("Loại tài khoản không hợp lệ (Invalid account type).");
         return null;
     }
 
@@ -143,19 +150,19 @@ public class MainView implements IView {
         if (role == null) {
             return;
         }
-        System.out.print("Enter phone number: ");
+        System.out.print("Nhập số điện thoại (Enter phone number): ");
         String phone = this.scanner.nextLine().trim();
-        char[] password = this.readPassword("Enter password: ");
+        char[] password = this.readPassword("Nhập mật khẩu (Enter password): ");
         try {
             this.currentSession = this.authController.login(role, phone, password);
             if (this.currentSession == null) {
-                System.out.println("Login failed. Check account type, phone number, and password.");
+                System.out.println("Đăng nhập thất bại. Kiểm tra loại tài khoản, số điện thoại và mật khẩu (Login failed).");
             } else {
-                System.out.println("Login successful. Welcome, " + this.currentSession.getDisplayName()
+                System.out.println("Đăng nhập thành công. Xin chào (Login successful), " + this.currentSession.getDisplayName()
                         + " (" + this.currentSession.getRole() + ").");
             }
         } catch (IllegalStateException e) {
-            System.out.println("Login could not be completed: " + e.getMessage());
+            System.out.println("Không thể đăng nhập (Login could not be completed): " + e.getMessage());
         } finally {
             java.util.Arrays.fill(password, '\0');
         }
@@ -166,24 +173,24 @@ public class MainView implements IView {
         if (role == null) {
             return;
         }
-        System.out.print("Enter your name: ");
+        System.out.print("Nhập họ tên (Enter your name): ");
         String name = this.scanner.nextLine().trim();
-        System.out.print("Enter your phone: ");
+        System.out.print("Nhập số điện thoại (Enter your phone): ");
         String phone = this.scanner.nextLine().trim();
         String address = "";
         if (role == AccountRole.CUSTOMER) {
-            System.out.print("Enter your address: ");
+            System.out.print("Nhập địa chỉ (Enter your address): ");
             address = this.scanner.nextLine().trim();
         }
-        char[] password = this.readPassword("Create password (at least 8 characters): ");
-        char[] confirmation = this.readPassword("Confirm password: ");
+        char[] password = this.readPassword("Tạo mật khẩu (ít nhất 8 ký tự) (Create password): ");
+        char[] confirmation = this.readPassword("Xác nhận mật khẩu (Confirm password): ");
         try {
             if (!java.util.Arrays.equals(password, confirmation)) {
-                System.out.println("Registration failed: passwords do not match.");
+                System.out.println("Đăng ký thất bại: mật khẩu nhập lại không khớp (Registration failed: passwords do not match).");
                 return;
             }
             if (name.isEmpty() || phone.isEmpty() || (role == AccountRole.CUSTOMER && address.isEmpty())) {
-                System.out.println("Registration failed: required fields cannot be empty.");
+                System.out.println("Đăng ký thất bại: vui lòng nhập đủ thông tin (Registration failed: required fields cannot be empty).");
                 return;
             }
             if (role == AccountRole.CUSTOMER) {
@@ -191,10 +198,10 @@ public class MainView implements IView {
             } else {
                 this.currentSession = this.authController.registerDriver(name, phone, password);
             }
-            System.out.println("Registration successful. Your account ID is " + this.currentSession.getUserId()
-                    + ". Use your phone number and password to log in. You are now logged in.");
+            System.out.println("Đăng ký thành công (Registration successful). ID: " + this.currentSession.getUserId()
+                    + ". Dùng số điện thoại và mật khẩu để đăng nhập. Bạn đã được đăng nhập.");
         } catch (IllegalArgumentException | IllegalStateException e) {
-            System.out.println("Registration failed: " + e.getMessage());
+            System.out.println("Đăng ký thất bại (Registration failed): " + e.getMessage());
         } finally {
             java.util.Arrays.fill(password, '\0');
             java.util.Arrays.fill(confirmation, '\0');
@@ -214,33 +221,35 @@ public class MainView implements IView {
     private void printMainMenu() {
         System.out.println("\n=======================================================");
         System.out.println("   FOOD DELIVERY NETWORK SIMULATION - LAB211 (MVC)    ");
-        System.out.println("   Signed in: " + this.currentSession.getDisplayName() + " ["
+        System.out.println("   Đang đăng nhập (Signed in): " + this.currentSession.getDisplayName() + " ["
                 + this.currentSession.getRole() + "]");
         System.out.println("=======================================================");
-        System.out.println("1. Place Order & Auto-Dispatch Driver");
-        System.out.println("2. Cancel Pending Order");
-        System.out.println("3. View Recent Orders");
-        System.out.println("4. View Restaurant Menu & Update Stock");
-        System.out.println("5. Driver Status Management (Online/Offline)");
-        System.out.println("6. Display Network ASCII Grid Map");
-        System.out.println("7. Run Simulator Benchmark (Compare 4 Lock Mechanisms)");
-        System.out.println("8. Generate Physical CSV Dataset (>= 18,000 Rows)");
-        System.out.println("9. Log out");
-        System.out.println("0. Exit Application");
+        if (this.currentSession.getRole() == AccountRole.CUSTOMER) {
+            System.out.println("1. Đặt món (Place an Order)");
+            System.out.println("2. Hủy đơn đang chờ của tôi (Cancel My Pending Order)");
+            System.out.println("3. Xem đơn hàng của tôi (View My Orders)");
+            System.out.println("4. Xem thực đơn nhà hàng (View Restaurant Menu)");
+            System.out.println("5. Đăng xuất (Log out)");
+        } else if (this.currentSession.getRole() == AccountRole.DRIVER) {
+            System.out.println("1. Xem đơn được giao (View My Assigned Orders)");
+            System.out.println("2. Cập nhật trạng thái tài xế (Manage My Driver Status)");
+            System.out.println("3. Đăng xuất (Log out)");
+        }
+        System.out.println("0. Thoát chương trình (Exit Application)");
         System.out.println("=======================================================");
     }
 
     private void handlePlaceOrderFlow() {
-        System.out.println("\n--- PLACE ORDER & DISPATCH ---");
+        System.out.println("\n--- ĐẶT MÓN & ĐIỀU PHỐI (PLACE ORDER & DISPATCH) ---");
         if (this.currentSession.getRole() != AccountRole.CUSTOMER) {
-            System.out.println("Only a logged-in customer can place an order.");
+            System.out.println("Chỉ khách hàng đã đăng nhập mới được đặt món (Only a logged-in customer can place an order).");
             return;
         }
         Customer cust = this.customerController.getCustomerById(this.currentSession.getUserId());
         List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
 
         if (cust == null || restaurants.isEmpty()) {
-            System.out.println("Data not found! Please run option 8 to generate dataset first.");
+            System.out.println("Không tìm thấy dữ liệu. Vui lòng liên hệ quản trị viên (Data not found).");
             return;
         }
 
@@ -248,12 +257,12 @@ public class MainView implements IView {
         List<MenuItem> menu = this.restaurantController.getMenuByRestaurant(rest.getId());
 
         if (menu.isEmpty()) {
-            System.out.println("No menu items available for restaurant " + rest.getName());
+            System.out.println("Nhà hàng chưa có món ăn (No menu items available): " + rest.getName());
             return;
         }
 
         this.orderView.renderMenu(menu);
-        System.out.println("Select a menu item:");
+        System.out.println("Chọn món ăn (Select a menu item):");
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.get(i);
             System.out.printf("%d. %s (Stock: %d)%n", i + 1, item.getName(), item.getStockQty());
@@ -261,28 +270,28 @@ public class MainView implements IView {
 
         MenuItem chosenItem = null;
         while (chosenItem == null) {
-            System.out.print("Enter item number [1-" + menu.size() + "] (0 to cancel): ");
+            System.out.print("Nhập số món [1-" + menu.size() + "] (0 để hủy) (Enter item number): ");
             String itemChoice = this.scanner.nextLine().trim();
             try {
                 int itemIndex = Integer.parseInt(itemChoice);
                 if (itemIndex == 0) {
-                    System.out.println("Order cancelled.");
+                    System.out.println("Đã hủy thao tác đặt món (Order cancelled).");
                     return;
                 }
                 if (itemIndex >= 1 && itemIndex <= menu.size()) {
                     chosenItem = menu.get(itemIndex - 1);
                 } else {
-                    System.out.println("Invalid item number. Choose a number shown in the menu.");
+                    System.out.println("Số món không hợp lệ (Invalid item number).");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
+                System.out.println("Vui lòng nhập số hợp lệ (Please enter a valid number).");
             }
         }
 
-        System.out.println("Selected Customer: " + cust.getName() + " (" + cust.getId() + ")");
-        System.out.println("Selected Restaurant: " + rest.getName() + " (" + rest.getId() + ")");
-        System.out.println("Selected Item: " + chosenItem.getName() + " [Stock: " + chosenItem.getStockQty() + "]");
-        System.out.print("Enter quantity to order (default 1): ");
+        System.out.println("Khách hàng (Customer): " + cust.getName() + " (" + cust.getId() + ")");
+        System.out.println("Nhà hàng (Restaurant): " + rest.getName() + " (" + rest.getId() + ")");
+        System.out.println("Món đã chọn (Selected Item): " + chosenItem.getName() + " [Tồn kho (Stock): " + chosenItem.getStockQty() + "]");
+        System.out.print("Nhập số lượng (mặc định 1) (Enter quantity): ");
         String qStr = this.scanner.nextLine().trim();
         int qty = 1;
         try {
@@ -294,31 +303,33 @@ public class MainView implements IView {
         try {
             Order order = this.orderController.placeOrderAndDispatch(
                     cust.getId(), rest.getId(), chosenItem.getId(), qty, LockMechanism.SYNCHRONIZED);
-            System.out.println(">>> Order placed successfully! Order ID: " + order.getId() + ", Status: " + order.getStatus() + ", Assigned Driver: " + order.getDriverId());
+            System.out.println(">>> Đặt món thành công (Order placed successfully)! Mã đơn (Order ID): "
+                    + order.getId() + ", Trạng thái (Status): " + order.getStatus()
+                    + ", Tài xế (Driver): " + order.getDriverId());
         } catch (Exception e) {
-            System.out.println(">>> Order processing failed: " + e.getMessage());
+            System.out.println(">>> Đặt món thất bại (Order processing failed): " + e.getMessage());
         }
     }
 
     private void handleCancelOrderFlow() {
         if (this.currentSession.getRole() != AccountRole.CUSTOMER) {
-            System.out.println("Only a customer can cancel an order.");
+            System.out.println("Chức năng này chỉ dành cho khách hàng (Customer only).");
             return;
         }
-        System.out.print("\nEnter Order ID to cancel: ");
+        System.out.print("\nNhập mã đơn cần hủy (Enter Order ID to cancel): ");
         String orderId = this.scanner.nextLine().trim();
         try {
             Order order = this.orderController.getOrderById(orderId);
             if (order == null || !this.currentSession.getUserId().equals(order.getCustomerId())) {
-                System.out.println("Order not found for your account.");
+                System.out.println("Không tìm thấy đơn hàng trong tài khoản của bạn (Order not found).");
                 return;
             }
             boolean success = this.orderController.cancelPendingOrder(orderId);
             if (success) {
-                System.out.println("Order " + orderId + " has been successfully cancelled.");
+                System.out.println("Đã hủy đơn hàng (Order cancelled): " + orderId);
             }
         } catch (Exception e) {
-            System.out.println("Cancel failed: " + e.getMessage());
+            System.out.println("Hủy đơn thất bại (Cancel failed): " + e.getMessage());
         }
     }
 
@@ -340,59 +351,45 @@ public class MainView implements IView {
 
     private void handleRestaurantMenuFlow() {
         if (this.currentSession.getRole() != AccountRole.CUSTOMER) {
-            System.out.println("This menu is available to customer accounts.");
+            System.out.println("Chức năng này chỉ dành cho khách hàng (Customer only).");
             return;
         }
         List<Restaurant> rests = this.restaurantController.getAllRestaurants();
         if (rests.isEmpty()) {
-            System.out.println("No restaurants available.");
+            System.out.println("Hiện chưa có nhà hàng (No restaurants available).");
             return;
         }
         Restaurant r = rests.get(0);
-        System.out.println("\nShowing menu for: " + r.getName() + " (" + r.getAddress() + ")");
+        System.out.println("\nThực đơn nhà hàng (Restaurant menu): " + r.getName() + " (" + r.getAddress() + ")");
         List<MenuItem> items = this.restaurantController.getMenuByRestaurant(r.getId());
         this.orderView.renderMenu(items);
-
-        System.out.print("Do you want to update stock for an item? (y/n): ");
-        String ans = this.scanner.nextLine().trim();
-        if (ans.equalsIgnoreCase("y") && !items.isEmpty()) {
-            MenuItem target = items.get(0);
-            System.out.print("Enter new stock quantity for " + target.getName() + ": ");
-            try {
-                int newStock = Integer.parseInt(this.scanner.nextLine().trim());
-                this.restaurantController.updateStock(target.getId(), newStock);
-                System.out.println("Stock updated to " + newStock);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number.");
-            }
-        }
     }
 
     private void handleDriverManagementFlow() {
         if (this.currentSession.getRole() != AccountRole.DRIVER) {
-            System.out.println("Driver status management requires a driver account.");
+            System.out.println("Chức năng này chỉ dành cho tài xế (Driver account required).");
             return;
         }
         Driver driver = this.driverController.getDriverById(this.currentSession.getUserId());
         if (driver == null) {
-            System.out.println("Driver account not found.");
+            System.out.println("Không tìm thấy tài khoản tài xế (Driver account not found).");
             return;
         }
-        System.out.println("\nYour driver status: " + driver.getStatus()
-                + " | Current order: " + driver.getCurrentOrderId());
+        System.out.println("\nTrạng thái tài xế (Driver status): " + driver.getStatus()
+                + " | Đơn hiện tại (Current order): " + driver.getCurrentOrderId());
         if (driver.getStatus() == DriverStatus.BUSY) {
-            System.out.println("Status cannot be changed while you have an active order.");
+            System.out.println("Không thể đổi trạng thái khi đang có đơn (Cannot change status with an active order).");
             return;
         }
-        System.out.print("Toggle status between AVAILABLE and OFFLINE? (y/n): ");
+        System.out.print("Đổi trạng thái AVAILABLE/OFFLINE? (y/n): ");
         String answer = this.scanner.nextLine().trim();
         if (answer.equalsIgnoreCase("y")) {
             DriverStatus next = driver.getStatus() == DriverStatus.AVAILABLE
                     ? DriverStatus.OFFLINE : DriverStatus.AVAILABLE;
             if (this.driverController.updateDriverStatus(driver.getId(), next)) {
-                System.out.println("Your status is now " + next + ".");
+                System.out.println("Trạng thái hiện tại (Current status): " + next);
             } else {
-                System.out.println("Could not update driver status.");
+                System.out.println("Không thể cập nhật trạng thái tài xế (Could not update status).");
             }
         }
     }

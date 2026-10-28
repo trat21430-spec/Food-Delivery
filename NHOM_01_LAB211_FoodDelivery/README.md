@@ -142,7 +142,9 @@ java -cp "src" Main
 - Ở màn hình tài khoản, chọn `2` để đăng ký Customer hoặc Driver; nhập thông tin và mật khẩu tối thiểu 8 ký tự.
 - Ứng dụng tạo ID hồ sơ, đăng nhập luôn và hiển thị ID nội bộ.
 - Chọn `1` ở màn hình tài khoản để đăng nhập bằng loại tài khoản, số điện thoại và mật khẩu.
-- Chọn `9` trong menu chính để đăng xuất. Đơn hàng chỉ có thể được tạo bởi Customer đã đăng nhập; Driver có thể cập nhật trạng thái hồ sơ của mình.
+- Customer chỉ thấy chức năng đặt món, hủy đơn đang chờ của mình, xem đơn của mình và xem menu. Xem menu không cho sửa tồn kho.
+- Driver chỉ thấy chức năng xem đơn được gán cho mình và cập nhật trạng thái tài xế của chính mình.
+- Customer chọn `5` để đăng xuất; Driver chọn `3`. `0` thoát ứng dụng. Các chức năng benchmark/bản đồ/tạo dữ liệu chưa có menu Admin trong phiên bản này.
 - Tài khoản được lưu riêng trong `data/accounts.csv`; mật khẩu lưu dưới dạng PBKDF2 hash kèm salt, không lưu mật khẩu rõ. Hồ sơ Customer/Driver vẫn nằm trong các CSV tương ứng.
 
 ---
