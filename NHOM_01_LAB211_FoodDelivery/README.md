@@ -142,6 +142,7 @@ java -cp "src" Main
 - Ở màn hình tài khoản, chọn `2` để đăng ký Customer hoặc Driver; nhập thông tin và mật khẩu tối thiểu 8 ký tự.
 - Ứng dụng tạo ID hồ sơ, đăng nhập luôn và hiển thị ID nội bộ.
 - Chọn `1` ở màn hình tài khoản để đăng nhập bằng loại tài khoản, số điện thoại và mật khẩu.
+- Số điện thoại chấp nhận số Việt Nam 10 chữ số bắt đầu bằng `0` hoặc số quốc tế dạng `+` kèm mã quốc gia (8–15 chữ số); có thể nhập khoảng trắng, dấu gạch hoặc ngoặc để dễ đọc.
 - Customer chỉ thấy chức năng đặt món, hủy đơn đang chờ của mình, xem đơn của mình và xem menu. Xem menu không cho sửa tồn kho.
 - Driver chỉ thấy chức năng xem đơn được gán cho mình và cập nhật trạng thái tài xế của chính mình.
 - Customer chọn `5` để đăng xuất; Driver chọn `3`. `0` thoát ứng dụng. Các chức năng benchmark/bản đồ/tạo dữ liệu chưa có menu Admin trong phiên bản này.
