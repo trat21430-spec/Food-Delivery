@@ -1,0 +1,60 @@
+HUONG DAN QUAY VIDEO - CODE MVC THEO CLASS DIAGRAM
+Nhom Food Delivery Network Simulation - LAB211
+
+==================================================
+PHAN 1 (2-3 phut): TIM HIEU MVC
+==================================================
+
+1) MVC la gi?
+- Model: du lieu + nghiep vu + CSV (entity, repository, GeoUtils, exception)
+- View: hien thi + nhap lieu (MainView, OrderView, MapView, SimulatorView, ReportView)
+- Controller: dieu phoi, khong ghi CSV truc tiep, khong tinh Haversine
+
+Luong goi:
+  Nguoi dung -> View.readUserInput()
+            -> Controller.method()
+            -> Repository.save/find/dispatch
+            -> CSV file
+            -> Controller tra ket qua
+            -> View in man hinh
+
+2) Tai sao dung MVC cho de tai nay?
+- De chia viec nhom (View / Controller / Repository)
+- Rubric tru diem neu dispatch nam o View/Controller
+- De test Simulator khong phu thuoc giao dien
+
+3) Uu diem
+- Tach UI va logic
+- Doi console -> ASCII map khong pha Repository
+- Dung Class Diagram de chia class
+
+4) Nhuoc diem (overhead)
+- Nhieu class/package hon code 1 file
+- 1 thao tac dat hang phai di qua 3 tang: View -> OrderController -> OrderRepository
+- Boilerplate (getter/CSV) nhieu hon
+- Nguoi moi de dat nham logic vao Controller
+
+==================================================
+PHAN 2 (4-6 phut): CODE TRUC TIEP KHOP CLASS DIAGRAM
+==================================================
+
+Mo thu muc src/ va chi:
+  src/model        <- BaseEntity, Customer, Restaurant, MenuItem, Driver, Order...
+  src/view         <- MainView.displayMainMenu / readUserInput
+  src/controller   <- CustomerController.register, OrderController.dispatchDriver
+  src/repository   <- CsvRepository<T>, findNearestAvailable, assignDriverWithSync
+  src/exception    <- Oversell / DoubleAssignment / DriverOverload
+
+Chi dung ClassDiagram.drawio:
+- DriverController.getNearestDriver() CHI GOI DriverRepository.findNearestAvailable()
+- OrderController.dispatchDriver() CHI GOI OrderRepository.dispatchNearestDriver()
+- Haversine nam o GeoUtils, duoc Repository dung
+
+Demo chay:
+  1. compile-and-run.bat
+  2. Menu 2: dat Com tam suon (M001) tu R001, customer C001
+  3. Menu 3: dispatch SYNCHRONIZED
+  4. Menu 4: ASCII map
+  5. Menu 7: simulator 5 threads cung 1 don -> chi 1 thread gan duoc tai xe
+
+Ket thuc: mo 1 file View va 1 file Repository de nhan manh View khong doc/ghi CSV.

@@ -1,0 +1,4 @@
+id,name,locationX,locationY,status,version,currentOrderId
+D001,Driver An,21.026,105.832,AVAILABLE,1,
+D002,Driver Binh,21.04,105.86,AVAILABLE,1,
+D003,Driver Cuong,21.01,105.81,OFFLINE,1,

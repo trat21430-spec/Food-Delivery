@@ -1,8 +1,14 @@
 package controller;
 
+<<<<<<< HEAD
 import model.LockMechanism;
 import exception.DoubleAssignmentException;
 import exception.DriverOverloadException;
+=======
+import exception.DoubleAssignmentException;
+import exception.DriverOverloadException;
+import model.LockMechanism;
+>>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,7 +40,11 @@ public class DispatchThread extends Thread {
     @Override
     public void run() {
         try {
+<<<<<<< HEAD
             this.startLatch.await(); // True concurrency barrier
+=======
+            this.startLatch.await();
+>>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
             this.orderController.dispatchPending(this.orderId, this.mechanism);
         } catch (DoubleAssignmentException e) {
             this.doubleAssignmentErrors.incrementAndGet();

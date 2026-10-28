@@ -2,6 +2,11 @@ package controller;
 
 import model.Order;
 import model.OrderStatus;
+<<<<<<< HEAD
+=======
+import model.MenuItem;
+import model.OrderItem;
+>>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
 import model.LockMechanism;
 import repository.OrderRepository;
 import repository.MenuItemRepository;
@@ -67,6 +72,23 @@ public class OrderController {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * READ OrderItems for a specific order.
+     */
+    public List<OrderItem> getOrderItemsByOrderId(String orderId) {
+        return this.orderItemRepository.findByOrderId(orderId);
+    }
+
+    /**
+     * READ MenuItem by ID.
+     */
+    public MenuItem getMenuItemById(String menuItemId) {
+        return this.menuItemRepository.findById(menuItemId);
+    }
+
+    /**
+>>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
      * UPDATE Order: Dispatches a pending order by delegating to the repository layer.
      */
     public boolean dispatchPending(String orderId, LockMechanism mechanism) throws Exception {
