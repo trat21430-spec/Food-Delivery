@@ -14,6 +14,10 @@ import java.util.List;
 public class SystemVerificationTest {
 
     public static void main(String[] args) {
+        try {
+            System.setOut(new java.io.PrintStream(System.out, true, "UTF-8"));
+            System.setErr(new java.io.PrintStream(System.err, true, "UTF-8"));
+        } catch (Exception ignored) {}
         System.out.println("=================================================================");
         System.out.println("  LAB211 FOOD DELIVERY SIMULATION - AUTOMATED SYSTEM TEST RUNNER ");
         System.out.println("=================================================================");

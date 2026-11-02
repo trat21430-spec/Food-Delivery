@@ -18,6 +18,11 @@ import java.util.List;
 
 public class CustomerNotificationFlowTest {
     public static void main(String[] args) {
+        try {
+            System.setOut(new java.io.PrintStream(System.out, true, "UTF-8"));
+            System.setErr(new java.io.PrintStream(System.err, true, "UTF-8"));
+        } catch (Exception ignored) {}
+
         System.out.println("==========================================================================");
         System.out.println("   KIEM TRA LUONG THONG BAO TAI XE VA TINH THOI GIAN GIAO TP. QUY NHON   ");
         System.out.println("==========================================================================");

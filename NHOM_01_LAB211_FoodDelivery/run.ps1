@@ -1,5 +1,7 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::InputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
+& "cmd.exe" /c "chcp 65001 > nul"
 
 Write-Host "[INFO] Dang bien dich Food Delivery Network Simulation..." -ForegroundColor Cyan
 if (-not (Test-Path "bin")) { New-Item -ItemType Directory -Path "bin" | Out-Null }
