@@ -5,11 +5,11 @@ import model.DeliveryRoute;
 public class DeliveryRouteRepository extends CsvRepository<DeliveryRoute> {
 
     public DeliveryRouteRepository() {
-        super("data/delivery_routes.csv", "id,orderId,driverId,distanceKm,estimatedMinutes,routePathJson,createdAt,updatedAt,version");
+        super("data/delivery_routes.csv", "id,orderId,driverId,pickupDistanceKm,deliveryDistanceKm,estimatedMinutes");
     }
 
-    public DeliveryRouteRepository(String customFilePath) {
-        super(customFilePath, "id,orderId,driverId,distanceKm,estimatedMinutes,routePathJson,createdAt,updatedAt,version");
+    public DeliveryRouteRepository(String filePath) {
+        super(filePath, "id,orderId,driverId,pickupDistanceKm,deliveryDistanceKm,estimatedMinutes");
     }
 
     @Override

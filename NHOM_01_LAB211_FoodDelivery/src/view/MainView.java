@@ -5,32 +5,26 @@ import controller.RestaurantController;
 import controller.DriverController;
 import controller.OrderController;
 import controller.SimulatorController;
+import controller.AuthController;
+import controller.AdminController;
+import controller.MainController;
 import model.Customer;
 import model.Restaurant;
 import model.MenuItem;
 import model.Driver;
 import model.DriverStatus;
+import model.DriverApplication;
 import model.Order;
-<<<<<<< HEAD
-import model.LockMechanism;
-import model.SimulationRun;
-import util.DataGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
-=======
-import model.OrderItem;
 import model.OrderStatus;
+import model.User;
+import model.UserRole;
 import model.LockMechanism;
 import model.SimulationRun;
 import model.GeoUtils;
 import util.DataGenerator;
-import util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
 import java.util.Scanner;
 
 public class MainView implements IView {
@@ -39,15 +33,41 @@ public class MainView implements IView {
     private DriverController driverController;
     private OrderController orderController;
     private SimulatorController simulatorController;
+    private AuthController authController;
+    private AdminController adminController;
     private MapView mapView;
     private SimulatorView simulatorView;
     private OrderView orderView;
     private ReportView reportView;
     private Scanner scanner;
-<<<<<<< HEAD
-=======
-    private TextUtil textUtil;
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
+    private MainController mainController;
+
+    private String readLine() {
+        if (this.scanner != null && this.scanner.hasNextLine()) {
+            return this.scanner.nextLine().trim();
+        }
+        return "0";
+    }
+
+    public MainView(MainController mainController) {
+        this.mainController = mainController;
+        this.customerController = mainController.getCustomerController();
+        this.restaurantController = mainController.getRestaurantController();
+        this.driverController = mainController.getDriverController();
+        this.orderController = mainController.getOrderController();
+        this.simulatorController = mainController.getSimulatorController();
+        this.authController = mainController.getAuthController();
+        this.adminController = mainController.getAdminController();
+        this.mapView = mainController.getMapView();
+        this.simulatorView = mainController.getSimulatorView();
+        this.orderView = mainController.getOrderView();
+        this.reportView = mainController.getReportView();
+        try {
+            this.scanner = new Scanner(System.in, "UTF-8");
+        } catch (Exception e) {
+            this.scanner = new Scanner(System.in);
+        }
+    }
 
     public MainView() {
         this.customerController = new CustomerController();
@@ -55,574 +75,1268 @@ public class MainView implements IView {
         this.driverController = new DriverController();
         this.orderController = new OrderController();
         this.simulatorController = new SimulatorController();
+        this.authController = new AuthController();
+        this.adminController = new AdminController();
         this.mapView = new MapView();
         this.simulatorView = new SimulatorView();
         this.orderView = new OrderView();
         this.reportView = new ReportView();
-        this.scanner = new Scanner(System.in);
-<<<<<<< HEAD
-=======
-        this.textUtil = new TextUtil();
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
+        try {
+            this.scanner = new Scanner(System.in, "UTF-8");
+        } catch (Exception e) {
+            this.scanner = new Scanner(System.in);
+        }
     }
 
     @Override
     public void display() {
-        boolean running = true;
-        while (running) {
-            this.printMainMenu();
-<<<<<<< HEAD
-            System.out.print("Enter your choice [0-9]: ");
-=======
-            System.out.print("Enter your choice [0-10]: ");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-            String choice = this.scanner.nextLine().trim();
+        boolean appRunning = true;
+        while (appRunning) {
+            if (!this.authController.isLoggedIn()) {
+                boolean loggedIn = this.displayLoginScreen();
+                if (!loggedIn) {
+                    System.out.println("\nExiting Food Delivery Network Simulation. Goodbye!");
+                    appRunning = false;
+                    break;
+                }
+            }
 
-            switch (choice) {
-                case "1":
-                    this.handlePlaceOrderFlow();
-                    break;
-                case "2":
-                    this.handleCancelOrderFlow();
-                    break;
-                case "3":
-                    this.handleViewOrdersFlow();
-                    break;
-                case "4":
-                    this.handleRestaurantMenuFlow();
-                    break;
-                case "5":
-                    this.handleDriverManagementFlow();
-                    break;
-                case "6":
-                    this.handleDisplayAsciiMap();
-                    break;
-                case "7":
-                    this.handleRunSimulatorBenchmark();
-                    break;
-                case "8":
-                    this.handleDataGeneration();
-                    break;
-                case "9":
-                    this.handleCrudSubMenu();
-                    break;
-<<<<<<< HEAD
-=======
-                case "10":
-                    this.handleSystemReportsFlow();
-                    break;
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-                case "0":
-                    System.out.println("Exiting Food Delivery Network Simulation. Goodbye!");
-                    running = false;
-                    break;
-                default:
-<<<<<<< HEAD
-                    System.out.println("Invalid selection. Please choose an option from 0 to 9.");
-=======
-                    System.out.println("Invalid selection. Please choose an option from 0 to 10.");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
+            User currentUser = this.authController.getCurrentUser();
+            this.handleRoleMenu(currentUser);
+        }
+    }
+
+    // =========================================================================
+    // 1. UNAUTHENTICATED SCREEN (Section 4.1)
+    // =========================================================================
+
+    private boolean displayLoginScreen() {
+        while (true) {
+            System.out.println("\n==========================================================================");
+            System.out.println("     FOOD DELIVERY NETWORK SIMULATION - HE THONG DANG NHAP / DANG KY      ");
+            System.out.println("==========================================================================");
+            System.out.println("1. Dang nhap (Login)");
+            System.out.println("2. Dang ky tai khoan Khach hang (Register Customer Account)");
+            System.out.println("3. Gui ho so dang ky lam Tai xe (Register as Driver - Cho Admin duyet)");
+            System.out.println("4. Xem danh sach tai khoan mau (Demo Sample Accounts)");
+            System.out.println("0. Thoat ung dung (Exit)");
+            System.out.println("==========================================================================");
+            System.out.print("Vui long chon chuc nang [0-4]: ");
+            String opt = this.readLine();
+
+            if (opt.equals("1")) {
+                boolean loggedIn = this.handleLoginFlow();
+                if (loggedIn) {
+                    return true;
+                }
+            } else if (opt.equals("2")) {
+                this.handleCustomerRegistrationFlow();
+            } else if (opt.equals("3")) {
+                this.handleDriverApplicationSubmissionFlow();
+            } else if (opt.equals("4")) {
+                this.handleDisplaySampleAccounts();
+            } else if (opt.equals("0") || opt.equalsIgnoreCase("exit")) {
+                return false;
+            } else {
+                System.out.println("Lua chon khong hop le. Vui long chon tu 0 den 4.");
             }
         }
     }
 
-    private void printMainMenu() {
+    private boolean handleLoginFlow() {
+        System.out.println("\n--- DANG NHAP HE THONG ---");
+        System.out.print("Nhap Ten dang nhap (Username hoac So dien thoai): ");
+        String username = this.readLine();
+        if (username.isEmpty()) {
+            System.out.println("Ten dang nhap khong duoc de trong.");
+            return false;
+        }
+
+        System.out.print("Nhap Mat khau (Password): ");
+        String password = this.readLine();
+
+        boolean authenticated = this.authController.login(username, password);
+        if (authenticated) {
+            User user = this.authController.getCurrentUser();
+            System.out.println("\n>>> [DANG NHAP THANH CONG] Xin chao, " + user.getDisplayName() + " [" + user.getRole().name() + "]!");
+            return true;
+        } else {
+            System.out.println("\n>>> [DANG NHAP THAT BAI] Sai ten dang nhap hoac mat khau! Vui long thu lai.");
+            return false;
+        }
+    }
+
+    private void handleCustomerRegistrationFlow() {
+        System.out.println("\n--------------------------------------------------------------------------");
+        System.out.println("                  DANG KY TAI KHOAN KHACH HANG MOI                        ");
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.print("Nhap Ten dang nhap (Username): ");
+        String username = this.readLine();
+        System.out.print("Nhap Mat khau (Password): ");
+        String password = this.readLine();
+        System.out.print("Nhap Ho va ten khach hang: ");
+        String name = this.readLine();
+        System.out.print("Nhap So dien thoai: ");
+        String phone = this.readLine();
+        System.out.print("Nhap Dia chi nhan hang (TP. Quy Nhon): ");
+        String address = this.readLine();
+
+        try {
+            User newUser = this.authController.registerCustomer(username, password, name, phone, address, 13.775, 109.225);
+            System.out.println("\n>>> [DANG KY THANH CONG] Chuc mung khach hang " + newUser.getDisplayName() + "!");
+            System.out.println(">>> Ma khach hang: " + newUser.getLinkedEntityId() + " | Ten dang nhap: " + newUser.getUsername());
+            System.out.println(">>> Ban da duoc tu dong dang nhap vao he thong.");
+        } catch (Exception e) {
+            System.out.println("\n>>> [THONG BAO] " + e.getMessage());
+        }
+    }
+
+    private void handleDriverApplicationSubmissionFlow() {
+        System.out.println("\n--------------------------------------------------------------------------");
+        System.out.println("               GUI HO SO DANG KY LAM TAI XE DOI TAC                       ");
+        System.out.println("   (Ho so se duoc luu o trang thai PENDING cho Admin phe duyet)           ");
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.print("Nhap Ten dang nhap mong muon (Username): ");
+        String username = this.readLine();
+        System.out.print("Nhap Mat khau (Password): ");
+        String password = this.readLine();
+        System.out.print("Nhap Ho va ten day du: ");
+        String fullName = this.readLine();
+        System.out.print("Nhap So dien thoai lien he: ");
+        String phone = this.readLine();
+        System.out.print("Nhap Bien so xe (VD: 77-L1 888.88): ");
+        String plate = this.readLine();
+        System.out.print("Nhap Loai phuong tien (Xe may / Xe dien / Xe ban tai): ");
+        String vehicleType = this.readLine();
+
+        try {
+            DriverApplication app = this.authController.submitDriverApplication(username, password, fullName, phone, plate, vehicleType);
+            System.out.println("\n>>> [GUI HO SO THANH CONG] Ma ho so: " + app.getId() + " | Trang thai: PENDING");
+            System.out.println(">>> Ho so cua ban da duoc chuyen den Ban Quan Tri (ADMIN).");
+            System.out.println(">>> Sau khi Admin phe duyet, ban co the dang nhap bang tai khoan nay voi vai tro DRIVER.");
+        } catch (Exception e) {
+            System.out.println("\n>>> [THONG BAO] " + e.getMessage());
+        }
+    }
+
+    private void handleDisplaySampleAccounts() {
+        System.out.println("\n==========================================================================");
+        System.out.println("| SAMPLE ACCOUNTS FOR QUICK EVALUATION / DEMONSTRATION                   |");
+        System.out.println("+---------------+---------------+---------------+------------------------+");
+        System.out.println("| Username      | Password      | Role          | Description            |");
+        System.out.println("+---------------+---------------+---------------+------------------------+");
+        System.out.println("| admin         | admin123      | ADMIN         | Full System Access     |");
+        System.out.println("| dispatcher    | disp123       | DISPATCHER    | Dispatcher Center      |");
+        System.out.println("| customer1     | 123           | CUSTOMER      | Customer (Nguyen An)   |");
+        System.out.println("| restaurant1   | 123           | RESTAURANT    | Restaurant Manager     |");
+        System.out.println("| driver1       | 123           | DRIVER        | Driver (Tai Xe Nam)    |");
+        System.out.println("+---------------+---------------+---------------+------------------------+");
+    }
+
+    // =========================================================================
+    // 2. ROLE-BASED ROUTING
+    // =========================================================================
+
+    private void handleRoleMenu(User user) {
+        if (user.getRole() == UserRole.ADMIN || user.getRole() == UserRole.SYSTEM_ADMIN || user.getRole() == UserRole.USER_ADMIN) {
+            this.handleAdminMenu(user);
+        } else if (user.getRole() == UserRole.DISPATCHER) {
+            this.handleDispatcherMenu(user);
+        } else if (user.getRole() == UserRole.CUSTOMER) {
+            this.handleCustomerMenu(user);
+        } else if (user.getRole() == UserRole.RESTAURANT || user.getRole() == UserRole.RESTAURANT_ADMIN) {
+            this.handleRestaurantMenu(user);
+        } else if (user.getRole() == UserRole.DRIVER) {
+            this.handleDriverMenu(user);
+        }
+    }
+
+    // =========================================================================
+    // 3. CUSTOMER PORTAL (Section 3.1 - STRICTLY REALISTIC, NO DRIVER UPGRADE!)
+    // =========================================================================
+
+    private void handleCustomerMenu(User user) {
+        this.checkAndDisplayCustomerNotifications(user.getLinkedEntityId());
+
         System.out.println("\n=======================================================");
-        System.out.println("   FOOD DELIVERY NETWORK SIMULATION - LAB211 (MVC)    ");
+        System.out.println("   FOOD DELIVERY SIMULATION - [CUSTOMER PORTAL]        ");
+        System.out.println("   Khach hang: " + user.getDisplayName() + " (Ma: " + user.getLinkedEntityId() + ")");
+        System.out.println("   Khu vuc hoat dong: TP. Quy Nhon - Binh Dinh         ");
         System.out.println("=======================================================");
-<<<<<<< HEAD
-        System.out.println("1. Place Order & Auto-Dispatch Driver");
-        System.out.println("2. Cancel Pending Order");
-        System.out.println("3. View Recent Orders");
-        System.out.println("4. View Restaurant Menu & Update Stock");
-        System.out.println("5. Driver Status Management (Online/Offline)");
-        System.out.println("6. Display Network ASCII Grid Map");
-        System.out.println("7. Run Simulator Benchmark (Compare 4 Lock Mechanisms)");
-        System.out.println("8. Generate Physical CSV Dataset (>= 18,000 Rows)");
-        System.out.println("9. Full CRUD Management (Restaurant, MenuItem, Driver, Order)");
-        System.out.println("0. Exit Application");
-=======
-        System.out.println(" 1. Place Order & Auto-Dispatch Driver");
-        System.out.println(" 2. Cancel Pending Order");
-        System.out.println(" 3. View Recent Orders & Order Receipts");
-        System.out.println(" 4. View Restaurant Menu & Update Stock");
-        System.out.println(" 5. Driver Fleet Status & Management (Online/Offline)");
-        System.out.println(" 6. Display Network ASCII Grid Map & Delivery Routes");
-        System.out.println(" 7. Run Simulator Benchmark (Compare 4 Lock Mechanisms)");
-        System.out.println(" 8. Generate Physical CSV Dataset (>= 18,000 Rows)");
-        System.out.println(" 9. Full CRUD Management (Restaurant, MenuItem, Driver, Order)");
-        System.out.println("10. System Reports & Research Analytics");
-        System.out.println(" 0. Exit Application");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
+        System.out.println("1. Xem danh sach Nha hang & Thuc don (Browse Restaurants & Menus)");
+        System.out.println("2. Dat mon an (Place Order)");
+        System.out.println("3. Theo doi & Xem don hang cua toi (Track & View My Orders)");
+        System.out.println("4. Huy don hang dang cho (Cancel Pending Order)");
+        System.out.println("5. Thong tin tai khoan cua toi (View Profile)");
+        System.out.println("6. Kiem tra hop thu thong bao tai xe (Check Driver Notifications)");
+        System.out.println("0. Dang xuat (Logout)");
         System.out.println("=======================================================");
-    }
+        System.out.print("Nhap lua chon cua ban [0-6]: ");
+        String choice = this.readLine();
 
-    private void handlePlaceOrderFlow() {
-<<<<<<< HEAD
-        System.out.println("\n--- PLACE ORDER & DISPATCH ---");
-=======
-        System.out.println("\n-------------------------------------------------------");
-        System.out.println("       PLACE ORDER & CONCURRENT DISPATCH FLOW          ");
-        System.out.println("-------------------------------------------------------");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-        List<Customer> customers = this.customerController.getAllCustomers();
-        List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
-
-        if (customers.isEmpty() || restaurants.isEmpty()) {
-<<<<<<< HEAD
-            System.out.println("Data not found! Please run option 8 to generate dataset first.");
-            return;
-        }
-
-        Customer cust = customers.get(0);
-        Restaurant rest = restaurants.get(0);
-        List<MenuItem> menu = this.restaurantController.getMenuByRestaurant(rest.getId());
-
-=======
-            System.out.println("Dataset missing! Please run option 8 to generate CSV data first.");
-            return;
-        }
-
-        // Customer selection
-        Customer cust = customers.get(0);
-        System.out.printf(Locale.US, "Default Customer: %s (%s) - %s%n", cust.getName(), cust.getId(), cust.getAddress());
-        System.out.print("Enter Customer ID to use (press Enter for default [" + cust.getId() + "]): ");
-        String custInput = this.scanner.nextLine().trim();
-        if (!custInput.isEmpty()) {
-            Customer customCust = this.customerController.getCustomerById(custInput);
-            if (customCust != null) {
-                cust = customCust;
-            } else {
-                System.out.println("Customer [" + custInput + "] not found. Using default [" + cust.getId() + "].");
-            }
-        }
-
-        // Restaurant selection
-        Restaurant rest = restaurants.get(0);
-        System.out.printf(Locale.US, "Default Restaurant: %s (%s) - Rating: %.1f%n", rest.getName(), rest.getId(), rest.getRating());
-        System.out.print("Enter Restaurant ID to use (press Enter for default [" + rest.getId() + "]): ");
-        String restInput = this.scanner.nextLine().trim();
-        if (!restInput.isEmpty()) {
-            Restaurant customRest = this.restaurantController.getRestaurantById(restInput);
-            if (customRest != null) {
-                rest = customRest;
-            } else {
-                System.out.println("Restaurant [" + restInput + "] not found. Using default [" + rest.getId() + "].");
-            }
-        }
-
-        // Menu selection
-        List<MenuItem> menu = this.restaurantController.getMenuByRestaurant(rest.getId());
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-        if (menu.isEmpty()) {
-            System.out.println("No menu items available for restaurant " + rest.getName());
-            return;
-        }
-
-<<<<<<< HEAD
-        this.orderView.renderMenu(menu);
-        MenuItem chosenItem = menu.get(0);
-
-        System.out.println("Selected Customer: " + cust.getName() + " (" + cust.getId() + ")");
-        System.out.println("Selected Restaurant: " + rest.getName() + " (" + rest.getId() + ")");
-        System.out.println("Selected Item: " + chosenItem.getName() + " [Stock: " + chosenItem.getStockQty() + "]");
-=======
-        System.out.println("\nMenu for " + rest.getName() + ":");
-        this.orderView.renderMenu(menu);
-        System.out.println("Select a menu item:");
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.get(i);
-            System.out.printf("%d. [%s] %s (Price: $%.2f, Stock: %d)%n", i + 1, item.getId(), item.getName(), item.getPrice(), item.getStockQty());
-        }
-
-        MenuItem chosenItem = menu.get(0);
-        System.out.print("Enter item number [1-" + menu.size() + "] or Item ID (press Enter for first [" + chosenItem.getId() + "], 0 to cancel): ");
-        String itemChoice = this.scanner.nextLine().trim();
-        if (itemChoice.equals("0")) {
-            System.out.println("Order cancelled.");
-            return;
-        } else if (!itemChoice.isEmpty()) {
-            try {
-                int itemIndex = Integer.parseInt(itemChoice);
-                if (itemIndex >= 1 && itemIndex <= menu.size()) {
-                    chosenItem = menu.get(itemIndex - 1);
-                } else {
-                    System.out.println("Invalid number. Using default item [" + chosenItem.getId() + "].");
-                }
-            } catch (NumberFormatException e) {
-                MenuItem customItem = this.restaurantController.getMenuItemById(itemChoice);
-                if (customItem != null) {
-                    chosenItem = customItem;
-                } else {
-                    System.out.println("Item [" + itemChoice + "] not found in catalog. Using [" + chosenItem.getId() + "].");
-                }
-            }
-        }
-
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-        System.out.print("Enter quantity to order (default 1): ");
-        String qStr = this.scanner.nextLine().trim();
-        int qty = 1;
-        try {
-            if (!qStr.isEmpty()) {
-<<<<<<< HEAD
-                qty = Integer.parseInt(qStr);
-            }
-        } catch (NumberFormatException ignored) {}
-
-        System.out.println("Select Synchronization Mechanism:");
-        System.out.println("1. NO_LOCK (Baseline, Race condition prone)");
-        System.out.println("2. SYNCHRONIZED (Fine-grained resource locks)");
-=======
-                qty = Math.max(1, Integer.parseInt(qStr));
-            }
-        } catch (NumberFormatException ignored) {}
-
-        System.out.println("\nSelect Synchronization Mechanism:");
-        System.out.println("1. NO_LOCK (Baseline, Race condition prone)");
-        System.out.println("2. SYNCHRONIZED (Fine-grained resource locks - Default)");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-        System.out.println("3. OPTIMISTIC (Version-based validation)");
-        System.out.println("4. FILE_LOCK (FileChannel physical locks)");
-        System.out.print("Choice [1-4]: ");
-        String mChoice = this.scanner.nextLine().trim();
-        LockMechanism mech = LockMechanism.SYNCHRONIZED;
-        if (mChoice.equals("1")) mech = LockMechanism.NO_LOCK;
-        else if (mChoice.equals("3")) mech = LockMechanism.OPTIMISTIC;
-        else if (mChoice.equals("4")) mech = LockMechanism.FILE_LOCK;
-
-        try {
-            Order order = this.orderController.placeOrderAndDispatch(cust.getId(), rest.getId(), chosenItem.getId(), qty, mech);
-<<<<<<< HEAD
-            System.out.println(">>> Order placed successfully! Order ID: " + order.getId() + ", Status: " + order.getStatus() + ", Assigned Driver: " + order.getDriverId());
-=======
-            System.out.println("\n>>> ORDER PLACED SUCCESSFULLY! Status: " + order.getStatus() + ", Driver: " + order.getDriverId());
-
-            List<OrderItem> orderItems = this.orderController.getOrderItemsByOrderId(order.getId());
-            this.orderView.renderOrderDetail(order, orderItems);
-
-            if (order.getDriverId() != null && !order.getDriverId().isEmpty()) {
-                Driver driver = this.driverController.getDriverById(order.getDriverId());
-                if (driver != null) {
-                    System.out.print("Would you like to visualize this delivery route on the ASCII map? (y/n): ");
-                    String visAns = this.scanner.nextLine().trim();
-                    if (visAns.equalsIgnoreCase("y")) {
-                        this.mapView.renderDeliveryRoute(rest, cust, driver);
-                    }
-                }
-            }
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-        } catch (Exception e) {
-            System.out.println(">>> Order processing failed: " + e.getMessage());
+        switch (choice) {
+            case "1":
+                this.handleCustomerBrowseRestaurants();
+                break;
+            case "2":
+                this.handleCustomerPlaceOrderFlow(user.getLinkedEntityId());
+                break;
+            case "3":
+                this.handleViewMyOrdersFlow(user.getLinkedEntityId());
+                break;
+            case "4":
+                this.handleCustomerCancelOrderFlow(user.getLinkedEntityId());
+                break;
+            case "5":
+                this.handleCustomerProfileFlow(user);
+                break;
+            case "6":
+                this.checkAndDisplayCustomerNotifications(user.getLinkedEntityId());
+                break;
+            case "0":
+                this.authController.logout();
+                System.out.println("\n>>> [LOGGED OUT] Da dang xuat thanh cong. Tro ve man hinh dang nhap...");
+                break;
+            default:
+                System.out.println("Lua chon khong hop le. Vui long chon tu 0 den 6.");
         }
     }
 
-    private void handleCancelOrderFlow() {
-<<<<<<< HEAD
-        System.out.print("\nEnter Order ID to cancel: ");
-        String orderId = this.scanner.nextLine().trim();
-        try {
-            boolean success = this.orderController.cancelPendingOrder(orderId);
-            if (success) {
-                System.out.println("Order " + orderId + " has been successfully cancelled.");
-            }
-        } catch (Exception e) {
-            System.out.println("Cancel failed: " + e.getMessage());
-=======
-        System.out.println("\n-------------------------------------------------------");
-        System.out.println("                CANCEL PENDING ORDER                   ");
-        System.out.println("-------------------------------------------------------");
+    private void checkAndDisplayCustomerNotifications(String customerId) {
+        if (customerId == null || customerId.trim().isEmpty()) {
+            return;
+        }
+        List<Order> orders = this.orderController.getOrdersByCustomer(customerId);
+        if (orders == null || orders.isEmpty()) {
+            return;
+        }
 
-        List<Order> allOrders = this.orderController.getAllOrders();
+        List<Order> activeOrders = new ArrayList<>();
         List<Order> pendingOrders = new ArrayList<>();
-        for (int i = 0; i < allOrders.size(); i++) {
-            Order o = allOrders.get(i);
-            if (o.getStatus() == OrderStatus.PENDING) {
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.CONFIRMED || o.getStatus() == OrderStatus.DISPATCHED) {
+                activeOrders.add(o);
+            } else if (o.getStatus() == OrderStatus.PENDING) {
                 pendingOrders.add(o);
             }
         }
 
-        if (pendingOrders.isEmpty()) {
-            System.out.println("No PENDING orders found in the system to cancel.");
-        } else {
-            System.out.println("Current PENDING Orders in Queue:");
-            int showLimit = Math.min(pendingOrders.size(), 5);
-            for (int i = 0; i < showLimit; i++) {
-                Order p = pendingOrders.get(i);
-                System.out.printf(Locale.US, "  [%d] ID: %s | Customer: %s | Restaurant: %s | Amount: $%.2f%n",
-                        i + 1, p.getId(), p.getCustomerId(), p.getRestaurantId(), p.getTotalAmount());
-            }
-        }
-
-        System.out.print("\nEnter Order ID to cancel (or press Enter to return): ");
-        String orderId = this.scanner.nextLine().trim();
-        if (orderId.isEmpty()) {
+        if (activeOrders.isEmpty() && pendingOrders.isEmpty()) {
             return;
         }
 
-        try {
-            boolean success = this.orderController.cancelPendingOrder(orderId);
-            if (success) {
-                System.out.println(">>> Order [" + orderId + "] has been successfully CANCELLED in CSV storage.");
+        GeoUtils geo = new GeoUtils();
+        Customer cust = this.customerController.getCustomerById(customerId);
+        double cLat = (cust != null && cust.getLatitude() != 0.0) ? cust.getLatitude() : 13.775;
+        double cLon = (cust != null && cust.getLongitude() != 0.0) ? cust.getLongitude() : 109.225;
+        String custWard = (cust != null && cust.getWard() != null) ? cust.getWard() : "TP. Quy Nhon";
+
+        if (!activeOrders.isEmpty()) {
+            System.out.println("\n****************************************************************************************");
+            System.out.println(">>> [HOP THU THONG BAO - TAI XE DA TIEP NHAN DON HANG TAI TP. QUY NHON!] <<<");
+            System.out.println("****************************************************************************************");
+            for (int i = 0; i < activeOrders.size(); i++) {
+                Order order = activeOrders.get(i);
+                Restaurant rest = this.restaurantController.getRestaurantById(order.getRestaurantId());
+                String rName = (rest != null) ? rest.getName() : order.getRestaurantId();
+                String rAddr = (rest != null) ? rest.getAddress() : "TP. Quy Nhon";
+                double rLat = (rest != null) ? rest.getLatitude() : 13.770;
+                double rLon = (rest != null) ? rest.getLongitude() : 109.220;
+
+                Driver driver = this.driverController.getDriverById(order.getDriverId());
+                String dName = (driver != null) ? driver.getName() : order.getDriverId();
+                String dPhone = (driver != null) ? driver.getPhone() : "Chua cap nhat";
+                String dPlate = (driver != null) ? driver.getLicensePlate() : "77-L1 XXX.XX";
+                double dLat = (driver != null) ? driver.getLatitude() : rLat;
+                double dLon = (driver != null) ? driver.getLongitude() : rLon;
+
+                double driverToRestKm = geo.haversine(dLat, dLon, rLat, rLon);
+                double restToCustKm = geo.haversine(rLat, rLon, cLat, cLon);
+
+                int pickupMin = geo.calculatePickupMinutes(driverToRestKm);
+                int deliveryMin = geo.calculateDeliveryMinutes(driverToRestKm, restToCustKm);
+                String etaPickupClock = geo.formatEstimatedClockTime(order.getCreatedAtEpochMs(), pickupMin);
+                String etaDeliveryClock = geo.formatEstimatedClockTime(order.getCreatedAtEpochMs(), deliveryMin);
+
+                System.out.println("* DON HANG:           " + order.getId() + " - Quan: " + rName);
+                System.out.println("  Dia chi quan:       " + rAddr);
+                System.out.println("  TAI XE PHU TRACH:   " + dName + " (Ma: " + order.getDriverId() + ")");
+                System.out.println("  So dien thoai:      " + dPhone);
+                System.out.println("  Bien so xe may:     " + dPlate + " (Binh Dinh 77)");
+                System.out.printf("  Khoang cach:        %.2f km (tai xe -> quan) | %.2f km (quan -> ban)\n", driverToRestKm, restToCustKm);
+                System.out.println("  THOI GIAN LAY MON:  ~" + pickupMin + " phut (Du kien co mat tai quan luc " + etaPickupClock + ")");
+                System.out.println("  THOI GIAN GIAO DEN: ~" + deliveryMin + " phut (Du kien den " + custWard + " luc " + etaDeliveryClock + ")");
+                if (order.getStatus() == OrderStatus.CONFIRMED) {
+                    System.out.println("  Trang thai hien tai: Quan dang chuan bi mon, tai xe dang tren duong den quan.");
+                } else {
+                    System.out.println("  Trang thai hien tai: Tai xe da lay mon, dang tren duong giao den ban!");
+                }
+                if (i < activeOrders.size() - 1) {
+                    System.out.println("----------------------------------------------------------------------------------------");
+                }
             }
-        } catch (Exception e) {
-            System.out.println(">>> Cancel failed: " + e.getMessage());
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
+            System.out.println("****************************************************************************************");
+        }
+
+        if (!pendingOrders.isEmpty()) {
+            System.out.println("\n----------------------------------------------------------------------------------------");
+            System.out.println(">>> [THONG BAO DON HANG CHO TAI XE TAI TP. QUY NHON]:");
+            for (int i = 0; i < pendingOrders.size(); i++) {
+                Order pOrder = pendingOrders.get(i);
+                Restaurant pRest = this.restaurantController.getRestaurantById(pOrder.getRestaurantId());
+                String pRName = (pRest != null) ? pRest.getName() : pOrder.getRestaurantId();
+                System.out.println("  * Don " + pOrder.getId() + " (Quan: " + pRName + ") dang trong Hang doi Dieu phoi tu dong.");
+                System.out.println("    He thong dang lien tuc quet radar tim tai xe gan nhat trong khu vuc Quy Nhon...");
+            }
+            System.out.println("----------------------------------------------------------------------------------------");
         }
     }
+
+    private void handleCustomerBrowseRestaurants() {
+        List<Restaurant> list = this.restaurantController.getAllRestaurants();
+        if (list.isEmpty()) {
+            System.out.println("Hien chua co nha hang nao tren he thong.");
+            return;
+        }
+        System.out.println("\n--- DANH SACH NHA HANG DOI TAC ---");
+        int limit = Math.min(list.size(), 10);
+        for (int i = 0; i < limit; i++) {
+            Restaurant r = list.get(i);
+            System.out.printf("[%s] %-25s | Dia chi: %-25s | Danh gia: %.1f/5.0\n",
+                    r.getId(), r.getName(), r.getAddress(), r.getRating());
+        }
+
+        System.out.print("\nNhap Ma nha hang de xem thuc don (hoac Enter de quay lai): ");
+        String rId = this.readLine();
+        if (!rId.isEmpty()) {
+            Restaurant selected = this.restaurantController.getRestaurantById(rId);
+            if (selected != null) {
+                List<MenuItem> menu = this.restaurantController.getMenuByRestaurant(selected.getId());
+                this.orderView.displayMenu(selected, menu);
+            } else {
+                System.out.println("Khong tim thay nha hang voi ma: " + rId);
+            }
+        }
+    }
+
+    private void handleCustomerPlaceOrderFlow(String customerId) {
+        System.out.println("\n--- DAT MON AN TRUC TUYEN ---");
+        List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
+        if (restaurants.isEmpty()) {
+            System.out.println("He thong chua co du lieu nha hang.");
+            return;
+        }
+
+        System.out.println("Danh sach mot so nha hang dang hoat dong:");
+        int limitR = Math.min(restaurants.size(), 5);
+        for (int i = 0; i < limitR; i++) {
+            Restaurant r = restaurants.get(i);
+            System.out.println("  * [" + r.getId() + "] " + r.getName() + " (" + r.getAddress() + ")");
+        }
+
+        System.out.print("Nhap Ma nha hang ban muon dat (mac dinh: " + restaurants.get(0).getId() + "): ");
+        String rId = this.readLine();
+        if (rId.isEmpty()) {
+            rId = restaurants.get(0).getId();
+        }
+
+        Restaurant rest = this.restaurantController.getRestaurantById(rId);
+        if (rest == null) {
+            System.out.println("Khong tim thay nha hang voi ma: " + rId);
+            return;
+        }
+
+        List<MenuItem> menu = this.restaurantController.getMenuByRestaurant(rest.getId());
+        if (menu.isEmpty()) {
+            System.out.println("Nha hang nay hien chua co mon an nao tren thuc don.");
+            return;
+        }
+
+        this.orderView.displayMenu(rest, menu);
+
+        System.out.print("Nhap Ma mon an ban muon chon (mac dinh: " + menu.get(0).getId() + "): ");
+        String mId = this.readLine();
+        if (mId.isEmpty()) {
+            mId = menu.get(0).getId();
+        }
+
+        MenuItem chosenItem = this.restaurantController.getMenuItemById(mId);
+        if (chosenItem == null) {
+            System.out.println("Khong tim thay mon an voi ma: " + mId);
+            return;
+        }
+
+        System.out.print("Nhap so luong muon dat (mac dinh 1): ");
+        String qStr = this.readLine();
+        int qty = 1;
+        try {
+            if (!qStr.isEmpty()) {
+                qty = Integer.parseInt(qStr);
+            }
+        } catch (NumberFormatException ignored) {}
+
+        System.out.println("\n[TIEN TRINH XU LY DAT HANG & TIM TAI XE TU DONG]");
+        System.out.println("[1/3] Don hang dang duoc gui toi Nha hang [" + rest.getName() + "]...");
+        try { Thread.sleep(300); } catch (Exception ignored) {}
+        System.out.println("[2/3] Nha hang da XAC NHAN don! DispatchService dang quet radar tim tai xe gan nhat (cong thuc Haversine)...");
+        try { Thread.sleep(400); } catch (Exception ignored) {}
+
+        try {
+            Order order = this.orderController.placeCustomerOrderAndAutoDispatch(customerId, rest.getId(), chosenItem.getId(), qty, LockMechanism.SYNCHRONIZED);
+
+            Customer cust = this.customerController.getCustomerById(customerId);
+            double cLat = (cust != null && cust.getLatitude() != 0.0) ? cust.getLatitude() : 13.775;
+            double cLon = (cust != null && cust.getLongitude() != 0.0) ? cust.getLongitude() : 109.225;
+            String custWard = (cust != null && cust.getWard() != null) ? cust.getWard() : "TP. Quy Nhon";
+
+            GeoUtils geo = new GeoUtils();
+            double restToCustKm = geo.haversine(rest.getLatitude(), rest.getLongitude(), cLat, cLon);
+
+            System.out.println("\n==========================================================================");
+            System.out.println("     KET QUA DAT HANG & DIEU PHOI TAI XE (KHU VUC: TP. QUY NHON)         ");
+            System.out.println("==========================================================================");
+            System.out.println("Ma don hang:     " + order.getId());
+            System.out.println("Nha hang:        " + rest.getName() + " (" + rest.getAddress() + ")");
+            System.out.println("Dia chi nhan:    " + custWard + " - TP. Quy Nhon");
+            System.out.println("Mon an da dat:   " + chosenItem.getName() + " x" + qty);
+            System.out.printf("Tien mon an:     %,.0f VND\n", order.getTotalFoodAmount());
+            System.out.printf("Phi giao hang:   %,.0f VND (Tinh theo khoang cach %.2f km)\n", order.getDeliveryFee(), restToCustKm);
+            System.out.printf("Tong thanh toan: %,.0f VND\n", order.getTotalAmount());
+            System.out.println("--------------------------------------------------------------------------");
+
+            if (order.getDriverId() != null && !order.getDriverId().trim().isEmpty()) {
+                Driver d = this.driverController.getDriverById(order.getDriverId());
+                String dName = (d != null) ? d.getName() : order.getDriverId();
+                String dPhone = (d != null) ? d.getPhone() : "Chua cap nhat";
+                String dPlate = (d != null) ? d.getLicensePlate() : "77-L1 XXX.XX";
+                double dLat = (d != null) ? d.getLatitude() : rest.getLatitude();
+                double dLon = (d != null) ? d.getLongitude() : rest.getLongitude();
+
+                double driverToRestKm = geo.haversine(dLat, dLon, rest.getLatitude(), rest.getLongitude());
+                int pickupMin = geo.calculatePickupMinutes(driverToRestKm);
+                int deliveryMin = geo.calculateDeliveryMinutes(driverToRestKm, restToCustKm);
+                String etaPickupClock = geo.formatEstimatedClockTime(order.getCreatedAtEpochMs(), pickupMin);
+                String etaDeliveryClock = geo.formatEstimatedClockTime(order.getCreatedAtEpochMs(), deliveryMin);
+
+                System.out.println(">>> [3/3] THONG BAO: DA TIM THAY TAI XE NHAN DON (MATCHED SUCCESSFUL)!");
+                System.out.println("  * TAI XE PHU TRACH:  " + dName + " (Ma: " + order.getDriverId() + ")");
+                System.out.println("  * So dien thoai:     " + dPhone);
+                System.out.println("  * Bien so xe may:    " + dPlate + " (Khu vuc Quy Nhon)");
+                System.out.printf("  * Khoang cach:       %.2f km (tai xe -> quan) | %.2f km (quan -> ban)\n", driverToRestKm, restToCustKm);
+                System.out.println("  * THOI GIAN LAY MON: ~" + pickupMin + " phut (Du kien co mat tai quan luc " + etaPickupClock + ")");
+                System.out.println("  * THOI GIAN GIAO DEN:~" + deliveryMin + " phut (Du kien den " + custWard + " luc " + etaDeliveryClock + ")");
+                System.out.println("  * Trang thai don:    CONFIRMED (Quan dang chuan bi mon, tai xe dang tren duong den quan)");
+            } else {
+                System.out.println(">>> [3/3] THONG BAO: Tat ca tai xe tai Quy Nhon hien dang thuc hien cuoc giao khac.");
+                System.out.println("  * Don hang da duoc xac nhan va dua vao Hang doi Uu tien (Priority Queue).");
+                System.out.println("  * He thong se tu dong gan tai xe ngay khi co tai xe hoan tat chuyen hoac online!");
+            }
+            System.out.println("==========================================================================");
+        } catch (Exception e) {
+            System.out.println("\n>>> [DAT HANG THAT BAI] " + e.getMessage());
+        }
+    }
+
+    private void handleViewMyOrdersFlow(String customerId) {
+        boolean inOrderTracking = true;
+        while (inOrderTracking) {
+            System.out.println("\n=======================================================");
+            System.out.println("            THEO DOI & DANH SACH DON HANG CUA TOI       ");
+            System.out.println("=======================================================");
+            List<Order> myOrders = this.orderController.getOrdersByCustomer(customerId);
+            if (myOrders.isEmpty()) {
+                System.out.println("Ban chua co don hang nao trong he thong.");
+                return;
+            }
+
+            this.orderView.renderOrders(myOrders);
+
+            System.out.println("-------------------------------------------------------");
+            System.out.println("Tuy chon theo doi don hang:");
+            System.out.println("1. Xem chi tiet & Theo doi hanh trinh (Real-Time Tracker)");
+            System.out.println("2. Quet tim lai tai xe cho cac don chua co tai xe (Retry Auto-Dispatch)");
+            System.out.println("0. Quay lai Menu Khach hang");
+            System.out.println("-------------------------------------------------------");
+            System.out.print("Nhap lua chon [0-2]: ");
+            String opt = this.readLine();
+
+            if (opt.equals("1")) {
+                System.out.print("Nhap Ma don hang muon theo doi (hoac Enter de chon don moi nhat): ");
+                String oId = this.readLine();
+                Order selected = null;
+                if (oId.isEmpty()) {
+                    selected = myOrders.get(myOrders.size() - 1);
+                } else {
+                    for (int i = 0; i < myOrders.size(); i++) {
+                        if (oId.equalsIgnoreCase(myOrders.get(i).getId())) {
+                            selected = myOrders.get(i);
+                            break;
+                        }
+                    }
+                }
+
+                if (selected != null) {
+                    this.handleLiveOrderTrackerDetail(selected, customerId);
+                } else {
+                    System.out.println("Khong tim thay don hang: " + oId);
+                }
+            } else if (opt.equals("2")) {
+                System.out.println("\nDang quet radar tim tai xe ranh cho cac don hang dang cho...");
+                List<String> logs = this.orderController.autoDispatchAllPending(LockMechanism.SYNCHRONIZED);
+                if (logs.isEmpty()) {
+                    System.out.println(">>> Khong co don hang nao can dieu phoi hoac chua co them tai xe ranh.");
+                } else {
+                    for (int i = 0; i < logs.size(); i++) {
+                        System.out.println("  -> " + logs.get(i));
+                    }
+                }
+            } else if (opt.equals("0")) {
+                inOrderTracking = false;
+            } else {
+                System.out.println("Lua chon khong hop le.");
+            }
+        }
+    }
+
+    private void handleLiveOrderTrackerDetail(Order order, String customerId) {
+        Order fresh = this.orderController.getOrderById(order.getId());
+        if (fresh != null) {
+            order = fresh;
+        }
+
+        Customer cust = this.customerController.getCustomerById(customerId);
+        double cLat = (cust != null && cust.getLatitude() != 0.0) ? cust.getLatitude() : 13.775;
+        double cLon = (cust != null && cust.getLongitude() != 0.0) ? cust.getLongitude() : 109.225;
+        String custWard = (cust != null && cust.getWard() != null) ? cust.getWard() : "TP. Quy Nhon";
+
+        System.out.println("\n==========================================================================");
+        System.out.println("    THEO DOI CHI TIET HANH TRINH GIAO HANG (KHU VUC: TP. QUY NHON)        ");
+        System.out.println("==========================================================================");
+        System.out.println("Ma don hang:     " + order.getId());
+
+        Restaurant rest = this.restaurantController.getRestaurantById(order.getRestaurantId());
+        String restName = (rest != null) ? rest.getName() : order.getRestaurantId();
+        String restAddr = (rest != null) ? rest.getAddress() : "TP. Quy Nhon";
+        double rLat = (rest != null) ? rest.getLatitude() : 13.770;
+        double rLon = (rest != null) ? rest.getLongitude() : 109.220;
+
+        System.out.println("Nha hang:        " + restName + " (" + restAddr + ")");
+        System.out.println("Dia chi nhan:    " + custWard + " - TP. Quy Nhon");
+        System.out.printf("Tien mon:        %,.0f VND | Phi ship: %,.0f VND | Tong: %,.0f VND\n",
+                order.getTotalFoodAmount(), order.getDeliveryFee(), order.getTotalAmount());
+
+        System.out.println("\nTIEN TRINH HANH TRINH:");
+        String s1 = "[ ]", s2 = "[ ]", s3 = "[ ]", s4 = "[ ]";
+        if (order.getStatus() == OrderStatus.PENDING) {
+            s1 = "[V]";
+        } else if (order.getStatus() == OrderStatus.CONFIRMED) {
+            s1 = "[V]"; s2 = "[V]";
+        } else if (order.getStatus() == OrderStatus.DISPATCHED) {
+            s1 = "[V]"; s2 = "[V]"; s3 = "[V]";
+        } else if (order.getStatus() == OrderStatus.DELIVERED) {
+            s1 = "[V]"; s2 = "[V]"; s3 = "[V]"; s4 = "[V]";
+        } else if (order.getStatus() == OrderStatus.CANCELLED) {
+            s1 = "[X] (DA HUY)";
+        }
+
+        if (order.getStatus() != OrderStatus.CANCELLED) {
+            System.out.println("  1. Dat hang  ===>  2. Quan xac nhan  ===>  3. Dang giao hang  ===>  4. Da giao thanh cong");
+            System.out.printf("     %-15s    %-17s      %-16s        %s\n", s1, s2, s3, s4);
+        } else {
+            System.out.println("  [X] Don hang da bi huy.");
+        }
+
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("THONG TIN TAI XE VA THOI GIAN DU KIEN:");
+        if (order.getDriverId() != null && !order.getDriverId().trim().isEmpty()) {
+            Driver d = this.driverController.getDriverById(order.getDriverId());
+            String dName = (d != null) ? d.getName() : order.getDriverId();
+            String dPhone = (d != null) ? d.getPhone() : "Chua cap nhat";
+            String dPlate = (d != null) ? d.getLicensePlate() : "77-L1 XXX.XX";
+            double dLat = (d != null) ? d.getLatitude() : rLat;
+            double dLon = (d != null) ? d.getLongitude() : rLon;
+
+            GeoUtils geo = new GeoUtils();
+            double driverToRestKm = geo.haversine(dLat, dLon, rLat, rLon);
+            double restToCustKm = geo.haversine(rLat, rLon, cLat, cLon);
+
+            int pickupMin = geo.calculatePickupMinutes(driverToRestKm);
+            int deliveryMin = geo.calculateDeliveryMinutes(driverToRestKm, restToCustKm);
+            String etaPickupClock = geo.formatEstimatedClockTime(order.getCreatedAtEpochMs(), pickupMin);
+            String etaDeliveryClock = geo.formatEstimatedClockTime(order.getCreatedAtEpochMs(), deliveryMin);
+
+            System.out.println("  * TAI XE PHU TRACH:    " + dName + " (Ma: " + order.getDriverId() + ")");
+            System.out.println("  * So dien thoai:       " + dPhone);
+            System.out.println("  * Bien so xe:          " + dPlate + " (Binh Dinh 77)");
+            System.out.printf("  * Khoang cach:         %.2f km (tai xe -> quan) | %.2f km (quan -> ban)\n", driverToRestKm, restToCustKm);
+            System.out.println("  * THOI GIAN LAY MON:   ~" + pickupMin + " phut (Du kien luc " + etaPickupClock + ")");
+            System.out.println("  * THOI GIAN GIAO DEN:  ~" + deliveryMin + " phut (Du kien luc " + etaDeliveryClock + ")");
+            if (order.getStatus() == OrderStatus.CONFIRMED) {
+                System.out.println("  * Tinh trang hien tai: Quan dang chuan bi mon, tai xe dang di chuyen den quan.");
+            } else if (order.getStatus() == OrderStatus.DISPATCHED) {
+                System.out.println("  * Tinh trang hien tai: Tai xe da lay hang va dang tren duong giao den " + custWard + "!");
+            } else if (order.getStatus() == OrderStatus.DELIVERED) {
+                System.out.println("  * Tinh trang hien tai: Don hang da duoc giao thanh cong! Chuc ngon mieng!");
+            }
+        } else {
+            System.out.println("  * Tai xe phu trach:  (Chua co tai xe nhan - Don dang trong Hang doi Uu tien)");
+            System.out.println("  * He thong se tu dong dieu phoi ngay khi co tai xe gan nhat ranh don.");
+        }
+        System.out.println("==========================================================================");
+
+        if (order.getStatus() == OrderStatus.CONFIRMED || order.getStatus() == OrderStatus.DISPATCHED) {
+            System.out.print("\nBan co muon xem MO PHONG TIEN TRINH TAI XE GIAO HANG thuc te khong? (y/n): ");
+            String simAns = this.readLine();
+            if (simAns.equalsIgnoreCase("y")) {
+                this.simulateDeliveryProgress(order);
+            }
+        } else if (order.getStatus() == OrderStatus.PENDING || (order.getDriverId() == null || order.getDriverId().trim().isEmpty())) {
+            System.out.print("\nBan co muon KICH HOAT QUET TIM TAI XE NGAY khong? (y/n): ");
+            String retryAns = this.readLine();
+            if (retryAns.equalsIgnoreCase("y")) {
+                try {
+                    boolean ok = this.orderController.dispatchPending(order.getId(), LockMechanism.SYNCHRONIZED);
+                    if (ok) {
+                        Order updated = this.orderController.getOrderById(order.getId());
+                        System.out.println(">>> [TIN VUI!] Da tim thay tai xe: " + updated.getDriverId() + " cho don hang!");
+                    } else {
+                        System.out.println(">>> Hien tai cac tai xe xung quanh van dang ban. He thong se tiep tuc thu lai tu dong.");
+                    }
+                } catch (Exception e) {
+                    System.out.println(">>> [THONG BAO] " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    private void simulateDeliveryProgress(Order order) {
+        System.out.println("\n--- DANG MO PHONG TIEN TRINH GIAO HANG TRUC TIEP ---");
+        try {
+            if (order.getStatus() == OrderStatus.CONFIRMED) {
+                System.out.println(">>> [1/2] Tai xe " + order.getDriverId() + " dang di chuyen den quan an...");
+                Thread.sleep(600);
+                boolean picked = this.orderController.markOrderPickedUp(order.getId(), order.getDriverId());
+                if (picked) {
+                    System.out.println(">>> [DA LAY HANG] Tai xe da nhan mon tu quan! Trang thai: DISPATCHED (Dang tren duong giao).");
+                }
+                Thread.sleep(600);
+            }
+
+            System.out.println(">>> [2/2] Tai xe dang di chuyen theo tuyen duong toi uu den dia chi cua ban...");
+            Thread.sleep(800);
+            boolean delivered = this.orderController.markOrderDelivered(order.getId(), order.getDriverId(), LockMechanism.SYNCHRONIZED);
+            if (delivered) {
+                System.out.println("\n>>> [GIAO HANG THANH CONG! (DELIVERED)]");
+                System.out.println(">>> Don hang " + order.getId() + " da duoc ban giao tan tay khach hang!");
+                System.out.println(">>> Tai xe " + order.getDriverId() + " da duoc tu dong giai phong ve trang thai AVAILABLE.");
+            }
+        } catch (Exception e) {
+            System.out.println(">>> Loi mo phong: " + e.getMessage());
+        }
+    }
+
+    private void handleCustomerCancelOrderFlow(String customerId) {
+        System.out.println("\n--- HUY DON HANG DANG CHO ---");
+        List<Order> myOrders = this.orderController.getOrdersByCustomer(customerId);
+        List<Order> pending = new ArrayList<>();
+        for (int i = 0; i < myOrders.size(); i++) {
+            Order o = myOrders.get(i);
+            if (o.getStatus() == OrderStatus.PENDING) {
+                pending.add(o);
+            }
+        }
+
+        if (pending.isEmpty()) {
+            System.out.println("Ban khong co don hang nao o trang thai PENDING de co the huy.");
+            return;
+        }
+
+        System.out.println("Danh sach don hang dang cho xac nhan:");
+        this.orderView.renderOrders(pending);
+
+        System.out.print("Nhap Ma don hang can huy: ");
+        String orderId = this.readLine();
+
+        try {
+            boolean ok = this.orderController.cancelOrderByCustomer(orderId, customerId);
+            if (ok) {
+                System.out.println(">>> [THANH CONG] Don hang " + orderId + " da duoc huy. So luong mon da duoc hoan lai ton kho.");
+            }
+        } catch (Exception e) {
+            System.out.println(">>> [THAT BAI] " + e.getMessage());
+        }
+    }
+
+    private void handleCustomerProfileFlow(User user) {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("               THONG TIN HO SO KHACH HANG              ");
+        System.out.println("-------------------------------------------------------");
+        System.out.println("Ten dang nhap: " + user.getUsername());
+        System.out.println("Ho va ten:     " + user.getDisplayName());
+        System.out.println("Ma khach hang: " + user.getLinkedEntityId());
+        Customer c = this.customerController.getCustomerById(user.getLinkedEntityId());
+        if (c != null) {
+            System.out.println("So dien thoai: " + c.getPhone());
+            System.out.println("Dia chi nhan:  " + c.getAddress());
+            System.out.println("Toa do vi tri: (" + c.getLatitude() + ", " + c.getLongitude() + ")");
+        }
+        System.out.println("-------------------------------------------------------");
+    }
+
+    // =========================================================================
+    // 4. DRIVER PORTAL (Section 3.2 - REALISTIC WITH ACTIVE CHECK)
+    // =========================================================================
+
+    private void handleDriverMenu(User user) {
+        String driverId = user.getLinkedEntityId();
+        Driver driver = this.driverController.getDriverById(driverId);
+        String statusStr = driver != null ? driver.getStatus().name() : "OFFLINE";
+
+        System.out.println("\n=======================================================");
+        System.out.println("   FOOD DELIVERY SIMULATION - [CONG THONG TIN TAI XE]  ");
+        System.out.println("   Tai xe: " + user.getDisplayName() + " (Ma: " + driverId + " | Trang thai: " + statusStr + ")");
+        System.out.println("=======================================================");
+        System.out.println("1. Xem thong tin tai xe & Thong ke ca nhan (View Profile & Stats)");
+        System.out.println("2. Chuyen trang thai Truc tuyen / Ngoai tuyen (Toggle AVAILABLE / OFFLINE)");
+        System.out.println("3. Xem don hang duoc phan cong cho toi (View Assigned Orders)");
+        System.out.println("4. Xac nhan da lay hang tai quan (Confirm Picked Up -> DISPATCHED)");
+        System.out.println("5. Xac nhan da giao hang thanh cong (Confirm Delivered -> DELIVERED & AVAILABLE)");
+        System.out.println("0. Dang xuat (Logout)");
+        System.out.println("=======================================================");
+        System.out.print("Nhap lua chon cua ban [0-5]: ");
+        String choice = this.readLine();
+
+        switch (choice) {
+            case "1":
+                this.handleDriverProfileFlow(user);
+                break;
+            case "2":
+                this.handleDriverStatusToggleFlow(driverId);
+                break;
+            case "3":
+                this.handleViewDriverOrdersFlow(driverId);
+                break;
+            case "4":
+                this.handleDriverPickUpFlow(driverId);
+                break;
+            case "5":
+                this.handleDriverDeliverFlow(driverId);
+                break;
+            case "0":
+                this.authController.logout();
+                System.out.println("\n>>> [LOGGED OUT] Da dang xuat thanh cong. Tro ve man hinh dang nhap...");
+                break;
+            default:
+                System.out.println("Lua chon khong hop le. Vui long chon tu 0 den 5.");
+        }
+    }
+
+    private void handleDriverProfileFlow(User user) {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("               HO SO DOI TAC TAI XE                    ");
+        System.out.println("-------------------------------------------------------");
+        System.out.println("Tai khoan:    " + user.getUsername());
+        System.out.println("Ho va ten:    " + user.getDisplayName());
+        System.out.println("Ma tai xe:    " + user.getLinkedEntityId());
+        Driver d = this.driverController.getDriverById(user.getLinkedEntityId());
+        if (d != null) {
+            System.out.println("So dien thoai: " + d.getPhone());
+            System.out.println("Bien so xe:    " + d.getLicensePlate());
+            System.out.println("Trang thai:    " + d.getStatus());
+            System.out.println("Vi tri hien tai: (" + d.getLatitude() + ", " + d.getLongitude() + ")");
+        }
+        List<Order> orders = this.orderController.getOrdersByDriver(user.getLinkedEntityId());
+        int deliveredCount = 0;
+        for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getStatus() == OrderStatus.DELIVERED) {
+                deliveredCount++;
+            }
+        }
+        System.out.println("Tong so don da giao thanh cong: " + deliveredCount + " don hang.");
+        System.out.println("-------------------------------------------------------");
+    }
+
+    private void handleDriverStatusToggleFlow(String driverId) {
+        Driver driver = this.driverController.getDriverById(driverId);
+        if (driver == null) {
+            System.out.println("Khong tim thay thong tin tai xe lien ket voi tai khoan nay.");
+            return;
+        }
+
+        // Section 3.2 Constraint: Cannot switch to AVAILABLE if driver has active delivery
+        boolean hasActive = this.orderController.hasActiveDelivery(driverId);
+        if (hasActive) {
+            System.out.println("\n>>> [CANH BAO] Ban dang co don hang dang thuc hien (CONFIRMED / DISPATCHED)!");
+            System.out.println(">>> Quy tac he thong: Tai xe khong duoc chuyen ve AVAILABLE khi chua giao xong don hang.");
+            System.out.println(">>> Hay hoan tat don hang truoc.");
+            return;
+        }
+
+        System.out.println("\n--- THAY DOI TRANG THAI HOAT DONG ---");
+        System.out.println("Trang thai hien tai: " + driver.getStatus());
+        DriverStatus next = (driver.getStatus() == DriverStatus.AVAILABLE) ? DriverStatus.OFFLINE : DriverStatus.AVAILABLE;
+        System.out.print("Ban co muon chuyen sang trang thai [" + next + "]? (y/n): ");
+        String ans = this.readLine();
+        if (ans.equalsIgnoreCase("y")) {
+            this.driverController.updateDriverStatus(driver.getId(), next);
+            System.out.println(">>> Trang thai cua ban da duoc cap nhat thanh: " + next);
+        }
+    }
+
+    private void handleViewDriverOrdersFlow(String driverId) {
+        System.out.println("\n--- DON HANG DUOC GAN CHO TOI ---");
+        List<Order> orders = this.orderController.getOrdersByDriver(driverId);
+        if (orders.isEmpty()) {
+            System.out.println("Hien tai chua co don hang nao duoc gan cho ban.");
+        } else {
+            this.orderView.renderOrders(orders);
+        }
+    }
+
+    private void handleDriverPickUpFlow(String driverId) {
+        System.out.println("\n--- XAC NHAN DA LAY HANG TAI QUAN ---");
+        List<Order> orders = this.orderController.getOrdersByDriver(driverId);
+        List<Order> confirmedList = new ArrayList<>();
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.CONFIRMED) {
+                confirmedList.add(o);
+            }
+        }
+
+        if (confirmedList.isEmpty()) {
+            System.out.println("Ban khong co don hang nao o trang thai CONFIRMED (cho lay hang).");
+            return;
+        }
+
+        this.orderView.renderOrders(confirmedList);
+        System.out.print("Nhap Ma don hang ban da lay duoc tai quan: ");
+        String orderId = this.readLine();
+
+        try {
+            boolean ok = this.orderController.markOrderPickedUp(orderId, driverId);
+            if (ok) {
+                System.out.println(">>> [THANH CONG] Don hang " + orderId + " da chuyen sang trang thai DISPATCHED (Dang giao).");
+                System.out.println(">>> Hay tien hanh giao hang den dia chi khach hang an toan!");
+            }
+        } catch (Exception e) {
+            System.out.println(">>> [THAT BAI] " + e.getMessage());
+        }
+    }
+
+    private void handleDriverDeliverFlow(String driverId) {
+        System.out.println("\n--- XAC NHAN DA GIAO HANG THANH CONG ---");
+        List<Order> orders = this.orderController.getOrdersByDriver(driverId);
+        List<Order> delivering = new ArrayList<>();
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.DISPATCHED || o.getStatus() == OrderStatus.CONFIRMED) {
+                delivering.add(o);
+            }
+        }
+
+        if (delivering.isEmpty()) {
+            System.out.println("Ban khong co don hang nao dang giao.");
+            return;
+        }
+
+        this.orderView.renderOrders(delivering);
+        System.out.print("Nhap Ma don hang da giao xong cho khach: ");
+        String orderId = this.readLine();
+
+        try {
+            boolean ok = this.orderController.markOrderDelivered(orderId, driverId, LockMechanism.SYNCHRONIZED);
+            if (ok) {
+                System.out.println(">>> [CHUC MUNG!] Don hang " + orderId + " da duoc xac nhan DELIVERED.");
+                System.out.println(">>> Tai khoan tai xe cua ban da duoc tu dong giai phong ve trang thai AVAILABLE.");
+                System.out.println(">>> San sang tiep nhan cac don hang tiep theo tren he thong!");
+            }
+        } catch (Exception e) {
+            System.out.println(">>> [THAT BAI] " + e.getMessage());
+        }
+    }
+
+    // =========================================================================
+    // 5. RESTAURANT MANAGER PORTAL (Section 3.3 - STRICTLY BOUND TO RESTAURANT)
+    // =========================================================================
+
+    private void handleRestaurantMenu(User user) {
+        String restaurantId = user.getLinkedEntityId();
+        Restaurant rest = this.restaurantController.getRestaurantById(restaurantId);
+        String restName = rest != null ? rest.getName() : "Nha hang doi tac";
+
+        System.out.println("\n=======================================================");
+        System.out.println("   FOOD DELIVERY SIMULATION - [CONG QUAN LY NHA HANG]  ");
+        System.out.println("   Quan ly: " + user.getDisplayName() + " (Nha hang: " + restName + " [" + restaurantId + "])");
+        System.out.println("=======================================================");
+        System.out.println("1. Xem thuc don cua quan & Tinh trang ton kho (View Menu & Stock)");
+        System.out.println("2. Cap nhat don gia & So luong ton kho mon an (Update Price & Stock)");
+        System.out.println("3. Xem danh sach don hang den quan (View Incoming Orders)");
+        System.out.println("4. Xac nhan don hang (Confirm Order -> Kich hoat tu dong dieu phoi Tai xe)");
+        System.out.println("5. Tu choi don hang (Reject Order -> Hoan lai ton kho mon an)");
+        System.out.println("6. Thong ke doanh thu nha hang (Restaurant Revenue Stats)");
+        System.out.println("0. Dang xuat (Logout)");
+        System.out.println("=======================================================");
+        System.out.print("Nhap lua chon cua ban [0-6]: ");
+        String choice = this.readLine();
+
+        switch (choice) {
+            case "1":
+                this.handleRestaurantViewMenuFlow(restaurantId, rest);
+                break;
+            case "2":
+                this.handleRestaurantUpdateStockFlow(restaurantId);
+                break;
+            case "3":
+                this.handleRestaurantViewIncomingOrdersFlow(restaurantId);
+                break;
+            case "4":
+                this.handleRestaurantConfirmOrderFlow(restaurantId);
+                break;
+            case "5":
+                this.handleRestaurantRejectOrderFlow(restaurantId);
+                break;
+            case "6":
+                this.handleRestaurantStatsFlow(restaurantId, restName);
+                break;
+            case "0":
+                this.authController.logout();
+                System.out.println("\n>>> [LOGGED OUT] Da dang xuat thanh cong. Tro ve man hinh dang nhap...");
+                break;
+            default:
+                System.out.println("Lua chon khong hop le. Vui long chon tu 0 den 6.");
+        }
+    }
+
+    private void handleRestaurantViewMenuFlow(String restaurantId, Restaurant rest) {
+        List<MenuItem> items = this.restaurantController.getMenuByRestaurant(restaurantId);
+        if (items.isEmpty()) {
+            System.out.println("Nha hang chua co mon an nao trong thuc don.");
+            return;
+        }
+        this.orderView.displayMenu(rest, items);
+    }
+
+    private void handleRestaurantUpdateStockFlow(String restaurantId) {
+        List<MenuItem> items = this.restaurantController.getMenuByRestaurant(restaurantId);
+        if (items.isEmpty()) {
+            System.out.println("Nha hang chua co mon an nao de cap nhat.");
+            return;
+        }
+        this.orderView.renderMenu(items);
+
+        System.out.print("Nhap Ma mon an can cap nhat: ");
+        String mId = this.readLine();
+        MenuItem target = this.restaurantController.getMenuItemById(mId);
+        if (target == null || !restaurantId.equalsIgnoreCase(target.getRestaurantId())) {
+            System.out.println("Mon an khong ton tai hoac khong thuoc nha hang cua ban.");
+            return;
+        }
+
+        System.out.print("Nhap don gia moi (VND, de trong neu khong doi): ");
+        String pStr = this.readLine();
+        double price = target.getPriceVnd();
+        if (!pStr.isEmpty()) {
+            try { price = Double.parseDouble(pStr); } catch (NumberFormatException ignored) {}
+        }
+
+        System.out.print("Nhap so luong ton kho moi (de trong neu khong doi): ");
+        String sStr = this.readLine();
+        int stock = target.getStockQty();
+        if (!sStr.isEmpty()) {
+            try { stock = Integer.parseInt(sStr); } catch (NumberFormatException ignored) {}
+        }
+
+        boolean ok = this.restaurantController.updateMenuItem(target.getId(), target.getName(), price, stock);
+        System.out.println(ok ? ">>> [CAP NHAT THANH CONG] Mon " + target.getName() + " da cap nhat!" : ">>> Cap nhat that bai.");
+    }
+
+    private void handleRestaurantViewIncomingOrdersFlow(String restaurantId) {
+        System.out.println("\n--- DON HANG DEN NHA HANG ---");
+        List<Order> orders = this.orderController.getOrdersByRestaurant(restaurantId);
+        if (orders.isEmpty()) {
+            System.out.println("Nha hang chua co don hang nao den.");
+        } else {
+            this.orderView.renderOrders(orders);
+        }
+    }
+
+    private void handleRestaurantConfirmOrderFlow(String restaurantId) {
+        System.out.println("\n--- XAC NHAN DON HANG & DIEU PHOI TAI XE ---");
+        List<Order> orders = this.orderController.getOrdersByRestaurant(restaurantId);
+        List<Order> pending = new ArrayList<>();
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.PENDING) {
+                pending.add(o);
+            }
+        }
+
+        if (pending.isEmpty()) {
+            System.out.println("Khong co don hang nao o trang thai PENDING cho xac nhan.");
+            return;
+        }
+
+        this.orderView.renderOrders(pending);
+        System.out.print("Nhap Ma don hang can xac nhan: ");
+        String orderId = this.readLine();
+
+        try {
+            Order confirmed = this.orderController.confirmOrderByRestaurant(orderId, restaurantId, LockMechanism.SYNCHRONIZED);
+            System.out.println("\n>>> [XAC NHAN DON HANG THANH CONG]");
+            System.out.println(">>> Ma don hang: " + confirmed.getId() + " | Trang thai: " + confirmed.getStatus());
+            if (confirmed.getDriverId() != null && !confirmed.getDriverId().isEmpty()) {
+                System.out.println(">>> [HE THONG DA TU DONG DIEU PHOI] Gan tai xe: " + confirmed.getDriverId() + " den lay hang!");
+            } else {
+                System.out.println(">>> [THONG BAO] Don hang da duoc xac nhan, hien dang cho tai xe gan nhat ranh don de nhan.");
+            }
+        } catch (Exception e) {
+            System.out.println(">>> [LOI] " + e.getMessage());
+        }
+    }
+
+    private void handleRestaurantRejectOrderFlow(String restaurantId) {
+        System.out.println("\n--- TU CHOI DON HANG ---");
+        List<Order> orders = this.orderController.getOrdersByRestaurant(restaurantId);
+        List<Order> pending = new ArrayList<>();
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.PENDING) {
+                pending.add(o);
+            }
+        }
+
+        if (pending.isEmpty()) {
+            System.out.println("Khong co don hang PENDING nao de tu choi.");
+            return;
+        }
+
+        this.orderView.renderOrders(pending);
+        System.out.print("Nhap Ma don hang can tu choi: ");
+        String orderId = this.readLine();
+        System.out.print("Nhap ly do tu choi: ");
+        String reason = this.readLine();
+
+        try {
+            boolean ok = this.orderController.rejectOrderByRestaurant(orderId, restaurantId, reason);
+            if (ok) {
+                System.out.println(">>> [DA TU CHOI] Don hang " + orderId + " da chuyen sang CANCELLED va so luong mon da duoc hoan lai vao kho.");
+            }
+        } catch (Exception e) {
+            System.out.println(">>> [LOI] " + e.getMessage());
+        }
+    }
+
+    private void handleRestaurantStatsFlow(String restaurantId, String restName) {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("         THONG KE DOANH THU & DON HANG NHA HANG        ");
+        System.out.println("   Nha hang: " + restName + " [" + restaurantId + "]");
+        System.out.println("-------------------------------------------------------");
+        List<Order> orders = this.orderController.getOrdersByRestaurant(restaurantId);
+        int pending = 0, confirmed = 0, dispatched = 0, delivered = 0, cancelled = 0;
+        double totalRev = 0.0;
+
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.PENDING) pending++;
+            else if (o.getStatus() == OrderStatus.CONFIRMED) confirmed++;
+            else if (o.getStatus() == OrderStatus.DISPATCHED) dispatched++;
+            else if (o.getStatus() == OrderStatus.DELIVERED) {
+                delivered++;
+                totalRev += o.getTotalFoodAmount();
+            } else if (o.getStatus() == OrderStatus.CANCELLED) cancelled++;
+        }
+
+        System.out.println("Tong so don hang tiep nhan: " + orders.size());
+        System.out.println("  + Dang cho xac nhan (PENDING):   " + pending);
+        System.out.println("  + Da xac nhan (CONFIRMED):       " + confirmed);
+        System.out.println("  + Dang giao hang (DISPATCHED):   " + dispatched);
+        System.out.println("  + Da giao thanh cong (DELIVERED): " + delivered);
+        System.out.println("  + Da huy (CANCELLED):            " + cancelled);
+        System.out.printf("Tong doanh thu mon an thanh cong:   %,.0f VND\n", totalRev);
+        System.out.println("-------------------------------------------------------");
+    }
+
+    // =========================================================================
+    // 6. ADMIN CONSOLE (Section 3.4 & 4.4)
+    // =========================================================================
+
+    private void handleAdminMenu(User user) {
+        System.out.println("\n=======================================================");
+        System.out.println("   FOOD DELIVERY SIMULATION - [CONG QUAN TRI - ADMIN]  ");
+        System.out.println("   Logged in as: " + user.getDisplayName());
+        System.out.println("=======================================================");
+        System.out.println("1. Duyet / Tu choi ho so dang ky tai xe (Approve / Reject Driver Applications)");
+        System.out.println("2. Quan ly Nguoi dung & Phan quyen (User Management)");
+        System.out.println("3. Quan ly Nha hang & Thuc don (Restaurant & Menu CRUD, Stock)");
+        System.out.println("4. Quan ly Khach hang (Customer Management)");
+        System.out.println("5. Quan ly Doi ngu Tai xe & Trang thai (Driver Fleet Management)");
+        System.out.println("6. Xem toan bo don hang tren he thong (View All Orders)");
+        System.out.println("7. Tu dong dieu phoi tat ca don hang dang cho (Auto-Dispatch All Pending)");
+        System.out.println("8. Hien thi Ban do mang luoi ASCII Grid Map");
+        System.out.println("9. Chay Concurrency Simulator Benchmark (Compare 4 Lock Mechanisms)");
+        System.out.println("10. Sinh lai toan bo du lieu mau CSV (>= 18,000 Rows)");
+        System.out.println("11. Tong quan toan he thong & Bao cao nghien cuu Big Question");
+        System.out.println("0. Dang xuat (Logout)");
+        System.out.println("=======================================================");
+        System.out.print("Nhap lua chon cua ban [0-11]: ");
+        String choice = this.readLine();
+
+        switch (choice) {
+            case "1":
+                this.handleDriverApplicationsReviewFlow();
+                break;
+            case "2":
+                this.handleUserManagementFlow();
+                break;
+            case "3":
+                this.handleRestaurantManagementFlow();
+                break;
+            case "4":
+                this.handleCustomerManagementFlow();
+                break;
+            case "5":
+                this.handleDriverManagementFlow();
+                break;
+            case "6":
+                this.handleViewOrdersFlow();
+                break;
+            case "7":
+                this.handleAutoDispatchPendingFlow();
+                break;
+            case "8":
+                this.handleDisplayAsciiMap();
+                break;
+            case "9":
+                this.handleRunSimulatorBenchmark();
+                break;
+            case "10":
+                this.handleDataGeneration();
+                break;
+            case "11":
+                this.handleSystemOverviewFlow();
+                break;
+            case "0":
+                this.authController.logout();
+                System.out.println("\n>>> [LOGGED OUT] Da dang xuat thanh cong. Tro ve man hinh dang nhap...");
+                break;
+            default:
+                System.out.println("Lua chon khong hop le. Vui long chon tu 0 den 11.");
+        }
+    }
+
+    private void handleDriverApplicationsReviewFlow() {
+        System.out.println("\n--------------------------------------------------------------------------");
+        System.out.println("            DUYET HO SO DANG KY TAI XE (SECTION 3.4 & 4.4)                ");
+        System.out.println("--------------------------------------------------------------------------");
+        List<DriverApplication> pending = this.adminController.getPendingDriverApplications();
+        if (pending.isEmpty()) {
+            System.out.println("Hien tai khong co ho so dang ky tai xe nao dang cho duyet.");
+            return;
+        }
+
+        System.out.println("Danh sach ho so dang cho xet duyet (" + pending.size() + " ho so):");
+        System.out.println("+---------+---------------+----------------------+---------------+---------------+---------------+");
+        System.out.println("| Ma HS   | Username      | Ho va ten            | SDT           | Bien so xe    | Phuong tien   |");
+        System.out.println("+---------+---------------+----------------------+---------------+---------------+---------------+");
+        for (int i = 0; i < pending.size(); i++) {
+            DriverApplication a = pending.get(i);
+            System.out.printf("| %-7s | %-13s | %-20s | %-13s | %-13s | %-13s |\n",
+                    a.getId(), a.getUsername(),
+                    a.getFullName().length() > 20 ? a.getFullName().substring(0, 17) + "..." : a.getFullName(),
+                    a.getPhone(), a.getLicensePlate(), a.getVehicleType());
+        }
+        System.out.println("+---------+---------------+----------------------+---------------+---------------+---------------+");
+
+        System.out.print("Nhap Ma ho so can xu ly (hoac Enter de bo qua): ");
+        String appId = this.readLine();
+        if (appId.isEmpty()) return;
+
+        System.out.print("Ban muon (1) PHE DUYET hay (2) TU CHOI ho so nay? [1/2]: ");
+        String action = this.readLine();
+
+        if (action.equals("1")) {
+            User approved = this.adminController.approveDriverApplication(appId);
+            if (approved != null) {
+                System.out.println("\n>>> [DA PHE DUYET THANH CONG]");
+                System.out.println(">>> Tao moi doi tac tai xe voi Ma: " + approved.getLinkedEntityId() + " (Trang thai ban dau: OFFLINE)");
+                System.out.println(">>> Cap tai khoan dang nhap: " + approved.getUsername() + " [Role: DRIVER].");
+            } else {
+                System.out.println(">>> Phe duyet that bai. Vui long kiem tra lai ma ho so.");
+            }
+        } else if (action.equals("2")) {
+            System.out.print("Nhap ly do tu choi: ");
+            String reason = this.readLine();
+            boolean ok = this.adminController.rejectDriverApplication(appId, reason);
+            System.out.println(ok ? ">>> [DA TU CHOI HO SO] " + appId : ">>> Tu choi that bai.");
+        }
+    }
+
+    // =========================================================================
+    // 7. DISPATCHER CONSOLE (Section 3.5)
+    // =========================================================================
+
+    private void handleDispatcherMenu(User user) {
+        System.out.println("\n=======================================================");
+        System.out.println("   FOOD DELIVERY SIMULATION - [DISPATCHER CONSOLE]     ");
+        System.out.println("   Logged in as: " + user.getDisplayName());
+        System.out.println("=======================================================");
+        System.out.println("1. Xem danh sach don hang can dieu phoi (View Pending Orders)");
+        System.out.println("2. Kich hoat tu dong dieu phoi tat ca don cho (Auto-Dispatch All Pending)");
+        System.out.println("3. Xem toan bo don hang gan day (View Recent Orders)");
+        System.out.println("4. Xem trang thai doi ngu tai xe (View Driver Status)");
+        System.out.println("5. Hien thi Ban do mang luoi ASCII Grid Map");
+        System.out.println("6. Chay Concurrency Simulator Benchmark (Compare 4 Lock Mechanisms)");
+        System.out.println("0. Dang xuat (Logout)");
+        System.out.println("=======================================================");
+        System.out.print("Nhap lua chon cua ban [0-6]: ");
+        String choice = this.readLine();
+
+        switch (choice) {
+            case "1":
+                List<Order> pending = this.orderController.getPendingOrders();
+                System.out.println("\nDanh sach don hang dang cho gan tai xe (" + pending.size() + " don):");
+                this.orderView.renderOrders(pending);
+                break;
+            case "2":
+                this.handleAutoDispatchPendingFlow();
+                break;
+            case "3":
+                this.handleViewOrdersFlow();
+                break;
+            case "4":
+                this.handleDriverManagementFlow();
+                break;
+            case "5":
+                this.handleDisplayAsciiMap();
+                break;
+            case "6":
+                this.handleRunSimulatorBenchmark();
+                break;
+            case "0":
+                this.authController.logout();
+                System.out.println("\n>>> [LOGGED OUT] Da dang xuat thanh cong. Tro ve man hinh dang nhap...");
+                break;
+            default:
+                System.out.println("Lua chon khong hop le. Vui long chon tu 0 den 6.");
+        }
+    }
+
+    // =========================================================================
+    // 8. COMMON FLOWS (ASCII MAP, BENCHMARK, USER CRUD, ETC.)
+    // =========================================================================
 
     private void handleViewOrdersFlow() {
         List<Order> orders = this.orderController.getAllOrders();
         this.orderView.renderOrders(orders);
-<<<<<<< HEAD
-=======
-
-        if (!orders.isEmpty()) {
-            System.out.print("Enter Order ID to inspect detailed receipt (or press Enter to return): ");
-            String orderId = this.scanner.nextLine().trim();
-            if (!orderId.isEmpty()) {
-                Order target = this.orderController.getOrderById(orderId);
-                if (target != null) {
-                    List<OrderItem> items = this.orderController.getOrderItemsByOrderId(target.getId());
-                    this.orderView.renderOrderDetail(target, items);
-                } else {
-                    System.out.println("Order [" + orderId + "] not found.");
-                }
-            }
-        }
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-    }
-
-    private void handleRestaurantMenuFlow() {
-        List<Restaurant> rests = this.restaurantController.getAllRestaurants();
-        if (rests.isEmpty()) {
-            System.out.println("No restaurants available.");
-            return;
-        }
-<<<<<<< HEAD
-        Restaurant r = rests.get(0);
-=======
-
-        Restaurant r = rests.get(0);
-        System.out.printf(Locale.US, "\nDefault Restaurant: %s (%s) - %s%n", r.getName(), r.getId(), r.getAddress());
-        System.out.print("Enter Restaurant ID to inspect (press Enter for default [" + r.getId() + "], 'L' to list): ");
-        String rInput = this.scanner.nextLine().trim();
-
-        if (rInput.equalsIgnoreCase("l")) {
-            System.out.println("\nActive Restaurants Catalog:");
-            int limit = Math.min(rests.size(), 10);
-            for (int i = 0; i < limit; i++) {
-                Restaurant curr = rests.get(i);
-                System.out.printf(Locale.US, "  [%s] %-26s | %-28s | Rating: %.1f%n",
-                        curr.getId(), this.textUtil.truncate(curr.getName(), 26),
-                        this.textUtil.truncate(curr.getAddress(), 28), curr.getRating());
-            }
-            System.out.print("Select Restaurant ID: ");
-            rInput = this.scanner.nextLine().trim();
-        }
-
-        if (!rInput.isEmpty()) {
-            Restaurant found = this.restaurantController.getRestaurantById(rInput);
-            if (found != null) {
-                r = found;
-            } else {
-                System.out.println("Restaurant not found. Using default [" + r.getId() + "].");
-            }
-        }
-
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-        System.out.println("\nShowing menu for: " + r.getName() + " (" + r.getAddress() + ")");
-        List<MenuItem> items = this.restaurantController.getMenuByRestaurant(r.getId());
-        this.orderView.renderMenu(items);
-
-        System.out.print("Do you want to update stock for an item? (y/n): ");
-        String ans = this.scanner.nextLine().trim();
-        if (ans.equalsIgnoreCase("y") && !items.isEmpty()) {
-            MenuItem target = items.get(0);
-<<<<<<< HEAD
-=======
-            System.out.print("Enter MenuItem ID to update (press Enter for [" + target.getId() + "]): ");
-            String mInput = this.scanner.nextLine().trim();
-            if (!mInput.isEmpty()) {
-                MenuItem foundItem = this.restaurantController.getMenuItemById(mInput);
-                if (foundItem != null) {
-                    target = foundItem;
-                }
-            }
-
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-            System.out.print("Enter new stock quantity for " + target.getName() + ": ");
-            try {
-                int newStock = Integer.parseInt(this.scanner.nextLine().trim());
-                this.restaurantController.updateStock(target.getId(), newStock);
-<<<<<<< HEAD
-                System.out.println("Stock updated to " + newStock);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number.");
-=======
-                System.out.println(">>> Stock updated to " + newStock + " for item [" + target.getId() + "].");
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid stock number.");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-            }
-        }
-    }
-
-    private void handleDriverManagementFlow() {
-        List<Driver> drivers = this.driverController.getAllDrivers();
-<<<<<<< HEAD
-        System.out.println("\nTotal drivers in network: " + drivers.size());
-        List<Driver> available = this.driverController.getAvailableDrivers();
-        System.out.println("Available drivers count: " + available.size());
-
-        if (!drivers.isEmpty()) {
-            Driver d = drivers.get(0);
-            System.out.println("Sample Driver: " + d.getName() + " [" + d.getStatus() + "] Current Order: " + d.getCurrentOrderId());
-            System.out.print("Toggle status between AVAILABLE and OFFLINE? (y/n): ");
-            String ans = this.scanner.nextLine().trim();
-            if (ans.equalsIgnoreCase("y")) {
-                DriverStatus next = (d.getStatus() == DriverStatus.AVAILABLE) ? DriverStatus.OFFLINE : DriverStatus.AVAILABLE;
-                this.driverController.updateDriverStatus(d.getId(), next);
-                System.out.println("Driver status changed to " + next);
-=======
-        int total = drivers.size();
-        int available = 0;
-        int busy = 0;
-        int offline = 0;
-
-        for (int i = 0; i < drivers.size(); i++) {
-            Driver d = drivers.get(i);
-            if (d.getStatus() == DriverStatus.AVAILABLE) available++;
-            else if (d.getStatus() == DriverStatus.BUSY) busy++;
-            else offline++;
-        }
-
-        System.out.println("\n=======================================================");
-        System.out.println("             DRIVER FLEET MANAGEMENT STATUS            ");
-        System.out.println("=======================================================");
-        System.out.printf(Locale.US, "  Total Drivers Registered : %,d%n", total);
-        System.out.printf(Locale.US, "  [AVAILABLE] Free to pick : %,d%n", available);
-        System.out.printf(Locale.US, "  [BUSY] Delivering orders : %,d%n", busy);
-        System.out.printf(Locale.US, "  [OFFLINE] Inactive fleet : %,d%n", offline);
-        System.out.println("=======================================================");
-
-        if (!drivers.isEmpty()) {
-            int showCount = Math.min(drivers.size(), 8);
-            System.out.println("Sample Driver Fleet Roster:");
-            for (int i = 0; i < showCount; i++) {
-                Driver d = drivers.get(i);
-                String curr = (d.getCurrentOrderId() == null || d.getCurrentOrderId().isEmpty()) ? "NONE" : d.getCurrentOrderId();
-                System.out.printf(Locale.US, "  [%s] %-18s | Phone: %-12s | Status: %-10s | Order: %s%n",
-                        d.getId(), this.textUtil.truncate(d.getName(), 18), d.getPhone(), d.getStatus(), curr);
-            }
-
-            System.out.print("\nEnter Driver ID to toggle status AVAILABLE <-> OFFLINE (or press Enter to return): ");
-            String dId = this.scanner.nextLine().trim();
-            if (!dId.isEmpty()) {
-                Driver target = this.driverController.getDriverById(dId);
-                if (target != null) {
-                    DriverStatus next = (target.getStatus() == DriverStatus.AVAILABLE) ? DriverStatus.OFFLINE : DriverStatus.AVAILABLE;
-                    this.driverController.updateDriverStatus(target.getId(), next);
-                    System.out.println(">>> Driver [" + target.getId() + "] status changed to " + next);
-                } else {
-                    System.out.println("Driver [" + dId + "] not found.");
-                }
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-            }
-        }
     }
 
     private void handleDisplayAsciiMap() {
-<<<<<<< HEAD
         List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
         List<Customer> customers = this.customerController.getAllCustomers();
         List<Driver> drivers = this.driverController.getAllDrivers();
         this.mapView.renderAsciiMap(restaurants, customers, drivers);
-=======
-        boolean inMapMenu = true;
-        while (inMapMenu) {
-            System.out.println("\n-------------------------------------------------------");
-            System.out.println("             NETWORK ASCII MAP & ROUTING               ");
-            System.out.println("-------------------------------------------------------");
-            System.out.println("1. Render Full Network Grid (Restaurants, Customers, Drivers)");
-            System.out.println("2. Visualize Active Delivery Route for an Order");
-            System.out.printf(Locale.US, "3. Adjust Map Grid Dimensions (Current: %d rows x %d cols)%n",
-                    this.mapView.getRows(), this.mapView.getCols());
-            System.out.println("0. Return to Main Menu");
-            System.out.println("-------------------------------------------------------");
-            System.out.print("Select Map Option [0-3]: ");
-            String mapChoice = this.scanner.nextLine().trim();
-
-            switch (mapChoice) {
-                case "1": {
-                    List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
-                    List<Customer> customers = this.customerController.getAllCustomers();
-                    List<Driver> drivers = this.driverController.getAllDrivers();
-                    this.mapView.renderAsciiMap(restaurants, customers, drivers);
-                    break;
-                }
-                case "2": {
-                    List<Order> orders = this.orderController.getAllOrders();
-                    Order targetOrder = null;
-                    for (int i = 0; i < orders.size(); i++) {
-                        Order o = orders.get(i);
-                        if (o.getDriverId() != null && !o.getDriverId().isEmpty()) {
-                            targetOrder = o;
-                            break;
-                        }
-                    }
-
-                    if (targetOrder == null) {
-                        System.out.println("No dispatched orders with assigned drivers found to visualize.");
-                        break;
-                    }
-
-                    System.out.printf(Locale.US, "Sample Order found: %s (Driver: %s, Rest: %s, Cust: %s)%n",
-                            targetOrder.getId(), targetOrder.getDriverId(), targetOrder.getRestaurantId(), targetOrder.getCustomerId());
-                    System.out.print("Enter Order ID to trace (press Enter for default [" + targetOrder.getId() + "]): ");
-                    String oInput = this.scanner.nextLine().trim();
-                    if (!oInput.isEmpty()) {
-                        Order custom = this.orderController.getOrderById(oInput);
-                        if (custom != null) {
-                            targetOrder = custom;
-                        }
-                    }
-
-                    Restaurant r = this.restaurantController.getRestaurantById(targetOrder.getRestaurantId());
-                    Customer c = this.customerController.getCustomerById(targetOrder.getCustomerId());
-                    Driver d = this.driverController.getDriverById(targetOrder.getDriverId());
-                    if (r != null && c != null && d != null) {
-                        this.mapView.renderDeliveryRoute(r, c, d);
-                    } else {
-                        System.out.println("Could not resolve restaurant, customer, or driver for order " + targetOrder.getId());
-                    }
-                    break;
-                }
-                case "3": {
-                    System.out.print("Enter new rows count (10-30, default 15): ");
-                    try {
-                        int rNum = Integer.parseInt(this.scanner.nextLine().trim());
-                        this.mapView.setRows(Math.max(10, Math.min(30, rNum)));
-                    } catch (NumberFormatException ignored) {}
-
-                    System.out.print("Enter new columns count (30-80, default 45): ");
-                    try {
-                        int cNum = Integer.parseInt(this.scanner.nextLine().trim());
-                        this.mapView.setCols(Math.max(30, Math.min(80, cNum)));
-                    } catch (NumberFormatException ignored) {}
-
-                    System.out.printf(Locale.US, "Grid adjusted to %d rows x %d cols.%n",
-                            this.mapView.getRows(), this.mapView.getCols());
-                    break;
-                }
-                case "0":
-                    inMapMenu = false;
-                    break;
-                default:
-                    System.out.println("Invalid selection.");
-            }
-        }
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
     }
 
     private void handleRunSimulatorBenchmark() {
@@ -630,15 +1344,11 @@ public class MainView implements IView {
         System.out.println("  RUNNING RESEARCH CONCURRENCY SIMULATOR BENCHMARK     ");
         System.out.println("=======================================================");
         System.out.print("Enter number of concurrent orders to simulate per mechanism (e.g. 500 or 1000): ");
-        String countStr = this.scanner.nextLine().trim();
+        String countStr = this.readLine();
         int ordersCount = 500;
         try {
             if (!countStr.isEmpty()) {
-<<<<<<< HEAD
                 ordersCount = Integer.parseInt(countStr);
-=======
-                ordersCount = Math.max(10, Integer.parseInt(countStr));
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
             }
         } catch (NumberFormatException ignored) {}
 
@@ -652,11 +1362,7 @@ public class MainView implements IView {
 
         for (int i = 0; i < mechanisms.length; i++) {
             LockMechanism mech = mechanisms[i];
-<<<<<<< HEAD
             System.out.println("\nExecuting simulation with mechanism: " + mech.name() + "...");
-=======
-            System.out.println("\n>>> Executing simulation with mechanism: " + mech.name() + " (" + ordersCount + " orders)...");
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
             SimulationRun run = this.simulatorController.runSimulation(ordersCount, mech);
             if (run != null) {
                 runs.add(run);
@@ -664,12 +1370,8 @@ public class MainView implements IView {
             }
         }
 
-<<<<<<< HEAD
         this.simulatorView.renderComparisonTable(runs);
-=======
-        // Render full benchmark suite (Table, Bar Chart, Anomalies, Conclusions)
-        this.simulatorView.renderFullBenchmarkReport(runs);
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
+        this.reportView.printResearchConclusion(runs);
     }
 
     private void handleDataGeneration() {
@@ -679,248 +1381,435 @@ public class MainView implements IView {
         System.out.println("Data generation completed successfully!");
     }
 
-<<<<<<< HEAD
-=======
-    private void handleSystemReportsFlow() {
-        boolean inReportMenu = true;
-        while (inReportMenu) {
+    private void handleAutoDispatchPendingFlow() {
+        System.out.println("\n=======================================================");
+        System.out.println("  TU DONG DIEU PHOI TAI XE CHO TAT CA DON HANG PENDING ");
+        System.out.println("=======================================================");
+        List<Order> pendingOrders = this.orderController.getPendingOrders();
+        System.out.println("So luong don hang dang cho dieu phoi (PENDING / Chua co tai xe): " + pendingOrders.size());
+        if (pendingOrders.isEmpty()) {
+            System.out.println(">>> Khong co don hang nao can dieu phoi tai thoi diem nay.");
+            return;
+        }
+
+        System.out.println("Chon co che dong bo hoa cho qua trinh tu dong dieu phoi:");
+        System.out.println("1. SYNCHRONIZED (Khuyen nghi - An toan tuyet doi, 0% loi)");
+        System.out.println("2. OPTIMISTIC (Version-based validation)");
+        System.out.println("3. FILE_LOCK (FileChannel physical locks)");
+        System.out.println("4. NO_LOCK (Khong khoa - Kiem thu rui ro Race Condition)");
+        System.out.print("Lua chon [1-4, mac dinh 1]: ");
+        String mChoice = this.readLine();
+        LockMechanism mech = LockMechanism.SYNCHRONIZED;
+        if (mChoice.equals("2")) mech = LockMechanism.OPTIMISTIC;
+        else if (mChoice.equals("3")) mech = LockMechanism.FILE_LOCK;
+        else if (mChoice.equals("4")) mech = LockMechanism.NO_LOCK;
+
+        System.out.println("\nDang kich hoat quy trinh tu dong quet vi tri nha hang va tai xe gan nhat...");
+        List<String> logs = this.orderController.autoDispatchAllPending(mech);
+        for (int i = 0; i < logs.size(); i++) {
+            System.out.println("  -> " + logs.get(i));
+        }
+        System.out.println("\n>>> [TU DONG DIEU PHOI HOAN TAT] Tong cong da xu ly " + logs.size() + " don hang.");
+    }
+
+    private void handleDriverManagementFlow() {
+        List<Driver> drivers = this.driverController.getAllDrivers();
+        System.out.println("\nTong so tai xe tren mang luoi: " + drivers.size());
+        List<Driver> available = this.driverController.getAvailableDrivers();
+        System.out.println("So tai xe dang AVAILABLE (San sang nhan don): " + available.size());
+
+        int limit = Math.min(drivers.size(), 10);
+        System.out.println("+---------+----------------------+---------------+---------------+---------------+");
+        System.out.println("| Ma TX   | Ho va ten            | SDT           | Bien so xe    | Trang thai    |");
+        System.out.println("+---------+----------------------+---------------+---------------+---------------+");
+        for (int i = 0; i < limit; i++) {
+            Driver d = drivers.get(i);
+            System.out.printf("| %-7s | %-20s | %-13s | %-13s | %-13s |\n",
+                    d.getId(),
+                    d.getName().length() > 20 ? d.getName().substring(0, 17) + "..." : d.getName(),
+                    d.getPhone(), d.getLicensePlate(), d.getStatus().name());
+        }
+        System.out.println("+---------+----------------------+---------------+---------------+---------------+");
+    }
+
+    private void handleUserManagementFlow() {
+        boolean inUserMenu = true;
+        while (inUserMenu) {
             System.out.println("\n-------------------------------------------------------");
-            System.out.println("        SYSTEM REPORTS & RESEARCH ANALYTICS            ");
+            System.out.println("        QUAN LY NGUOI DUNG & TAI KHOAN HE THONG        ");
             System.out.println("-------------------------------------------------------");
-            System.out.println("1. Complete System Network & Order Audit Report");
-            System.out.println("2. Haversine Distance Formula Geodesic Verification");
-            System.out.println("3. Physical CSV Storage Anomaly Audit");
-            System.out.println("4. Research Big Question Theoretical Summary");
-            System.out.println("5. Historical Simulation Runs Log (simulation_runs.csv)");
-            System.out.println("0. Return to Main Menu");
+            System.out.println("1. Xem danh sach tat ca tai khoan nguoi dung");
+            System.out.println("2. Tim kiem tai khoan theo Ten dang nhap");
+            System.out.println("3. Loc danh sach tai khoan theo Vai tro (Role)");
+            System.out.println("4. Tao tai khoan moi (Admin / Dispatcher / Rest / Driver / Customer)");
+            System.out.println("5. Cap nhat tai khoan (Mat khau, Ten hien thi, Vai tro)");
+            System.out.println("6. Xoa tai khoan nguoi dung");
+            System.out.println("0. Quay lai Menu Admin");
             System.out.println("-------------------------------------------------------");
-            System.out.print("Select Report Option [0-5]: ");
-            String repChoice = this.scanner.nextLine().trim();
+            System.out.print("Chon chuc nang quan ly nguoi dung [0-6]: ");
+            String opt = this.readLine();
 
-            switch (repChoice) {
-                case "1": {
-                    List<Customer> custs = this.customerController.getAllCustomers();
-                    List<Restaurant> rests = this.restaurantController.getAllRestaurants();
-                    List<Driver> drivers = this.driverController.getAllDrivers();
-                    List<Order> orders = this.orderController.getAllOrders();
-
-                    int avail = 0;
-                    int busy = 0;
-                    int offline = 0;
-                    for (int i = 0; i < drivers.size(); i++) {
-                        Driver d = drivers.get(i);
-                        if (d.getStatus() == DriverStatus.AVAILABLE) avail++;
-                        else if (d.getStatus() == DriverStatus.BUSY) busy++;
-                        else offline++;
-                    }
-
-                    int pending = 0;
-                    int completed = 0;
-                    int cancelled = 0;
-                    double totalRev = 0.0;
-                    for (int i = 0; i < orders.size(); i++) {
-                        Order o = orders.get(i);
-                        if (o.getStatus() == OrderStatus.PENDING) pending++;
-                        else if (o.getStatus() == OrderStatus.DELIVERED) completed++;
-                        else if (o.getStatus() == OrderStatus.CANCELLED) cancelled++;
-                        totalRev += o.getTotalAmount();
-                    }
-
-                    int menuItemCount = rests.size() * 10;
-                    this.reportView.renderSystemOverview(
-                            custs.size(), rests.size(), menuItemCount, drivers.size(),
-                            orders.size(), totalRev,
-                            avail, busy, offline,
-                            pending, completed, cancelled
-                    );
+            switch (opt) {
+                case "1":
+                    List<User> allUsers = this.authController.getAllUsers();
+                    this.displayUserTable(allUsers);
                     break;
-                }
-                case "2": {
-                    GeoUtils geo = new GeoUtils();
-                    // Hanoi coordinates: 21.0285 N, 105.8542 E
-                    // Ho Chi Minh City coordinates: 10.8231 N, 106.6297 E
-                    double dist = geo.haversineDistance(21.0285, 105.8542, 10.8231, 106.6297);
-                    this.reportView.renderHaversineAccuracyReport(dist, 1138.0, "Hanoi (21.0285 N, 105.8542 E)", "Ho Chi Minh City (10.8231 N, 106.6297 E)");
-                    break;
-                }
-                case "3": {
-                    int doubleAssignments = this.simulatorController.detectDoubleAssignments();
-                    int oversells = this.simulatorController.detectOversellItems();
-                    int driverOverloads = this.simulatorController.detectDriverOverload();
-                    this.reportView.renderConcurrencyAnomaliesAudit(doubleAssignments, oversells, driverOverloads);
-                    break;
-                }
-                case "4": {
-                    this.reportView.renderBigQuestionSummary();
-                    break;
-                }
-                case "5": {
-                    List<SimulationRun> allRuns = this.simulatorController.getAllSimulationRuns();
-                    if (allRuns.isEmpty()) {
-                        System.out.println("No simulation runs recorded in data/simulation_runs.csv yet.");
+                case "2":
+                    System.out.print("Nhap ten dang nhap can tim: ");
+                    String sUsername = this.readLine();
+                    User foundUser = this.authController.getUserRepository().findByUsername(sUsername);
+                    if (foundUser != null) {
+                        List<User> list = new ArrayList<>();
+                        list.add(foundUser);
+                        this.displayUserTable(list);
                     } else {
-                        System.out.println("\nAll Recorded Simulation Benchmark Runs (" + allRuns.size() + " records):");
-                        this.simulatorView.renderComparisonTable(allRuns);
+                        System.out.println("Khong tim thay nguoi dung voi username: " + sUsername);
                     }
                     break;
-                }
+                case "3":
+                    System.out.println("Chon vai tro can loc:");
+                    System.out.println("1. ADMIN | 2. DISPATCHER | 3. RESTAURANT | 4. DRIVER | 5. CUSTOMER");
+                    System.out.print("Lua chon [1-5]: ");
+                    String rChoice = this.readLine();
+                    UserRole filterRole = UserRole.CUSTOMER;
+                    if (rChoice.equals("1")) filterRole = UserRole.ADMIN;
+                    else if (rChoice.equals("2")) filterRole = UserRole.DISPATCHER;
+                    else if (rChoice.equals("3")) filterRole = UserRole.RESTAURANT;
+                    else if (rChoice.equals("4")) filterRole = UserRole.DRIVER;
+                    List<User> filtered = this.authController.getUsersByRole(filterRole);
+                    System.out.println("\nDanh sach tai khoan vai tro [" + filterRole.name() + "] (" + filtered.size() + " tai khoan):");
+                    this.displayUserTable(filtered);
+                    break;
+                case "4":
+                    System.out.print("Nhap ten dang nhap moi: ");
+                    String uName = this.readLine();
+                    System.out.print("Nhap mat khau: ");
+                    String uPass = this.readLine();
+                    System.out.println("Chon vai tro: 1. ADMIN | 2. DISPATCHER | 3. RESTAURANT | 4. DRIVER | 5. CUSTOMER");
+                    System.out.print("Lua chon [1-5]: ");
+                    String roleOpt = this.readLine();
+                    UserRole newRole = UserRole.CUSTOMER;
+                    if (roleOpt.equals("1")) newRole = UserRole.ADMIN;
+                    else if (roleOpt.equals("2")) newRole = UserRole.DISPATCHER;
+                    else if (roleOpt.equals("3")) newRole = UserRole.RESTAURANT;
+                    else if (roleOpt.equals("4")) newRole = UserRole.DRIVER;
+
+                    System.out.print("Nhap ten hien thi: ");
+                    String uDisp = this.readLine();
+                    System.out.print("Nhap ma lien ket thuc the (VD: R001, D0001, C0001 hoac de trong): ");
+                    String uLinked = this.readLine();
+
+                    try {
+                        User created = this.authController.createUser(uName, uPass, newRole, uLinked, uDisp);
+                        System.out.println(">>> [TAO THANH CONG] Tai khoan ID: " + created.getId() + " [" + created.getRole().name() + "]");
+                    } catch (Exception e) {
+                        System.out.println(">>> [LOI] " + e.getMessage());
+                    }
+                    break;
+                case "5":
+                    System.out.print("Nhap ID tai khoan can sua (VD: U_1): ");
+                    String targetId = this.readLine();
+                    User targetUser = this.authController.getUserById(targetId);
+                    if (targetUser == null) {
+                        System.out.println("Khong tim thay tai khoan voi ID: " + targetId);
+                        break;
+                    }
+                    System.out.print("Nhap mat khau moi (bam Enter de giu nguyen): ");
+                    String newP = this.readLine();
+                    System.out.print("Nhap ten hien thi moi (bam Enter de giu nguyen): ");
+                    String newD = this.readLine();
+                    System.out.print("Doi vai tro? (1. ADMIN | 2. DISPATCHER | 3. RESTAURANT | 4. DRIVER | 5. CUSTOMER | Enter bo qua): ");
+                    String chR = this.readLine();
+                    UserRole upRole = null;
+                    if (chR.equals("1")) upRole = UserRole.ADMIN;
+                    else if (chR.equals("2")) upRole = UserRole.DISPATCHER;
+                    else if (chR.equals("3")) upRole = UserRole.RESTAURANT;
+                    else if (chR.equals("4")) upRole = UserRole.DRIVER;
+                    else if (chR.equals("5")) upRole = UserRole.CUSTOMER;
+
+                    boolean upOk = this.authController.updateUser(targetId, newP, upRole, newD);
+                    System.out.println(upOk ? ">>> Cap nhat tai khoan thanh cong!" : ">>> Cap nhat that bai.");
+                    break;
+                case "6":
+                    System.out.print("Nhap ID tai khoan can xoa: ");
+                    String delId = this.readLine();
+                    try {
+                        boolean delOk = this.authController.deleteUser(delId);
+                        System.out.println(delOk ? ">>> Da xoa tai khoan " + delId + " khoi he thong." : "Khong tim thay tai khoan de xoa.");
+                    } catch (Exception e) {
+                        System.out.println(">>> [LOI] " + e.getMessage());
+                    }
+                    break;
                 case "0":
-                    inReportMenu = false;
+                    inUserMenu = false;
                     break;
                 default:
-                    System.out.println("Invalid selection.");
+                    System.out.println("Lua chon khong hop le.");
             }
         }
     }
 
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
-    // --- FULL CRUD SUBMENU ---
+    private void displayUserTable(List<User> users) {
+        System.out.println("+---------+---------------+---------------+--------------------+-------------------------+");
+        System.out.println("| ID      | Username      | Role          | Linked Entity      | Display Name            |");
+        System.out.println("+---------+---------------+---------------+--------------------+-------------------------+");
+        for (int i = 0; i < users.size(); i++) {
+            User u = users.get(i);
+            System.out.printf("| %-7s | %-13s | %-13s | %-18s | %-23s |\n",
+                u.getId(),
+                u.getUsername(),
+                u.getRole().name(),
+                u.getLinkedEntityId() != null ? u.getLinkedEntityId() : "",
+                u.getDisplayName().length() > 23 ? u.getDisplayName().substring(0, 20) + "..." : u.getDisplayName()
+            );
+        }
+        System.out.println("+---------+---------------+---------------+--------------------+-------------------------+");
+        System.out.println("Tong cong: " + users.size() + " nguoi dung.");
+    }
 
-    private void handleCrudSubMenu() {
-        boolean inCrud = true;
-        while (inCrud) {
+    private void handleRestaurantManagementFlow() {
+        boolean inRestMenu = true;
+        while (inRestMenu) {
             System.out.println("\n-------------------------------------------------------");
-            System.out.println("      FULL CRUD MANAGEMENT (RUBRIC CRITERION 3)        ");
+            System.out.println("            QUAN LY NHA HANG & THUC DON                ");
             System.out.println("-------------------------------------------------------");
-            System.out.println("1. Create New Restaurant");
-            System.out.println("2. Read / Find Restaurant by ID");
-            System.out.println("3. Update Restaurant Information");
-            System.out.println("4. Delete Restaurant by ID");
-            System.out.println("5. Create New MenuItem for Restaurant");
-            System.out.println("6. Read / Find MenuItem by ID");
-            System.out.println("7. Update MenuItem (Name, Price, Stock)");
-            System.out.println("8. Delete MenuItem by ID");
-            System.out.println("9. Create New Driver");
-            System.out.println("10. Read / Find Driver by ID");
-            System.out.println("11. Update Driver Information / Status");
-            System.out.println("12. Delete Driver by ID");
-            System.out.println("13. Delete Order by ID");
-            System.out.println("0. Return to Main Menu");
+            System.out.println("1. Xem danh sach nha hang");
+            System.out.println("2. Them nha hang moi");
+            System.out.println("3. Cap nhat thong tin nha hang");
+            System.out.println("4. Xoa nha hang");
+            System.out.println("5. Xem thuc don cua nha hang");
+            System.out.println("6. Them mon an moi vao thuc don");
+            System.out.println("7. Cap nhat mon an (Ten, Gia, Ton kho)");
+            System.out.println("8. Xoa mon an khoi thuc don");
+            System.out.println("0. Quay lai Menu Admin");
             System.out.println("-------------------------------------------------------");
-            System.out.print("Select CRUD action [0-13]: ");
-            String crudChoice = this.scanner.nextLine().trim();
+            System.out.print("Chon chuc nang [0-8]: ");
+            String opt = this.readLine();
 
-            switch (crudChoice) {
+            switch (opt) {
                 case "1":
-                    System.out.print("Enter restaurant name: ");
-                    String rName = this.scanner.nextLine().trim();
-                    System.out.print("Enter restaurant address: ");
-                    String rAddr = this.scanner.nextLine().trim();
-                    Restaurant createdR = this.restaurantController.createRestaurant(rName, rAddr, 21.03, 105.84, 4.8);
-                    System.out.println(">>> [CREATE] Restaurant created with ID: " + createdR.getId());
+                    List<Restaurant> list = this.restaurantController.getAllRestaurants();
+                    int limit = Math.min(list.size(), 15);
+                    System.out.println("+-------+--------------------------------+---------------------------+--------+");
+                    System.out.println("| ID    | Ten nha hang                   | Dia chi                   | Rating |");
+                    System.out.println("+-------+--------------------------------+---------------------------+--------+");
+                    for (int i = 0; i < limit; i++) {
+                        Restaurant r = list.get(i);
+                        System.out.printf("| %-5s | %-30s | %-25s | %-6.1f |\n",
+                            r.getId(),
+                            r.getName().length() > 30 ? r.getName().substring(0, 27) + "..." : r.getName(),
+                            r.getAddress().length() > 25 ? r.getAddress().substring(0, 22) + "..." : r.getAddress(),
+                            r.getRating()
+                        );
+                    }
+                    System.out.println("+-------+--------------------------------+---------------------------+--------+");
                     break;
                 case "2":
-                    System.out.print("Enter restaurant ID to read: ");
-                    String findRId = this.scanner.nextLine().trim();
-                    Restaurant foundR = this.restaurantController.getRestaurantById(findRId);
-                    if (foundR != null) {
-                        System.out.println(">>> [READ] Found: " + foundR.getName() + " | Address: " + foundR.getAddress() + " | Rating: " + foundR.getRating());
+                    System.out.print("Nhap ten nha hang: ");
+                    String rName = this.readLine();
+                    System.out.print("Nhap dia chi: ");
+                    String rAddr = this.readLine();
+                    Restaurant createdR = this.restaurantController.createRestaurant(rName, rAddr, 13.770, 109.220, 4.8);
+                    System.out.println(">>> [TAO THANH CONG] Nha hang ID: " + createdR.getId());
+                    break;
+                case "3":
+                    System.out.print("Nhap ID nha hang can sua: ");
+                    String upRId = this.readLine();
+                    System.out.print("Nhap ten moi: ");
+                    String newRName = this.readLine();
+                    System.out.print("Nhap dia chi moi: ");
+                    String newRAddr = this.readLine();
+                    boolean upOk = this.restaurantController.updateRestaurant(upRId, newRName, newRAddr, 4.9);
+                    System.out.println(upOk ? ">>> Cap nhat nha hang thanh cong!" : ">>> Khong tim thay nha hang.");
+                    break;
+                case "4":
+                    System.out.print("Nhap ID nha hang can xoa: ");
+                    String delRId = this.readLine();
+                    boolean delOk = this.restaurantController.deleteRestaurant(delRId);
+                    System.out.println(delOk ? ">>> Da xoa nha hang khoi CSV." : ">>> Khong tim thay nha hang.");
+                    break;
+                case "5":
+                    System.out.print("Nhap ID nha hang can xem thuc don: ");
+                    String restIdView = this.readLine();
+                    Restaurant restObj = this.restaurantController.getRestaurantById(restIdView);
+                    if (restObj != null) {
+                        List<MenuItem> mList = this.restaurantController.getMenuByRestaurant(restIdView);
+                        this.orderView.displayMenu(restObj, mList);
                     } else {
-                        System.out.println("Restaurant not found.");
+                        System.out.println("Khong tim thay nha hang: " + restIdView);
+                    }
+                    break;
+                case "6":
+                    System.out.print("Nhap ID nha hang: ");
+                    String rIdForMenu = this.readLine();
+                    System.out.print("Nhap ten mon an: ");
+                    String mName = this.readLine();
+                    System.out.print("Nhap don gia (VND): ");
+                    double mPrice = Double.parseDouble(this.readLine());
+                    System.out.print("Nhap so luong ton kho ban dau: ");
+                    int mStock = Integer.parseInt(this.readLine());
+                    MenuItem createdM = this.restaurantController.createMenuItem(rIdForMenu, mName, mPrice, mStock);
+                    System.out.println(">>> [TAO MON THANH CONG] Mon an ID: " + createdM.getId());
+                    break;
+                case "7":
+                    System.out.print("Nhap ID mon an can sua: ");
+                    String upMId = this.readLine();
+                    System.out.print("Nhap ten moi: ");
+                    String upMName = this.readLine();
+                    System.out.print("Nhap don gia moi (VND): ");
+                    double upPrice = Double.parseDouble(this.readLine());
+                    System.out.print("Nhap so luong ton kho moi: ");
+                    int upStock = Integer.parseInt(this.readLine());
+                    boolean upMOk = this.restaurantController.updateMenuItem(upMId, upMName, upPrice, upStock);
+                    System.out.println(upMOk ? ">>> Cap nhat mon an thanh cong!" : ">>> Khong tim thay mon an.");
+                    break;
+                case "8":
+                    System.out.print("Nhap ID mon an can xoa: ");
+                    String delMId = this.readLine();
+                    boolean delMOk = this.restaurantController.deleteMenuItem(delMId);
+                    System.out.println(delMOk ? ">>> Da xoa mon an khoi thuc don." : ">>> Khong tim thay mon an.");
+                    break;
+                case "0":
+                    inRestMenu = false;
+                    break;
+                default:
+                    System.out.println("Lua chon khong hop le.");
+            }
+        }
+    }
+
+    private void handleCustomerManagementFlow() {
+        boolean inCustMenu = true;
+        while (inCustMenu) {
+            System.out.println("\n-------------------------------------------------------");
+            System.out.println("                  QUAN LY KHACH HANG                   ");
+            System.out.println("-------------------------------------------------------");
+            System.out.println("1. Xem danh sach khach hang");
+            System.out.println("2. Tim kiem khach hang theo So dien thoai");
+            System.out.println("3. Them moi khach hang");
+            System.out.println("4. Cap nhat thong tin khach hang");
+            System.out.println("5. Xoa khach hang");
+            System.out.println("0. Quay lai Menu Admin");
+            System.out.println("-------------------------------------------------------");
+            System.out.print("Chon chuc nang [0-5]: ");
+            String opt = this.readLine();
+
+            switch (opt) {
+                case "1":
+                    List<Customer> all = this.customerController.getAllCustomers();
+                    int limit = Math.min(all.size(), 15);
+                    System.out.println("+---------+----------------------+---------------+--------------------------------+");
+                    System.out.println("| ID      | Ten khach hang       | So dien thoai | Dia chi                        |");
+                    System.out.println("+---------+----------------------+---------------+--------------------------------+");
+                    for (int i = 0; i < limit; i++) {
+                        Customer c = all.get(i);
+                        System.out.printf("| %-7s | %-20s | %-13s | %-30s |\n",
+                            c.getId(),
+                            c.getName().length() > 20 ? c.getName().substring(0, 17) + "..." : c.getName(),
+                            c.getPhone(),
+                            c.getAddress().length() > 30 ? c.getAddress().substring(0, 27) + "..." : c.getAddress()
+                        );
+                    }
+                    System.out.println("+---------+----------------------+---------------+--------------------------------+");
+                    break;
+                case "2":
+                    System.out.print("Nhap so dien thoai can tim: ");
+                    String sPhone = this.readLine();
+                    Customer found = this.customerController.getCustomerByPhone(sPhone);
+                    if (found != null) {
+                        System.out.println(">>> [TIM THAY] Ma: " + found.getId() + " | Ten: " + found.getName() + " | SDT: " + found.getPhone() + " | Dia chi: " + found.getAddress());
+                    } else {
+                        System.out.println("Khong tim thay khach hang voi so dien thoai: " + sPhone);
                     }
                     break;
                 case "3":
-                    System.out.print("Enter restaurant ID to update: ");
-                    String upRId = this.scanner.nextLine().trim();
-                    System.out.print("Enter new name: ");
-                    String newRName = this.scanner.nextLine().trim();
-                    System.out.print("Enter new address: ");
-                    String newRAddr = this.scanner.nextLine().trim();
-                    boolean upRSuccess = this.restaurantController.updateRestaurant(upRId, newRName, newRAddr, 4.9);
-                    System.out.println(upRSuccess ? ">>> [UPDATE] Restaurant updated." : "Failed to update restaurant.");
+                    System.out.print("Nhap ten khach hang: ");
+                    String cName = this.readLine();
+                    System.out.print("Nhap so dien thoai: ");
+                    String cPhone = this.readLine();
+                    System.out.print("Nhap dia chi: ");
+                    String cAddr = this.readLine();
+                    Customer createdC = this.customerController.registerCustomer(cName, cPhone, cAddr, 13.775, 109.225);
+                    System.out.println(">>> [TAO THANH CONG] Khach hang ID: " + createdC.getId());
                     break;
                 case "4":
-                    System.out.print("Enter restaurant ID to delete: ");
-                    String delRId = this.scanner.nextLine().trim();
-                    boolean delRSuccess = this.restaurantController.deleteRestaurant(delRId);
-                    System.out.println(delRSuccess ? ">>> [DELETE] Restaurant deleted from CSV." : "Restaurant not found.");
+                    System.out.print("Nhap ID khach hang can cap nhat: ");
+                    String upCId = this.readLine();
+                    System.out.print("Nhap ten moi: ");
+                    String newCName = this.readLine();
+                    System.out.print("Nhap so dien thoai moi: ");
+                    String newCPhone = this.readLine();
+                    System.out.print("Nhap dia chi moi: ");
+                    String newCAddr = this.readLine();
+                    boolean upCOk = this.customerController.updateCustomer(upCId, newCName, newCPhone, newCAddr, 13.775, 109.225);
+                    System.out.println(upCOk ? ">>> Cap nhat khach hang thanh cong!" : ">>> Khong tim thay khach hang.");
                     break;
                 case "5":
-                    System.out.print("Enter restaurant ID: ");
-                    String restIdForMenu = this.scanner.nextLine().trim();
-                    System.out.print("Enter item name: ");
-                    String mName = this.scanner.nextLine().trim();
-                    System.out.print("Enter item price: ");
-                    double mPrice = Double.parseDouble(this.scanner.nextLine().trim());
-                    System.out.print("Enter item stock: ");
-                    int mStock = Integer.parseInt(this.scanner.nextLine().trim());
-                    MenuItem createdM = this.restaurantController.createMenuItem(restIdForMenu, mName, mPrice, mStock);
-                    System.out.println(">>> [CREATE] MenuItem created with ID: " + createdM.getId());
-                    break;
-                case "6":
-                    System.out.print("Enter item ID to read: ");
-                    String mIdFind = this.scanner.nextLine().trim();
-                    MenuItem foundM = this.restaurantController.getMenuItemById(mIdFind);
-                    if (foundM != null) {
-                        System.out.println(">>> [READ] Found: " + foundM.getName() + " | Price: $" + foundM.getPrice() + " | Stock: " + foundM.getStockQty());
-                    } else {
-                        System.out.println("Item not found.");
-                    }
-                    break;
-                case "7":
-                    System.out.print("Enter item ID to update: ");
-                    String upMId = this.scanner.nextLine().trim();
-                    System.out.print("Enter new item name: ");
-                    String upMName = this.scanner.nextLine().trim();
-                    System.out.print("Enter new price: ");
-                    double upMPrice = Double.parseDouble(this.scanner.nextLine().trim());
-                    System.out.print("Enter new stock quantity: ");
-                    int upMStock = Integer.parseInt(this.scanner.nextLine().trim());
-                    boolean upMSuccess = this.restaurantController.updateMenuItem(upMId, upMName, upMPrice, upMStock);
-                    System.out.println(upMSuccess ? ">>> [UPDATE] MenuItem updated." : "Item not found.");
-                    break;
-                case "8":
-                    System.out.print("Enter item ID to delete: ");
-                    String delMId = this.scanner.nextLine().trim();
-                    boolean delMSuccess = this.restaurantController.deleteMenuItem(delMId);
-                    System.out.println(delMSuccess ? ">>> [DELETE] MenuItem deleted from CSV." : "Item not found.");
-                    break;
-                case "9":
-                    System.out.print("Enter driver name: ");
-                    String dName = this.scanner.nextLine().trim();
-                    System.out.print("Enter driver phone: ");
-                    String dPhone = this.scanner.nextLine().trim();
-                    Driver createdD = this.driverController.createDriver(dName, dPhone, 21.025, 105.850);
-                    System.out.println(">>> [CREATE] Driver registered with ID: " + createdD.getId());
-                    break;
-                case "10":
-                    System.out.print("Enter driver ID to read: ");
-                    String dIdFind = this.scanner.nextLine().trim();
-                    Driver foundD = this.driverController.getDriverById(dIdFind);
-                    if (foundD != null) {
-                        System.out.println(">>> [READ] Driver: " + foundD.getName() + " | Phone: " + foundD.getPhone() + " | Status: " + foundD.getStatus());
-                    } else {
-                        System.out.println("Driver not found.");
-                    }
-                    break;
-                case "11":
-                    System.out.print("Enter driver ID to update: ");
-                    String upDId = this.scanner.nextLine().trim();
-                    System.out.print("Enter new name: ");
-                    String upDName = this.scanner.nextLine().trim();
-                    System.out.print("Enter new phone: ");
-                    String upDPhone = this.scanner.nextLine().trim();
-                    boolean upDSuccess = this.driverController.updateDriverInfo(upDId, upDName, upDPhone, 21.026, 105.852);
-                    System.out.println(upDSuccess ? ">>> [UPDATE] Driver updated." : "Driver not found.");
-                    break;
-                case "12":
-                    System.out.print("Enter driver ID to delete: ");
-                    String delDId = this.scanner.nextLine().trim();
-                    boolean delDSuccess = this.driverController.deleteDriver(delDId);
-                    System.out.println(delDSuccess ? ">>> [DELETE] Driver deleted from CSV." : "Driver not found.");
-                    break;
-                case "13":
-                    System.out.print("Enter order ID to delete: ");
-                    String delOId = this.scanner.nextLine().trim();
-                    boolean delOSuccess = this.orderController.deleteOrder(delOId);
-                    System.out.println(delOSuccess ? ">>> [DELETE] Order deleted from CSV." : "Order not found.");
+                    System.out.print("Nhap ID khach hang can xoa: ");
+                    String delCId = this.readLine();
+                    boolean delCOk = this.customerController.deleteCustomer(delCId);
+                    System.out.println(delCOk ? ">>> Da xoa khach hang khoi CSV." : ">>> Khong tim thay khach hang.");
                     break;
                 case "0":
-                    inCrud = false;
+                    inCustMenu = false;
                     break;
                 default:
-                    System.out.println("Invalid selection.");
+                    System.out.println("Lua chon khong hop le.");
             }
         }
+    }
+
+    private void handleSystemOverviewFlow() {
+        System.out.println("\n=======================================================");
+        System.out.println("         BAO CAO TONG QUAN TOAN HE THONG               ");
+        System.out.println("=======================================================");
+        List<User> users = this.authController.getAllUsers();
+        List<Customer> customers = this.customerController.getAllCustomers();
+        List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
+        List<Driver> drivers = this.driverController.getAllDrivers();
+        List<Order> orders = this.orderController.getAllOrders();
+
+        int availableDrivers = 0;
+        int busyDrivers = 0;
+        int offlineDrivers = 0;
+        for (int i = 0; i < drivers.size(); i++) {
+            Driver d = drivers.get(i);
+            if (d.getStatus() == DriverStatus.AVAILABLE) availableDrivers++;
+            else if (d.getStatus() == DriverStatus.BUSY) busyDrivers++;
+            else offlineDrivers++;
+        }
+
+        int pendingOrders = 0;
+        int confirmedOrders = 0;
+        int dispatchedOrders = 0;
+        int deliveredOrders = 0;
+        int cancelledOrders = 0;
+        double totalRevenue = 0.0;
+        for (int i = 0; i < orders.size(); i++) {
+            Order o = orders.get(i);
+            if (o.getStatus() == OrderStatus.PENDING) pendingOrders++;
+            else if (o.getStatus() == OrderStatus.CONFIRMED) confirmedOrders++;
+            else if (o.getStatus() == OrderStatus.DISPATCHED) dispatchedOrders++;
+            else if (o.getStatus() == OrderStatus.DELIVERED) {
+                deliveredOrders++;
+                totalRevenue += o.getTotalFoodAmount();
+            } else if (o.getStatus() == OrderStatus.CANCELLED) cancelledOrders++;
+        }
+
+        System.out.println("1. TAI KHOAN NGUOI DUNG (USERS): " + users.size());
+        System.out.println("2. KHACH HANG (CUSTOMERS):       " + customers.size());
+        System.out.println("3. NHA HANG DOI TAC:             " + restaurants.size());
+        System.out.println("4. DOI NGU TAI XE (DRIVERS):     " + drivers.size());
+        System.out.println("   + Dang Online (AVAILABLE):    " + availableDrivers);
+        System.out.println("   + Dang giao hang (BUSY):      " + busyDrivers);
+        System.out.println("   + Ngoai tuyen (OFFLINE):      " + offlineDrivers);
+        System.out.println("5. TONG SO DON HANG (ORDERS):    " + orders.size());
+        System.out.println("   + Dang cho nha hang (PENDING):" + pendingOrders);
+        System.out.println("   + Da xac nhan (CONFIRMED):    " + confirmedOrders);
+        System.out.println("   + Dang giao hang (DISPATCHED):" + dispatchedOrders);
+        System.out.println("   + Da giao xong (DELIVERED):   " + deliveredOrders);
+        System.out.println("   + Da huy (CANCELLED):         " + cancelledOrders);
+        System.out.printf("6. DOANH THU MON AN GIAO XONG:   %,.0f VND\n", totalRevenue);
+        System.out.println("=======================================================");
     }
 }

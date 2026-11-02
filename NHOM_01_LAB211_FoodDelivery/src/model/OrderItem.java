@@ -6,22 +6,31 @@ public class OrderItem extends BaseEntity {
     private String orderId;
     private String menuItemId;
     private int quantity;
-    private double price;
+    private double unitPriceVnd;
 
     public OrderItem() {
         super();
         this.orderId = "";
         this.menuItemId = "";
         this.quantity = 0;
-        this.price = 0.0;
+        this.unitPriceVnd = 0.0;
     }
 
-    public OrderItem(String id, String orderId, String menuItemId, int quantity, double price, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
+    public OrderItem(String id, String orderId, String menuItemId, int quantity, double unitPriceVnd) {
+        super(id);
+        this.orderId = orderId;
+        this.menuItemId = menuItemId;
+        this.quantity = quantity;
+        this.unitPriceVnd = unitPriceVnd;
+    }
+
+    public OrderItem(String id, String orderId, String menuItemId, int quantity, double unitPriceVnd,
+                     LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
         super(id, createdAt, updatedAt, version);
         this.orderId = orderId;
         this.menuItemId = menuItemId;
         this.quantity = quantity;
-        this.price = price;
+        this.unitPriceVnd = unitPriceVnd;
     }
 
     public String getOrderId() {
@@ -48,44 +57,41 @@ public class OrderItem extends BaseEntity {
         this.quantity = quantity;
     }
 
+    public double getUnitPriceVnd() {
+        return this.unitPriceVnd;
+    }
+
+    public void setUnitPriceVnd(double unitPriceVnd) {
+        this.unitPriceVnd = unitPriceVnd;
+    }
+
     public double getPrice() {
-        return this.price;
+        return this.unitPriceVnd;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.unitPriceVnd = price;
     }
 
     @Override
     public String toCsvLine() {
         return String.join(",",
-            this.getId(),
-            this.orderId,
-            this.menuItemId,
-            String.valueOf(this.quantity),
-            String.valueOf(this.price),
-            this.getCreatedAt().toString(),
-            this.getUpdatedAt().toString(),
-            String.valueOf(this.getVersion())
-        );
+                this.getId(),
+                this.orderId,
+                this.menuItemId,
+                String.valueOf(this.quantity),
+                String.format(java.util.Locale.US, "%.0f", this.unitPriceVnd));
     }
 
     @Override
-    public void fromCsvLine(String csvLine) {
-        String[] parts = this.parseCsvLine(csvLine);
-        if (parts.length >= 8) {
-            this.setId(parts[0]);
-            this.orderId = parts[1];
-            this.menuItemId = parts[2];
-            this.quantity = Integer.parseInt(parts[3]);
-            this.price = Double.parseDouble(parts[4]);
-            this.setCreatedAt(LocalDateTime.parse(parts[5]));
-            this.setUpdatedAt(LocalDateTime.parse(parts[6]));
-            this.setVersion(Long.parseLong(parts[7]));
+    public void fromCsvLine(String line) {
+        String[] p = line.split(",", -1);
+        if (p.length >= 5) {
+            this.setId(p[0].trim());
+            this.orderId = p[1].trim();
+            this.menuItemId = p[2].trim();
+            this.quantity = Integer.parseInt(p[3].trim());
+            this.unitPriceVnd = Double.parseDouble(p[4].trim());
         }
-    }
-
-    private String[] parseCsvLine(String line) {
-        return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     }
 }

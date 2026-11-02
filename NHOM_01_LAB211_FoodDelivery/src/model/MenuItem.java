@@ -2,25 +2,37 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Critical Hot-Spot Entity #1: Contains stockQty and version for Optimistic Locking.
+ */
 public class MenuItem extends BaseEntity {
     private String restaurantId;
     private String name;
-    private double price;
+    private double priceVnd;
     private int stockQty;
 
     public MenuItem() {
         super();
         this.restaurantId = "";
         this.name = "";
-        this.price = 0.0;
+        this.priceVnd = 0.0;
         this.stockQty = 0;
     }
 
-    public MenuItem(String id, String restaurantId, String name, double price, int stockQty, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
+    public MenuItem(String id, String restaurantId, String name, double priceVnd, int stockQty, long version) {
+        super(id, LocalDateTime.now(), LocalDateTime.now(), version);
+        this.restaurantId = restaurantId;
+        this.name = name;
+        this.priceVnd = priceVnd;
+        this.stockQty = stockQty;
+    }
+
+    public MenuItem(String id, String restaurantId, String name, double priceVnd, int stockQty,
+                    LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
         super(id, createdAt, updatedAt, version);
         this.restaurantId = restaurantId;
         this.name = name;
-        this.price = price;
+        this.priceVnd = priceVnd;
         this.stockQty = stockQty;
     }
 
@@ -40,12 +52,20 @@ public class MenuItem extends BaseEntity {
         this.name = name;
     }
 
+    public double getPriceVnd() {
+        return this.priceVnd;
+    }
+
+    public void setPriceVnd(double priceVnd) {
+        this.priceVnd = priceVnd;
+    }
+
     public double getPrice() {
-        return this.price;
+        return this.priceVnd;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.priceVnd = price;
     }
 
     public int getStockQty() {
@@ -59,41 +79,24 @@ public class MenuItem extends BaseEntity {
     @Override
     public String toCsvLine() {
         return String.join(",",
-            this.getId(),
-            this.restaurantId,
-            this.escapeCsv(this.name),
-            String.valueOf(this.price),
-            String.valueOf(this.stockQty),
-            this.getCreatedAt().toString(),
-            this.getUpdatedAt().toString(),
-            String.valueOf(this.getVersion())
-        );
+                this.getId(),
+                this.restaurantId,
+                this.name,
+                String.format(java.util.Locale.US, "%.0f", this.priceVnd),
+                String.valueOf(this.stockQty),
+                String.valueOf(this.getVersion()));
     }
 
     @Override
-    public void fromCsvLine(String csvLine) {
-        String[] parts = this.parseCsvLine(csvLine);
-        if (parts.length >= 8) {
-            this.setId(parts[0]);
-            this.restaurantId = parts[1];
-            this.name = parts[2];
-            this.price = Double.parseDouble(parts[3]);
-            this.stockQty = Integer.parseInt(parts[4]);
-            this.setCreatedAt(LocalDateTime.parse(parts[5]));
-            this.setUpdatedAt(LocalDateTime.parse(parts[6]));
-            this.setVersion(Long.parseLong(parts[7]));
+    public void fromCsvLine(String line) {
+        String[] p = line.split(",", -1);
+        if (p.length >= 6) {
+            this.setId(p[0].trim());
+            this.restaurantId = p[1].trim();
+            this.name = p[2].trim();
+            this.priceVnd = Double.parseDouble(p[3].trim());
+            this.stockQty = Integer.parseInt(p[4].trim());
+            this.setVersion(Long.parseLong(p[5].trim()));
         }
-    }
-
-    private String escapeCsv(String val) {
-        if (val == null) return "";
-        if (val.contains(",") || val.contains("\"")) {
-            return "\"" + val.replace("\"", "\"\"") + "\"";
-        }
-        return val;
-    }
-
-    private String[] parseCsvLine(String line) {
-        return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     }
 }

@@ -6,27 +6,33 @@ import exception.OptimisticLockException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
+/**
+ * Generic CSV Repository implementing physical file read/write with UTF-8
+ * and support for NO_LOCK, FILE_LOCK, SYNCHRONIZED (per-resource key), and OPTIMISTIC locking.
+ */
 public abstract class CsvRepository<T extends BaseEntity> implements IRepository<T> {
     private String filePath;
     private String header;
+    private Object fileMonitor;
     private ConcurrentHashMap<String, Object> keyLocks;
 
     public CsvRepository(String filePath, String header) {
         this.filePath = filePath;
         this.header = header;
+        this.fileMonitor = new Object();
         this.keyLocks = new ConcurrentHashMap<>();
         this.ensureFileExists();
     }
@@ -42,31 +48,39 @@ public abstract class CsvRepository<T extends BaseEntity> implements IRepository
     public String getHeader() {
         return this.header;
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> e10ffdc516208d587aa591da018bcddb3663aff9
     public void setHeader(String header) {
         this.header = header;
     }
 
+    public abstract T createEntity();
+
+    public T parseLine(String line) {
+        T entity = this.createEntity();
+        entity.fromCsvLine(line);
+        return entity;
+    }
+
     private void ensureFileExists() {
-        File file = new File(this.filePath);
-        if (!file.exists()) {
+        try {
+            File file = new File(this.filePath);
             File parent = file.getParentFile();
             if (parent != null && !parent.exists()) {
                 parent.mkdirs();
             }
-            try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-                pw.println(this.header);
-            } catch (IOException e) {
-                System.err.println("Error initializing file " + this.filePath + ": " + e.getMessage());
+            if (!file.exists()) {
+                file.createNewFile();
+                if (this.header != null && !this.header.trim().isEmpty()) {
+                    try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
+                        bw.write(this.header);
+                        bw.newLine();
+                    }
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Error initializing CSV file " + this.filePath + ": " + e.getMessage());
         }
     }
-
-    public abstract T createEntity();
 
     @Override
     public synchronized List<T> findAll() {
@@ -76,22 +90,19 @@ public abstract class CsvRepository<T extends BaseEntity> implements IRepository
             return list;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            boolean isFirstLine = true;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+            String line = br.readLine(); // skip header
             while ((line = br.readLine()) != null) {
-                if (isFirstLine) {
-                    isFirstLine = false;
-                    continue;
-                }
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                T entity = this.createEntity();
-                entity.fromCsvLine(line);
-                list.add(entity);
+                try {
+                    list.add(this.parseLine(line));
+                } catch (Exception parseEx) {
+                    // Skip malformed lines
+                }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Error reading " + this.filePath + ": " + e.getMessage());
         }
         return list;
@@ -99,58 +110,84 @@ public abstract class CsvRepository<T extends BaseEntity> implements IRepository
 
     @Override
     public synchronized T findById(String id) {
+        if (id == null) {
+            return null;
+        }
         List<T> all = this.findAll();
         for (int i = 0; i < all.size(); i++) {
-            T entity = all.get(i);
-            if (entity.getId().equals(id)) {
-                return entity;
+            T item = all.get(i);
+            if (id.equals(item.getId())) {
+                return item;
             }
         }
         return null;
     }
 
-    @Override
-    public synchronized void saveAll(List<T> entities) {
-        File file = new File(this.filePath);
-        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file, false)))) {
-            pw.println(this.header);
-            for (int i = 0; i < entities.size(); i++) {
-                T entity = entities.get(i);
-                pw.println(entity.toCsvLine());
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving all to " + this.filePath + ": " + e.getMessage());
-        }
+    public Optional<T> findByIdOptional(String id) {
+        return Optional.ofNullable(this.findById(id));
     }
 
     @Override
     public synchronized void save(T entity) {
+        if (entity == null) {
+            return;
+        }
         List<T> all = this.findAll();
-        boolean updated = false;
+        boolean found = false;
         for (int i = 0; i < all.size(); i++) {
-            if (all.get(i).getId().equals(entity.getId())) {
+            if (entity.getId().equals(all.get(i).getId())) {
                 all.set(i, entity);
-                updated = true;
+                found = true;
                 break;
             }
         }
-        if (!updated) {
+        if (!found) {
             all.add(entity);
         }
         this.saveAll(all);
     }
 
     @Override
-    public synchronized void deleteById(String id) {
-        List<T> all = this.findAll();
-        List<T> filtered = new ArrayList<>();
-        for (int i = 0; i < all.size(); i++) {
-            T entity = all.get(i);
-            if (!entity.getId().equals(id)) {
-                filtered.add(entity);
+    public synchronized void saveAll(List<T> entities) {
+        synchronized (this.fileMonitor) {
+            File file = new File(this.filePath);
+            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), StandardCharsets.UTF_8))) {
+                if (this.header != null && !this.header.trim().isEmpty()) {
+                    bw.write(this.header);
+                    bw.newLine();
+                }
+                if (entities != null) {
+                    for (int i = 0; i < entities.size(); i++) {
+                        T item = entities.get(i);
+                        if (item != null) {
+                            bw.write(item.toCsvLine());
+                            bw.newLine();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Error saving to " + this.filePath + ": " + e.getMessage());
             }
         }
-        this.saveAll(filtered);
+    }
+
+    @Override
+    public synchronized void deleteById(String id) {
+        if (id == null) {
+            return;
+        }
+        List<T> all = this.findAll();
+        boolean removed = false;
+        for (int i = 0; i < all.size(); i++) {
+            if (id.equals(all.get(i).getId())) {
+                all.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if (removed) {
+            this.saveAll(all);
+        }
     }
 
     public Object getKeyLock(String key) {
@@ -158,59 +195,34 @@ public abstract class CsvRepository<T extends BaseEntity> implements IRepository
     }
 
     public void executeWithFileLock(Runnable action) {
-        File lockFile = new File(this.filePath + ".lock");
-        try (FileChannel channel = FileChannel.open(Paths.get(lockFile.getAbsolutePath()),
-                StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.READ)) {
-            FileLock lock = channel.lock();
-            try {
-                action.run();
-            } finally {
-                lock.release();
-            }
-        } catch (IOException e) {
-            System.err.println("File lock execution error on " + this.filePath + ": " + e.getMessage());
-        }
+        this.executeWithFileLock(() -> {
+            action.run();
+            return null;
+        });
     }
 
     public <R> R executeWithFileLock(Supplier<R> action) {
-        File lockFile = new File(this.filePath + ".lock");
-        try (FileChannel channel = FileChannel.open(Paths.get(lockFile.getAbsolutePath()),
-                StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.READ)) {
-            FileLock lock = channel.lock();
-            try {
+        synchronized (this.fileMonitor) {
+            File lockFile = new File(this.filePath + ".lock");
+            try (FileOutputStream fos = new FileOutputStream(lockFile);
+                 FileChannel channel = fos.getChannel();
+                 FileLock lock = channel.lock()) {
                 return action.get();
-            } finally {
-                lock.release();
+            } catch (Exception e) {
+                throw new RuntimeException("FileLock error on " + this.filePath, e);
             }
-        } catch (IOException e) {
-            System.err.println("File lock execution error on " + this.filePath + ": " + e.getMessage());
-            return null;
         }
     }
 
     public void updateWithOptimisticLock(T entity, long expectedVersion) throws OptimisticLockException {
-        List<T> all = this.findAll();
-        T currentInStore = null;
-        int targetIndex = -1;
-
-        for (int i = 0; i < all.size(); i++) {
-            if (all.get(i).getId().equals(entity.getId())) {
-                currentInStore = all.get(i);
-                targetIndex = i;
-                break;
-            }
+        T current = this.findById(entity.getId());
+        if (current == null) {
+            throw new OptimisticLockException(entity.getId(), expectedVersion, -1L);
         }
-
-        if (currentInStore != null && currentInStore.getVersion() != expectedVersion) {
-            throw new OptimisticLockException(entity.getId(), expectedVersion, currentInStore.getVersion());
+        if (current.getVersion() != expectedVersion) {
+            throw new OptimisticLockException(entity.getId(), expectedVersion, current.getVersion());
         }
-
         entity.incrementVersion();
-        if (targetIndex >= 0) {
-            all.set(targetIndex, entity);
-        } else {
-            all.add(entity);
-        }
-        this.saveAll(all);
+        this.save(entity);
     }
 }

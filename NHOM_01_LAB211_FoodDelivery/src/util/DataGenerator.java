@@ -9,6 +9,8 @@ import model.Order;
 import model.OrderStatus;
 import model.OrderItem;
 import model.DeliveryRoute;
+import model.User;
+import model.UserRole;
 import repository.CustomerRepository;
 import repository.RestaurantRepository;
 import repository.MenuItemRepository;
@@ -16,6 +18,7 @@ import repository.DriverRepository;
 import repository.OrderRepository;
 import repository.OrderItemRepository;
 import repository.DeliveryRouteRepository;
+import repository.UserRepository;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -177,6 +180,20 @@ public class DataGenerator {
         }
         routeRepo.saveAll(routes);
 
-        System.out.println("Total Rows Generated: " + (customers.size() + restaurants.size() + menuItems.size() + drivers.size() + orders.size() + orderItems.size() + routes.size()));
+        // 8. Generate Users (Sample authentication accounts for all roles)
+        System.out.println("Generating users.csv (Authentication accounts)...");
+        UserRepository userRepo = new UserRepository();
+        List<User> users = new ArrayList<>();
+        users.add(new User("U0001", "admin", "admin123", UserRole.ADMIN, "ADMIN", "He Thong Quan Tri (Admin)", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0002", "dispatcher", "disp123", UserRole.DISPATCHER, "DISP01", "Dieu Phoi Vien Trung Tam", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0003", "customer1", "123", UserRole.CUSTOMER, "C0001", "Nguyen An (Khach Hang)", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0004", "customer2", "123", UserRole.CUSTOMER, "C0002", "Tran Binh (Khach Hang)", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0005", "restaurant1", "123", UserRole.RESTAURANT, "R001", "Quan Pho 101", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0006", "restaurant2", "123", UserRole.RESTAURANT, "R002", "Quan Bun Cha 102", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0007", "driver1", "123", UserRole.DRIVER, "D0001", "Tai Xe Nam 1 (Ha Noi)", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        users.add(new User("U0008", "driver2", "123", UserRole.DRIVER, "D0002", "Tai Xe Linh 2 (Ha Noi)", LocalDateTime.now(), LocalDateTime.now(), 1L));
+        userRepo.saveAll(users);
+
+        System.out.println("Total Rows Generated: " + (customers.size() + restaurants.size() + menuItems.size() + drivers.size() + orders.size() + orderItems.size() + routes.size() + users.size()));
     }
 }

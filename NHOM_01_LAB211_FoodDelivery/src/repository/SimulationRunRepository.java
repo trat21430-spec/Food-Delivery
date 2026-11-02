@@ -5,11 +5,11 @@ import model.SimulationRun;
 public class SimulationRunRepository extends CsvRepository<SimulationRun> {
 
     public SimulationRunRepository() {
-        super("data/simulation_runs.csv", "id,mechanism,totalOrders,durationMs,throughputOpsPerSec,doubleAssignments,oversells,driverOverloads,totalErrors,createdAt,updatedAt,version");
+        super("data/simulation_runs.csv", "id,mechanism,totalOrders,durationMs,throughputOpsPerSec,throughputDropPercent,doubleAssignErrors,oversellErrors,driverOverloadErrors");
     }
 
-    public SimulationRunRepository(String customFilePath) {
-        super(customFilePath, "id,mechanism,totalOrders,durationMs,throughputOpsPerSec,doubleAssignments,oversells,driverOverloads,totalErrors,createdAt,updatedAt,version");
+    public SimulationRunRepository(String filePath) {
+        super(filePath, "id,mechanism,totalOrders,durationMs,throughputOpsPerSec,throughputDropPercent,doubleAssignErrors,oversellErrors,driverOverloadErrors");
     }
 
     @Override

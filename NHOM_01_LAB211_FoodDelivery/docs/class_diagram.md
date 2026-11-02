@@ -9,10 +9,10 @@
 classDiagram
     %% Base Entity
     class BaseEntity {
-        #String id
-        #LocalDateTime createdAt
-        #LocalDateTime updatedAt
-        #long version
+        -String id
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -long version
         +BaseEntity()
         +BaseEntity(String, LocalDateTime, LocalDateTime, long)
         +getId() String
@@ -147,13 +147,13 @@ classDiagram
 
     class GeoUtils {
         -EARTH_RADIUS_KM double = 6371.0
-        +haversineDistance(double, double, double, double)$ double
+        +haversineDistance(double, double, double, double) double
     }
 
     %% Repository Layer
     class CsvRepository~T~ {
-        #String filePath
-        #String header
+        -String filePath
+        -String header
         -ConcurrentHashMap~String, Object~ keyLocks
         +CsvRepository(String, String)
         +findAll() List~T~
@@ -247,8 +247,8 @@ classDiagram
     }
 
     class MapView {
-        -ROWS int = 15
-        -COLS int = 45
+        -int ROWS
+        -int COLS
         +renderAsciiMap(List~Customer~, List~Restaurant~, List~Driver~) void
     }
 

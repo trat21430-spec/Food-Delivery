@@ -5,7 +5,6 @@ import model.MenuItem;
 import repository.RestaurantRepository;
 import repository.MenuItemRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class RestaurantController {
@@ -22,11 +21,10 @@ public class RestaurantController {
         this.menuItemRepository = menuItemRepository;
     }
 
-    // --- RESTAURANT CRUD ---
-
     public Restaurant createRestaurant(String name, String address, double lat, double lon, double rating) {
-        String id = "R" + (100 + (int)(Math.random() * 900));
-        Restaurant rest = new Restaurant(id, name, address, lat, lon, rating, LocalDateTime.now(), LocalDateTime.now(), 1L);
+        List<Restaurant> all = this.restaurantRepository.findAll();
+        String id = String.format("R%03d", all.size() + 1);
+        Restaurant rest = new Restaurant(id, name, "Am thuc", address, lat, lon, rating, true);
         this.restaurantRepository.save(rest);
         return rest;
     }
@@ -61,11 +59,10 @@ public class RestaurantController {
         return false;
     }
 
-    // --- MENU ITEM CRUD ---
-
     public MenuItem createMenuItem(String restaurantId, String name, double price, int stockQty) {
-        String id = "M" + (10000 + (int)(Math.random() * 90000));
-        MenuItem item = new MenuItem(id, restaurantId, name, price, stockQty, LocalDateTime.now(), LocalDateTime.now(), 1L);
+        List<MenuItem> all = this.menuItemRepository.findAll();
+        String id = String.format("M%04d", all.size() + 1);
+        MenuItem item = new MenuItem(id, restaurantId, name, price, stockQty, 1L);
         this.menuItemRepository.save(item);
         return item;
     }
@@ -82,7 +79,7 @@ public class RestaurantController {
         MenuItem item = this.menuItemRepository.findById(id);
         if (item != null) {
             item.setName(newName);
-            item.setPrice(newPrice);
+            item.setPriceVnd(newPrice);
             item.setStockQty(newStock);
             item.incrementVersion();
             this.menuItemRepository.save(item);

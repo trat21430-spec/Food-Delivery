@@ -5,26 +5,37 @@ import java.time.LocalDateTime;
 public class DeliveryRoute extends BaseEntity {
     private String orderId;
     private String driverId;
-    private double distanceKm;
+    private double pickupDistanceKm;
+    private double deliveryDistanceKm;
     private int estimatedMinutes;
-    private String routePathJson;
 
     public DeliveryRoute() {
         super();
         this.orderId = "";
         this.driverId = "";
-        this.distanceKm = 0.0;
-        this.estimatedMinutes = 0;
-        this.routePathJson = "[]";
+        this.pickupDistanceKm = 0.0;
+        this.deliveryDistanceKm = 0.0;
+        this.estimatedMinutes = 15;
     }
 
-    public DeliveryRoute(String id, String orderId, String driverId, double distanceKm, int estimatedMinutes, String routePathJson, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
+    public DeliveryRoute(String id, String orderId, String driverId,
+                         double pickupDistanceKm, double deliveryDistanceKm, int estimatedMinutes) {
+        super(id);
+        this.orderId = orderId;
+        this.driverId = driverId;
+        this.pickupDistanceKm = pickupDistanceKm;
+        this.deliveryDistanceKm = deliveryDistanceKm;
+        this.estimatedMinutes = estimatedMinutes;
+    }
+
+    public DeliveryRoute(String id, String orderId, String driverId, double distanceKm, int estimatedMinutes,
+                         String routePathJson, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
         super(id, createdAt, updatedAt, version);
         this.orderId = orderId;
         this.driverId = driverId;
-        this.distanceKm = distanceKm;
+        this.pickupDistanceKm = 1.0;
+        this.deliveryDistanceKm = distanceKm;
         this.estimatedMinutes = estimatedMinutes;
-        this.routePathJson = routePathJson != null ? routePathJson : "[]";
     }
 
     public String getOrderId() {
@@ -43,12 +54,28 @@ public class DeliveryRoute extends BaseEntity {
         this.driverId = driverId;
     }
 
+    public double getPickupDistanceKm() {
+        return this.pickupDistanceKm;
+    }
+
+    public void setPickupDistanceKm(double pickupDistanceKm) {
+        this.pickupDistanceKm = pickupDistanceKm;
+    }
+
+    public double getDeliveryDistanceKm() {
+        return this.deliveryDistanceKm;
+    }
+
+    public void setDeliveryDistanceKm(double deliveryDistanceKm) {
+        this.deliveryDistanceKm = deliveryDistanceKm;
+    }
+
     public double getDistanceKm() {
-        return this.distanceKm;
+        return this.deliveryDistanceKm;
     }
 
     public void setDistanceKm(double distanceKm) {
-        this.distanceKm = distanceKm;
+        this.deliveryDistanceKm = distanceKm;
     }
 
     public int getEstimatedMinutes() {
@@ -59,54 +86,27 @@ public class DeliveryRoute extends BaseEntity {
         this.estimatedMinutes = estimatedMinutes;
     }
 
-    public String getRoutePathJson() {
-        return this.routePathJson;
-    }
-
-    public void setRoutePathJson(String routePathJson) {
-        this.routePathJson = routePathJson;
-    }
-
     @Override
     public String toCsvLine() {
         return String.join(",",
-            this.getId(),
-            this.orderId,
-            this.driverId,
-            String.valueOf(this.distanceKm),
-            String.valueOf(this.estimatedMinutes),
-            this.escapeCsv(this.routePathJson),
-            this.getCreatedAt().toString(),
-            this.getUpdatedAt().toString(),
-            String.valueOf(this.getVersion())
-        );
+                this.getId(),
+                this.orderId,
+                this.driverId,
+                String.format(java.util.Locale.US, "%.3f", this.pickupDistanceKm),
+                String.format(java.util.Locale.US, "%.3f", this.deliveryDistanceKm),
+                String.valueOf(this.estimatedMinutes));
     }
 
     @Override
-    public void fromCsvLine(String csvLine) {
-        String[] parts = this.parseCsvLine(csvLine);
-        if (parts.length >= 9) {
-            this.setId(parts[0]);
-            this.orderId = parts[1];
-            this.driverId = parts[2];
-            this.distanceKm = Double.parseDouble(parts[3]);
-            this.estimatedMinutes = Integer.parseInt(parts[4]);
-            this.routePathJson = parts[5];
-            this.setCreatedAt(LocalDateTime.parse(parts[6]));
-            this.setUpdatedAt(LocalDateTime.parse(parts[7]));
-            this.setVersion(Long.parseLong(parts[8]));
+    public void fromCsvLine(String line) {
+        String[] p = line.split(",", -1);
+        if (p.length >= 6) {
+            this.setId(p[0].trim());
+            this.orderId = p[1].trim();
+            this.driverId = p[2].trim();
+            this.pickupDistanceKm = Double.parseDouble(p[3].trim());
+            this.deliveryDistanceKm = Double.parseDouble(p[4].trim());
+            this.estimatedMinutes = Integer.parseInt(p[5].trim());
         }
-    }
-
-    private String escapeCsv(String val) {
-        if (val == null) return "";
-        if (val.contains(",") || val.contains("\"")) {
-            return "\"" + val.replace("\"", "\"\"") + "\"";
-        }
-        return val;
-    }
-
-    private String[] parseCsvLine(String line) {
-        return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     }
 }

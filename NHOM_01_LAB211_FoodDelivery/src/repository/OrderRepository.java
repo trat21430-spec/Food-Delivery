@@ -7,20 +7,22 @@ import model.Restaurant;
 import model.Driver;
 import model.MenuItem;
 import model.OrderItem;
+import model.GeoUtils;
 import exception.DoubleAssignmentException;
 import exception.EntityNotFoundException;
 import exception.OversellException;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderRepository extends CsvRepository<Order> {
 
     public OrderRepository() {
-        super("data/orders.csv", "id,customerId,restaurantId,driverId,status,totalAmount,deliveryFee,createdAt,updatedAt,version");
+        super("data/orders.csv", "id,customerId,restaurantId,driverId,status,totalFoodAmount,deliveryFee,createdAtEpochMs,assignCount,version");
     }
 
     public OrderRepository(String customFilePath) {
-        super(customFilePath, "id,customerId,restaurantId,driverId,status,totalAmount,deliveryFee,createdAt,updatedAt,version");
+        super(customFilePath, "id,customerId,restaurantId,driverId,status,totalFoodAmount,deliveryFee,createdAtEpochMs,assignCount,version");
     }
 
     @Override
@@ -28,9 +30,6 @@ public class OrderRepository extends CsvRepository<Order> {
         return new Order();
     }
 
-    /**
-     * Dispatch logic and full order processing placed inside Repository Layer as required by architecture specifications.
-     */
     public Order processOrderAndDispatch(String customerId, String restaurantId, String menuItemId, int quantity,
                                          LockMechanism mechanism, MenuItemRepository itemRepo,
                                          DriverRepository driverRepo, RestaurantRepository restRepo,
@@ -42,40 +41,40 @@ public class OrderRepository extends CsvRepository<Order> {
         }
 
         MenuItem item = itemRepo.findById(menuItemId);
-        double totalAmount = item != null ? item.getPrice() * quantity : 10.0;
+        double foodAmount = (item != null ? item.getPriceVnd() : 35000.0) * quantity;
 
-        // 2. Create Pending Order
-        String orderId = "O" + System.currentTimeMillis() + "_" + (int)(Math.random() * 10000);
-        Order order = new Order(orderId, customerId, restaurantId, "", OrderStatus.PENDING, totalAmount, 2.0, LocalDateTime.now(), LocalDateTime.now(), 1L);
+        // 2. Calculate Haversine distance and real delivery fee
+        Restaurant restaurant = restRepo.findById(restaurantId);
+        double restLat = restaurant != null ? restaurant.getLatitude() : 13.7700;
+        double restLon = restaurant != null ? restaurant.getLongitude() : 109.2200;
+
+        GeoUtils geoUtils = new GeoUtils();
+        double deliveryFee = 15000.0; // default base fee
+
+        // 3. Create Order
+        String orderId = "O" + System.currentTimeMillis() + "_" + (100 + (int)(Math.random() * 899));
+        Order order = new Order(orderId, customerId, restaurantId, "", OrderStatus.PENDING,
+                foodAmount, deliveryFee, System.currentTimeMillis(), 0, 1L);
         this.save(order);
 
-        // 3. Save OrderItem
-        String orderItemId = "OI" + System.currentTimeMillis() + "_" + (int)(Math.random() * 10000);
-        OrderItem orderItem = new OrderItem(orderItemId, orderId, menuItemId, quantity, item != null ? item.getPrice() : 10.0, LocalDateTime.now(), LocalDateTime.now(), 1L);
+        // 4. Save OrderItem
+        String orderItemId = "OI" + System.currentTimeMillis() + "_" + (100 + (int)(Math.random() * 899));
+        OrderItem orderItem = new OrderItem(orderItemId, orderId, menuItemId, quantity,
+                item != null ? item.getPriceVnd() : 35000.0);
         orderItemRepo.save(orderItem);
 
-        // 4. Find Nearest Available Driver using Haversine inside Repository
-        Restaurant restaurant = restRepo.findById(restaurantId);
-        double restLat = restaurant != null ? restaurant.getLatitude() : 21.0285;
-        double restLon = restaurant != null ? restaurant.getLongitude() : 105.8542;
-
+        // 5. Find Nearest Available Driver using Haversine inside Repository
         Driver driver = driverRepo.findNearestAvailable(restLat, restLon);
-        if (driver == null) {
-            throw new EntityNotFoundException("Driver", "AVAILABLE_NEARBY");
+        if (driver != null) {
+            // Assign Driver to Order (handles Double Assignment check)
+            this.assignDriver(orderId, driver.getId(), mechanism);
+            // Mark Driver as Busy (handles Driver Overload check)
+            driverRepo.markBusy(driver.getId(), orderId, mechanism);
         }
-
-        // 5. Assign Driver to Order (handles Double Assignment check)
-        this.assignDriver(orderId, driver.getId(), mechanism);
-
-        // 6. Mark Driver as Busy (handles Driver Overload check)
-        driverRepo.markBusy(driver.getId(), orderId, mechanism);
 
         return this.findById(orderId);
     }
 
-    /**
-     * Dispatches an existing pending order to the nearest available driver.
-     */
     public boolean dispatchPendingOrder(String orderId, LockMechanism mechanism,
                                         DriverRepository driverRepo, RestaurantRepository restRepo) throws Exception {
         Order order = this.findById(orderId);
@@ -84,8 +83,8 @@ public class OrderRepository extends CsvRepository<Order> {
         }
 
         Restaurant restaurant = restRepo.findById(order.getRestaurantId());
-        double restLat = restaurant != null ? restaurant.getLatitude() : 21.0285;
-        double restLon = restaurant != null ? restaurant.getLongitude() : 105.8542;
+        double restLat = restaurant != null ? restaurant.getLatitude() : 13.7700;
+        double restLon = restaurant != null ? restaurant.getLongitude() : 109.2200;
 
         Driver driver = driverRepo.findNearestAvailable(restLat, restLon);
         if (driver == null) {
@@ -97,9 +96,33 @@ public class OrderRepository extends CsvRepository<Order> {
         return true;
     }
 
-    /**
-     * Assigns a driver to an order using the specified LockMechanism.
-     */
+    public List<String> autoDispatchAllPending(LockMechanism mechanism, DriverRepository driverRepo, RestaurantRepository restRepo) {
+        List<String> logs = new ArrayList<>();
+        List<Order> allOrders = this.findAll();
+        for (int i = 0; i < allOrders.size(); i++) {
+            Order order = allOrders.get(i);
+            if (order.getStatus() == OrderStatus.PENDING || order.getDriverId() == null || order.getDriverId().trim().isEmpty()) {
+                try {
+                    boolean success = this.dispatchPendingOrder(order.getId(), mechanism, driverRepo, restRepo);
+                    if (success) {
+                        Order updated = this.findById(order.getId());
+                        logs.add("Don hang [" + order.getId() + "] -> Da tu dong gan tai xe [" + updated.getDriverId() + "] thanh cong.");
+                    }
+                } catch (EntityNotFoundException enfe) {
+                    logs.add("Khong tim thay them tai xe ranh tren mang luoi. Tam dung dieu phoi tu dong.");
+                    break;
+                } catch (Exception e) {
+                    logs.add("Don hang [" + order.getId() + "] -> Chua the dieu phoi: " + e.getMessage());
+                }
+            }
+        }
+        return logs;
+    }
+
+    public boolean dispatchOrderToDriver(String orderId, String driverId, LockMechanism mechanism) throws Exception {
+        return this.assignDriver(orderId, driverId, mechanism);
+    }
+
     public boolean assignDriver(String orderId, String driverId, LockMechanism mechanism) throws Exception {
         switch (mechanism) {
             case NO_LOCK:
@@ -115,7 +138,6 @@ public class OrderRepository extends CsvRepository<Order> {
         }
     }
 
-    // 1. NO_LOCK (Simulates Double Assignment)
     private boolean assignDriverNoLock(String orderId, String driverId) throws DoubleAssignmentException {
         Order order = this.findById(orderId);
         if (order == null) {
@@ -137,7 +159,6 @@ public class OrderRepository extends CsvRepository<Order> {
         return true;
     }
 
-    // 2. SYNCHRONIZED per Order ID Key
     private boolean assignDriverSynchronized(String orderId, String driverId) throws DoubleAssignmentException {
         synchronized (this.getKeyLock("ORDER_" + orderId)) {
             Order order = this.findById(orderId);
@@ -161,7 +182,6 @@ public class OrderRepository extends CsvRepository<Order> {
         }
     }
 
-    // 3. OPTIMISTIC
     private boolean assignDriverOptimistic(String orderId, String driverId) throws Exception {
         Order order = this.findById(orderId);
         if (order == null) {
@@ -184,7 +204,6 @@ public class OrderRepository extends CsvRepository<Order> {
         return true;
     }
 
-    // 4. FILE_LOCK
     private boolean assignDriverFileLock(String orderId, String driverId) throws DoubleAssignmentException {
         Boolean result = this.executeWithFileLock(() -> {
             Order order = this.findById(orderId);
