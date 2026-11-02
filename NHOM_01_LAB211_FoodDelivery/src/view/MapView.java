@@ -1,12 +1,15 @@
 package view;
 
-import model.Restaurant;
 import model.Customer;
 import model.Driver;
 import model.DriverStatus;
+import model.Restaurant;
 
 import java.util.List;
 
+/**
+ * Renders an ASCII grid map of Quy Nhon City showing Restaurants [R], Drivers [D/B], and Customers [C].
+ */
 public class MapView {
     private int rows;
     private int cols;
@@ -16,12 +19,12 @@ public class MapView {
     private double maxLon;
 
     public MapView() {
-        this.rows = 15;
-        this.cols = 45;
-        this.minLat = 21.000;
-        this.maxLat = 21.060;
-        this.minLon = 105.800;
-        this.maxLon = 105.900;
+        this.rows = 16;
+        this.cols = 48;
+        this.minLat = 13.745;
+        this.maxLat = 13.795;
+        this.minLon = 109.200;
+        this.maxLon = 109.245;
     }
 
     public void renderAsciiMap(List<Restaurant> restaurants, List<Customer> customers, List<Driver> drivers) {
@@ -32,70 +35,37 @@ public class MapView {
             }
         }
 
-        // Plot Customers 'C'
         if (customers != null) {
-            for (int i = 0; i < customers.size(); i++) {
-                Customer cust = customers.get(i);
-                int r = this.latToRow(cust.getLatitude());
-                int c = this.lonToCol(cust.getLongitude());
-                if (this.isInBounds(r, c)) {
-                    grid[r][c] = 'C';
-                }
-            }
+            customers.stream().limit(30).forEach(c -> this.plot(grid, c.getLatitude(), c.getLongitude(), 'C'));
         }
-
-        // Plot Restaurants 'R'
-        if (restaurants != null) {
-            for (int i = 0; i < restaurants.size(); i++) {
-                Restaurant rest = restaurants.get(i);
-                int r = this.latToRow(rest.getLatitude());
-                int c = this.lonToCol(rest.getLongitude());
-                if (this.isInBounds(r, c)) {
-                    grid[r][c] = 'R';
-                }
-            }
-        }
-
-        // Plot Drivers 'D' or 'B' (busy)
         if (drivers != null) {
-            for (int i = 0; i < drivers.size(); i++) {
-                Driver d = drivers.get(i);
-                int r = this.latToRow(d.getLatitude());
-                int c = this.lonToCol(d.getLongitude());
-                if (this.isInBounds(r, c)) {
-                    grid[r][c] = (d.getStatus() == DriverStatus.AVAILABLE) ? 'D' : 'B';
-                }
-            }
+            drivers.stream().limit(25).forEach(d -> this.plot(grid, d.getLatitude(), d.getLongitude(),
+                    d.getStatus() == DriverStatus.AVAILABLE ? 'D' : 'B'));
+        }
+        if (restaurants != null) {
+            restaurants.stream().limit(15).forEach(r -> this.plot(grid, r.getLatitude(), r.getLongitude(), 'R'));
         }
 
-        System.out.println("\n+-----------------------------------------------+");
-        System.out.println("|      FOOD DELIVERY NETWORK ASCII MAP GRID     |");
-        System.out.println("|  [R] Restaurant  [C] Customer  [D] Avail Driver |");
-        System.out.println("+-----------------------------------------------+");
-
+        System.out.println("+------------------------------------------------+");
+        System.out.println("|   BAN DO DIEU PHOI GIAO DO AN TP. QUY NHON     |");
+        System.out.println("|   [R] Quan an   [D] Tai xe ranh  [B] Dang giao |");
+        System.out.println("|   [C] Khach hang               [.] Mat duong   |");
+        System.out.println("+------------------------------------------------+");
         for (int r = 0; r < this.rows; r++) {
-            System.out.print("| ");
+            System.out.print("|");
             for (int c = 0; c < this.cols; c++) {
                 System.out.print(grid[r][c]);
             }
-            System.out.println(" |");
+            System.out.println("|");
         }
-        System.out.println("+-----------------------------------------------+\n");
+        System.out.println("+------------------------------------------------+");
     }
 
-    private int latToRow(double lat) {
-        double ratio = (lat - this.minLat) / (this.maxLat - this.minLat);
-        int r = (int)((1.0 - ratio) * (this.rows - 1));
-        return Math.max(0, Math.min(this.rows - 1, r));
-    }
-
-    private int lonToCol(double lon) {
-        double ratio = (lon - this.minLon) / (this.maxLon - this.minLon);
-        int c = (int)(ratio * (this.cols - 1));
-        return Math.max(0, Math.min(this.cols - 1, c));
-    }
-
-    private boolean isInBounds(int r, int c) {
-        return r >= 0 && r < this.rows && c >= 0 && c < this.cols;
+    private void plot(char[][] grid, double lat, double lon, char symbol) {
+        int row = (int) ((this.maxLat - lat) / (this.maxLat - this.minLat) * (this.rows - 1));
+        int col = (int) ((lon - this.minLon) / (this.maxLon - this.minLon) * (this.cols - 1));
+        row = Math.max(0, Math.min(this.rows - 1, row));
+        col = Math.max(0, Math.min(this.cols - 1, col));
+        grid[row][col] = symbol;
     }
 }

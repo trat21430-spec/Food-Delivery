@@ -29,7 +29,7 @@
 - **Model:** 8 Entities (`Customer`, `Restaurant`, `MenuItem`, `Driver`, `Order`, `OrderItem`, `DeliveryRoute`, `SimulationRun`) + `GeoUtils` (Haversine).
 - **Repository:** Generic `CsvRepository<T>` + Critical dispatch & lock logic in Repository layer.
 - **Controller:** Flow orchestration.
-- **View:** CLI ASCII grid map & Web Dashboard (HTML5 / Canvas / Chart.js).
+- **View:** CLI ASCII grid map (MapView) & CLI Benchmark Table (SimulatorView).
 
 ---
 

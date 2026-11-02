@@ -3,14 +3,36 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "NHOM_01_LAB211_FoodDelivery_eb9450fc",
+            "vmArgs": "-Dfile.encoding=UTF-8",
+            "encoding": "UTF-8",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
             "name": "Run FoodDelivery (Main)",
             "request": "launch",
             "mainClass": "Main",
             "projectName": "NHOM_01_LAB211_FoodDelivery",
             "console": "integratedTerminal",
             "encoding": "UTF-8",
+            "vmArgs": "-Dfile.encoding=UTF-8",
             "workingDirectory": "${workspaceFolder}",
             "javaExec": "C:\\Program Files\\Java\\jdk1.8.0_202\\bin\\java.exe"
+        },
+        {
+            "type": "java",
+            "name": "☕ Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "NHOM_01_LAB211_FoodDelivery",
+            "vmArgs": "-Dfile.encoding=UTF-8 -Dcom.sun.management.jmxremote=false -Djava.awt.headless=true -XX:+DisableAttachMechanism",
+            "encoding": "UTF-8",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
         },
         {
             "type": "java",
@@ -20,8 +42,42 @@
             "projectName": "NHOM_01_LAB211_FoodDelivery",
             "console": "integratedTerminal",
             "encoding": "UTF-8",
+            "vmArgs": "-Dfile.encoding=UTF-8",
             "workingDirectory": "${workspaceFolder}",
             "javaExec": "C:\\Program Files\\Java\\jdk1.8.0_202\\bin\\java.exe"
+        },
+        {
+            "type": "java",
+            "name": "☕ SystemVerificationTest",
+            "request": "launch",
+            "mainClass": "util.SystemVerificationTest",
+            "projectName": "NHOM_01_LAB211_FoodDelivery",
+            "vmArgs": "-Dfile.encoding=UTF-8 -Dcom.sun.management.jmxremote=false -Djava.awt.headless=true -XX:+DisableAttachMechanism",
+            "encoding": "UTF-8",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "🧪 SystemVerificationTest",
+            "request": "launch",
+            "mainClass": "util.SystemVerificationTest",
+            "projectName": "NHOM_01_LAB211_FoodDelivery",
+            "vmArgs": "-Dfile.encoding=UTF-8 -Dcom.sun.management.jmxremote=false -Djava.awt.headless=true -XX:+DisableAttachMechanism -ea",
+            "encoding": "UTF-8",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "☕ DataGenerator",
+            "request": "launch",
+            "mainClass": "util.DataGenerator",
+            "projectName": "NHOM_01_LAB211_FoodDelivery",
+            "vmArgs": "-Dfile.encoding=UTF-8 -Dcom.sun.management.jmxremote=false -Djava.awt.headless=true -XX:+DisableAttachMechanism",
+            "encoding": "UTF-8",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
         }
     ]
 }

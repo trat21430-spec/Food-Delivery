@@ -4,8 +4,6 @@ import model.Driver;
 import model.DriverStatus;
 import repository.DriverRepository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DriverController {
@@ -19,11 +17,11 @@ public class DriverController {
         this.driverRepository = driverRepository;
     }
 
-    // --- DRIVER CRUD ---
-
     public Driver createDriver(String name, String phone, double lat, double lon) {
-        String id = "D" + (1000 + (int)(Math.random() * 9000));
-        Driver driver = new Driver(id, name, phone, DriverStatus.AVAILABLE, lat, lon, "", LocalDateTime.now(), LocalDateTime.now(), 1L);
+        List<Driver> all = this.driverRepository.findAll();
+        String id = String.format("D%04d", all.size() + 1);
+        String plate = "77-L1 " + (100 + (int)(Math.random() * 899)) + "." + (10 + (int)(Math.random() * 89));
+        Driver driver = new Driver(id, name, phone, plate, lat, lon, DriverStatus.AVAILABLE, 0, 1L);
         this.driverRepository.save(driver);
         return driver;
     }
@@ -37,48 +35,41 @@ public class DriverController {
     }
 
     public List<Driver> getAvailableDrivers() {
-        List<Driver> all = this.driverRepository.findAll();
-        List<Driver> available = new ArrayList<>();
-        for (int i = 0; i < all.size(); i++) {
-            Driver d = all.get(i);
-            if (d.getStatus() == DriverStatus.AVAILABLE) {
-                available.add(d);
-            }
-        }
-        return available;
+        return this.driverRepository.findAvailableDrivers();
     }
 
-    public boolean updateDriverStatus(String driverId, DriverStatus newStatus) {
-        Driver driver = this.driverRepository.findById(driverId);
-        if (driver != null) {
-            driver.setStatus(newStatus);
-            if (newStatus == DriverStatus.AVAILABLE) {
-                driver.setCurrentOrderId("");
-            }
-            driver.incrementVersion();
-            this.driverRepository.save(driver);
+    public Driver getNearestAvailableDriver(double lat, double lon) {
+        return this.driverRepository.findClosestOnlineDriver(lat, lon);
+    }
+
+    public boolean updateDriverStatus(String id, DriverStatus status) {
+        Driver d = this.driverRepository.findById(id);
+        if (d != null) {
+            d.setStatus(status);
+            d.incrementVersion();
+            this.driverRepository.save(d);
             return true;
         }
         return false;
     }
 
-    public boolean updateDriverInfo(String driverId, String newName, String newPhone, double newLat, double newLon) {
-        Driver driver = this.driverRepository.findById(driverId);
-        if (driver != null) {
-            driver.setName(newName);
-            driver.setPhone(newPhone);
-            driver.setLatitude(newLat);
-            driver.setLongitude(newLon);
-            driver.incrementVersion();
-            this.driverRepository.save(driver);
+    public boolean updateDriverInfo(String id, String name, String phone, double lat, double lon) {
+        Driver d = this.driverRepository.findById(id);
+        if (d != null) {
+            d.setFullName(name);
+            d.setPhone(phone);
+            d.setLatitude(lat);
+            d.setLongitude(lon);
+            d.incrementVersion();
+            this.driverRepository.save(d);
             return true;
         }
         return false;
     }
 
     public boolean deleteDriver(String id) {
-        Driver driver = this.driverRepository.findById(id);
-        if (driver != null) {
+        Driver d = this.driverRepository.findById(id);
+        if (d != null) {
             this.driverRepository.deleteById(id);
             return true;
         }

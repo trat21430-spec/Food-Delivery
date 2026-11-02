@@ -5,11 +5,11 @@ import model.Restaurant;
 public class RestaurantRepository extends CsvRepository<Restaurant> {
 
     public RestaurantRepository() {
-        super("data/restaurants.csv", "id,name,address,latitude,longitude,rating,createdAt,updatedAt,version");
+        super("data/restaurants.csv", "id,name,category,address,latitude,longitude,rating,open");
     }
 
-    public RestaurantRepository(String customFilePath) {
-        super(customFilePath, "id,name,address,latitude,longitude,rating,createdAt,updatedAt,version");
+    public RestaurantRepository(String filePath) {
+        super(filePath, "id,name,category,address,latitude,longitude,rating,open");
     }
 
     @Override

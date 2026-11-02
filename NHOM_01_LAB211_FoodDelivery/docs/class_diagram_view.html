@@ -58,10 +58,10 @@
         <div class="mermaid">
 classDiagram
     class BaseEntity {
-        #String id
-        #LocalDateTime createdAt
-        #LocalDateTime updatedAt
-        #long version
+        -String id
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -long version
         +BaseEntity()
         +BaseEntity(String, LocalDateTime, LocalDateTime, long)
         +getId() String
@@ -199,8 +199,8 @@ classDiagram
     }
 
     class CsvRepository~T~ {
-        #String filePath
-        #String header
+        -String filePath
+        -String header
         -ConcurrentHashMap~String, Object~ keyLocks
         +CsvRepository(String, String)
         +findAll() List~T~
@@ -292,8 +292,8 @@ classDiagram
     }
 
     class MapView {
-        -ROWS int = 15
-        -COLS int = 45
+        -int ROWS
+        -int COLS
         +renderAsciiMap(List~Customer~, List~Restaurant~, List~Driver~) void
     }
 

@@ -7,10 +7,10 @@ public class SimulationRun extends BaseEntity {
     private int totalOrders;
     private long durationMs;
     private double throughputOpsPerSec;
-    private int doubleAssignments;
-    private int oversells;
-    private int driverOverloads;
-    private int totalErrors;
+    private double throughputDropPercent;
+    private int doubleAssignErrors;
+    private int oversellErrors;
+    private int driverOverloadErrors;
 
     public SimulationRun() {
         super();
@@ -18,22 +18,38 @@ public class SimulationRun extends BaseEntity {
         this.totalOrders = 0;
         this.durationMs = 0L;
         this.throughputOpsPerSec = 0.0;
-        this.doubleAssignments = 0;
-        this.oversells = 0;
-        this.driverOverloads = 0;
-        this.totalErrors = 0;
+        this.throughputDropPercent = 0.0;
+        this.doubleAssignErrors = 0;
+        this.oversellErrors = 0;
+        this.driverOverloadErrors = 0;
     }
 
-    public SimulationRun(String id, LockMechanism mechanism, int totalOrders, long durationMs, double throughputOpsPerSec, int doubleAssignments, int oversells, int driverOverloads, int totalErrors, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
+    public SimulationRun(String id, LockMechanism mechanism, int totalOrders, long durationMs,
+                         double throughputOpsPerSec, double throughputDropPercent,
+                         int doubleAssignErrors, int oversellErrors, int driverOverloadErrors) {
+        super(id);
+        this.mechanism = mechanism;
+        this.totalOrders = totalOrders;
+        this.durationMs = durationMs;
+        this.throughputOpsPerSec = throughputOpsPerSec;
+        this.throughputDropPercent = throughputDropPercent;
+        this.doubleAssignErrors = doubleAssignErrors;
+        this.oversellErrors = oversellErrors;
+        this.driverOverloadErrors = driverOverloadErrors;
+    }
+
+    public SimulationRun(String id, LockMechanism mechanism, int totalOrders, long durationMs,
+                         double throughputOpsPerSec, int doubleAssignments, int oversells, int driverOverloads,
+                         int totalErrors, LocalDateTime createdAt, LocalDateTime updatedAt, long version) {
         super(id, createdAt, updatedAt, version);
         this.mechanism = mechanism;
         this.totalOrders = totalOrders;
         this.durationMs = durationMs;
         this.throughputOpsPerSec = throughputOpsPerSec;
-        this.doubleAssignments = doubleAssignments;
-        this.oversells = oversells;
-        this.driverOverloads = driverOverloads;
-        this.totalErrors = totalErrors;
+        this.throughputDropPercent = 0.0;
+        this.doubleAssignErrors = doubleAssignments;
+        this.oversellErrors = oversells;
+        this.driverOverloadErrors = driverOverloads;
     }
 
     public LockMechanism getMechanism() {
@@ -68,76 +84,97 @@ public class SimulationRun extends BaseEntity {
         this.throughputOpsPerSec = throughputOpsPerSec;
     }
 
+    public double getThroughputDropPercent() {
+        return this.throughputDropPercent;
+    }
+
+    public void setThroughputDropPercent(double throughputDropPercent) {
+        this.throughputDropPercent = throughputDropPercent;
+    }
+
+    public int getDoubleAssignErrors() {
+        return this.doubleAssignErrors;
+    }
+
+    public void setDoubleAssignErrors(int doubleAssignErrors) {
+        this.doubleAssignErrors = doubleAssignErrors;
+    }
+
     public int getDoubleAssignments() {
-        return this.doubleAssignments;
+        return this.doubleAssignErrors;
     }
 
     public void setDoubleAssignments(int doubleAssignments) {
-        this.doubleAssignments = doubleAssignments;
+        this.doubleAssignErrors = doubleAssignments;
+    }
+
+    public int getOversellErrors() {
+        return this.oversellErrors;
+    }
+
+    public void setOversellErrors(int oversellErrors) {
+        this.oversellErrors = oversellErrors;
     }
 
     public int getOversells() {
-        return this.oversells;
+        return this.oversellErrors;
     }
 
     public void setOversells(int oversells) {
-        this.oversells = oversells;
+        this.oversellErrors = oversells;
+    }
+
+    public int getDriverOverloadErrors() {
+        return this.driverOverloadErrors;
+    }
+
+    public void setDriverOverloadErrors(int driverOverloadErrors) {
+        this.driverOverloadErrors = driverOverloadErrors;
     }
 
     public int getDriverOverloads() {
-        return this.driverOverloads;
+        return this.driverOverloadErrors;
     }
 
     public void setDriverOverloads(int driverOverloads) {
-        this.driverOverloads = driverOverloads;
+        this.driverOverloadErrors = driverOverloads;
     }
 
     public int getTotalErrors() {
-        return this.totalErrors;
+        return this.doubleAssignErrors + this.oversellErrors + this.driverOverloadErrors;
     }
 
     public void setTotalErrors(int totalErrors) {
-        this.totalErrors = totalErrors;
+        // derived
     }
 
     @Override
     public String toCsvLine() {
         return String.join(",",
-            this.getId(),
-            this.mechanism.name(),
-            String.valueOf(this.totalOrders),
-            String.valueOf(this.durationMs),
-            String.format(java.util.Locale.US, "%.2f", this.throughputOpsPerSec),
-            String.valueOf(this.doubleAssignments),
-            String.valueOf(this.oversells),
-            String.valueOf(this.driverOverloads),
-            String.valueOf(this.totalErrors),
-            this.getCreatedAt().toString(),
-            this.getUpdatedAt().toString(),
-            String.valueOf(this.getVersion())
-        );
+                this.getId(),
+                this.mechanism.name(),
+                String.valueOf(this.totalOrders),
+                String.valueOf(this.durationMs),
+                String.format(java.util.Locale.US, "%.2f", this.throughputOpsPerSec),
+                String.format(java.util.Locale.US, "%.2f", this.throughputDropPercent),
+                String.valueOf(this.doubleAssignErrors),
+                String.valueOf(this.oversellErrors),
+                String.valueOf(this.driverOverloadErrors));
     }
 
     @Override
-    public void fromCsvLine(String csvLine) {
-        String[] parts = this.parseCsvLine(csvLine);
-        if (parts.length >= 12) {
-            this.setId(parts[0]);
-            this.mechanism = LockMechanism.valueOf(parts[1]);
-            this.totalOrders = Integer.parseInt(parts[2]);
-            this.durationMs = Long.parseLong(parts[3]);
-            this.throughputOpsPerSec = Double.parseDouble(parts[4]);
-            this.doubleAssignments = Integer.parseInt(parts[5]);
-            this.oversells = Integer.parseInt(parts[6]);
-            this.driverOverloads = Integer.parseInt(parts[7]);
-            this.totalErrors = Integer.parseInt(parts[8]);
-            this.setCreatedAt(LocalDateTime.parse(parts[9]));
-            this.setUpdatedAt(LocalDateTime.parse(parts[10]));
-            this.setVersion(Long.parseLong(parts[11]));
+    public void fromCsvLine(String line) {
+        String[] p = line.split(",", -1);
+        if (p.length >= 9) {
+            this.setId(p[0].trim());
+            this.mechanism = LockMechanism.valueOf(p[1].trim());
+            this.totalOrders = Integer.parseInt(p[2].trim());
+            this.durationMs = Long.parseLong(p[3].trim());
+            this.throughputOpsPerSec = Double.parseDouble(p[4].trim());
+            this.throughputDropPercent = Double.parseDouble(p[5].trim());
+            this.doubleAssignErrors = Integer.parseInt(p[6].trim());
+            this.oversellErrors = Integer.parseInt(p[7].trim());
+            this.driverOverloadErrors = Integer.parseInt(p[8].trim());
         }
-    }
-
-    private String[] parseCsvLine(String line) {
-        return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     }
 }

@@ -9,6 +9,14 @@ public abstract class BaseEntity {
     private long version;
 
     public BaseEntity() {
+        this.id = "";
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.version = 1L;
+    }
+
+    public BaseEntity(String id) {
+        this.id = id;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.version = 1L;
@@ -54,10 +62,10 @@ public abstract class BaseEntity {
     }
 
     public void incrementVersion() {
-        this.version = this.version + 1L;
+        this.version++;
         this.updatedAt = LocalDateTime.now();
     }
 
     public abstract String toCsvLine();
-    public abstract void fromCsvLine(String csvLine);
+    public abstract void fromCsvLine(String line);
 }
