@@ -9,12 +9,12 @@
 
 | STT | Mã Actor | Tên Tác Nhân | Vai Trò (Role) | Phân Loại | Nhiệm Vụ Trọng Tâm |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn và nộp đơn làm tài xế. |
-| 2 | `ACT_RESTAURANT` | **Quản lý Nhà hàng** (Restaurant) | Đối tác ẩm thực | Human | Quản lý menu món ăn, cập nhật số lượng tồn kho (stock), duyệt hoặc từ chối đơn hàng, xem doanh thu. |
+| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn, hủy đơn (`extends`) và nộp đơn làm tài xế. |
+| 2 | `ACT_RESTAURANT` | **Quản lý Nhà hàng** (Restaurant) | Đối tác ẩm thực | Human | Quản lý menu món ăn, cập nhật tồn kho (stock), duyệt hoặc từ chối đơn hàng, kích hoạt điều phối, xem doanh thu. |
 | 3 | `ACT_DRIVER` | **Tài xế Giao hàng** (Driver) | Đối tác vận chuyển | Human | Bật/tắt trạng thái nhận cuốc, cập nhật GPS, nhận đơn điều phối, xác nhận lấy hàng và giao thành công. |
 | 4 | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Điều hành hệ thống | Human | Quản lý tài khoản, duyệt đơn ứng tuyển tài xế, quản lý mạng lưới nhà hàng, kiểm thử mô phỏng đa luồng. |
 | 5 | `ACT_DISPATCHER` | **Hệ thống Điều phối** (Dispatcher Engine) | Hệ thống tự động | System | Tự động quét hàng đợi `PENDING`, tính toán khoảng cách Haversine & ETA, ghép nối và khóa tài xế `BUSY`. |
-| 6 | `ACT_SIMULATOR` | **Bộ Mô phỏng Đa luồng** (Simulator Engine) | Hệ thống kiểm thử | System | Khởi tạo nhiều luồng đồng thời (Customer/Dispatch Thread), so chuẩn 4 cơ chế khóa và phát hiện Race Conditions. |
+| 6 | `ACT_SIMULATOR` | **Bộ Mô phỏng Đa luồng** (Simulator Engine) | Hệ thống kiểm thử | System | Khởi tạo nhiều luồng đồng thời (Customer/Dispatch Thread), so chuẩn 4 cơ chế khóa và phát hiện Race Conditions (`includes`). |
 
 ---
 
@@ -37,15 +37,15 @@
 | Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
 | :---: | :--- | :--- | :---: | :--- |
 | **UC06** | Xem danh sách nhà hàng & menu Quy Nhơn | Khách hàng | UC07 <<extend>> | Mã nguồn: `UC06` trong package tương ứng. |
-| **UC08** | Đặt món và tạo đơn hàng mới | Khách hàng | <<include>> UC09<br><<include>> UC10 | Mã nguồn: `UC08` trong package tương ứng. |
+| **UC08** | Đặt món và tạo đơn hàng mới | Khách hàng | <<include>> UC09<br><<include>> UC10<br>UC14 <<extend>> | Mã nguồn: `UC08` trong package tương ứng. |
 | **UC12** | Theo dõi trạng thái đơn hàng thời gian thực | Khách hàng | ─ | Mã nguồn: `UC12` trong package tương ứng. |
 | **UC13** | Xem lịch sử đơn hàng | Khách hàng | ─ | Mã nguồn: `UC13` trong package tương ứng. |
-| **UC14** | Hủy đơn hàng chưa điều phối | Khách hàng | <<include>> UC15 | Mã nguồn: `UC14` trong package tương ứng. |
 | **UC07** | Tìm kiếm và lọc món ăn | Hệ thống tự động | <<extend>> UC06 | Mã nguồn: `UC07` trong package tương ứng. |
 | **UC09** | Trừ số lượng tồn kho món ăn tức thời | Hệ thống tự động | UC08 <<include>> | Mã nguồn: `UC09` trong package tương ứng. |
 | **UC10** | Tính phí giao hàng khoảng cách Haversine | Hệ thống tự động | UC08 <<include>><br><<include>> UC11 | Mã nguồn: `UC10` trong package tương ứng. |
-| **UC15** | Hoàn trả tồn kho khi đơn bị hủy/từ chối | Hệ thống tự động | UC14 <<include>> | Mã nguồn: `UC15` trong package tương ứng. |
+| **UC14** | Hủy đơn hàng chưa điều phối (extends UC08) | Khách hàng | <<extend>> UC08<br><<include>> UC15 | Mã nguồn: `UC14` trong package tương ứng. |
 | **UC11** | Xác thực địa chỉ và tọa độ GPS | Hệ thống tự động | UC10 <<include>> | Mã nguồn: `UC11` trong package tương ứng. |
+| **UC15** | Hoàn trả tồn kho khi đơn bị hủy/từ chối | Hệ thống tự động | UC14 <<include>> | Mã nguồn: `UC15` trong package tương ứng. |
 
 ### Phân hệ 3: Quản lý Nhà hàng & Thực đơn Quy Nhơn (`SUB3`)
 *Tên tiếng Anh:* Restaurant & Menu Catalog Management  
@@ -104,11 +104,11 @@
 | Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
 | :---: | :--- | :--- | :---: | :--- |
 | **UC43** | Cấu hình số luồng, số đơn và cơ chế khóa | Quản trị viên | ─ | Mã nguồn: `UC43` trong package tương ứng. |
-| **UC44** | Khởi chạy kịch bản mô phỏng đa luồng đồng thời | Quản trị viên, Bộ Mô phỏng Đa luồng | <<include>> UC45<br><<include>> UC46 | Mã nguồn: `UC44` trong package tương ứng. |
+| **UC44** | Khởi chạy kịch bản mô phỏng đa luồng đồng thời | Quản trị viên, Bộ Mô phỏng Đa luồng | <<include>> UC45<br><<include>> UC46<br><<include>> UC48 | Mã nguồn: `UC44` trong package tương ứng. |
 | **UC47** | Đo kiểm so sánh 4 cơ chế khóa tương tranh | Bộ Mô phỏng Đa luồng | ─ | Mã nguồn: `UC47` trong package tương ứng. |
-| **UC48** | Phát hiện tranh chấp: Double Assign, Oversell | Bộ Mô phỏng Đa luồng | UC49 <<extend>> | Mã nguồn: `UC48` trong package tương ứng. |
 | **UC45** | Mô phỏng khách hàng đặt hàng đồng thời | Hệ thống tự động | UC44 <<include>> | Mã nguồn: `UC45` trong package tương ứng. |
 | **UC46** | Mô phỏng bộ điều phối gán đơn đồng thời | Hệ thống tự động | UC44 <<include>> | Mã nguồn: `UC46` trong package tương ứng. |
+| **UC48** | Phát hiện tranh chấp: Double Assign, Oversell | Bộ Mô phỏng Đa luồng | UC44 <<include>><br>UC49 <<extend>> | Mã nguồn: `UC48` trong package tương ứng. |
 | **UC49** | Xuất bảng so sánh hiệu năng và thời gian thực thi | Hệ thống tự động | <<extend>> UC48 | Mã nguồn: `UC49` trong package tương ứng. |
 
 ---
@@ -130,12 +130,12 @@ graph LR
             UC08(("UC08: Đặt món & Khởi tạo Đơn hàng"))
             UC12(("UC12: Theo dõi trạng thái Đơn hàng thời gian thực"))
             UC13(("UC13: Xem lịch sử Các đơn hàng đã đặt"))
-            UC14(("UC14: Hủy đơn hàng (khi đang PENDING)"))
             UC07(("UC07: Tìm kiếm & Lọc Món ăn / Giá / Khoảng cách"))
             UC09(("UC09: Trừ tồn kho Món ăn tức thời"))
             UC10(("UC10: Tính phí ship theo Haversine"))
-            UC15(("UC15: Hoàn trả số lượng Tồn kho món ăn"))
+            UC14(("UC14: Hủy đơn hàng (khi đang PENDING)"))
             UC11(("UC11: Xác thực tọa độ GPS giao hàng Quy Nhơn"))
+            UC15(("UC15: Hoàn trả số lượng Tồn kho món ăn"))
         end
         subgraph SUB3 ["Phân hệ 3: Quản lý Nhà hàng & Thực đơn Quy Nhơn"]
             UC16(("UC16: Thêm món ăn mới vào Thực đơn"))
@@ -176,9 +176,9 @@ graph LR
             UC43(("UC43: Cấu hình tham số Kiểm thử (Threads/Lock)"))
             UC44(("UC44: Kích hoạt mô phỏng Đa luồng đồng thời"))
             UC47(("UC47: So chuẩn 4 cơ chế khóa (NO/SYNC/OPT/FILE)"))
-            UC48(("UC48: Tự động phát hiện Lỗi Race Conditions"))
             UC45(("UC45: Mô phỏng Đặt hàng (CustomerThread)"))
             UC46(("UC46: Mô phỏng Điều phối (DispatchThread)"))
+            UC48(("UC48: Tự động phát hiện Lỗi Race Conditions"))
             UC49(("UC49: Xuất báo cáo Số liệu & Thông lượng"))
         end
     end
@@ -227,6 +227,7 @@ graph LR
     UC08 -. "&lt;&lt;include&gt;&gt;" .-> UC09
     UC08 -. "&lt;&lt;include&gt;&gt;" .-> UC10
     UC10 -. "&lt;&lt;include&gt;&gt;" .-> UC11
+    UC14 -. "&lt;&lt;extend&gt;&gt;" .-> UC08
     UC14 -. "&lt;&lt;include&gt;&gt;" .-> UC15
     UC21 -. "&lt;&lt;include&gt;&gt;" .-> UC22
     UC23 -. "&lt;&lt;extend&gt;&gt;" .-> UC20
@@ -239,6 +240,7 @@ graph LR
     UC34 -. "&lt;&lt;include&gt;&gt;" .-> UC33
     UC44 -. "&lt;&lt;include&gt;&gt;" .-> UC45
     UC44 -. "&lt;&lt;include&gt;&gt;" .-> UC46
+    UC44 -. "&lt;&lt;include&gt;&gt;" .-> UC48
     UC49 -. "&lt;&lt;extend&gt;&gt;" .-> UC48
 ```
 
