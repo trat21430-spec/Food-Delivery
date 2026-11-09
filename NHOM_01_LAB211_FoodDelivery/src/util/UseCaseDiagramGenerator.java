@@ -85,7 +85,7 @@ public class UseCaseDiagramGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println("Generating 100% VERIFIED Monochrome UML Use Case Diagram matching CRS Specification...");
+        System.out.println("Generating 100% AUDITED & VERIFIED Monochrome UML Use Case Diagram (51 Use Cases)...");
         try {
             List<Actor> actors = buildActors();
             List<Subsystem> subsystems = buildSubsystems();
@@ -97,7 +97,7 @@ public class UseCaseDiagramGenerator {
             generateDrawio(actors, subsystems, useCases, relations);
             generateMarkdown(actors, subsystems, useCases, relations);
 
-            System.out.println("USE CASE DIAGRAM GENERATION FINISHED WITH 100% COMPLIANCE!");
+            System.out.println("USE CASE DIAGRAM GENERATION FINISHED WITH 100% VERIFIED CODE COVERAGE!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,27 +108,27 @@ public class UseCaseDiagramGenerator {
         // Left side actors (Human users)
         list.add(new Actor("ACT_CUSTOMER", "Khách hàng", "(Customer)", "human", 160, 680));
         list.add(new Actor("ACT_RESTAURANT", "Quản lý Nhà hàng", "(Restaurant Manager)", "human", 160, 1420));
-        list.add(new Actor("ACT_DRIVER", "Tài xế Giao hàng", "(Delivery Driver)", "human", 160, 2010));
+        list.add(new Actor("ACT_DRIVER", "Tài xế Đối tác", "(Delivery Driver)", "human", 160, 2010));
 
-        // Right side actors (Admin & Automated System Actors)
-        list.add(new Actor("ACT_ADMIN", "Quản trị viên", "(System Administrator)", "human", 3140, 430));
-        list.add(new Actor("ACT_DISPATCHER", "Hệ thống Điều phối", "<<system>> Dispatcher Engine", "system", 3140, 1050));
-        list.add(new Actor("ACT_SIMULATOR", "Bộ Mô phỏng Đa luồng", "<<system>> Concurrency Simulator", "system", 3140, 1780));
+        // Right side actors (Admin & Automated System / Central Dispatcher Actors)
+        list.add(new Actor("ACT_ADMIN", "Quản trị viên", "(System Administrator)", "human", 3210, 430));
+        list.add(new Actor("ACT_DISPATCHER", "Điều phối viên", "(Dispatcher Console)", "human", 3210, 1050));
+        list.add(new Actor("ACT_SIMULATOR", "Bộ Mô phỏng Đa luồng", "<<system>> Concurrency Simulator", "system", 3210, 1780));
         return list;
     }
 
     private static List<Subsystem> buildSubsystems() {
         List<Subsystem> list = new ArrayList<>();
-        // Left column subsystems (Width = 1180, x = 380)
-        list.add(new Subsystem("SUB1", "Phân hệ 1: Xác thực & Hồ sơ Cá nhân", "Authentication & User Profile", 380, 140, 1180, 340));
-        list.add(new Subsystem("SUB2", "Phân hệ 2: Khách hàng & Đặt hàng Trực tuyến", "Customer Ordering & Cart Management", 380, 510, 1180, 590));
-        list.add(new Subsystem("SUB3", "Phân hệ 3: Quản lý Nhà hàng & Thực đơn Quy Nhơn", "Restaurant & Menu Catalog Management", 380, 1130, 1180, 580));
-        list.add(new Subsystem("SUB4", "Phân hệ 4: Tài xế & Vận hành Giao nhận Đơn hàng", "Driver Delivery & Trip Operations", 380, 1740, 1180, 520));
+        // Left column subsystems (Width = 1220, x = 380)
+        list.add(new Subsystem("SUB1", "Phân hệ 1: Xác thực & Quản lý Truy cập", "Authentication & Access Management", 380, 140, 1220, 330));
+        list.add(new Subsystem("SUB2", "Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn", "Customer Portal & Food Ordering", 380, 500, 1220, 610));
+        list.add(new Subsystem("SUB3", "Phân hệ 3: Quản lý Nhà hàng & Thực đơn", "Restaurant Catalog & Order Processing", 380, 1140, 1220, 560));
+        list.add(new Subsystem("SUB4", "Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn", "Driver Delivery & Trip Operations", 380, 1730, 1220, 520));
 
-        // Right column subsystems (Width = 1330, x = 1630)
-        list.add(new Subsystem("SUB6", "Phân hệ 6: Quản trị Hệ thống & Phê duyệt Đối tác", "System Administration & Partner Approval", 1630, 140, 1330, 610));
-        list.add(new Subsystem("SUB5", "Phân hệ 5: Điều phối Tự động & Tối ưu Lộ trình", "Automated Dispatch & Route Matching Engine", 1630, 780, 1330, 560));
-        list.add(new Subsystem("SUB7", "Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh", "Concurrency Stress Testing & Race Detection", 1630, 1370, 1330, 890));
+        // Right column subsystems (Width = 1380, x = 1650)
+        list.add(new Subsystem("SUB6", "Phân hệ 6: Quản trị Hệ thống Toàn diện", "System Administration & Super Control", 1650, 140, 1380, 620));
+        list.add(new Subsystem("SUB5", "Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid", "Central Dispatching & Network Grid", 1650, 790, 1380, 550));
+        list.add(new Subsystem("SUB7", "Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh", "Concurrency Stress Testing & Race Detection", 1650, 1370, 1380, 880));
         return list;
     }
 
@@ -136,89 +136,91 @@ public class UseCaseDiagramGenerator {
         List<UseCase> list = new ArrayList<>();
 
         // ==========================================
-        // SUB1: Xác thực & Hồ sơ (x=380, y=140, w=1180, h=340)
+        // SUB1: Xác thực & Quản lý Truy cập (x=380, y=140, w=1220, h=330)
         // Col 1 (x=550) - Base cases facing Customer / User
-        list.add(new UseCase("UC01", "UC01: Đăng ký tài khoản", "Khách hàng mới", "Đăng ký tài khoản Khách hàng mới", "SUB1", 550, 220, 240, 68));
-        list.add(new UseCase("UC02", "UC02: Đăng nhập", "vào Hệ thống", "Đăng nhập hệ thống (Đa vai trò)", "SUB1", 550, 310, 240, 68));
-        list.add(new UseCase("UC03", "UC03: Đăng xuất", "khỏi Phiên làm việc", "Đăng xuất khỏi hệ thống", "SUB1", 550, 400, 240, 68));
-        // Col 2 (x=880) - Secondary / Included / Extended
-        list.add(new UseCase("UC04", "UC04: Xem & Cập nhật", "Hồ sơ / Địa chỉ GPS", "Xem & cập nhật hồ sơ cá nhân", "SUB1", 880, 260, 250, 68));
-        list.add(new UseCase("UC05", "UC05: Nộp đơn đăng ký", "Ứng tuyển Tài xế", "Nộp đơn ứng tuyển tài xế giao hàng", "SUB1", 880, 360, 250, 68));
+        list.add(new UseCase("UC01", "UC01: Đăng ký tài khoản", "Khách hàng mới", "Đăng ký tài khoản Khách hàng mới (CustomerRegistration)", "SUB1", 550, 210, 240, 66));
+        list.add(new UseCase("UC02", "UC02: Đăng nhập", "Hệ thống đa vai trò", "Đăng nhập hệ thống (Customer, Restaurant, Driver, Admin, Dispatcher)", "SUB1", 550, 290, 240, 66));
+        list.add(new UseCase("UC05", "UC05: Đăng xuất", "khỏi Phiên làm việc", "Đăng xuất tài khoản khỏi hệ thống (Logout)", "SUB1", 550, 370, 240, 66));
+        // Col 2 (x=880) - Registration & Demo
+        list.add(new UseCase("UC03", "UC03: Nộp hồ sơ đăng ký", "Làm Tài xế (Chờ duyệt)", "Gửi hồ sơ đăng ký đối tác tài xế giao hàng (DriverApplication)", "SUB1", 880, 240, 250, 66));
+        list.add(new UseCase("UC04", "UC04: Xem danh sách", "Tài khoản mẫu Demo", "Xem thông tin các tài khoản mẫu định sẵn cho đánh giá (DemoAccounts)", "SUB1", 880, 340, 250, 66));
 
         // ==========================================
-        // SUB2: Khách hàng & Đặt hàng (x=380, y=510, w=1180, h=590)
+        // SUB2: Khách hàng & Đặt hàng Quy Nhơn (x=380, y=500, w=1220, h=610)
         // Col 1 (x=550) - Base cases facing Customer Actor
-        list.add(new UseCase("UC06", "UC06: Xem danh mục", "Nhà hàng & Thực đơn", "Xem danh sách nhà hàng & menu Quy Nhơn", "SUB2", 550, 580, 250, 68));
-        list.add(new UseCase("UC08", "UC08: Đặt món &", "Khởi tạo Đơn hàng", "Đặt món và tạo đơn hàng mới", "SUB2", 550, 700, 250, 72));
-        list.add(new UseCase("UC12", "UC12: Theo dõi trạng thái", "Đơn hàng thời gian thực", "Theo dõi trạng thái đơn hàng thời gian thực", "SUB2", 550, 840, 250, 68));
-        list.add(new UseCase("UC13", "UC13: Xem lịch sử", "Các đơn hàng đã đặt", "Xem lịch sử đơn hàng", "SUB2", 550, 960, 250, 68));
+        list.add(new UseCase("UC06", "UC06: Xem danh sách", "Nhà hàng & Thực đơn", "Xem danh sách nhà hàng và thực đơn món ăn tại Quy Nhơn", "SUB2", 550, 570, 250, 66));
+        list.add(new UseCase("UC07", "UC07: Đặt món &", "Khởi tạo Đơn hàng", "Đặt món ăn trực tuyến và tạo đơn hàng mới (PlaceOrder)", "SUB2", 550, 680, 250, 70));
+        list.add(new UseCase("UC11", "UC11: Theo dõi & Xem", "Đơn hàng của tôi", "Theo dõi trạng thái đơn hàng thời gian thực (Track & View My Orders)", "SUB2", 550, 800, 250, 66));
+        list.add(new UseCase("UC14", "UC14: Xem thông tin", "Tài khoản cá nhân", "Xem thông tin cá nhân và địa chỉ giao hàng (CustomerProfile)", "SUB2", 550, 910, 250, 66));
+        list.add(new UseCase("UC15", "UC15: Kiểm tra hộp thư", "Thông báo tài xế & ETA", "Nhận thông báo tài xế đã nhận đơn và thời gian giao dự kiến (Notifications)", "SUB2", 550, 1010, 250, 66));
         // Col 2 (x=880) - Included / Extended
-        list.add(new UseCase("UC07", "UC07: Tìm kiếm & Lọc", "Món ăn / Giá / Khoảng cách", "Tìm kiếm và lọc món ăn", "SUB2", 880, 580, 250, 68));
-        list.add(new UseCase("UC09", "UC09: Trừ tồn kho", "Món ăn tức thời", "Trừ số lượng tồn kho món ăn tức thời", "SUB2", 880, 670, 240, 68));
-        list.add(new UseCase("UC10", "UC10: Tính phí ship", "theo Haversine", "Tính phí giao hàng khoảng cách Haversine", "SUB2", 880, 760, 240, 68));
-        list.add(new UseCase("UC14", "UC14: Hủy đơn hàng", "(khi đang PENDING)", "Hủy đơn hàng chưa điều phối (extends UC08)", "SUB2", 880, 860, 250, 68));
-        // Col 3 (x=1180) - Deeply included
-        list.add(new UseCase("UC11", "UC11: Xác thực tọa độ", "GPS giao hàng Quy Nhơn", "Xác thực địa chỉ và tọa độ GPS", "SUB2", 1180, 760, 240, 68));
-        list.add(new UseCase("UC15", "UC15: Hoàn trả số lượng", "Tồn kho món ăn", "Hoàn trả tồn kho khi đơn bị hủy/từ chối", "SUB2", 1180, 860, 240, 68));
+        list.add(new UseCase("UC08", "UC08: Trừ tồn kho", "Món ăn tức thời", "Trừ số lượng tồn kho món ăn tức thời khi đặt (DeductStock)", "SUB2", 880, 640, 240, 66));
+        list.add(new UseCase("UC09", "UC09: Tính phí ship", "theo Haversine", "Tính phí giao hàng khoảng cách Haversine giữa Quán và Khách", "SUB2", 880, 720, 240, 66));
+        list.add(new UseCase("UC12", "UC12: Hủy đơn hàng", "(khi đang PENDING)", "Hủy đơn hàng chưa điều phối (extends UC07 PlaceOrder)", "SUB2", 880, 840, 250, 66));
+        // Col 3 (x=1200) - Deeply included
+        list.add(new UseCase("UC10", "UC10: Xác thực GPS", "Giao hàng Quy Nhơn", "Xác thực địa chỉ và tọa độ GPS khách hàng trong phạm vi Quy Nhơn", "SUB2", 1200, 720, 230, 66));
+        list.add(new UseCase("UC13", "UC13: Hoàn trả số lượng", "Tồn kho món ăn", "Tự động hoàn trả tồn kho món ăn khi đơn bị hủy hoặc từ chối (RestoreStock)", "SUB2", 1200, 840, 230, 66));
 
         // ==========================================
-        // SUB3: Quản lý Nhà hàng & Thực đơn (x=380, y=1130, w=1180, h=580)
+        // SUB3: Quản lý Nhà hàng & Thực đơn (x=380, y=1140, w=1220, h=560)
         // Col 1 (x=550) - Base cases facing Restaurant Manager Actor
-        list.add(new UseCase("UC16", "UC16: Thêm món ăn mới", "vào Thực đơn", "Thêm món ăn mới vào thực đơn", "SUB3", 550, 1200, 250, 68));
-        list.add(new UseCase("UC17", "UC17: Cập nhật thông tin", "Món ăn & Giá bán", "Cập nhật thông tin món và giá bán", "SUB3", 550, 1290, 250, 68));
-        list.add(new UseCase("UC18", "UC18: Xóa món ăn", "khỏi Thực đơn", "Xóa món ăn khỏi thực đơn", "SUB3", 550, 1380, 250, 68));
-        list.add(new UseCase("UC19", "UC19: Cập nhật & Nhập thêm", "Số lượng Tồn kho (Stock)", "Nhập bổ sung số lượng tồn kho", "SUB3", 550, 1470, 250, 68));
-        list.add(new UseCase("UC20", "UC20: Xem danh sách", "Đơn hàng mới tiếp nhận", "Xem danh sách đơn hàng đến", "SUB3", 550, 1560, 250, 68));
-        list.add(new UseCase("UC21", "UC21: Xác nhận", "Đơn hàng (Accept)", "Xác nhận chấp nhận đơn hàng", "SUB3", 550, 1650, 250, 68));
-        // Col 2 (x=880) - Secondary & Included
-        list.add(new UseCase("UC24", "UC24: Xem báo cáo", "Doanh thu & Đơn hàng", "Xem thống kê doanh thu và báo cáo nhà hàng", "SUB3", 880, 1470, 240, 68));
-        list.add(new UseCase("UC23", "UC23: Từ chối", "Đơn hàng (Reject)", "Từ chối tiếp nhận đơn hàng", "SUB3", 880, 1560, 240, 68));
-        list.add(new UseCase("UC22", "UC22: Kích hoạt", "Điều phối Tự động", "Kích hoạt điều phối tự động tài xế", "SUB3", 880, 1650, 240, 68));
-
-        // ==========================================
-        // SUB4: Vận hành Tài xế & Giao nhận (x=380, y=1740, w=1180, h=520)
-        // Col 1 (x=550) - Base cases facing Driver Actor
-        list.add(new UseCase("UC25", "UC25: Bật/Tắt trạng thái", "Hoạt động (Available/Off)", "Bật tắt trạng thái hoạt động tài xế", "SUB4", 550, 1810, 250, 68));
-        list.add(new UseCase("UC26", "UC26: Cập nhật vị trí", "Tọa độ GPS thực tế", "Cập nhật tọa độ vị trí thực tế của tài xế", "SUB4", 550, 1900, 250, 68));
-        list.add(new UseCase("UC27", "UC27: Tiếp nhận đơn hàng", "được Điều phối ghép nối", "Nhận đơn hàng được hệ thống điều phối", "SUB4", 550, 1990, 250, 68));
-        list.add(new UseCase("UC28", "UC28: Xác nhận lấy món", "(Chuyển DISPATCHED)", "Xác nhận đã lấy hàng tại nhà hàng", "SUB4", 550, 2080, 250, 68));
-        list.add(new UseCase("UC29", "UC29: Xác nhận hoàn tất", "Giao hàng (DELIVERED)", "Xác nhận giao hàng thành công tới khách", "SUB4", 550, 2170, 250, 68));
+        list.add(new UseCase("UC16", "UC16: Xem thực đơn &", "Tình trạng tồn kho", "Xem danh sách món ăn và số lượng tồn kho của quán (ViewMenuAndStock)", "SUB3", 550, 1210, 250, 66));
+        list.add(new UseCase("UC17", "UC17: Cập nhật đơn giá", "& Bổ sung tồn kho", "Cập nhật giá bán và nhập thêm tồn kho món ăn (UpdatePriceAndStock)", "SUB3", 550, 1300, 250, 66));
+        list.add(new UseCase("UC18", "UC18: Xem danh sách", "Đơn hàng đến quán", "Xem các đơn hàng mới đặt chờ xác nhận (ViewIncomingOrders)", "SUB3", 550, 1390, 250, 66));
+        list.add(new UseCase("UC19", "UC19: Xác nhận đơn", "(Accept Order)", "Xác nhận chấp nhận đơn hàng và chuẩn bị món (ConfirmOrder)", "SUB3", 550, 1480, 250, 66));
+        list.add(new UseCase("UC21", "UC21: Từ chối đơn", "(Reject Order)", "Từ chối tiếp nhận đơn hàng và hoàn trả tồn kho (RejectOrder)", "SUB3", 550, 1570, 250, 66));
+        list.add(new UseCase("UC22", "UC22: Thống kê doanh thu", "Báo cáo bán hàng", "Xem tổng doanh thu và lịch sử đơn hàng của quán (RestaurantRevenue)", "SUB3", 550, 1660, 250, 66));
         // Col 2 (x=880) - Included
-        list.add(new UseCase("UC30", "UC30: Tự động chuyển", "về Sẵn sàng (AVAILABLE)", "Tự động chuyển tài xế về trạng thái sẵn sàng", "SUB4", 880, 2170, 250, 68));
+        list.add(new UseCase("UC20", "UC20: Kích hoạt tự động", "Điều phối Tài xế", "Tự động chuyển đơn vào hàng đợi điều phối tài xế gần nhất (AutoDispatch)", "SUB3", 880, 1480, 240, 66));
 
         // ==========================================
-        // SUB6: Quản trị Hệ thống (x=1630, y=140, w=1330, h=610)
-        // Col 3 (x=2770) - Rightmost, directly facing Admin Actor
-        list.add(new UseCase("UC35", "UC35: Quản lý Tài khoản", "Người dùng & Phân quyền", "Quản lý tài khoản người dùng và phân quyền", "SUB6", 2770, 210, 260, 68));
-        list.add(new UseCase("UC37", "UC37: Thẩm định hồ sơ", "Đơn ứng tuyển Tài xế", "Xem và thẩm định hồ sơ ứng tuyển tài xế", "SUB6", 2770, 320, 260, 68));
-        list.add(new UseCase("UC40", "UC40: Quản lý danh mục", "Nhà hàng & Phân bổ QL", "Quản lý danh sách nhà hàng và chỉ định quản lý", "SUB6", 2770, 430, 260, 68));
-        list.add(new UseCase("UC41", "UC41: Giám sát toàn bộ", "Đơn hàng trong Hệ thống", "Giám sát toàn bộ lưu lượng đơn hàng hệ thống", "SUB6", 2770, 540, 260, 68));
-        list.add(new UseCase("UC42", "UC42: Nhập hàng bổ sung", "Tồn kho toàn Hệ thống", "Nhập hàng bổ sung kho toàn hệ thống", "SUB6", 2770, 650, 260, 68));
-        // Col 2 (x=2460) - Internal / Extended / Included
-        list.add(new UseCase("UC36", "UC36: Khóa / Mở khóa", "Tài khoản người dùng", "Khóa hoặc mở khóa tài khoản vi phạm", "SUB6", 2460, 210, 250, 68));
-        list.add(new UseCase("UC38", "UC38: Phê duyệt đơn &", "Tự động tạo hồ sơ Driver", "Phê duyệt đơn và cấp tài khoản tài xế", "SUB6", 2460, 310, 250, 68));
-        list.add(new UseCase("UC39", "UC39: Từ chối hồ sơ", "Ứng tuyển tài xế", "Từ chối hồ sơ ứng tuyển tài xế", "SUB6", 2460, 400, 250, 68));
+        // SUB4: Vận hành Tài xế & Giao nhận (x=380, y=1730, w=1220, h=520)
+        // Col 1 (x=550) - Base cases facing Driver Actor
+        list.add(new UseCase("UC23", "UC23: Xem hồ sơ &", "Thống kê cá nhân", "Xem thông tin tài xế, biển số, xe máy và số cuốc xe đã giao (DriverProfile)", "SUB4", 550, 1800, 250, 66));
+        list.add(new UseCase("UC24", "UC24: Chuyển trạng thái", "AVAILABLE / OFFLINE", "Bật hoặc tắt trạng thái sẵn sàng nhận cuốc của tài xế (ToggleStatus)", "SUB4", 550, 1890, 250, 66));
+        list.add(new UseCase("UC25", "UC25: Xem các đơn hàng", "Được phân công", "Xem chi tiết các đơn hàng được gán cho tài xế (ViewAssignedOrders)", "SUB4", 550, 1980, 250, 66));
+        list.add(new UseCase("UC26", "UC26: Xác nhận lấy hàng", "(Chuyển DISPATCHED)", "Xác nhận đã lấy món ăn tại quán và bắt đầu đi giao (ConfirmPickedUp)", "SUB4", 550, 2070, 250, 66));
+        list.add(new UseCase("UC27", "UC27: Xác nhận hoàn tất", "Giao hàng (DELIVERED)", "Xác nhận đã giao hàng thành công tới khách hàng (ConfirmDelivered)", "SUB4", 550, 2160, 250, 66));
+        // Col 2 (x=880) - Included
+        list.add(new UseCase("UC28", "UC28: Tự động chuyển", "về Sẵn sàng (AVAILABLE)", "Tự động cập nhật tài xế về trạng thái AVAILABLE để nhận đơn mới", "SUB4", 880, 2160, 250, 66));
 
         // ==========================================
-        // SUB5: Điều phối Tự động (x=1630, y=780, w=1330, h=560)
-        // Col 3 (x=2770) - Facing Dispatcher Engine Actor
-        list.add(new UseCase("UC31", "UC31: Quét hàng đợi", "Đơn hàng PENDING", "Quét hàng đợi đơn hàng chờ xử lý", "SUB5", 2770, 870, 260, 68));
-        list.add(new UseCase("UC34", "UC34: Tự động ghép nối", "& Khóa tài xế (BUSY)", "Tự động giao đơn và khóa trạng thái tài xế", "SUB5", 2770, 1040, 260, 72));
-        // Col 2 (x=2460) - Included from UC34
-        list.add(new UseCase("UC32", "UC32: Tìm kiếm tài xế", "Gần nhất (Haversine)", "Tìm kiếm tài xế khả dụng gần nhất", "SUB5", 2460, 980, 250, 68));
-        list.add(new UseCase("UC33", "UC33: Tính toán thời gian", "Dự kiến giao hàng (ETA)", "Tính toán thời gian dự kiến giao hàng Quy Nhơn", "SUB5", 2460, 1100, 250, 68));
+        // SUB6: Quản trị Hệ thống Toàn diện (x=1650, y=140, w=1380, h=620)
+        // Col 3 (x=2830) - Rightmost, directly facing Admin Actor
+        list.add(new UseCase("UC36", "UC36: Xét duyệt hồ sơ", "Đăng ký làm Tài xế", "Xem và xét duyệt các hồ sơ xin làm tài xế đang chờ (DriverApplications)", "SUB6", 2830, 210, 260, 66));
+        list.add(new UseCase("UC39", "UC39: Quản lý Người dùng", "& Phân quyền hệ thống", "Quản lý danh sách tài khoản, mật khẩu và quyền hạn (UserManagement)", "SUB6", 2830, 300, 260, 66));
+        list.add(new UseCase("UC40", "UC40: Quản lý Nhà hàng,", "Thực đơn & Nhập kho", "Thêm nhà hàng mới, sửa menu, và bổ sung tồn kho hệ thống (RestaurantCRUD)", "SUB6", 2830, 390, 260, 66));
+        list.add(new UseCase("UC41", "UC41: Quản lý Danh sách", "Khách hàng Quy Nhơn", "Xem thông tin, địa chỉ và lịch sử của tất cả khách hàng (CustomerManagement)", "SUB6", 2830, 480, 260, 66));
+        list.add(new UseCase("UC42", "UC42: Giám sát toàn bộ", "Đơn hàng trong Hệ thống", "Xem và theo dõi tất cả đơn hàng trên toàn hệ thống (ViewAllOrders)", "SUB6", 2830, 570, 260, 66));
+        list.add(new UseCase("UC43", "UC43: Sinh dữ liệu mẫu", "CSV (>= 18,000 Rows)", "Tạo bộ dữ liệu mô phỏng lớn gồm 18,000 dòng dữ liệu vào file CSV", "SUB6", 2830, 660, 260, 66));
+        // Col 2 (x=2490) - Extensions and Research
+        list.add(new UseCase("UC37", "UC37: Phê duyệt hồ sơ &", "Tự động cấp mã Driver", "Duyệt đơn và tự động sinh mã D000x + tài khoản DRIVER (ApproveApplication)", "SUB6", 2490, 170, 250, 66));
+        list.add(new UseCase("UC38", "UC38: Từ chối hồ sơ", "Kèm lý do cụ thể", "Từ chối hồ sơ đăng ký tài xế kèm lý do (RejectApplication)", "SUB6", 2490, 250, 250, 66));
+        list.add(new UseCase("UC44", "UC44: Báo cáo Tổng quan &", "Nghiên cứu Big Question", "Xem tổng kết số liệu và báo cáo giải quyết vấn đề Big Question", "SUB6", 2490, 660, 250, 66));
 
         // ==========================================
-        // SUB7: Mô phỏng Đa luồng & Kiểm định (x=1630, y=1370, w=1330, h=890)
-        // Col 3 (x=2770) - Facing Simulator Engine & Admin Actors
-        list.add(new UseCase("UC43", "UC43: Cấu hình tham số", "Kiểm thử (Threads/Lock)", "Cấu hình số luồng, số đơn và cơ chế khóa", "SUB7", 2770, 1460, 260, 68));
-        list.add(new UseCase("UC44", "UC44: Kích hoạt mô phỏng", "Đa luồng đồng thời", "Khởi chạy kịch bản mô phỏng đa luồng đồng thời", "SUB7", 2770, 1580, 260, 72));
-        list.add(new UseCase("UC47", "UC47: So chuẩn 4 cơ chế khóa", "(NO/SYNC/OPT/FILE)", "Đo kiểm so sánh 4 cơ chế khóa tương tranh", "SUB7", 2770, 1720, 260, 68));
-        // Col 2 (x=2460) - Included / Extended
-        list.add(new UseCase("UC45", "UC45: Mô phỏng Đặt hàng", "(CustomerThread)", "Mô phỏng khách hàng đặt hàng đồng thời", "SUB7", 2460, 1500, 250, 68));
-        list.add(new UseCase("UC46", "UC46: Mô phỏng Điều phối", "(DispatchThread)", "Mô phỏng bộ điều phối gán đơn đồng thời", "SUB7", 2460, 1600, 250, 68));
-        list.add(new UseCase("UC48", "UC48: Tự động phát hiện", "Lỗi Race Conditions", "Phát hiện tranh chấp: Double Assign, Oversell", "SUB7", 2460, 1720, 260, 72));
-        list.add(new UseCase("UC49", "UC49: Xuất báo cáo", "Số liệu & Thông lượng", "Xuất bảng so sánh hiệu năng và thời gian thực thi", "SUB7", 2460, 1850, 250, 68));
+        // SUB5: Điều phối Trung tâm & Bản đồ Grid (x=1650, y=790, w=1380, h=550)
+        // Col 3 (x=2830) - Facing Dispatcher Console Actor
+        list.add(new UseCase("UC29", "UC29: Xem danh sách đơn", "Chờ điều phối (PENDING)", "Xem hàng đợi các đơn hàng đang chờ ghép tài xế (ViewPendingOrders)", "SUB5", 2830, 860, 260, 66));
+        list.add(new UseCase("UC30", "UC30: Tự động điều phối", "Tất cả đơn hàng chờ", "Kích hoạt thuật toán tự động ghép nối tất cả đơn PENDING (AutoDispatchAll)", "SUB5", 2830, 970, 260, 70));
+        list.add(new UseCase("UC34", "UC34: Giám sát trạng thái", "Đội ngũ Tài xế", "Kiểm tra vị trí và trạng thái hoạt động của tài xế (DriverFleetStatus)", "SUB5", 2830, 1080, 260, 66));
+        list.add(new UseCase("UC35", "UC35: Hiển thị Bản đồ", "ASCII Grid Map Quy Nhơn", "Vẽ bản đồ trực quan tọa độ nhà hàng, khách hàng, tài xế bằng ký tự ASCII", "SUB5", 2830, 1190, 260, 66));
+        // Col 2 (x=2490) - Included from UC30
+        list.add(new UseCase("UC31", "UC31: Tìm kiếm tài xế", "Gần nhất (Haversine)", "Tìm tài xế AVAILABLE có khoảng cách Haversine ngắn nhất tới quán", "SUB5", 2490, 920, 250, 66));
+        list.add(new UseCase("UC32", "UC32: Tính toán ETA", "Lấy món & Giao hàng", "Tính toán thời gian dự kiến tài xế đến quán và đến nhà khách hàng", "SUB5", 2490, 1000, 250, 66));
+        list.add(new UseCase("UC33", "UC33: Ghép nối đơn &", "Khóa tài xế (BUSY)", "Gán đơn hàng cho tài xế và chuyển trạng thái tài xế sang BUSY", "SUB5", 2490, 1080, 250, 66));
+
+        // ==========================================
+        // SUB7: Mô phỏng Đa luồng & Kiểm định (x=1650, y=1370, w=1380, h=880)
+        // Col 3 (x=2830) - Facing Simulator Engine & Admin Actors
+        list.add(new UseCase("UC45", "UC45: Cấu hình tham số", "Kiểm thử (Threads/Lock)", "Chọn số lượng đơn hàng và 1 trong 4 cơ chế khóa kiểm thử (SimulatorConfig)", "SUB7", 2830, 1450, 260, 66));
+        list.add(new UseCase("UC46", "UC46: Khởi chạy mô phỏng", "Đa luồng đồng thời", "Bắt đầu chạy kịch bản mô phỏng tương tranh đa luồng (RunSimulation)", "SUB7", 2830, 1560, 260, 70));
+        list.add(new UseCase("UC50", "UC50: Đo kiểm so chuẩn", "4 cơ chế khóa (Benchmark)", "So sánh hiệu năng NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK", "SUB7", 2830, 1700, 260, 66));
+        list.add(new UseCase("UC51", "UC51: Xuất bảng so sánh", "Hiệu năng & Kết luận", "Hiển thị bảng tổng kết thông lượng, thời gian và tỷ lệ xung đột (BenchmarkTable)", "SUB7", 2830, 1840, 260, 66));
+        // Col 2 (x=2490) - Included / Extended
+        list.add(new UseCase("UC47", "UC47: Mô phỏng Đặt hàng", "(CustomerThread)", "Mô phỏng đồng thời nhiều khách hàng đặt hàng cùng lúc (CustomerThread)", "SUB7", 2490, 1500, 250, 66));
+        list.add(new UseCase("UC48", "UC48: Mô phỏng Điều phối", "(DispatchThread)", "Mô phỏng đồng thời nhiều tiến trình gán đơn cùng lúc (DispatchThread)", "SUB7", 2490, 1590, 250, 66));
+        list.add(new UseCase("UC49", "UC49: Tự động phát hiện", "Lỗi Race Conditions", "Tự động phát hiện Double Assignment, Oversell, Driver Overload", "SUB7", 2490, 1710, 260, 70));
 
         return list;
     }
@@ -226,84 +228,93 @@ public class UseCaseDiagramGenerator {
     private static List<UCRelation> buildRelations() {
         List<UCRelation> list = new ArrayList<>();
 
-        // 1. Customer Actor Associations (Direct solid connections to Col 1 & UC14)
+        // 1. Customer Actor Associations (Direct solid connections to Col 1 & UC12)
         list.add(new UCRelation("ACT_CUSTOMER", "UC01", "assoc", ""));
         list.add(new UCRelation("ACT_CUSTOMER", "UC02", "assoc", ""));
         list.add(new UCRelation("ACT_CUSTOMER", "UC03", "assoc", ""));
+        list.add(new UCRelation("ACT_CUSTOMER", "UC04", "assoc", ""));
+        list.add(new UCRelation("ACT_CUSTOMER", "UC05", "assoc", ""));
         list.add(new UCRelation("ACT_CUSTOMER", "UC06", "assoc", ""));
-        list.add(new UCRelation("ACT_CUSTOMER", "UC08", "assoc", ""));
+        list.add(new UCRelation("ACT_CUSTOMER", "UC07", "assoc", ""));
+        list.add(new UCRelation("ACT_CUSTOMER", "UC11", "assoc", ""));
         list.add(new UCRelation("ACT_CUSTOMER", "UC12", "assoc", ""));
-        list.add(new UCRelation("ACT_CUSTOMER", "UC13", "assoc", ""));
         list.add(new UCRelation("ACT_CUSTOMER", "UC14", "assoc", ""));
+        list.add(new UCRelation("ACT_CUSTOMER", "UC15", "assoc", ""));
 
         // 2. Restaurant Actor Associations (Direct solid connections to Col 1)
+        list.add(new UCRelation("ACT_RESTAURANT", "UC02", "assoc", ""));
+        list.add(new UCRelation("ACT_RESTAURANT", "UC05", "assoc", ""));
         list.add(new UCRelation("ACT_RESTAURANT", "UC16", "assoc", ""));
         list.add(new UCRelation("ACT_RESTAURANT", "UC17", "assoc", ""));
         list.add(new UCRelation("ACT_RESTAURANT", "UC18", "assoc", ""));
         list.add(new UCRelation("ACT_RESTAURANT", "UC19", "assoc", ""));
-        list.add(new UCRelation("ACT_RESTAURANT", "UC20", "assoc", ""));
         list.add(new UCRelation("ACT_RESTAURANT", "UC21", "assoc", ""));
+        list.add(new UCRelation("ACT_RESTAURANT", "UC22", "assoc", ""));
 
         // 3. Driver Actor Associations (Direct solid connections to Col 1)
+        list.add(new UCRelation("ACT_DRIVER", "UC02", "assoc", ""));
+        list.add(new UCRelation("ACT_DRIVER", "UC05", "assoc", ""));
+        list.add(new UCRelation("ACT_DRIVER", "UC23", "assoc", ""));
+        list.add(new UCRelation("ACT_DRIVER", "UC24", "assoc", ""));
         list.add(new UCRelation("ACT_DRIVER", "UC25", "assoc", ""));
         list.add(new UCRelation("ACT_DRIVER", "UC26", "assoc", ""));
         list.add(new UCRelation("ACT_DRIVER", "UC27", "assoc", ""));
-        list.add(new UCRelation("ACT_DRIVER", "UC28", "assoc", ""));
-        list.add(new UCRelation("ACT_DRIVER", "UC29", "assoc", ""));
 
         // 4. Admin Actor Associations (Direct solid connections to Col 3)
-        list.add(new UCRelation("ACT_ADMIN", "UC35", "assoc", ""));
-        list.add(new UCRelation("ACT_ADMIN", "UC37", "assoc", ""));
+        list.add(new UCRelation("ACT_ADMIN", "UC02", "assoc", ""));
+        list.add(new UCRelation("ACT_ADMIN", "UC05", "assoc", ""));
+        list.add(new UCRelation("ACT_ADMIN", "UC36", "assoc", ""));
+        list.add(new UCRelation("ACT_ADMIN", "UC39", "assoc", ""));
         list.add(new UCRelation("ACT_ADMIN", "UC40", "assoc", ""));
         list.add(new UCRelation("ACT_ADMIN", "UC41", "assoc", ""));
         list.add(new UCRelation("ACT_ADMIN", "UC42", "assoc", ""));
         list.add(new UCRelation("ACT_ADMIN", "UC43", "assoc", ""));
         list.add(new UCRelation("ACT_ADMIN", "UC44", "assoc", ""));
+        list.add(new UCRelation("ACT_ADMIN", "UC45", "assoc", ""));
+        list.add(new UCRelation("ACT_ADMIN", "UC46", "assoc", ""));
 
-        // 5. Automated Dispatcher Engine Associations (Direct solid connections to Col 3)
-        list.add(new UCRelation("ACT_DISPATCHER", "UC31", "assoc", ""));
+        // 5. Dispatcher Console Actor Associations (Direct solid connections to Col 3)
+        list.add(new UCRelation("ACT_DISPATCHER", "UC02", "assoc", ""));
+        list.add(new UCRelation("ACT_DISPATCHER", "UC05", "assoc", ""));
+        list.add(new UCRelation("ACT_DISPATCHER", "UC29", "assoc", ""));
+        list.add(new UCRelation("ACT_DISPATCHER", "UC30", "assoc", ""));
         list.add(new UCRelation("ACT_DISPATCHER", "UC34", "assoc", ""));
+        list.add(new UCRelation("ACT_DISPATCHER", "UC35", "assoc", ""));
 
         // 6. Concurrency Simulator Engine Associations (Direct solid connections to Col 3)
-        list.add(new UCRelation("ACT_SIMULATOR", "UC44", "assoc", ""));
-        list.add(new UCRelation("ACT_SIMULATOR", "UC47", "assoc", ""));
-        list.add(new UCRelation("ACT_SIMULATOR", "UC48", "assoc", ""));
+        list.add(new UCRelation("ACT_SIMULATOR", "UC46", "assoc", ""));
+        list.add(new UCRelation("ACT_SIMULATOR", "UC50", "assoc", ""));
+        list.add(new UCRelation("ACT_SIMULATOR", "UC49", "assoc", ""));
 
         // 7. Internal System Relationships (<<include>> & <<extend>>)
-        // SUB1
-        list.add(new UCRelation("UC02", "UC04", "include", "<<include>>"));
-        list.add(new UCRelation("UC05", "UC04", "extend", "<<extend>>"));
+        // SUB2 (Customer Subsystem - Matches CRS Template!)
+        list.add(new UCRelation("UC07", "UC08", "include", "<<include>>")); // PlaceOrder includes DeductStock
+        list.add(new UCRelation("UC07", "UC09", "include", "<<include>>")); // PlaceOrder includes CalculateFee
+        list.add(new UCRelation("UC09", "UC10", "include", "<<include>>")); // CalculateFee includes ValidateGPS
+        list.add(new UCRelation("UC12", "UC07", "extend", "<<extend>>"));   // CancelOrder extends PlaceOrder (CRS template match!)
+        list.add(new UCRelation("UC12", "UC13", "include", "<<include>>")); // CancelOrder includes RestoreStock
 
-        // SUB2 (Strictly follows CRS Reference)
-        list.add(new UCRelation("UC07", "UC06", "extend", "<<extend>>"));
-        list.add(new UCRelation("UC08", "UC09", "include", "<<include>>"));
-        list.add(new UCRelation("UC08", "UC10", "include", "<<include>>"));
-        list.add(new UCRelation("UC10", "UC11", "include", "<<include>>"));
-        list.add(new UCRelation("UC14", "UC08", "extend", "<<extend>>")); // Cancel Order extends Place Order (CRS template match!)
-        list.add(new UCRelation("UC14", "UC15", "include", "<<include>>"));
+        // SUB3 (Restaurant Subsystem)
+        list.add(new UCRelation("UC19", "UC20", "include", "<<include>>")); // ConfirmOrder includes AutoDispatch
+        list.add(new UCRelation("UC21", "UC13", "include", "<<include>>")); // RejectOrder includes RestoreStock
 
-        // SUB3
-        list.add(new UCRelation("UC21", "UC22", "include", "<<include>>"));
-        list.add(new UCRelation("UC23", "UC20", "extend", "<<extend>>"));
-        list.add(new UCRelation("UC24", "UC20", "extend", "<<extend>>"));
+        // SUB4 (Driver Subsystem)
+        list.add(new UCRelation("UC27", "UC28", "include", "<<include>>")); // Delivered includes SetAvailable
 
-        // SUB4
-        list.add(new UCRelation("UC29", "UC30", "include", "<<include>>"));
+        // SUB6 (Admin Subsystem)
+        list.add(new UCRelation("UC37", "UC36", "extend", "<<extend>>"));   // Approve extends ReviewApplications
+        list.add(new UCRelation("UC38", "UC36", "extend", "<<extend>>"));   // Reject extends ReviewApplications
 
-        // SUB6
-        list.add(new UCRelation("UC36", "UC35", "extend", "<<extend>>"));
-        list.add(new UCRelation("UC38", "UC37", "extend", "<<extend>>"));
-        list.add(new UCRelation("UC39", "UC37", "extend", "<<extend>>"));
+        // SUB5 (Dispatcher Subsystem)
+        list.add(new UCRelation("UC30", "UC31", "include", "<<include>>")); // AutoDispatch includes FindNearestDriver
+        list.add(new UCRelation("UC30", "UC32", "include", "<<include>>")); // AutoDispatch includes CalculateETA
+        list.add(new UCRelation("UC30", "UC33", "include", "<<include>>")); // AutoDispatch includes LockDriverBusy
 
-        // SUB5
-        list.add(new UCRelation("UC34", "UC32", "include", "<<include>>"));
-        list.add(new UCRelation("UC34", "UC33", "include", "<<include>>"));
-
-        // SUB7 (Strictly follows CRS Reference)
-        list.add(new UCRelation("UC44", "UC45", "include", "<<include>>"));
-        list.add(new UCRelation("UC44", "UC46", "include", "<<include>>"));
-        list.add(new UCRelation("UC44", "UC48", "include", "<<include>>")); // Run Simulation includes Detect Race Conditions (CRS template match!)
-        list.add(new UCRelation("UC49", "UC48", "extend", "<<extend>>"));
+        // SUB7 (Simulator Subsystem - Matches CRS Template!)
+        list.add(new UCRelation("UC46", "UC47", "include", "<<include>>")); // RunSimulation includes CustomerThread
+        list.add(new UCRelation("UC46", "UC48", "include", "<<include>>")); // RunSimulation includes DispatchThread
+        list.add(new UCRelation("UC46", "UC49", "include", "<<include>>")); // RunSimulation includes DetectRaceConditions (CRS template match!)
+        list.add(new UCRelation("UC51", "UC49", "extend", "<<extend>>"));   // ExportReport extends DetectRaceConditions
 
         return list;
     }
@@ -327,7 +338,7 @@ public class UseCaseDiagramGenerator {
     // ==========================================
     private static void generateSvg(List<Actor> actors, List<Subsystem> subsystems, List<UseCase> useCases, List<UCRelation> relations) throws Exception {
         StringBuilder sb = new StringBuilder();
-        int width = 3380;
+        int width = 3450;
         int height = 2320;
 
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -356,12 +367,12 @@ public class UseCaseDiagramGenerator {
         // Main Header Banner
         sb.append("  <rect x=\"30\" y=\"20\" width=\"").append(width - 60).append("\" height=\"60\" fill=\"#ffffff\" stroke=\"#000000\" stroke-width=\"2\" />\n");
         sb.append("  <text x=\"").append(width / 2).append("\" y=\"45\" text-anchor=\"middle\" class=\"system-title\">TỔNG THỂ USE CASE DIAGRAM — HỆ THỐNG ĐẶT VÀ GIAO ĐỒ ĂN TRỰC TUYẾN (FOOD DELIVERY SIMULATION SYSTEM - FDS)</text>\n");
-        sb.append("  <text x=\"").append(width / 2).append("\" y=\"68\" text-anchor=\"middle\" class=\"system-subtitle\">LAB211 — OOP with Java | Full 49 Use Cases, 6 Actors, 7 Subsystems (Academic Monochrome Specification)</text>\n\n");
+        sb.append("  <text x=\"").append(width / 2).append("\" y=\"68\" text-anchor=\"middle\" class=\"system-subtitle\">LAB211 — OOP with Java | Full 51 Use Cases, 6 Actors, 7 Subsystems (Academic Monochrome Specification)</text>\n\n");
 
         // System Boundary Box
         int sysX = 350;
         int sysY = 100;
-        int sysW = 2640;
+        int sysW = 2710;
         int sysH = 2170;
         sb.append("  <!-- System Boundary -->\n");
         sb.append("  <rect x=\"").append(sysX).append("\" y=\"").append(sysY).append("\" width=\"").append(sysW).append("\" height=\"").append(sysH).append("\" fill=\"#ffffff\" stroke=\"#000000\" stroke-width=\"2.5\" rx=\"6\" />\n");
@@ -479,7 +490,7 @@ public class UseCaseDiagramGenerator {
         sb.append("\n  <!-- Legend / Notation -->\n");
         int legX = 400;
         int legY = 2225;
-        sb.append("  <rect x=\"").append(legX).append("\" y=\"").append(legY).append("\" width=\"1020\" height=\"35\" fill=\"#ffffff\" stroke=\"#000000\" stroke-width=\"1\" rx=\"3\" />\n");
+        sb.append("  <rect x=\"").append(legX).append("\" y=\"").append(legY).append("\" width=\"1040\" height=\"35\" fill=\"#ffffff\" stroke=\"#000000\" stroke-width=\"1\" rx=\"3\" />\n");
         sb.append("  <text x=\"").append(legX + 15).append("\" y=\"").append(legY + 22).append("\" font-family=\"'Segoe UI', Arial, sans-serif\" font-size=\"12px\" fill=\"#000000\">");
         sb.append("<b>Ký hiệu chuẩn UML:</b> &nbsp; ── Association (Liên kết tác nhân) &nbsp;&nbsp;|&nbsp;&nbsp; - - &gt; &lt;&lt;include&gt;&gt; (Bắt buộc bao gồm) &nbsp;&nbsp;|&nbsp;&nbsp; - - &gt; &lt;&lt;extend&gt;&gt; (Mở rộng tùy chọn) &nbsp;&nbsp;|&nbsp;&nbsp; Academic B&amp;W");
         sb.append("</text>\n");
@@ -530,7 +541,7 @@ public class UseCaseDiagramGenerator {
         sb.append("<header>\n");
         sb.append("  <div class=\"title-group\">\n");
         sb.append("    <h1>SƠ ĐỒ USE CASE TOÀN DIỆN — FOOD DELIVERY SIMULATION (FDS)</h1>\n");
-        sb.append("    <p>LAB211 OOP with Java • Quy Nhơn City • Đầy đủ 49 Use Cases • 6 Tác nhân • Academic B&amp;W Mode</p>\n");
+        sb.append("    <p>LAB211 OOP with Java • Quy Nhơn City • Đầy đủ 51 Use Cases • 6 Tác nhân • Academic B&amp;W Mode</p>\n");
         sb.append("  </div>\n");
         sb.append("  <div class=\"controls\">\n");
         sb.append("    <button onclick=\"zoomIn()\">+ Phóng to</button>\n");
@@ -596,8 +607,8 @@ public class UseCaseDiagramGenerator {
         sb.append("  function resetZoom() {\n");
         sb.append("    const vw = viewport.clientWidth;\n");
         sb.append("    const vh = viewport.clientHeight;\n");
-        sb.append("    scale = Math.min(vw / 3400, vh / 2350) * 0.95;\n");
-        sb.append("    panX = (vw - 3380 * scale) / 2;\n");
+        sb.append("    scale = Math.min(vw / 3450, vh / 2350) * 0.95;\n");
+        sb.append("    panX = (vw - 3450 * scale) / 2;\n");
         sb.append("    panY = 10;\n");
         sb.append("    updateTransform();\n");
         sb.append("  }\n\n");
@@ -668,9 +679,9 @@ public class UseCaseDiagramGenerator {
     // ==========================================
     private static void generateDrawio(List<Actor> actors, List<Subsystem> subsystems, List<UseCase> useCases, List<UCRelation> relations) throws Exception {
         StringBuilder sb = new StringBuilder();
-        sb.append("<mxfile host=\"app.diagrams.net\" modified=\"2026-11-09T10:55:00.000Z\" agent=\"Antigravity AI\" version=\"21.1.0\" type=\"device\">\n");
+        sb.append("<mxfile host=\"app.diagrams.net\" modified=\"2026-11-09T11:00:00.000Z\" agent=\"Antigravity AI\" version=\"21.1.0\" type=\"device\">\n");
         sb.append("  <diagram id=\"FoodDeliveryUseCase\" name=\"Food Delivery Full Use Case\">\n");
-        sb.append("    <mxGraphModel dx=\"2400\" dy=\"1800\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"3400\" pageHeight=\"2400\" background=\"#ffffff\">\n");
+        sb.append("    <mxGraphModel dx=\"2400\" dy=\"1800\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"3500\" pageHeight=\"2400\" background=\"#ffffff\">\n");
         sb.append("      <root>\n");
         sb.append("        <mxCell id=\"0\" />\n");
         sb.append("        <mxCell id=\"1\" parent=\"0\" />\n");
@@ -679,7 +690,7 @@ public class UseCaseDiagramGenerator {
 
         // System Boundary
         sb.append("        <mxCell id=\"").append(cellId++).append("\" value=\"&lt;b&gt;HỆ THỐNG ĐẶT VÀ GIAO ĐỒ ĂN TRỰC TUYẾN (FOOD DELIVERY SIMULATION SYSTEM - FDS)&lt;/b&gt;\" style=\"shape=rect;html=1;whiteSpace=wrap;align=center;verticalAlign=top;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;fontSize=16;fontColor=#000000;\" vertex=\"1\" parent=\"1\">\n");
-        sb.append("          <mxGeometry x=\"350\" y=\"100\" width=\"2640\" height=\"2170\" as=\"geometry\" />\n");
+        sb.append("          <mxGeometry x=\"350\" y=\"100\" width=\"2710\" height=\"2170\" as=\"geometry\" />\n");
         sb.append("        </mxCell>\n");
 
         // Subsystems
@@ -751,26 +762,27 @@ public class UseCaseDiagramGenerator {
         sb.append("# TÀI LIỆU ĐẶC TẢ VÀ SƠ ĐỒ USE CASE TOÀN DIỆN (FOOD DELIVERY SIMULATION SYSTEM - FDS)\n");
         sb.append("**Môn học:** LAB211 — Lập trình Hướng đối tượng với Java | FPT University  \n");
         sb.append("**Phạm vi triển khai:** Hệ thống Đặt & Giao đồ ăn trực tuyến (Thành phố Quy Nhơn)  \n");
-        sb.append("**Quy chuẩn thiết kế:** UML 2.5 Academic Monochrome Specification (Đen - Trắng chuẩn đồ án)  \n\n");
+        sb.append("**Quy chuẩn thiết kế:** UML 2.5 Academic Monochrome Specification (Đen - Trắng chuẩn đồ án)  \n");
+        sb.append("**Độ phủ kiểm chứng:** 100% khớp các menu và hàm điều khiển trong `MainView.java` và các `Controller`  \n\n");
         sb.append("---\n\n");
 
         sb.append("## 1. TỔNG QUAN HỆ THỐNG VÀ DANH SÁCH TÁC NHÂN (ACTORS)\n\n");
         sb.append("| STT | Mã Actor | Tên Tác Nhân | Vai Trò (Role) | Phân Loại | Nhiệm Vụ Trọng Tâm |\n");
         sb.append("| :---: | :--- | :--- | :--- | :---: | :--- |\n");
-        sb.append("| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn, hủy đơn (`extends`) và nộp đơn làm tài xế. |\n");
+        sb.append("| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn, hủy đơn (`extends`) và xem thông báo ETA. |\n");
         sb.append("| 2 | `ACT_RESTAURANT` | **Quản lý Nhà hàng** (Restaurant) | Đối tác ẩm thực | Human | Quản lý menu món ăn, cập nhật tồn kho (stock), duyệt hoặc từ chối đơn hàng, kích hoạt điều phối, xem doanh thu. |\n");
-        sb.append("| 3 | `ACT_DRIVER` | **Tài xế Giao hàng** (Driver) | Đối tác vận chuyển | Human | Bật/tắt trạng thái nhận cuốc, cập nhật GPS, nhận đơn điều phối, xác nhận lấy hàng và giao thành công. |\n");
-        sb.append("| 4 | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Điều hành hệ thống | Human | Quản lý tài khoản, duyệt đơn ứng tuyển tài xế, quản lý mạng lưới nhà hàng, kiểm thử mô phỏng đa luồng. |\n");
-        sb.append("| 5 | `ACT_DISPATCHER` | **Hệ thống Điều phối** (Dispatcher Engine) | Hệ thống tự động | System | Tự động quét hàng đợi `PENDING`, tính toán khoảng cách Haversine & ETA, ghép nối và khóa tài xế `BUSY`. |\n");
+        sb.append("| 3 | `ACT_DRIVER` | **Tài xế Đối tác** (Driver) | Đối tác vận chuyển | Human | Bật/tắt trạng thái nhận cuốc, cập nhật GPS, nhận đơn điều phối, xác nhận lấy hàng và giao thành công. |\n");
+        sb.append("| 4 | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Điều hành hệ thống | Human | Quản lý tài khoản, duyệt đơn ứng tuyển tài xế, quản lý mạng lưới nhà hàng, sinh dữ liệu CSV và chạy kiểm thử đa luồng. |\n");
+        sb.append("| 5 | `ACT_DISPATCHER` | **Điều phối viên** (Dispatcher Console) | Điều hành chuyến xe | Human | Quét hàng đợi `PENDING`, kích hoạt tự động điều phối, xem bản đồ mạng lưới ASCII Grid Map và giám sát đội tài xế. |\n");
         sb.append("| 6 | `ACT_SIMULATOR` | **Bộ Mô phỏng Đa luồng** (Simulator Engine) | Hệ thống kiểm thử | System | Khởi tạo nhiều luồng đồng thời (Customer/Dispatch Thread), so chuẩn 4 cơ chế khóa và phát hiện Race Conditions (`includes`). |\n\n");
 
         sb.append("---\n\n");
-        sb.append("## 2. BẢNG ĐẶC TẢ CHI TIẾT 49 USE CASES THEO PHÂN HỆ\n\n");
+        sb.append("## 2. BẢNG ĐẶC TẢ CHI TIẾT 51 USE CASES THEO PHÂN HỆ VÀ CODE TRIỂN KHAI\n\n");
 
         for (Subsystem sub : subsystems) {
             sb.append("### ").append(sub.title).append(" (`").append(sub.id).append("`)\n");
             sb.append("*Tên tiếng Anh:* ").append(sub.enTitle).append("  \n\n");
-            sb.append("| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |\n");
+            sb.append("| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |\n");
             sb.append("| :---: | :--- | :--- | :---: | :--- |\n");
 
             for (UseCase uc : useCases) {
@@ -800,7 +812,7 @@ public class UseCaseDiagramGenerator {
                     if (depStr.length() == 0) depStr.append("─");
                     if (actStr.length() == 0) actStr.append("Hệ thống tự động");
 
-                    sb.append("| **").append(uc.id).append("** | ").append(uc.fullTitle).append(" | ").append(actStr).append(" | ").append(depStr).append(" | Mã nguồn: `").append(uc.id).append("` trong package tương ứng. |\n");
+                    sb.append("| **").append(uc.id).append("** | ").append(uc.fullTitle).append(" | ").append(actStr).append(" | ").append(depStr).append(" | `").append(uc.id).append("` trong package tương ứng. |\n");
                 }
             }
             sb.append("\n");

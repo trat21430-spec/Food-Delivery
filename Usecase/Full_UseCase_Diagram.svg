@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3380 2320" width="3380" height="2320">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3450 2320" width="3450" height="2320">
   <defs>
     <marker id="openarrow" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto">
       <polyline points="1 1, 11 5, 1 9" fill="none" stroke="#000000" stroke-width="1.8" />
@@ -19,385 +19,398 @@
 
   <rect width="100%" height="100%" fill="#ffffff" />
 
-  <rect x="30" y="20" width="3320" height="60" fill="#ffffff" stroke="#000000" stroke-width="2" />
-  <text x="1690" y="45" text-anchor="middle" class="system-title">TỔNG THỂ USE CASE DIAGRAM — HỆ THỐNG ĐẶT VÀ GIAO ĐỒ ĂN TRỰC TUYẾN (FOOD DELIVERY SIMULATION SYSTEM - FDS)</text>
-  <text x="1690" y="68" text-anchor="middle" class="system-subtitle">LAB211 — OOP with Java | Full 49 Use Cases, 6 Actors, 7 Subsystems (Academic Monochrome Specification)</text>
+  <rect x="30" y="20" width="3390" height="60" fill="#ffffff" stroke="#000000" stroke-width="2" />
+  <text x="1725" y="45" text-anchor="middle" class="system-title">TỔNG THỂ USE CASE DIAGRAM — HỆ THỐNG ĐẶT VÀ GIAO ĐỒ ĂN TRỰC TUYẾN (FOOD DELIVERY SIMULATION SYSTEM - FDS)</text>
+  <text x="1725" y="68" text-anchor="middle" class="system-subtitle">LAB211 — OOP with Java | Full 51 Use Cases, 6 Actors, 7 Subsystems (Academic Monochrome Specification)</text>
 
   <!-- System Boundary -->
-  <rect x="350" y="100" width="2640" height="2170" fill="#ffffff" stroke="#000000" stroke-width="2.5" rx="6" />
+  <rect x="350" y="100" width="2710" height="2170" fill="#ffffff" stroke="#000000" stroke-width="2.5" rx="6" />
   <rect x="350" y="100" width="460" height="32" fill="#ffffff" stroke="#000000" stroke-width="1.5" />
   <text x="365" y="122" font-family="'Segoe UI', Arial, sans-serif" font-size="14px" font-weight="bold" fill="#000000">&lt;&lt;system boundary&gt;&gt; Food Delivery System</text>
 
   <!-- Subsystem SUB1 -->
-  <rect x="380" y="140" width="1180" height="340" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="396" y="164" class="sub-title">Phân hệ 1: Xác thực & Hồ sơ Cá nhân</text>
-  <text x="396" y="182" class="sub-en">[Authentication & User Profile]</text>
+  <rect x="380" y="140" width="1220" height="330" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="396" y="164" class="sub-title">Phân hệ 1: Xác thực & Quản lý Truy cập</text>
+  <text x="396" y="182" class="sub-en">[Authentication & Access Management]</text>
   <!-- Subsystem SUB2 -->
-  <rect x="380" y="510" width="1180" height="590" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="396" y="534" class="sub-title">Phân hệ 2: Khách hàng & Đặt hàng Trực tuyến</text>
-  <text x="396" y="552" class="sub-en">[Customer Ordering & Cart Management]</text>
+  <rect x="380" y="500" width="1220" height="610" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="396" y="524" class="sub-title">Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn</text>
+  <text x="396" y="542" class="sub-en">[Customer Portal & Food Ordering]</text>
   <!-- Subsystem SUB3 -->
-  <rect x="380" y="1130" width="1180" height="580" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="396" y="1154" class="sub-title">Phân hệ 3: Quản lý Nhà hàng & Thực đơn Quy Nhơn</text>
-  <text x="396" y="1172" class="sub-en">[Restaurant & Menu Catalog Management]</text>
+  <rect x="380" y="1140" width="1220" height="560" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="396" y="1164" class="sub-title">Phân hệ 3: Quản lý Nhà hàng & Thực đơn</text>
+  <text x="396" y="1182" class="sub-en">[Restaurant Catalog & Order Processing]</text>
   <!-- Subsystem SUB4 -->
-  <rect x="380" y="1740" width="1180" height="520" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="396" y="1764" class="sub-title">Phân hệ 4: Tài xế & Vận hành Giao nhận Đơn hàng</text>
-  <text x="396" y="1782" class="sub-en">[Driver Delivery & Trip Operations]</text>
+  <rect x="380" y="1730" width="1220" height="520" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="396" y="1754" class="sub-title">Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn</text>
+  <text x="396" y="1772" class="sub-en">[Driver Delivery & Trip Operations]</text>
   <!-- Subsystem SUB6 -->
-  <rect x="1630" y="140" width="1330" height="610" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="1646" y="164" class="sub-title">Phân hệ 6: Quản trị Hệ thống & Phê duyệt Đối tác</text>
-  <text x="1646" y="182" class="sub-en">[System Administration & Partner Approval]</text>
+  <rect x="1650" y="140" width="1380" height="620" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="1666" y="164" class="sub-title">Phân hệ 6: Quản trị Hệ thống Toàn diện</text>
+  <text x="1666" y="182" class="sub-en">[System Administration & Super Control]</text>
   <!-- Subsystem SUB5 -->
-  <rect x="1630" y="780" width="1330" height="560" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="1646" y="804" class="sub-title">Phân hệ 5: Điều phối Tự động & Tối ưu Lộ trình</text>
-  <text x="1646" y="822" class="sub-en">[Automated Dispatch & Route Matching Engine]</text>
+  <rect x="1650" y="790" width="1380" height="550" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="1666" y="814" class="sub-title">Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid</text>
+  <text x="1666" y="832" class="sub-en">[Central Dispatching & Network Grid]</text>
   <!-- Subsystem SUB7 -->
-  <rect x="1630" y="1370" width="1330" height="890" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
-  <text x="1646" y="1394" class="sub-title">Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh</text>
-  <text x="1646" y="1412" class="sub-en">[Concurrency Stress Testing & Race Detection]</text>
+  <rect x="1650" y="1370" width="1380" height="880" fill="#ffffff" stroke="#444444" stroke-width="1.2" stroke-dasharray="6,4" rx="4" />
+  <text x="1666" y="1394" class="sub-title">Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh</text>
+  <text x="1666" y="1412" class="sub-en">[Concurrency Stress Testing & Race Detection]</text>
 
   <!-- Relationships -->
-  <line x1="190" y1="680" x2="430" y2="220" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="430" y2="310" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="430" y2="400" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="425" y2="580" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="425" y2="700" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="425" y2="840" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="425" y2="960" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="680" x2="755" y2="860" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="1420" x2="425" y2="1200" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="1420" x2="425" y2="1290" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="1420" x2="425" y2="1380" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="1420" x2="425" y2="1470" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="1420" x2="425" y2="1560" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="1420" x2="425" y2="1650" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="2010" x2="425" y2="1810" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="2010" x2="425" y2="1900" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="2010" x2="425" y2="1990" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="2010" x2="425" y2="2080" stroke="#000000" stroke-width="1.4" />
-  <line x1="190" y1="2010" x2="425" y2="2170" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="210" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="320" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="430" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="540" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="650" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="1460" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="430" x2="2900" y2="1580" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="1050" x2="2900" y2="870" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="1050" x2="2900" y2="1040" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="1780" x2="2900" y2="1580" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="1780" x2="2900" y2="1720" stroke="#000000" stroke-width="1.4" />
-  <line x1="3110" y1="1780" x2="2590" y2="1720" stroke="#000000" stroke-width="1.4" />
-  <line x1="670" y1="310" x2="755" y2="260" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="674" y="277" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="712" y="289" class="rel-label"><<include>></text>
-  <line x1="880" y1="326" x2="880" y2="294" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="842" y="302" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="880" y="314" class="rel-label"><<extend>></text>
-  <line x1="755" y1="580" x2="675" y2="580" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="677" y="572" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="715" y="584" class="rel-label"><<extend>></text>
-  <line x1="675" y1="700" x2="760" y2="670" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="679" y="677" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="717" y="689" class="rel-label"><<include>></text>
-  <line x1="675" y1="700" x2="760" y2="760" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="679" y="722" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="717" y="734" class="rel-label"><<include>></text>
-  <line x1="1000" y1="760" x2="1060" y2="760" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="992" y="752" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="1030" y="764" class="rel-label"><<include>></text>
-  <line x1="755" y1="860" x2="675" y2="700" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="677" y="772" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="715" y="784" class="rel-label"><<extend>></text>
-  <line x1="1005" y1="860" x2="1060" y2="860" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="994" y="852" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="1032" y="864" class="rel-label"><<include>></text>
-  <line x1="675" y1="1650" x2="760" y2="1650" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="679" y="1642" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="717" y="1654" class="rel-label"><<include>></text>
-  <line x1="760" y1="1560" x2="675" y2="1560" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="679" y="1552" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="717" y="1564" class="rel-label"><<extend>></text>
-  <line x1="760" y1="1470" x2="675" y2="1560" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="679" y="1507" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="717" y="1519" class="rel-label"><<extend>></text>
-  <line x1="675" y1="2170" x2="755" y2="2170" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="677" y="2162" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="715" y="2174" class="rel-label"><<include>></text>
-  <line x1="2585" y1="210" x2="2640" y2="210" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="202" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="214" class="rel-label"><<extend>></text>
-  <line x1="2585" y1="310" x2="2640" y2="320" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="307" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="319" class="rel-label"><<extend>></text>
-  <line x1="2585" y1="400" x2="2640" y2="320" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="352" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="364" class="rel-label"><<extend>></text>
-  <line x1="2640" y1="1040" x2="2585" y2="980" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="1002" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="1014" class="rel-label"><<include>></text>
-  <line x1="2640" y1="1040" x2="2585" y2="1100" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="1062" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="1074" class="rel-label"><<include>></text>
-  <line x1="2640" y1="1580" x2="2585" y2="1500" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="1532" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="1544" class="rel-label"><<include>></text>
-  <line x1="2640" y1="1580" x2="2585" y2="1600" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2574" y="1582" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2612" y="1594" class="rel-label"><<include>></text>
-  <line x1="2640" y1="1580" x2="2590" y2="1720" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2577" y="1642" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2615" y="1654" class="rel-label"><<include>></text>
-  <line x1="2460" y1="1816" x2="2460" y2="1756" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
-  <rect x="2422" y="1778" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
-  <text x="2460" y="1790" class="rel-label"><<extend>></text>
+  <line x1="190" y1="680" x2="430" y2="210" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="430" y2="290" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="755" y2="240" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="755" y2="340" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="430" y2="370" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="425" y2="570" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="425" y2="680" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="425" y2="800" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="755" y2="840" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="425" y2="910" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="680" x2="425" y2="1010" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="430" y2="290" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="430" y2="370" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="425" y2="1210" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="425" y2="1300" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="425" y2="1390" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="425" y2="1480" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="425" y2="1570" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="1420" x2="425" y2="1660" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="430" y2="290" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="430" y2="370" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="425" y2="1800" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="425" y2="1890" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="425" y2="1980" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="425" y2="2070" stroke="#000000" stroke-width="1.4" />
+  <line x1="190" y1="2010" x2="425" y2="2160" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="670" y2="290" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="670" y2="370" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="210" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="300" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="390" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="480" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="570" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="660" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2615" y2="660" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="1450" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="430" x2="2960" y2="1560" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1050" x2="670" y2="290" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1050" x2="670" y2="370" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1050" x2="2960" y2="860" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1050" x2="2960" y2="970" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1050" x2="2960" y2="1080" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1050" x2="2960" y2="1190" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1780" x2="2960" y2="1560" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1780" x2="2960" y2="1700" stroke="#000000" stroke-width="1.4" />
+  <line x1="3180" y1="1780" x2="2620" y2="1710" stroke="#000000" stroke-width="1.4" />
+  <line x1="675" y1="680" x2="760" y2="640" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="679" y="652" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="717" y="664" class="rel-label"><<include>></text>
+  <line x1="675" y1="680" x2="760" y2="720" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="679" y="692" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="717" y="704" class="rel-label"><<include>></text>
+  <line x1="1000" y1="720" x2="1085" y2="720" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="1004" y="712" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="1042" y="724" class="rel-label"><<include>></text>
+  <line x1="755" y1="840" x2="675" y2="680" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="677" y="752" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="715" y="764" class="rel-label"><<extend>></text>
+  <line x1="1005" y1="840" x2="1085" y2="840" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="1007" y="832" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="1045" y="844" class="rel-label"><<include>></text>
+  <line x1="675" y1="1480" x2="760" y2="1480" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="679" y="1472" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="717" y="1484" class="rel-label"><<include>></text>
+  <line x1="550" y1="1537" x2="1200" y2="873" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="837" y="1197" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="875" y="1209" class="rel-label"><<include>></text>
+  <line x1="675" y1="2160" x2="755" y2="2160" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="677" y="2152" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="715" y="2164" class="rel-label"><<include>></text>
+  <line x1="2615" y1="170" x2="2700" y2="210" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="182" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="194" class="rel-label"><<extend>></text>
+  <line x1="2615" y1="250" x2="2700" y2="210" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="222" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="234" class="rel-label"><<extend>></text>
+  <line x1="2700" y1="970" x2="2615" y2="920" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="937" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="949" class="rel-label"><<include>></text>
+  <line x1="2700" y1="970" x2="2615" y2="1000" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="977" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="989" class="rel-label"><<include>></text>
+  <line x1="2700" y1="970" x2="2615" y2="1080" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="1017" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="1029" class="rel-label"><<include>></text>
+  <line x1="2700" y1="1560" x2="2615" y2="1500" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="1522" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="1534" class="rel-label"><<include>></text>
+  <line x1="2700" y1="1560" x2="2615" y2="1590" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2619" y="1567" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2657" y="1579" class="rel-label"><<include>></text>
+  <line x1="2700" y1="1560" x2="2620" y2="1710" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2622" y="1627" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2660" y="1639" class="rel-label"><<include>></text>
+  <line x1="2700" y1="1840" x2="2620" y2="1710" stroke="#000000" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#openarrow)" />
+  <rect x="2622" y="1767" width="76" height="17" fill="#ffffff" stroke="#000000" stroke-width="0.8" rx="3" />
+  <text x="2660" y="1779" class="rel-label"><<extend>></text>
 
   <!-- Use Cases -->
   <g id="UC01">
-    <ellipse cx="550" cy="220" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="216" class="uc-code">UC01: Đăng ký tài khoản</text>
-    <text x="550" y="236" class="uc-line2">Khách hàng mới</text>
+    <ellipse cx="550" cy="210" rx="120" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="206" class="uc-code">UC01: Đăng ký tài khoản</text>
+    <text x="550" y="226" class="uc-line2">Khách hàng mới</text>
   </g>
   <g id="UC02">
-    <ellipse cx="550" cy="310" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="306" class="uc-code">UC02: Đăng nhập</text>
-    <text x="550" y="326" class="uc-line2">vào Hệ thống</text>
-  </g>
-  <g id="UC03">
-    <ellipse cx="550" cy="400" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="396" class="uc-code">UC03: Đăng xuất</text>
-    <text x="550" y="416" class="uc-line2">khỏi Phiên làm việc</text>
-  </g>
-  <g id="UC04">
-    <ellipse cx="880" cy="260" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="256" class="uc-code">UC04: Xem & Cập nhật</text>
-    <text x="880" y="276" class="uc-line2">Hồ sơ / Địa chỉ GPS</text>
+    <ellipse cx="550" cy="290" rx="120" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="286" class="uc-code">UC02: Đăng nhập</text>
+    <text x="550" y="306" class="uc-line2">Hệ thống đa vai trò</text>
   </g>
   <g id="UC05">
-    <ellipse cx="880" cy="360" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="356" class="uc-code">UC05: Nộp đơn đăng ký</text>
-    <text x="880" y="376" class="uc-line2">Ứng tuyển Tài xế</text>
+    <ellipse cx="550" cy="370" rx="120" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="366" class="uc-code">UC05: Đăng xuất</text>
+    <text x="550" y="386" class="uc-line2">khỏi Phiên làm việc</text>
+  </g>
+  <g id="UC03">
+    <ellipse cx="880" cy="240" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="236" class="uc-code">UC03: Nộp hồ sơ đăng ký</text>
+    <text x="880" y="256" class="uc-line2">Làm Tài xế (Chờ duyệt)</text>
+  </g>
+  <g id="UC04">
+    <ellipse cx="880" cy="340" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="336" class="uc-code">UC04: Xem danh sách</text>
+    <text x="880" y="356" class="uc-line2">Tài khoản mẫu Demo</text>
   </g>
   <g id="UC06">
-    <ellipse cx="550" cy="580" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="576" class="uc-code">UC06: Xem danh mục</text>
-    <text x="550" y="596" class="uc-line2">Nhà hàng & Thực đơn</text>
-  </g>
-  <g id="UC08">
-    <ellipse cx="550" cy="700" rx="125" ry="36" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="696" class="uc-code">UC08: Đặt món &</text>
-    <text x="550" y="716" class="uc-line2">Khởi tạo Đơn hàng</text>
-  </g>
-  <g id="UC12">
-    <ellipse cx="550" cy="840" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="836" class="uc-code">UC12: Theo dõi trạng thái</text>
-    <text x="550" y="856" class="uc-line2">Đơn hàng thời gian thực</text>
-  </g>
-  <g id="UC13">
-    <ellipse cx="550" cy="960" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="956" class="uc-code">UC13: Xem lịch sử</text>
-    <text x="550" y="976" class="uc-line2">Các đơn hàng đã đặt</text>
+    <ellipse cx="550" cy="570" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="566" class="uc-code">UC06: Xem danh sách</text>
+    <text x="550" y="586" class="uc-line2">Nhà hàng & Thực đơn</text>
   </g>
   <g id="UC07">
-    <ellipse cx="880" cy="580" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="576" class="uc-code">UC07: Tìm kiếm & Lọc</text>
-    <text x="880" y="596" class="uc-line2">Món ăn / Giá / Khoảng cách</text>
-  </g>
-  <g id="UC09">
-    <ellipse cx="880" cy="670" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="666" class="uc-code">UC09: Trừ tồn kho</text>
-    <text x="880" y="686" class="uc-line2">Món ăn tức thời</text>
-  </g>
-  <g id="UC10">
-    <ellipse cx="880" cy="760" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="756" class="uc-code">UC10: Tính phí ship</text>
-    <text x="880" y="776" class="uc-line2">theo Haversine</text>
-  </g>
-  <g id="UC14">
-    <ellipse cx="880" cy="860" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="856" class="uc-code">UC14: Hủy đơn hàng</text>
-    <text x="880" y="876" class="uc-line2">(khi đang PENDING)</text>
+    <ellipse cx="550" cy="680" rx="125" ry="35" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="676" class="uc-code">UC07: Đặt món &</text>
+    <text x="550" y="696" class="uc-line2">Khởi tạo Đơn hàng</text>
   </g>
   <g id="UC11">
-    <ellipse cx="1180" cy="760" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="1180" y="756" class="uc-code">UC11: Xác thực tọa độ</text>
-    <text x="1180" y="776" class="uc-line2">GPS giao hàng Quy Nhơn</text>
+    <ellipse cx="550" cy="800" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="796" class="uc-code">UC11: Theo dõi & Xem</text>
+    <text x="550" y="816" class="uc-line2">Đơn hàng của tôi</text>
+  </g>
+  <g id="UC14">
+    <ellipse cx="550" cy="910" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="906" class="uc-code">UC14: Xem thông tin</text>
+    <text x="550" y="926" class="uc-line2">Tài khoản cá nhân</text>
   </g>
   <g id="UC15">
-    <ellipse cx="1180" cy="860" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="1180" y="856" class="uc-code">UC15: Hoàn trả số lượng</text>
-    <text x="1180" y="876" class="uc-line2">Tồn kho món ăn</text>
+    <ellipse cx="550" cy="1010" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1006" class="uc-code">UC15: Kiểm tra hộp thư</text>
+    <text x="550" y="1026" class="uc-line2">Thông báo tài xế & ETA</text>
+  </g>
+  <g id="UC08">
+    <ellipse cx="880" cy="640" rx="120" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="636" class="uc-code">UC08: Trừ tồn kho</text>
+    <text x="880" y="656" class="uc-line2">Món ăn tức thời</text>
+  </g>
+  <g id="UC09">
+    <ellipse cx="880" cy="720" rx="120" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="716" class="uc-code">UC09: Tính phí ship</text>
+    <text x="880" y="736" class="uc-line2">theo Haversine</text>
+  </g>
+  <g id="UC12">
+    <ellipse cx="880" cy="840" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="836" class="uc-code">UC12: Hủy đơn hàng</text>
+    <text x="880" y="856" class="uc-line2">(khi đang PENDING)</text>
+  </g>
+  <g id="UC10">
+    <ellipse cx="1200" cy="720" rx="115" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="1200" y="716" class="uc-code">UC10: Xác thực GPS</text>
+    <text x="1200" y="736" class="uc-line2">Giao hàng Quy Nhơn</text>
+  </g>
+  <g id="UC13">
+    <ellipse cx="1200" cy="840" rx="115" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="1200" y="836" class="uc-code">UC13: Hoàn trả số lượng</text>
+    <text x="1200" y="856" class="uc-line2">Tồn kho món ăn</text>
   </g>
   <g id="UC16">
-    <ellipse cx="550" cy="1200" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1196" class="uc-code">UC16: Thêm món ăn mới</text>
-    <text x="550" y="1216" class="uc-line2">vào Thực đơn</text>
+    <ellipse cx="550" cy="1210" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1206" class="uc-code">UC16: Xem thực đơn &</text>
+    <text x="550" y="1226" class="uc-line2">Tình trạng tồn kho</text>
   </g>
   <g id="UC17">
-    <ellipse cx="550" cy="1290" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1286" class="uc-code">UC17: Cập nhật thông tin</text>
-    <text x="550" y="1306" class="uc-line2">Món ăn & Giá bán</text>
+    <ellipse cx="550" cy="1300" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1296" class="uc-code">UC17: Cập nhật đơn giá</text>
+    <text x="550" y="1316" class="uc-line2">& Bổ sung tồn kho</text>
   </g>
   <g id="UC18">
-    <ellipse cx="550" cy="1380" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1376" class="uc-code">UC18: Xóa món ăn</text>
-    <text x="550" y="1396" class="uc-line2">khỏi Thực đơn</text>
+    <ellipse cx="550" cy="1390" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1386" class="uc-code">UC18: Xem danh sách</text>
+    <text x="550" y="1406" class="uc-line2">Đơn hàng đến quán</text>
   </g>
   <g id="UC19">
-    <ellipse cx="550" cy="1470" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1466" class="uc-code">UC19: Cập nhật & Nhập thêm</text>
-    <text x="550" y="1486" class="uc-line2">Số lượng Tồn kho (Stock)</text>
-  </g>
-  <g id="UC20">
-    <ellipse cx="550" cy="1560" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1556" class="uc-code">UC20: Xem danh sách</text>
-    <text x="550" y="1576" class="uc-line2">Đơn hàng mới tiếp nhận</text>
+    <ellipse cx="550" cy="1480" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1476" class="uc-code">UC19: Xác nhận đơn</text>
+    <text x="550" y="1496" class="uc-line2">(Accept Order)</text>
   </g>
   <g id="UC21">
-    <ellipse cx="550" cy="1650" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1646" class="uc-code">UC21: Xác nhận</text>
-    <text x="550" y="1666" class="uc-line2">Đơn hàng (Accept)</text>
-  </g>
-  <g id="UC24">
-    <ellipse cx="880" cy="1470" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="1466" class="uc-code">UC24: Xem báo cáo</text>
-    <text x="880" y="1486" class="uc-line2">Doanh thu & Đơn hàng</text>
-  </g>
-  <g id="UC23">
-    <ellipse cx="880" cy="1560" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="1556" class="uc-code">UC23: Từ chối</text>
-    <text x="880" y="1576" class="uc-line2">Đơn hàng (Reject)</text>
+    <ellipse cx="550" cy="1570" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1566" class="uc-code">UC21: Từ chối đơn</text>
+    <text x="550" y="1586" class="uc-line2">(Reject Order)</text>
   </g>
   <g id="UC22">
-    <ellipse cx="880" cy="1650" rx="120" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="1646" class="uc-code">UC22: Kích hoạt</text>
-    <text x="880" y="1666" class="uc-line2">Điều phối Tự động</text>
+    <ellipse cx="550" cy="1660" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1656" class="uc-code">UC22: Thống kê doanh thu</text>
+    <text x="550" y="1676" class="uc-line2">Báo cáo bán hàng</text>
+  </g>
+  <g id="UC20">
+    <ellipse cx="880" cy="1480" rx="120" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="1476" class="uc-code">UC20: Kích hoạt tự động</text>
+    <text x="880" y="1496" class="uc-line2">Điều phối Tài xế</text>
+  </g>
+  <g id="UC23">
+    <ellipse cx="550" cy="1800" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1796" class="uc-code">UC23: Xem hồ sơ &</text>
+    <text x="550" y="1816" class="uc-line2">Thống kê cá nhân</text>
+  </g>
+  <g id="UC24">
+    <ellipse cx="550" cy="1890" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1886" class="uc-code">UC24: Chuyển trạng thái</text>
+    <text x="550" y="1906" class="uc-line2">AVAILABLE / OFFLINE</text>
   </g>
   <g id="UC25">
-    <ellipse cx="550" cy="1810" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1806" class="uc-code">UC25: Bật/Tắt trạng thái</text>
-    <text x="550" y="1826" class="uc-line2">Hoạt động (Available/Off)</text>
+    <ellipse cx="550" cy="1980" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="1976" class="uc-code">UC25: Xem các đơn hàng</text>
+    <text x="550" y="1996" class="uc-line2">Được phân công</text>
   </g>
   <g id="UC26">
-    <ellipse cx="550" cy="1900" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1896" class="uc-code">UC26: Cập nhật vị trí</text>
-    <text x="550" y="1916" class="uc-line2">Tọa độ GPS thực tế</text>
+    <ellipse cx="550" cy="2070" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="2066" class="uc-code">UC26: Xác nhận lấy hàng</text>
+    <text x="550" y="2086" class="uc-line2">(Chuyển DISPATCHED)</text>
   </g>
   <g id="UC27">
-    <ellipse cx="550" cy="1990" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="1986" class="uc-code">UC27: Tiếp nhận đơn hàng</text>
-    <text x="550" y="2006" class="uc-line2">được Điều phối ghép nối</text>
+    <ellipse cx="550" cy="2160" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="550" y="2156" class="uc-code">UC27: Xác nhận hoàn tất</text>
+    <text x="550" y="2176" class="uc-line2">Giao hàng (DELIVERED)</text>
   </g>
   <g id="UC28">
-    <ellipse cx="550" cy="2080" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="2076" class="uc-code">UC28: Xác nhận lấy món</text>
-    <text x="550" y="2096" class="uc-line2">(Chuyển DISPATCHED)</text>
-  </g>
-  <g id="UC29">
-    <ellipse cx="550" cy="2170" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="550" y="2166" class="uc-code">UC29: Xác nhận hoàn tất</text>
-    <text x="550" y="2186" class="uc-line2">Giao hàng (DELIVERED)</text>
-  </g>
-  <g id="UC30">
-    <ellipse cx="880" cy="2170" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="880" y="2166" class="uc-code">UC30: Tự động chuyển</text>
-    <text x="880" y="2186" class="uc-line2">về Sẵn sàng (AVAILABLE)</text>
-  </g>
-  <g id="UC35">
-    <ellipse cx="2770" cy="210" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="206" class="uc-code">UC35: Quản lý Tài khoản</text>
-    <text x="2770" y="226" class="uc-line2">Người dùng & Phân quyền</text>
-  </g>
-  <g id="UC37">
-    <ellipse cx="2770" cy="320" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="316" class="uc-code">UC37: Thẩm định hồ sơ</text>
-    <text x="2770" y="336" class="uc-line2">Đơn ứng tuyển Tài xế</text>
-  </g>
-  <g id="UC40">
-    <ellipse cx="2770" cy="430" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="426" class="uc-code">UC40: Quản lý danh mục</text>
-    <text x="2770" y="446" class="uc-line2">Nhà hàng & Phân bổ QL</text>
-  </g>
-  <g id="UC41">
-    <ellipse cx="2770" cy="540" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="536" class="uc-code">UC41: Giám sát toàn bộ</text>
-    <text x="2770" y="556" class="uc-line2">Đơn hàng trong Hệ thống</text>
-  </g>
-  <g id="UC42">
-    <ellipse cx="2770" cy="650" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="646" class="uc-code">UC42: Nhập hàng bổ sung</text>
-    <text x="2770" y="666" class="uc-line2">Tồn kho toàn Hệ thống</text>
+    <ellipse cx="880" cy="2160" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="880" y="2156" class="uc-code">UC28: Tự động chuyển</text>
+    <text x="880" y="2176" class="uc-line2">về Sẵn sàng (AVAILABLE)</text>
   </g>
   <g id="UC36">
-    <ellipse cx="2460" cy="210" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="206" class="uc-code">UC36: Khóa / Mở khóa</text>
-    <text x="2460" y="226" class="uc-line2">Tài khoản người dùng</text>
-  </g>
-  <g id="UC38">
-    <ellipse cx="2460" cy="310" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="306" class="uc-code">UC38: Phê duyệt đơn &</text>
-    <text x="2460" y="326" class="uc-line2">Tự động tạo hồ sơ Driver</text>
+    <ellipse cx="2830" cy="210" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="206" class="uc-code">UC36: Xét duyệt hồ sơ</text>
+    <text x="2830" y="226" class="uc-line2">Đăng ký làm Tài xế</text>
   </g>
   <g id="UC39">
-    <ellipse cx="2460" cy="400" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="396" class="uc-code">UC39: Từ chối hồ sơ</text>
-    <text x="2460" y="416" class="uc-line2">Ứng tuyển tài xế</text>
+    <ellipse cx="2830" cy="300" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="296" class="uc-code">UC39: Quản lý Người dùng</text>
+    <text x="2830" y="316" class="uc-line2">& Phân quyền hệ thống</text>
   </g>
-  <g id="UC31">
-    <ellipse cx="2770" cy="870" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="866" class="uc-code">UC31: Quét hàng đợi</text>
-    <text x="2770" y="886" class="uc-line2">Đơn hàng PENDING</text>
+  <g id="UC40">
+    <ellipse cx="2830" cy="390" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="386" class="uc-code">UC40: Quản lý Nhà hàng,</text>
+    <text x="2830" y="406" class="uc-line2">Thực đơn & Nhập kho</text>
   </g>
-  <g id="UC34">
-    <ellipse cx="2770" cy="1040" rx="130" ry="36" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="1036" class="uc-code">UC34: Tự động ghép nối</text>
-    <text x="2770" y="1056" class="uc-line2">& Khóa tài xế (BUSY)</text>
+  <g id="UC41">
+    <ellipse cx="2830" cy="480" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="476" class="uc-code">UC41: Quản lý Danh sách</text>
+    <text x="2830" y="496" class="uc-line2">Khách hàng Quy Nhơn</text>
   </g>
-  <g id="UC32">
-    <ellipse cx="2460" cy="980" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="976" class="uc-code">UC32: Tìm kiếm tài xế</text>
-    <text x="2460" y="996" class="uc-line2">Gần nhất (Haversine)</text>
-  </g>
-  <g id="UC33">
-    <ellipse cx="2460" cy="1100" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="1096" class="uc-code">UC33: Tính toán thời gian</text>
-    <text x="2460" y="1116" class="uc-line2">Dự kiến giao hàng (ETA)</text>
+  <g id="UC42">
+    <ellipse cx="2830" cy="570" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="566" class="uc-code">UC42: Giám sát toàn bộ</text>
+    <text x="2830" y="586" class="uc-line2">Đơn hàng trong Hệ thống</text>
   </g>
   <g id="UC43">
-    <ellipse cx="2770" cy="1460" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="1456" class="uc-code">UC43: Cấu hình tham số</text>
-    <text x="2770" y="1476" class="uc-line2">Kiểm thử (Threads/Lock)</text>
+    <ellipse cx="2830" cy="660" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="656" class="uc-code">UC43: Sinh dữ liệu mẫu</text>
+    <text x="2830" y="676" class="uc-line2">CSV (>= 18,000 Rows)</text>
+  </g>
+  <g id="UC37">
+    <ellipse cx="2490" cy="170" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="166" class="uc-code">UC37: Phê duyệt hồ sơ &</text>
+    <text x="2490" y="186" class="uc-line2">Tự động cấp mã Driver</text>
+  </g>
+  <g id="UC38">
+    <ellipse cx="2490" cy="250" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="246" class="uc-code">UC38: Từ chối hồ sơ</text>
+    <text x="2490" y="266" class="uc-line2">Kèm lý do cụ thể</text>
   </g>
   <g id="UC44">
-    <ellipse cx="2770" cy="1580" rx="130" ry="36" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="1576" class="uc-code">UC44: Kích hoạt mô phỏng</text>
-    <text x="2770" y="1596" class="uc-line2">Đa luồng đồng thời</text>
+    <ellipse cx="2490" cy="660" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="656" class="uc-code">UC44: Báo cáo Tổng quan &</text>
+    <text x="2490" y="676" class="uc-line2">Nghiên cứu Big Question</text>
   </g>
-  <g id="UC47">
-    <ellipse cx="2770" cy="1720" rx="130" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2770" y="1716" class="uc-code">UC47: So chuẩn 4 cơ chế khóa</text>
-    <text x="2770" y="1736" class="uc-line2">(NO/SYNC/OPT/FILE)</text>
+  <g id="UC29">
+    <ellipse cx="2830" cy="860" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="856" class="uc-code">UC29: Xem danh sách đơn</text>
+    <text x="2830" y="876" class="uc-line2">Chờ điều phối (PENDING)</text>
+  </g>
+  <g id="UC30">
+    <ellipse cx="2830" cy="970" rx="130" ry="35" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="966" class="uc-code">UC30: Tự động điều phối</text>
+    <text x="2830" y="986" class="uc-line2">Tất cả đơn hàng chờ</text>
+  </g>
+  <g id="UC34">
+    <ellipse cx="2830" cy="1080" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="1076" class="uc-code">UC34: Giám sát trạng thái</text>
+    <text x="2830" y="1096" class="uc-line2">Đội ngũ Tài xế</text>
+  </g>
+  <g id="UC35">
+    <ellipse cx="2830" cy="1190" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="1186" class="uc-code">UC35: Hiển thị Bản đồ</text>
+    <text x="2830" y="1206" class="uc-line2">ASCII Grid Map Quy Nhơn</text>
+  </g>
+  <g id="UC31">
+    <ellipse cx="2490" cy="920" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="916" class="uc-code">UC31: Tìm kiếm tài xế</text>
+    <text x="2490" y="936" class="uc-line2">Gần nhất (Haversine)</text>
+  </g>
+  <g id="UC32">
+    <ellipse cx="2490" cy="1000" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="996" class="uc-code">UC32: Tính toán ETA</text>
+    <text x="2490" y="1016" class="uc-line2">Lấy món & Giao hàng</text>
+  </g>
+  <g id="UC33">
+    <ellipse cx="2490" cy="1080" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="1076" class="uc-code">UC33: Ghép nối đơn &</text>
+    <text x="2490" y="1096" class="uc-line2">Khóa tài xế (BUSY)</text>
   </g>
   <g id="UC45">
-    <ellipse cx="2460" cy="1500" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="1496" class="uc-code">UC45: Mô phỏng Đặt hàng</text>
-    <text x="2460" y="1516" class="uc-line2">(CustomerThread)</text>
+    <ellipse cx="2830" cy="1450" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="1446" class="uc-code">UC45: Cấu hình tham số</text>
+    <text x="2830" y="1466" class="uc-line2">Kiểm thử (Threads/Lock)</text>
   </g>
   <g id="UC46">
-    <ellipse cx="2460" cy="1600" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="1596" class="uc-code">UC46: Mô phỏng Điều phối</text>
-    <text x="2460" y="1616" class="uc-line2">(DispatchThread)</text>
+    <ellipse cx="2830" cy="1560" rx="130" ry="35" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="1556" class="uc-code">UC46: Khởi chạy mô phỏng</text>
+    <text x="2830" y="1576" class="uc-line2">Đa luồng đồng thời</text>
+  </g>
+  <g id="UC50">
+    <ellipse cx="2830" cy="1700" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="1696" class="uc-code">UC50: Đo kiểm so chuẩn</text>
+    <text x="2830" y="1716" class="uc-line2">4 cơ chế khóa (Benchmark)</text>
+  </g>
+  <g id="UC51">
+    <ellipse cx="2830" cy="1840" rx="130" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2830" y="1836" class="uc-code">UC51: Xuất bảng so sánh</text>
+    <text x="2830" y="1856" class="uc-line2">Hiệu năng & Kết luận</text>
+  </g>
+  <g id="UC47">
+    <ellipse cx="2490" cy="1500" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="1496" class="uc-code">UC47: Mô phỏng Đặt hàng</text>
+    <text x="2490" y="1516" class="uc-line2">(CustomerThread)</text>
   </g>
   <g id="UC48">
-    <ellipse cx="2460" cy="1720" rx="130" ry="36" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="1716" class="uc-code">UC48: Tự động phát hiện</text>
-    <text x="2460" y="1736" class="uc-line2">Lỗi Race Conditions</text>
+    <ellipse cx="2490" cy="1590" rx="125" ry="33" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="1586" class="uc-code">UC48: Mô phỏng Điều phối</text>
+    <text x="2490" y="1606" class="uc-line2">(DispatchThread)</text>
   </g>
   <g id="UC49">
-    <ellipse cx="2460" cy="1850" rx="125" ry="34" fill="#ffffff" stroke="#000000" stroke-width="2" />
-    <text x="2460" y="1846" class="uc-code">UC49: Xuất báo cáo</text>
-    <text x="2460" y="1866" class="uc-line2">Số liệu & Thông lượng</text>
+    <ellipse cx="2490" cy="1710" rx="130" ry="35" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="2490" y="1706" class="uc-code">UC49: Tự động phát hiện</text>
+    <text x="2490" y="1726" class="uc-line2">Lỗi Race Conditions</text>
   </g>
 
   <!-- Actors -->
@@ -425,32 +438,35 @@
     <line x1="134" y1="1993" x2="186" y2="1993" stroke="#000000" stroke-width="2.2" />
     <line x1="160" y1="2017" x2="138" y2="2053" stroke="#000000" stroke-width="2.2" />
     <line x1="160" y1="2017" x2="182" y2="2053" stroke="#000000" stroke-width="2.2" />
-    <text x="160" y="2077" class="actor-title">Tài xế Giao hàng</text>
+    <text x="160" y="2077" class="actor-title">Tài xế Đối tác</text>
     <text x="160" y="2095" class="actor-sub">(Delivery Driver)</text>
   </g>
   <g id="ACT_ADMIN">
-    <circle cx="3140" cy="385" r="16" fill="#ffffff" stroke="#000000" stroke-width="2.2" />
-    <line x1="3140" y1="401" x2="3140" y2="437" stroke="#000000" stroke-width="2.2" />
-    <line x1="3114" y1="413" x2="3166" y2="413" stroke="#000000" stroke-width="2.2" />
-    <line x1="3140" y1="437" x2="3118" y2="473" stroke="#000000" stroke-width="2.2" />
-    <line x1="3140" y1="437" x2="3162" y2="473" stroke="#000000" stroke-width="2.2" />
-    <text x="3140" y="497" class="actor-title">Quản trị viên</text>
-    <text x="3140" y="515" class="actor-sub">(System Administrator)</text>
+    <circle cx="3210" cy="385" r="16" fill="#ffffff" stroke="#000000" stroke-width="2.2" />
+    <line x1="3210" y1="401" x2="3210" y2="437" stroke="#000000" stroke-width="2.2" />
+    <line x1="3184" y1="413" x2="3236" y2="413" stroke="#000000" stroke-width="2.2" />
+    <line x1="3210" y1="437" x2="3188" y2="473" stroke="#000000" stroke-width="2.2" />
+    <line x1="3210" y1="437" x2="3232" y2="473" stroke="#000000" stroke-width="2.2" />
+    <text x="3210" y="497" class="actor-title">Quản trị viên</text>
+    <text x="3210" y="515" class="actor-sub">(System Administrator)</text>
   </g>
   <g id="ACT_DISPATCHER">
-    <rect x="3065" y="1005" width="150" height="80" fill="#ffffff" stroke="#000000" stroke-width="2.2" rx="4" />
-    <text x="3140" y="1029" font-family="'Segoe UI', Arial, sans-serif" font-size="12px" font-weight="bold" fill="#444444" text-anchor="middle">&lt;&lt;system actor&gt;&gt;</text>
-    <text x="3140" y="1053" font-family="'Segoe UI', Arial, sans-serif" font-size="14px" font-weight="bold" fill="#000000" text-anchor="middle">Hệ thống Điều phối</text>
-    <text x="3140" y="1073" font-family="'Segoe UI', Arial, sans-serif" font-size="11px" fill="#555555" text-anchor="middle"><<system>> Dispatcher Engine</text>
+    <circle cx="3210" cy="1005" r="16" fill="#ffffff" stroke="#000000" stroke-width="2.2" />
+    <line x1="3210" y1="1021" x2="3210" y2="1057" stroke="#000000" stroke-width="2.2" />
+    <line x1="3184" y1="1033" x2="3236" y2="1033" stroke="#000000" stroke-width="2.2" />
+    <line x1="3210" y1="1057" x2="3188" y2="1093" stroke="#000000" stroke-width="2.2" />
+    <line x1="3210" y1="1057" x2="3232" y2="1093" stroke="#000000" stroke-width="2.2" />
+    <text x="3210" y="1117" class="actor-title">Điều phối viên</text>
+    <text x="3210" y="1135" class="actor-sub">(Dispatcher Console)</text>
   </g>
   <g id="ACT_SIMULATOR">
-    <rect x="3065" y="1735" width="150" height="80" fill="#ffffff" stroke="#000000" stroke-width="2.2" rx="4" />
-    <text x="3140" y="1759" font-family="'Segoe UI', Arial, sans-serif" font-size="12px" font-weight="bold" fill="#444444" text-anchor="middle">&lt;&lt;system actor&gt;&gt;</text>
-    <text x="3140" y="1783" font-family="'Segoe UI', Arial, sans-serif" font-size="14px" font-weight="bold" fill="#000000" text-anchor="middle">Bộ Mô phỏng Đa luồng</text>
-    <text x="3140" y="1803" font-family="'Segoe UI', Arial, sans-serif" font-size="11px" fill="#555555" text-anchor="middle"><<system>> Concurrency Simulator</text>
+    <rect x="3135" y="1735" width="150" height="80" fill="#ffffff" stroke="#000000" stroke-width="2.2" rx="4" />
+    <text x="3210" y="1759" font-family="'Segoe UI', Arial, sans-serif" font-size="12px" font-weight="bold" fill="#444444" text-anchor="middle">&lt;&lt;system actor&gt;&gt;</text>
+    <text x="3210" y="1783" font-family="'Segoe UI', Arial, sans-serif" font-size="14px" font-weight="bold" fill="#000000" text-anchor="middle">Bộ Mô phỏng Đa luồng</text>
+    <text x="3210" y="1803" font-family="'Segoe UI', Arial, sans-serif" font-size="11px" fill="#555555" text-anchor="middle"><<system>> Concurrency Simulator</text>
   </g>
 
   <!-- Legend / Notation -->
-  <rect x="400" y="2225" width="1020" height="35" fill="#ffffff" stroke="#000000" stroke-width="1" rx="3" />
+  <rect x="400" y="2225" width="1040" height="35" fill="#ffffff" stroke="#000000" stroke-width="1" rx="3" />
   <text x="415" y="2247" font-family="'Segoe UI', Arial, sans-serif" font-size="12px" fill="#000000"><b>Ký hiệu chuẩn UML:</b> &nbsp; ── Association (Liên kết tác nhân) &nbsp;&nbsp;|&nbsp;&nbsp; - - &gt; &lt;&lt;include&gt;&gt; (Bắt buộc bao gồm) &nbsp;&nbsp;|&nbsp;&nbsp; - - &gt; &lt;&lt;extend&gt;&gt; (Mở rộng tùy chọn) &nbsp;&nbsp;|&nbsp;&nbsp; Academic B&amp;W</text>
 </svg>

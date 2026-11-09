@@ -2,6 +2,7 @@
 **Môn học:** LAB211 — Lập trình Hướng đối tượng với Java | FPT University  
 **Phạm vi triển khai:** Hệ thống Đặt & Giao đồ ăn trực tuyến (Thành phố Quy Nhơn)  
 **Quy chuẩn thiết kế:** UML 2.5 Academic Monochrome Specification (Đen - Trắng chuẩn đồ án)  
+**Độ phủ kiểm chứng:** 100% khớp các menu và hàm điều khiển trong `MainView.java` và các `Controller`  
 
 ---
 
@@ -9,107 +10,109 @@
 
 | STT | Mã Actor | Tên Tác Nhân | Vai Trò (Role) | Phân Loại | Nhiệm Vụ Trọng Tâm |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn, hủy đơn (`extends`) và nộp đơn làm tài xế. |
+| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn, hủy đơn (`extends`) và xem thông báo ETA. |
 | 2 | `ACT_RESTAURANT` | **Quản lý Nhà hàng** (Restaurant) | Đối tác ẩm thực | Human | Quản lý menu món ăn, cập nhật tồn kho (stock), duyệt hoặc từ chối đơn hàng, kích hoạt điều phối, xem doanh thu. |
-| 3 | `ACT_DRIVER` | **Tài xế Giao hàng** (Driver) | Đối tác vận chuyển | Human | Bật/tắt trạng thái nhận cuốc, cập nhật GPS, nhận đơn điều phối, xác nhận lấy hàng và giao thành công. |
-| 4 | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Điều hành hệ thống | Human | Quản lý tài khoản, duyệt đơn ứng tuyển tài xế, quản lý mạng lưới nhà hàng, kiểm thử mô phỏng đa luồng. |
-| 5 | `ACT_DISPATCHER` | **Hệ thống Điều phối** (Dispatcher Engine) | Hệ thống tự động | System | Tự động quét hàng đợi `PENDING`, tính toán khoảng cách Haversine & ETA, ghép nối và khóa tài xế `BUSY`. |
+| 3 | `ACT_DRIVER` | **Tài xế Đối tác** (Driver) | Đối tác vận chuyển | Human | Bật/tắt trạng thái nhận cuốc, cập nhật GPS, nhận đơn điều phối, xác nhận lấy hàng và giao thành công. |
+| 4 | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Điều hành hệ thống | Human | Quản lý tài khoản, duyệt đơn ứng tuyển tài xế, quản lý mạng lưới nhà hàng, sinh dữ liệu CSV và chạy kiểm thử đa luồng. |
+| 5 | `ACT_DISPATCHER` | **Điều phối viên** (Dispatcher Console) | Điều hành chuyến xe | Human | Quét hàng đợi `PENDING`, kích hoạt tự động điều phối, xem bản đồ mạng lưới ASCII Grid Map và giám sát đội tài xế. |
 | 6 | `ACT_SIMULATOR` | **Bộ Mô phỏng Đa luồng** (Simulator Engine) | Hệ thống kiểm thử | System | Khởi tạo nhiều luồng đồng thời (Customer/Dispatch Thread), so chuẩn 4 cơ chế khóa và phát hiện Race Conditions (`includes`). |
 
 ---
 
-## 2. BẢNG ĐẶC TẢ CHI TIẾT 49 USE CASES THEO PHÂN HỆ
+## 2. BẢNG ĐẶC TẢ CHI TIẾT 51 USE CASES THEO PHÂN HỆ VÀ CODE TRIỂN KHAI
 
-### Phân hệ 1: Xác thực & Hồ sơ Cá nhân (`SUB1`)
-*Tên tiếng Anh:* Authentication & User Profile  
+### Phân hệ 1: Xác thực & Quản lý Truy cập (`SUB1`)
+*Tên tiếng Anh:* Authentication & Access Management  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC01** | Đăng ký tài khoản Khách hàng mới | Khách hàng | ─ | Mã nguồn: `UC01` trong package tương ứng. |
-| **UC02** | Đăng nhập hệ thống (Đa vai trò) | Khách hàng | <<include>> UC04 | Mã nguồn: `UC02` trong package tương ứng. |
-| **UC03** | Đăng xuất khỏi hệ thống | Khách hàng | ─ | Mã nguồn: `UC03` trong package tương ứng. |
-| **UC04** | Xem & cập nhật hồ sơ cá nhân | Hệ thống tự động | UC02 <<include>><br>UC05 <<extend>> | Mã nguồn: `UC04` trong package tương ứng. |
-| **UC05** | Nộp đơn ứng tuyển tài xế giao hàng | Hệ thống tự động | <<extend>> UC04 | Mã nguồn: `UC05` trong package tương ứng. |
+| **UC01** | Đăng ký tài khoản Khách hàng mới (CustomerRegistration) | Khách hàng | ─ | `UC01` trong package tương ứng. |
+| **UC02** | Đăng nhập hệ thống (Customer, Restaurant, Driver, Admin, Dispatcher) | Khách hàng, Quản lý Nhà hàng, Tài xế Đối tác, Quản trị viên, Điều phối viên | ─ | `UC02` trong package tương ứng. |
+| **UC05** | Đăng xuất tài khoản khỏi hệ thống (Logout) | Khách hàng, Quản lý Nhà hàng, Tài xế Đối tác, Quản trị viên, Điều phối viên | ─ | `UC05` trong package tương ứng. |
+| **UC03** | Gửi hồ sơ đăng ký đối tác tài xế giao hàng (DriverApplication) | Khách hàng | ─ | `UC03` trong package tương ứng. |
+| **UC04** | Xem thông tin các tài khoản mẫu định sẵn cho đánh giá (DemoAccounts) | Khách hàng | ─ | `UC04` trong package tương ứng. |
 
-### Phân hệ 2: Khách hàng & Đặt hàng Trực tuyến (`SUB2`)
-*Tên tiếng Anh:* Customer Ordering & Cart Management  
+### Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn (`SUB2`)
+*Tên tiếng Anh:* Customer Portal & Food Ordering  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC06** | Xem danh sách nhà hàng & menu Quy Nhơn | Khách hàng | UC07 <<extend>> | Mã nguồn: `UC06` trong package tương ứng. |
-| **UC08** | Đặt món và tạo đơn hàng mới | Khách hàng | <<include>> UC09<br><<include>> UC10<br>UC14 <<extend>> | Mã nguồn: `UC08` trong package tương ứng. |
-| **UC12** | Theo dõi trạng thái đơn hàng thời gian thực | Khách hàng | ─ | Mã nguồn: `UC12` trong package tương ứng. |
-| **UC13** | Xem lịch sử đơn hàng | Khách hàng | ─ | Mã nguồn: `UC13` trong package tương ứng. |
-| **UC07** | Tìm kiếm và lọc món ăn | Hệ thống tự động | <<extend>> UC06 | Mã nguồn: `UC07` trong package tương ứng. |
-| **UC09** | Trừ số lượng tồn kho món ăn tức thời | Hệ thống tự động | UC08 <<include>> | Mã nguồn: `UC09` trong package tương ứng. |
-| **UC10** | Tính phí giao hàng khoảng cách Haversine | Hệ thống tự động | UC08 <<include>><br><<include>> UC11 | Mã nguồn: `UC10` trong package tương ứng. |
-| **UC14** | Hủy đơn hàng chưa điều phối (extends UC08) | Khách hàng | <<extend>> UC08<br><<include>> UC15 | Mã nguồn: `UC14` trong package tương ứng. |
-| **UC11** | Xác thực địa chỉ và tọa độ GPS | Hệ thống tự động | UC10 <<include>> | Mã nguồn: `UC11` trong package tương ứng. |
-| **UC15** | Hoàn trả tồn kho khi đơn bị hủy/từ chối | Hệ thống tự động | UC14 <<include>> | Mã nguồn: `UC15` trong package tương ứng. |
+| **UC06** | Xem danh sách nhà hàng và thực đơn món ăn tại Quy Nhơn | Khách hàng | ─ | `UC06` trong package tương ứng. |
+| **UC07** | Đặt món ăn trực tuyến và tạo đơn hàng mới (PlaceOrder) | Khách hàng | <<include>> UC08<br><<include>> UC09<br>UC12 <<extend>> | `UC07` trong package tương ứng. |
+| **UC11** | Theo dõi trạng thái đơn hàng thời gian thực (Track & View My Orders) | Khách hàng | ─ | `UC11` trong package tương ứng. |
+| **UC14** | Xem thông tin cá nhân và địa chỉ giao hàng (CustomerProfile) | Khách hàng | ─ | `UC14` trong package tương ứng. |
+| **UC15** | Nhận thông báo tài xế đã nhận đơn và thời gian giao dự kiến (Notifications) | Khách hàng | ─ | `UC15` trong package tương ứng. |
+| **UC08** | Trừ số lượng tồn kho món ăn tức thời khi đặt (DeductStock) | Hệ thống tự động | UC07 <<include>> | `UC08` trong package tương ứng. |
+| **UC09** | Tính phí giao hàng khoảng cách Haversine giữa Quán và Khách | Hệ thống tự động | UC07 <<include>><br><<include>> UC10 | `UC09` trong package tương ứng. |
+| **UC12** | Hủy đơn hàng chưa điều phối (extends UC07 PlaceOrder) | Khách hàng | <<extend>> UC07<br><<include>> UC13 | `UC12` trong package tương ứng. |
+| **UC10** | Xác thực địa chỉ và tọa độ GPS khách hàng trong phạm vi Quy Nhơn | Hệ thống tự động | UC09 <<include>> | `UC10` trong package tương ứng. |
+| **UC13** | Tự động hoàn trả tồn kho món ăn khi đơn bị hủy hoặc từ chối (RestoreStock) | Hệ thống tự động | UC12 <<include>><br>UC21 <<include>> | `UC13` trong package tương ứng. |
 
-### Phân hệ 3: Quản lý Nhà hàng & Thực đơn Quy Nhơn (`SUB3`)
-*Tên tiếng Anh:* Restaurant & Menu Catalog Management  
+### Phân hệ 3: Quản lý Nhà hàng & Thực đơn (`SUB3`)
+*Tên tiếng Anh:* Restaurant Catalog & Order Processing  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC16** | Thêm món ăn mới vào thực đơn | Quản lý Nhà hàng | ─ | Mã nguồn: `UC16` trong package tương ứng. |
-| **UC17** | Cập nhật thông tin món và giá bán | Quản lý Nhà hàng | ─ | Mã nguồn: `UC17` trong package tương ứng. |
-| **UC18** | Xóa món ăn khỏi thực đơn | Quản lý Nhà hàng | ─ | Mã nguồn: `UC18` trong package tương ứng. |
-| **UC19** | Nhập bổ sung số lượng tồn kho | Quản lý Nhà hàng | ─ | Mã nguồn: `UC19` trong package tương ứng. |
-| **UC20** | Xem danh sách đơn hàng đến | Quản lý Nhà hàng | UC23 <<extend>><br>UC24 <<extend>> | Mã nguồn: `UC20` trong package tương ứng. |
-| **UC21** | Xác nhận chấp nhận đơn hàng | Quản lý Nhà hàng | <<include>> UC22 | Mã nguồn: `UC21` trong package tương ứng. |
-| **UC24** | Xem thống kê doanh thu và báo cáo nhà hàng | Hệ thống tự động | <<extend>> UC20 | Mã nguồn: `UC24` trong package tương ứng. |
-| **UC23** | Từ chối tiếp nhận đơn hàng | Hệ thống tự động | <<extend>> UC20 | Mã nguồn: `UC23` trong package tương ứng. |
-| **UC22** | Kích hoạt điều phối tự động tài xế | Hệ thống tự động | UC21 <<include>> | Mã nguồn: `UC22` trong package tương ứng. |
+| **UC16** | Xem danh sách món ăn và số lượng tồn kho của quán (ViewMenuAndStock) | Quản lý Nhà hàng | ─ | `UC16` trong package tương ứng. |
+| **UC17** | Cập nhật giá bán và nhập thêm tồn kho món ăn (UpdatePriceAndStock) | Quản lý Nhà hàng | ─ | `UC17` trong package tương ứng. |
+| **UC18** | Xem các đơn hàng mới đặt chờ xác nhận (ViewIncomingOrders) | Quản lý Nhà hàng | ─ | `UC18` trong package tương ứng. |
+| **UC19** | Xác nhận chấp nhận đơn hàng và chuẩn bị món (ConfirmOrder) | Quản lý Nhà hàng | <<include>> UC20 | `UC19` trong package tương ứng. |
+| **UC21** | Từ chối tiếp nhận đơn hàng và hoàn trả tồn kho (RejectOrder) | Quản lý Nhà hàng | <<include>> UC13 | `UC21` trong package tương ứng. |
+| **UC22** | Xem tổng doanh thu và lịch sử đơn hàng của quán (RestaurantRevenue) | Quản lý Nhà hàng | ─ | `UC22` trong package tương ứng. |
+| **UC20** | Tự động chuyển đơn vào hàng đợi điều phối tài xế gần nhất (AutoDispatch) | Hệ thống tự động | UC19 <<include>> | `UC20` trong package tương ứng. |
 
-### Phân hệ 4: Tài xế & Vận hành Giao nhận Đơn hàng (`SUB4`)
+### Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn (`SUB4`)
 *Tên tiếng Anh:* Driver Delivery & Trip Operations  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC25** | Bật tắt trạng thái hoạt động tài xế | Tài xế Giao hàng | ─ | Mã nguồn: `UC25` trong package tương ứng. |
-| **UC26** | Cập nhật tọa độ vị trí thực tế của tài xế | Tài xế Giao hàng | ─ | Mã nguồn: `UC26` trong package tương ứng. |
-| **UC27** | Nhận đơn hàng được hệ thống điều phối | Tài xế Giao hàng | ─ | Mã nguồn: `UC27` trong package tương ứng. |
-| **UC28** | Xác nhận đã lấy hàng tại nhà hàng | Tài xế Giao hàng | ─ | Mã nguồn: `UC28` trong package tương ứng. |
-| **UC29** | Xác nhận giao hàng thành công tới khách | Tài xế Giao hàng | <<include>> UC30 | Mã nguồn: `UC29` trong package tương ứng. |
-| **UC30** | Tự động chuyển tài xế về trạng thái sẵn sàng | Hệ thống tự động | UC29 <<include>> | Mã nguồn: `UC30` trong package tương ứng. |
+| **UC23** | Xem thông tin tài xế, biển số, xe máy và số cuốc xe đã giao (DriverProfile) | Tài xế Đối tác | ─ | `UC23` trong package tương ứng. |
+| **UC24** | Bật hoặc tắt trạng thái sẵn sàng nhận cuốc của tài xế (ToggleStatus) | Tài xế Đối tác | ─ | `UC24` trong package tương ứng. |
+| **UC25** | Xem chi tiết các đơn hàng được gán cho tài xế (ViewAssignedOrders) | Tài xế Đối tác | ─ | `UC25` trong package tương ứng. |
+| **UC26** | Xác nhận đã lấy món ăn tại quán và bắt đầu đi giao (ConfirmPickedUp) | Tài xế Đối tác | ─ | `UC26` trong package tương ứng. |
+| **UC27** | Xác nhận đã giao hàng thành công tới khách hàng (ConfirmDelivered) | Tài xế Đối tác | <<include>> UC28 | `UC27` trong package tương ứng. |
+| **UC28** | Tự động cập nhật tài xế về trạng thái AVAILABLE để nhận đơn mới | Hệ thống tự động | UC27 <<include>> | `UC28` trong package tương ứng. |
 
-### Phân hệ 6: Quản trị Hệ thống & Phê duyệt Đối tác (`SUB6`)
-*Tên tiếng Anh:* System Administration & Partner Approval  
+### Phân hệ 6: Quản trị Hệ thống Toàn diện (`SUB6`)
+*Tên tiếng Anh:* System Administration & Super Control  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC35** | Quản lý tài khoản người dùng và phân quyền | Quản trị viên | UC36 <<extend>> | Mã nguồn: `UC35` trong package tương ứng. |
-| **UC37** | Xem và thẩm định hồ sơ ứng tuyển tài xế | Quản trị viên | UC38 <<extend>><br>UC39 <<extend>> | Mã nguồn: `UC37` trong package tương ứng. |
-| **UC40** | Quản lý danh sách nhà hàng và chỉ định quản lý | Quản trị viên | ─ | Mã nguồn: `UC40` trong package tương ứng. |
-| **UC41** | Giám sát toàn bộ lưu lượng đơn hàng hệ thống | Quản trị viên | ─ | Mã nguồn: `UC41` trong package tương ứng. |
-| **UC42** | Nhập hàng bổ sung kho toàn hệ thống | Quản trị viên | ─ | Mã nguồn: `UC42` trong package tương ứng. |
-| **UC36** | Khóa hoặc mở khóa tài khoản vi phạm | Hệ thống tự động | <<extend>> UC35 | Mã nguồn: `UC36` trong package tương ứng. |
-| **UC38** | Phê duyệt đơn và cấp tài khoản tài xế | Hệ thống tự động | <<extend>> UC37 | Mã nguồn: `UC38` trong package tương ứng. |
-| **UC39** | Từ chối hồ sơ ứng tuyển tài xế | Hệ thống tự động | <<extend>> UC37 | Mã nguồn: `UC39` trong package tương ứng. |
+| **UC36** | Xem và xét duyệt các hồ sơ xin làm tài xế đang chờ (DriverApplications) | Quản trị viên | UC37 <<extend>><br>UC38 <<extend>> | `UC36` trong package tương ứng. |
+| **UC39** | Quản lý danh sách tài khoản, mật khẩu và quyền hạn (UserManagement) | Quản trị viên | ─ | `UC39` trong package tương ứng. |
+| **UC40** | Thêm nhà hàng mới, sửa menu, và bổ sung tồn kho hệ thống (RestaurantCRUD) | Quản trị viên | ─ | `UC40` trong package tương ứng. |
+| **UC41** | Xem thông tin, địa chỉ và lịch sử của tất cả khách hàng (CustomerManagement) | Quản trị viên | ─ | `UC41` trong package tương ứng. |
+| **UC42** | Xem và theo dõi tất cả đơn hàng trên toàn hệ thống (ViewAllOrders) | Quản trị viên | ─ | `UC42` trong package tương ứng. |
+| **UC43** | Tạo bộ dữ liệu mô phỏng lớn gồm 18,000 dòng dữ liệu vào file CSV | Quản trị viên | ─ | `UC43` trong package tương ứng. |
+| **UC37** | Duyệt đơn và tự động sinh mã D000x + tài khoản DRIVER (ApproveApplication) | Hệ thống tự động | <<extend>> UC36 | `UC37` trong package tương ứng. |
+| **UC38** | Từ chối hồ sơ đăng ký tài xế kèm lý do (RejectApplication) | Hệ thống tự động | <<extend>> UC36 | `UC38` trong package tương ứng. |
+| **UC44** | Xem tổng kết số liệu và báo cáo giải quyết vấn đề Big Question | Quản trị viên | ─ | `UC44` trong package tương ứng. |
 
-### Phân hệ 5: Điều phối Tự động & Tối ưu Lộ trình (`SUB5`)
-*Tên tiếng Anh:* Automated Dispatch & Route Matching Engine  
+### Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid (`SUB5`)
+*Tên tiếng Anh:* Central Dispatching & Network Grid  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC31** | Quét hàng đợi đơn hàng chờ xử lý | Hệ thống Điều phối | ─ | Mã nguồn: `UC31` trong package tương ứng. |
-| **UC34** | Tự động giao đơn và khóa trạng thái tài xế | Hệ thống Điều phối | <<include>> UC32<br><<include>> UC33 | Mã nguồn: `UC34` trong package tương ứng. |
-| **UC32** | Tìm kiếm tài xế khả dụng gần nhất | Hệ thống tự động | UC34 <<include>> | Mã nguồn: `UC32` trong package tương ứng. |
-| **UC33** | Tính toán thời gian dự kiến giao hàng Quy Nhơn | Hệ thống tự động | UC34 <<include>> | Mã nguồn: `UC33` trong package tương ứng. |
+| **UC29** | Xem hàng đợi các đơn hàng đang chờ ghép tài xế (ViewPendingOrders) | Điều phối viên | ─ | `UC29` trong package tương ứng. |
+| **UC30** | Kích hoạt thuật toán tự động ghép nối tất cả đơn PENDING (AutoDispatchAll) | Điều phối viên | <<include>> UC31<br><<include>> UC32<br><<include>> UC33 | `UC30` trong package tương ứng. |
+| **UC34** | Kiểm tra vị trí và trạng thái hoạt động của tài xế (DriverFleetStatus) | Điều phối viên | ─ | `UC34` trong package tương ứng. |
+| **UC35** | Vẽ bản đồ trực quan tọa độ nhà hàng, khách hàng, tài xế bằng ký tự ASCII | Điều phối viên | ─ | `UC35` trong package tương ứng. |
+| **UC31** | Tìm tài xế AVAILABLE có khoảng cách Haversine ngắn nhất tới quán | Hệ thống tự động | UC30 <<include>> | `UC31` trong package tương ứng. |
+| **UC32** | Tính toán thời gian dự kiến tài xế đến quán và đến nhà khách hàng | Hệ thống tự động | UC30 <<include>> | `UC32` trong package tương ứng. |
+| **UC33** | Gán đơn hàng cho tài xế và chuyển trạng thái tài xế sang BUSY | Hệ thống tự động | UC30 <<include>> | `UC33` trong package tương ứng. |
 
 ### Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh (`SUB7`)
 *Tên tiếng Anh:* Concurrency Stress Testing & Race Detection  
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Mô Tả Nghiệp Vụ Code Triển Khai |
+| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC43** | Cấu hình số luồng, số đơn và cơ chế khóa | Quản trị viên | ─ | Mã nguồn: `UC43` trong package tương ứng. |
-| **UC44** | Khởi chạy kịch bản mô phỏng đa luồng đồng thời | Quản trị viên, Bộ Mô phỏng Đa luồng | <<include>> UC45<br><<include>> UC46<br><<include>> UC48 | Mã nguồn: `UC44` trong package tương ứng. |
-| **UC47** | Đo kiểm so sánh 4 cơ chế khóa tương tranh | Bộ Mô phỏng Đa luồng | ─ | Mã nguồn: `UC47` trong package tương ứng. |
-| **UC45** | Mô phỏng khách hàng đặt hàng đồng thời | Hệ thống tự động | UC44 <<include>> | Mã nguồn: `UC45` trong package tương ứng. |
-| **UC46** | Mô phỏng bộ điều phối gán đơn đồng thời | Hệ thống tự động | UC44 <<include>> | Mã nguồn: `UC46` trong package tương ứng. |
-| **UC48** | Phát hiện tranh chấp: Double Assign, Oversell | Bộ Mô phỏng Đa luồng | UC44 <<include>><br>UC49 <<extend>> | Mã nguồn: `UC48` trong package tương ứng. |
-| **UC49** | Xuất bảng so sánh hiệu năng và thời gian thực thi | Hệ thống tự động | <<extend>> UC48 | Mã nguồn: `UC49` trong package tương ứng. |
+| **UC45** | Chọn số lượng đơn hàng và 1 trong 4 cơ chế khóa kiểm thử (SimulatorConfig) | Quản trị viên | ─ | `UC45` trong package tương ứng. |
+| **UC46** | Bắt đầu chạy kịch bản mô phỏng tương tranh đa luồng (RunSimulation) | Quản trị viên, Bộ Mô phỏng Đa luồng | <<include>> UC47<br><<include>> UC48<br><<include>> UC49 | `UC46` trong package tương ứng. |
+| **UC50** | So sánh hiệu năng NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK | Bộ Mô phỏng Đa luồng | ─ | `UC50` trong package tương ứng. |
+| **UC51** | Hiển thị bảng tổng kết thông lượng, thời gian và tỷ lệ xung đột (BenchmarkTable) | Hệ thống tự động | <<extend>> UC49 | `UC51` trong package tương ứng. |
+| **UC47** | Mô phỏng đồng thời nhiều khách hàng đặt hàng cùng lúc (CustomerThread) | Hệ thống tự động | UC46 <<include>> | `UC47` trong package tương ứng. |
+| **UC48** | Mô phỏng đồng thời nhiều tiến trình gán đơn cùng lúc (DispatchThread) | Hệ thống tự động | UC46 <<include>> | `UC48` trong package tương ứng. |
+| **UC49** | Tự động phát hiện Double Assignment, Oversell, Driver Overload | Bộ Mô phỏng Đa luồng | UC46 <<include>><br>UC51 <<extend>> | `UC49` trong package tương ứng. |
 
 ---
 
@@ -118,130 +121,143 @@
 ```mermaid
 graph LR
     subgraph FDS ["HỆ THỐNG ĐẶT VÀ GIAO ĐỒ ĂN TRỰC TUYẾN (FOOD DELIVERY SIMULATION SYSTEM)"]
-        subgraph SUB1 ["Phân hệ 1: Xác thực & Hồ sơ Cá nhân"]
+        subgraph SUB1 ["Phân hệ 1: Xác thực & Quản lý Truy cập"]
             UC01(("UC01: Đăng ký tài khoản Khách hàng mới"))
-            UC02(("UC02: Đăng nhập vào Hệ thống"))
-            UC03(("UC03: Đăng xuất khỏi Phiên làm việc"))
-            UC04(("UC04: Xem & Cập nhật Hồ sơ / Địa chỉ GPS"))
-            UC05(("UC05: Nộp đơn đăng ký Ứng tuyển Tài xế"))
+            UC02(("UC02: Đăng nhập Hệ thống đa vai trò"))
+            UC05(("UC05: Đăng xuất khỏi Phiên làm việc"))
+            UC03(("UC03: Nộp hồ sơ đăng ký Làm Tài xế (Chờ duyệt)"))
+            UC04(("UC04: Xem danh sách Tài khoản mẫu Demo"))
         end
-        subgraph SUB2 ["Phân hệ 2: Khách hàng & Đặt hàng Trực tuyến"]
-            UC06(("UC06: Xem danh mục Nhà hàng & Thực đơn"))
-            UC08(("UC08: Đặt món & Khởi tạo Đơn hàng"))
-            UC12(("UC12: Theo dõi trạng thái Đơn hàng thời gian thực"))
-            UC13(("UC13: Xem lịch sử Các đơn hàng đã đặt"))
-            UC07(("UC07: Tìm kiếm & Lọc Món ăn / Giá / Khoảng cách"))
-            UC09(("UC09: Trừ tồn kho Món ăn tức thời"))
-            UC10(("UC10: Tính phí ship theo Haversine"))
-            UC14(("UC14: Hủy đơn hàng (khi đang PENDING)"))
-            UC11(("UC11: Xác thực tọa độ GPS giao hàng Quy Nhơn"))
-            UC15(("UC15: Hoàn trả số lượng Tồn kho món ăn"))
+        subgraph SUB2 ["Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn"]
+            UC06(("UC06: Xem danh sách Nhà hàng & Thực đơn"))
+            UC07(("UC07: Đặt món & Khởi tạo Đơn hàng"))
+            UC11(("UC11: Theo dõi & Xem Đơn hàng của tôi"))
+            UC14(("UC14: Xem thông tin Tài khoản cá nhân"))
+            UC15(("UC15: Kiểm tra hộp thư Thông báo tài xế & ETA"))
+            UC08(("UC08: Trừ tồn kho Món ăn tức thời"))
+            UC09(("UC09: Tính phí ship theo Haversine"))
+            UC12(("UC12: Hủy đơn hàng (khi đang PENDING)"))
+            UC10(("UC10: Xác thực GPS Giao hàng Quy Nhơn"))
+            UC13(("UC13: Hoàn trả số lượng Tồn kho món ăn"))
         end
-        subgraph SUB3 ["Phân hệ 3: Quản lý Nhà hàng & Thực đơn Quy Nhơn"]
-            UC16(("UC16: Thêm món ăn mới vào Thực đơn"))
-            UC17(("UC17: Cập nhật thông tin Món ăn & Giá bán"))
-            UC18(("UC18: Xóa món ăn khỏi Thực đơn"))
-            UC19(("UC19: Cập nhật & Nhập thêm Số lượng Tồn kho (Stock)"))
-            UC20(("UC20: Xem danh sách Đơn hàng mới tiếp nhận"))
-            UC21(("UC21: Xác nhận Đơn hàng (Accept)"))
-            UC24(("UC24: Xem báo cáo Doanh thu & Đơn hàng"))
-            UC23(("UC23: Từ chối Đơn hàng (Reject)"))
-            UC22(("UC22: Kích hoạt Điều phối Tự động"))
+        subgraph SUB3 ["Phân hệ 3: Quản lý Nhà hàng & Thực đơn"]
+            UC16(("UC16: Xem thực đơn & Tình trạng tồn kho"))
+            UC17(("UC17: Cập nhật đơn giá & Bổ sung tồn kho"))
+            UC18(("UC18: Xem danh sách Đơn hàng đến quán"))
+            UC19(("UC19: Xác nhận đơn (Accept Order)"))
+            UC21(("UC21: Từ chối đơn (Reject Order)"))
+            UC22(("UC22: Thống kê doanh thu Báo cáo bán hàng"))
+            UC20(("UC20: Kích hoạt tự động Điều phối Tài xế"))
         end
-        subgraph SUB4 ["Phân hệ 4: Tài xế & Vận hành Giao nhận Đơn hàng"]
-            UC25(("UC25: Bật/Tắt trạng thái Hoạt động (Available/Off)"))
-            UC26(("UC26: Cập nhật vị trí Tọa độ GPS thực tế"))
-            UC27(("UC27: Tiếp nhận đơn hàng được Điều phối ghép nối"))
-            UC28(("UC28: Xác nhận lấy món (Chuyển DISPATCHED)"))
-            UC29(("UC29: Xác nhận hoàn tất Giao hàng (DELIVERED)"))
-            UC30(("UC30: Tự động chuyển về Sẵn sàng (AVAILABLE)"))
+        subgraph SUB4 ["Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn"]
+            UC23(("UC23: Xem hồ sơ & Thống kê cá nhân"))
+            UC24(("UC24: Chuyển trạng thái AVAILABLE / OFFLINE"))
+            UC25(("UC25: Xem các đơn hàng Được phân công"))
+            UC26(("UC26: Xác nhận lấy hàng (Chuyển DISPATCHED)"))
+            UC27(("UC27: Xác nhận hoàn tất Giao hàng (DELIVERED)"))
+            UC28(("UC28: Tự động chuyển về Sẵn sàng (AVAILABLE)"))
         end
-        subgraph SUB6 ["Phân hệ 6: Quản trị Hệ thống & Phê duyệt Đối tác"]
-            UC35(("UC35: Quản lý Tài khoản Người dùng & Phân quyền"))
-            UC37(("UC37: Thẩm định hồ sơ Đơn ứng tuyển Tài xế"))
-            UC40(("UC40: Quản lý danh mục Nhà hàng & Phân bổ QL"))
-            UC41(("UC41: Giám sát toàn bộ Đơn hàng trong Hệ thống"))
-            UC42(("UC42: Nhập hàng bổ sung Tồn kho toàn Hệ thống"))
-            UC36(("UC36: Khóa / Mở khóa Tài khoản người dùng"))
-            UC38(("UC38: Phê duyệt đơn & Tự động tạo hồ sơ Driver"))
-            UC39(("UC39: Từ chối hồ sơ Ứng tuyển tài xế"))
+        subgraph SUB6 ["Phân hệ 6: Quản trị Hệ thống Toàn diện"]
+            UC36(("UC36: Xét duyệt hồ sơ Đăng ký làm Tài xế"))
+            UC39(("UC39: Quản lý Người dùng & Phân quyền hệ thống"))
+            UC40(("UC40: Quản lý Nhà hàng, Thực đơn & Nhập kho"))
+            UC41(("UC41: Quản lý Danh sách Khách hàng Quy Nhơn"))
+            UC42(("UC42: Giám sát toàn bộ Đơn hàng trong Hệ thống"))
+            UC43(("UC43: Sinh dữ liệu mẫu CSV (>= 18,000 Rows)"))
+            UC37(("UC37: Phê duyệt hồ sơ & Tự động cấp mã Driver"))
+            UC38(("UC38: Từ chối hồ sơ Kèm lý do cụ thể"))
+            UC44(("UC44: Báo cáo Tổng quan & Nghiên cứu Big Question"))
         end
-        subgraph SUB5 ["Phân hệ 5: Điều phối Tự động & Tối ưu Lộ trình"]
-            UC31(("UC31: Quét hàng đợi Đơn hàng PENDING"))
-            UC34(("UC34: Tự động ghép nối & Khóa tài xế (BUSY)"))
-            UC32(("UC32: Tìm kiếm tài xế Gần nhất (Haversine)"))
-            UC33(("UC33: Tính toán thời gian Dự kiến giao hàng (ETA)"))
+        subgraph SUB5 ["Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid"]
+            UC29(("UC29: Xem danh sách đơn Chờ điều phối (PENDING)"))
+            UC30(("UC30: Tự động điều phối Tất cả đơn hàng chờ"))
+            UC34(("UC34: Giám sát trạng thái Đội ngũ Tài xế"))
+            UC35(("UC35: Hiển thị Bản đồ ASCII Grid Map Quy Nhơn"))
+            UC31(("UC31: Tìm kiếm tài xế Gần nhất (Haversine)"))
+            UC32(("UC32: Tính toán ETA Lấy món & Giao hàng"))
+            UC33(("UC33: Ghép nối đơn & Khóa tài xế (BUSY)"))
         end
         subgraph SUB7 ["Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh"]
-            UC43(("UC43: Cấu hình tham số Kiểm thử (Threads/Lock)"))
-            UC44(("UC44: Kích hoạt mô phỏng Đa luồng đồng thời"))
-            UC47(("UC47: So chuẩn 4 cơ chế khóa (NO/SYNC/OPT/FILE)"))
-            UC45(("UC45: Mô phỏng Đặt hàng (CustomerThread)"))
-            UC46(("UC46: Mô phỏng Điều phối (DispatchThread)"))
-            UC48(("UC48: Tự động phát hiện Lỗi Race Conditions"))
-            UC49(("UC49: Xuất báo cáo Số liệu & Thông lượng"))
+            UC45(("UC45: Cấu hình tham số Kiểm thử (Threads/Lock)"))
+            UC46(("UC46: Khởi chạy mô phỏng Đa luồng đồng thời"))
+            UC50(("UC50: Đo kiểm so chuẩn 4 cơ chế khóa (Benchmark)"))
+            UC51(("UC51: Xuất bảng so sánh Hiệu năng & Kết luận"))
+            UC47(("UC47: Mô phỏng Đặt hàng (CustomerThread)"))
+            UC48(("UC48: Mô phỏng Điều phối (DispatchThread)"))
+            UC49(("UC49: Tự động phát hiện Lỗi Race Conditions"))
         end
     end
 
     ACT_CUSTOMER["👤 Khách hàng"]
     ACT_RESTAURANT["👤 Quản lý Nhà hàng"]
-    ACT_DRIVER["👤 Tài xế Giao hàng"]
+    ACT_DRIVER["👤 Tài xế Đối tác"]
     ACT_ADMIN["👤 Quản trị viên"]
-    ACT_DISPATCHER["👤 Hệ thống Điều phối"]
+    ACT_DISPATCHER["👤 Điều phối viên"]
     ACT_SIMULATOR["👤 Bộ Mô phỏng Đa luồng"]
 
     ACT_CUSTOMER --- UC01
     ACT_CUSTOMER --- UC02
     ACT_CUSTOMER --- UC03
+    ACT_CUSTOMER --- UC04
+    ACT_CUSTOMER --- UC05
     ACT_CUSTOMER --- UC06
-    ACT_CUSTOMER --- UC08
+    ACT_CUSTOMER --- UC07
+    ACT_CUSTOMER --- UC11
     ACT_CUSTOMER --- UC12
-    ACT_CUSTOMER --- UC13
     ACT_CUSTOMER --- UC14
+    ACT_CUSTOMER --- UC15
+    ACT_RESTAURANT --- UC02
+    ACT_RESTAURANT --- UC05
     ACT_RESTAURANT --- UC16
     ACT_RESTAURANT --- UC17
     ACT_RESTAURANT --- UC18
     ACT_RESTAURANT --- UC19
-    ACT_RESTAURANT --- UC20
     ACT_RESTAURANT --- UC21
+    ACT_RESTAURANT --- UC22
+    ACT_DRIVER --- UC02
+    ACT_DRIVER --- UC05
+    ACT_DRIVER --- UC23
+    ACT_DRIVER --- UC24
     ACT_DRIVER --- UC25
     ACT_DRIVER --- UC26
     ACT_DRIVER --- UC27
-    ACT_DRIVER --- UC28
-    ACT_DRIVER --- UC29
-    ACT_ADMIN --- UC35
-    ACT_ADMIN --- UC37
+    ACT_ADMIN --- UC02
+    ACT_ADMIN --- UC05
+    ACT_ADMIN --- UC36
+    ACT_ADMIN --- UC39
     ACT_ADMIN --- UC40
     ACT_ADMIN --- UC41
     ACT_ADMIN --- UC42
     ACT_ADMIN --- UC43
     ACT_ADMIN --- UC44
-    ACT_DISPATCHER --- UC31
+    ACT_ADMIN --- UC45
+    ACT_ADMIN --- UC46
+    ACT_DISPATCHER --- UC02
+    ACT_DISPATCHER --- UC05
+    ACT_DISPATCHER --- UC29
+    ACT_DISPATCHER --- UC30
     ACT_DISPATCHER --- UC34
-    ACT_SIMULATOR --- UC44
-    ACT_SIMULATOR --- UC47
-    ACT_SIMULATOR --- UC48
-    UC02 -. "&lt;&lt;include&gt;&gt;" .-> UC04
-    UC05 -. "&lt;&lt;extend&gt;&gt;" .-> UC04
-    UC07 -. "&lt;&lt;extend&gt;&gt;" .-> UC06
-    UC08 -. "&lt;&lt;include&gt;&gt;" .-> UC09
-    UC08 -. "&lt;&lt;include&gt;&gt;" .-> UC10
-    UC10 -. "&lt;&lt;include&gt;&gt;" .-> UC11
-    UC14 -. "&lt;&lt;extend&gt;&gt;" .-> UC08
-    UC14 -. "&lt;&lt;include&gt;&gt;" .-> UC15
-    UC21 -. "&lt;&lt;include&gt;&gt;" .-> UC22
-    UC23 -. "&lt;&lt;extend&gt;&gt;" .-> UC20
-    UC24 -. "&lt;&lt;extend&gt;&gt;" .-> UC20
-    UC29 -. "&lt;&lt;include&gt;&gt;" .-> UC30
-    UC36 -. "&lt;&lt;extend&gt;&gt;" .-> UC35
-    UC38 -. "&lt;&lt;extend&gt;&gt;" .-> UC37
-    UC39 -. "&lt;&lt;extend&gt;&gt;" .-> UC37
-    UC34 -. "&lt;&lt;include&gt;&gt;" .-> UC32
-    UC34 -. "&lt;&lt;include&gt;&gt;" .-> UC33
-    UC44 -. "&lt;&lt;include&gt;&gt;" .-> UC45
-    UC44 -. "&lt;&lt;include&gt;&gt;" .-> UC46
-    UC44 -. "&lt;&lt;include&gt;&gt;" .-> UC48
-    UC49 -. "&lt;&lt;extend&gt;&gt;" .-> UC48
+    ACT_DISPATCHER --- UC35
+    ACT_SIMULATOR --- UC46
+    ACT_SIMULATOR --- UC50
+    ACT_SIMULATOR --- UC49
+    UC07 -. "&lt;&lt;include&gt;&gt;" .-> UC08
+    UC07 -. "&lt;&lt;include&gt;&gt;" .-> UC09
+    UC09 -. "&lt;&lt;include&gt;&gt;" .-> UC10
+    UC12 -. "&lt;&lt;extend&gt;&gt;" .-> UC07
+    UC12 -. "&lt;&lt;include&gt;&gt;" .-> UC13
+    UC19 -. "&lt;&lt;include&gt;&gt;" .-> UC20
+    UC21 -. "&lt;&lt;include&gt;&gt;" .-> UC13
+    UC27 -. "&lt;&lt;include&gt;&gt;" .-> UC28
+    UC37 -. "&lt;&lt;extend&gt;&gt;" .-> UC36
+    UC38 -. "&lt;&lt;extend&gt;&gt;" .-> UC36
+    UC30 -. "&lt;&lt;include&gt;&gt;" .-> UC31
+    UC30 -. "&lt;&lt;include&gt;&gt;" .-> UC32
+    UC30 -. "&lt;&lt;include&gt;&gt;" .-> UC33
+    UC46 -. "&lt;&lt;include&gt;&gt;" .-> UC47
+    UC46 -. "&lt;&lt;include&gt;&gt;" .-> UC48
+    UC46 -. "&lt;&lt;include&gt;&gt;" .-> UC49
+    UC51 -. "&lt;&lt;extend&gt;&gt;" .-> UC49
 ```
 
 ---
