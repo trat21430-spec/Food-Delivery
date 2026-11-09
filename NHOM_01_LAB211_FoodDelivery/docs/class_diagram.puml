@@ -1,0 +1,621 @@
+@startuml
+title FOOD DELIVERY NETWORK SIMULATION - FULL CLASS DIAGRAM (MONOCHROME MVC)
+skinparam monochrome true
+skinparam backgroundColor #FFFFFF
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #000000
+skinparam classFontColor #000000
+skinparam linetype ortho
+skinparam packageStyle rectangle
+
+package "1. Model Layer" {
+    abstract class BaseEntity {
+        - String id
+        - LocalDateTime createdAt
+        - LocalDateTime updatedAt
+        - long version
+        + BaseEntity()
+        + BaseEntity(id: String)
+        + BaseEntity(id: String, createdAt: LocalDateTime, updatedAt: LocalDateTime, version: long)
+        + getId(): String
+        + setId(id: String): void
+        + getCreatedAt(): LocalDateTime
+        + setCreatedAt(createdAt: LocalDateTime): void
+        + getUpdatedAt(): LocalDateTime
+        + setUpdatedAt(updatedAt: LocalDateTime): void
+        + getVersion(): long
+        + setVersion(version: long): void
+        + incrementVersion(): void
+        + {abstract} toCsvLine(): String
+        + {abstract} fromCsvLine(line: String): void
+    }
+
+    class Customer {
+        - String fullName
+        - String phone
+        - String ward
+        - double latitude
+        - double longitude
+        + Customer()
+        + Customer(id, fullName, phone, ward, lat, lon)
+        + getFullName(): String
+        + setFullName(fullName: String): void
+        + getPhone(): String
+        + setPhone(phone: String): void
+        + getWard(): String
+        + setWard(ward: String): void
+        + getLatitude(): double
+        + getLongitude(): double
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class Restaurant {
+        - String name
+        - String category
+        - String address
+        - double latitude
+        - double longitude
+        - double rating
+        - boolean open
+        + Restaurant()
+        + Restaurant(id, name, cat, addr, lat, lon, rating, open)
+        + getName(): String
+        + getAddress(): String
+        + getLatitude(): double
+        + getLongitude(): double
+        + getRating(): double
+        + isOpen(): boolean
+        + setOpen(open: boolean): void
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class MenuItem {
+        - String restaurantId
+        - String name
+        - double priceVnd
+        - int stockQty
+        + MenuItem()
+        + MenuItem(id, restId, name, price, stock, version)
+        + getRestaurantId(): String
+        + getName(): String
+        + getPriceVnd(): double
+        + getStockQty(): int
+        + setStockQty(stockQty: int): void
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class Driver {
+        - String fullName
+        - String phone
+        - String licensePlate
+        - double latitude
+        - double longitude
+        - DriverStatus status
+        - int activeOrderCount
+        - String currentOrderId
+        + Driver()
+        + Driver(id, name, phone, plate, lat, lon, status, count, version)
+        + getFullName(): String
+        + getLicensePlate(): String
+        + getLatitude(): double
+        + getLongitude(): double
+        + getStatus(): DriverStatus
+        + setStatus(status: DriverStatus): void
+        + getCurrentOrderId(): String
+        + setCurrentOrderId(orderId: String): void
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class DriverApplication {
+        - String username
+        - String password
+        - String fullName
+        - String phone
+        - String licensePlate
+        - String vehicleType
+        - String status
+        - String note
+        + DriverApplication()
+        + DriverApplication(id, user, pass, name, phone, plate, type, status, note)
+        + getUsername(): String
+        + getStatus(): String
+        + setStatus(status: String): void
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class Order {
+        - String customerId
+        - String restaurantId
+        - String driverId
+        - OrderStatus status
+        - double totalFoodAmount
+        - double deliveryFee
+        - long createdAtEpochMs
+        - int assignCount
+        + Order()
+        + Order(id, custId, restId, driverId, status, total, fee, epoch, count, version)
+        + getCustomerId(): String
+        + getRestaurantId(): String
+        + getDriverId(): String
+        + setDriverId(driverId: String): void
+        + getStatus(): OrderStatus
+        + setStatus(status: OrderStatus): void
+        + getTotalAmount(): double
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class OrderItem {
+        - String orderId
+        - String menuItemId
+        - int quantity
+        - double unitPriceVnd
+        + OrderItem()
+        + OrderItem(id, orderId, menuItemId, quantity, unitPrice)
+        + getOrderId(): String
+        + getMenuItemId(): String
+        + getQuantity(): int
+        + getUnitPriceVnd(): double
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class DeliveryRoute {
+        - String orderId
+        - String driverId
+        - double pickupDistanceKm
+        - double deliveryDistanceKm
+        - int estimatedMinutes
+        + DeliveryRoute()
+        + DeliveryRoute(id, orderId, driverId, pickupDist, delivDist, mins)
+        + getPickupDistanceKm(): double
+        + getDeliveryDistanceKm(): double
+        + getEstimatedMinutes(): int
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class SimulationRun {
+        - LockMechanism mechanism
+        - int totalOrders
+        - long durationMs
+        - double throughputOpsPerSec
+        - double throughputDropPercent
+        - int doubleAssignErrors
+        - int oversellErrors
+        - int driverOverloadErrors
+        + SimulationRun()
+        + SimulationRun(id, mechanism, total, duration, throughput, drop, dAssign, oversell, dOverload)
+        + getMechanism(): LockMechanism
+        + getThroughputOpsPerSec(): double
+        + getTotalErrors(): int
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class User {
+        - String username
+        - String password
+        - UserRole role
+        - String linkedEntityId
+        - String displayName
+        - String phone
+        + User()
+        + User(id, user, pass, role, linkedId, name, created, updated, version)
+        + getUsername(): String
+        + getRole(): UserRole
+        + getLinkedEntityId(): String
+        + getDisplayName(): String
+        + toCsvLine(): String
+        + fromCsvLine(line: String): void
+    }
+
+    class UserAccount {
+        + UserAccount()
+        + UserAccount(id, user, pass, phone, name, role, custId, driverId, active)
+    }
+
+    class GeoUtils {
+        - double earthRadiusKm
+        + GeoUtils()
+        + haversineDistance(lat1, lon1, lat2, lon2): double
+        + calculateDeliveryFee(distanceKm: double): double
+        + calculatePickupMinutes(driverToRestKm: double): int
+        + calculateDeliveryMinutes(driverToRestKm, restToCustKm): int
+        + formatEstimatedClockTime(baseEpochMs, durationMins): String
+    }
+
+    enum DriverStatus {
+        AVAILABLE
+        BUSY
+        OFFLINE
+    }
+
+    enum OrderStatus {
+        PENDING
+        CONFIRMED
+        DISPATCHED
+        DELIVERED
+        CANCELLED
+    }
+
+    enum UserRole {
+        CUSTOMER
+        DRIVER
+        RESTAURANT
+        ADMIN
+    }
+
+    enum LockMechanism {
+        NO_LOCK
+        SYNCHRONIZED
+        OPTIMISTIC
+        FILE_LOCK
+    }
+
+    BaseEntity <|-- Customer
+    BaseEntity <|-- Restaurant
+    BaseEntity <|-- MenuItem
+    BaseEntity <|-- Driver
+    BaseEntity <|-- DriverApplication
+    BaseEntity <|-- Order
+    BaseEntity <|-- OrderItem
+    BaseEntity <|-- DeliveryRoute
+    BaseEntity <|-- SimulationRun
+    BaseEntity <|-- User
+    User <|-- UserAccount
+}
+
+package "2. Repository Layer" {
+    interface IRepository<T> {
+        + findAll(): List<T>
+        + findById(id: String): T
+        + save(entity: T): void
+        + saveAll(entities: List<T>): void
+        + deleteById(id: String): void
+    }
+
+    abstract class CsvRepository<T> {
+        - String filePath
+        - String header
+        - Object fileMonitor
+        - ConcurrentHashMap<String, Object> keyLocks
+        + CsvRepository(filePath: String, header: String)
+        + {abstract} createEntity(): T
+        + parseLine(line: String): T
+        + findAll(): List<T>
+        + findById(id: String): T
+        + save(entity: T): void
+        + saveAll(entities: List<T>): void
+        + deleteById(id: String): void
+        + getKeyLock(key: String): Object
+        + executeWithFileLock(action: Runnable): void
+        + updateWithOptimisticLock(entity: T, expectedVersion: long): void
+    }
+
+    class CustomerRepository {
+        + CustomerRepository()
+        + createEntity(): Customer
+    }
+
+    class RestaurantRepository {
+        + RestaurantRepository()
+        + createEntity(): Restaurant
+    }
+
+    class MenuItemRepository {
+        + MenuItemRepository()
+        + createEntity(): MenuItem
+        + findByRestaurantId(restaurantId: String): List<MenuItem>
+        + deductStock(menuItemId, quantity, mechanism): boolean
+        + restoreStock(menuItemId, quantity): boolean
+    }
+
+    class DriverRepository {
+        - GeoUtils geoUtils
+        + DriverRepository()
+        + createEntity(): Driver
+        + findAvailableDrivers(): List<Driver>
+        + findNearestAvailable(restLat, restLon): Driver
+        + markBusy(driverId, orderId, mechanism): boolean
+        + markAvailable(driverId: String): boolean
+    }
+
+    class DriverApplicationRepository {
+        + DriverApplicationRepository()
+        + createEntity(): DriverApplication
+        + findPendingApplications(): List<DriverApplication>
+        + findByUsername(username: String): DriverApplication
+        + findByPhone(phone: String): DriverApplication
+    }
+
+    class OrderRepository {
+        + OrderRepository()
+        + createEntity(): Order
+        + processOrderAndDispatch(custId, restId, itemId, qty, mech, ...): Order
+        + dispatchPendingOrder(orderId, mech, ...): boolean
+        + autoDispatchAllPending(mech, ...): List<String>
+        + dispatchOrderToDriver(orderId, driverId, mech): boolean
+        + assignDriver(orderId, driverId, mech): boolean
+    }
+
+    class OrderItemRepository {
+        + OrderItemRepository()
+        + createEntity(): OrderItem
+        + findByOrderId(orderId: String): List<OrderItem>
+    }
+
+    class DeliveryRouteRepository {
+        + DeliveryRouteRepository()
+        + createEntity(): DeliveryRoute
+    }
+
+    class SimulationRunRepository {
+        + SimulationRunRepository()
+        + createEntity(): SimulationRun
+    }
+
+    class UserRepository {
+        + UserRepository()
+        + createEntity(): User
+        + findByUsername(username: String): User
+        + findByPhone(phone: String): User
+    }
+
+    IRepository <|.. CsvRepository
+    CsvRepository <|-- CustomerRepository
+    CsvRepository <|-- RestaurantRepository
+    CsvRepository <|-- MenuItemRepository
+    CsvRepository <|-- DriverRepository
+    CsvRepository <|-- DriverApplicationRepository
+    CsvRepository <|-- OrderRepository
+    CsvRepository <|-- OrderItemRepository
+    CsvRepository <|-- DeliveryRouteRepository
+    CsvRepository <|-- SimulationRunRepository
+    CsvRepository <|-- UserRepository
+    DriverRepository o-- GeoUtils
+}
+
+package "3. Controller Layer" {
+    class MainController {
+        - AuthController authController
+        - CustomerController customerController
+        - RestaurantController restaurantController
+        - DriverController driverController
+        - OrderController orderController
+        - SimulatorController simulatorController
+        - AdminController adminController
+        - MainView mainView
+        + MainController()
+        + run(): void
+        + login(username, password): boolean
+        + logout(): void
+        + getCurrentUser(): User
+    }
+
+    class AppController {
+        + AppController()
+    }
+
+    class AuthController {
+        - UserRepository userRepository
+        - CustomerRepository customerRepository
+        - DriverRepository driverRepository
+        - DriverApplicationRepository driverAppRepository
+        - User currentUser
+        + AuthController()
+        + login(username, password): boolean
+        + logout(): void
+        + registerCustomer(...): User
+        + submitDriverApplication(...): DriverApplication
+        + registerDriver(...): User
+    }
+
+    class CustomerController {
+        - CustomerRepository customerRepository
+        - OrderRepository orderRepository
+        + CustomerController()
+        + registerCustomer(...): Customer
+        + getAllCustomers(): List<Customer>
+        + getCustomerById(id: String): Customer
+        + updateCustomer(...): boolean
+        + getOrderHistory(customerId: String): List<Order>
+    }
+
+    class DriverController {
+        - DriverRepository driverRepository
+        + DriverController()
+        + getAllDrivers(): List<Driver>
+        + getAvailableDrivers(): List<Driver>
+        + getNearestAvailableDriver(lat, lon): Driver
+        + updateDriverStatus(id, status): boolean
+    }
+
+    class RestaurantController {
+        - RestaurantRepository restaurantRepository
+        - MenuItemRepository menuItemRepository
+        + RestaurantController()
+        + getAllRestaurants(): List<Restaurant>
+        + getMenuByRestaurant(restaurantId: String): List<MenuItem>
+        + updateStock(menuItemId, newStock): boolean
+    }
+
+    class OrderController {
+        - OrderRepository orderRepository
+        - MenuItemRepository menuItemRepository
+        - DriverRepository driverRepository
+        - RestaurantRepository restaurantRepository
+        - OrderItemRepository orderItemRepository
+        - CustomerRepository customerRepository
+        - DeliveryRouteRepository routeRepository
+        + OrderController()
+        + placeOrderAndDispatch(...): Order
+        + confirmOrderByRestaurant(...): Order
+        + rejectOrderByRestaurant(...): boolean
+        + cancelOrderByCustomer(...): boolean
+        + markOrderPickedUp(...): boolean
+        + markOrderDelivered(...): boolean
+        + autoDispatchPendingOrders(mechanism): int
+    }
+
+    class AdminController {
+        - RestaurantRepository restaurantRepo
+        - MenuItemRepository menuItemRepo
+        - CustomerRepository customerRepo
+        - DriverRepository driverRepo
+        - DriverApplicationRepository driverAppRepo
+        - UserRepository userRepo
+        + AdminController()
+        + getPendingDriverApplications(): List<DriverApplication>
+        + approveDriverApplication(id): User
+        + rejectDriverApplication(id, reason): boolean
+        + addRestaurant(...): Restaurant
+        + restockMenuItem(itemId, qty): void
+    }
+
+    class SimulatorController {
+        - OrderRepository orderRepo
+        - DriverRepository driverRepo
+        - MenuItemRepository menuItemRepo
+        - SimulationRunRepository simRunRepo
+        + SimulatorController()
+        + runSimulation(numOrders, mechanism): SimulationRun
+        + detectDoubleAssignments(): int
+        + detectOversellItems(): int
+        + detectDriverOverload(): int
+    }
+
+    class CustomerThread extends Thread {
+        - OrderController orderController
+        - LockMechanism mechanism
+        + run(): void
+    }
+
+    class DispatchThread extends Thread {
+        - OrderController orderController
+        - LockMechanism mechanism
+        + run(): void
+    }
+
+    MainController <|-- AppController
+    MainController *-- AuthController
+    MainController *-- CustomerController
+    MainController *-- RestaurantController
+    MainController *-- DriverController
+    MainController *-- OrderController
+    MainController *-- SimulatorController
+    MainController *-- AdminController
+
+    CustomerController o-- CustomerRepository
+    CustomerController o-- OrderRepository
+    DriverController o-- DriverRepository
+    RestaurantController o-- RestaurantRepository
+    RestaurantController o-- MenuItemRepository
+    OrderController o-- OrderRepository
+    OrderController o-- MenuItemRepository
+    OrderController o-- DriverRepository
+    AdminController o-- DriverApplicationRepository
+    SimulatorController o-- SimulationRunRepository
+}
+
+package "4. Exception Layer" {
+    class FoodDeliveryException extends Exception {
+        + FoodDeliveryException(message: String)
+    }
+
+    class ConcurrencyException extends FoodDeliveryException {
+        + ConcurrencyException(message: String)
+    }
+
+    class DoubleAssignmentException extends ConcurrencyException {
+        - String orderId
+        - String existingDriverId
+        - String attemptedDriverId
+        + getOrderId(): String
+    }
+
+    class DriverOverloadException extends ConcurrencyException {
+        - String driverId
+        - String currentOrderId
+        + getDriverId(): String
+    }
+
+    class OptimisticLockException extends ConcurrencyException {
+        - String entityId
+        - long expectedVersion
+        - long currentVersion
+        + getEntityId(): String
+    }
+
+    class OversellException extends ConcurrencyException {
+        - String menuItemId
+        - int requestedQty
+        - int availableQty
+        + getMenuItemId(): String
+    }
+
+    class EntityNotFoundException extends FoodDeliveryException {
+        - String entityName
+        - String entityId
+    }
+
+    class InvalidInputException extends FoodDeliveryException {
+        - String fieldName
+    }
+}
+
+package "5. View Layer" {
+    interface IView {
+        + display(): void
+    }
+
+    class MainView implements IView {
+        - MainController mainController
+        + MainView(mainController: MainController)
+        + display(): void
+    }
+
+    class MapView {
+        + renderAsciiMap(restaurants, customers, drivers): void
+    }
+
+    class OrderView {
+        + displayMenu(restaurant, items): void
+        + displayRecentOrders(orders, count): void
+    }
+
+    class ReportView {
+        + printResearchConclusion(runs): void
+        + renderSimulationSummary(run): void
+    }
+
+    class SimulatorView {
+        + printBenchmarkTable(runs): void
+        + renderComparisonTable(runs): void
+    }
+
+    MainController *-- MainView
+    MainController *-- MapView
+    MainController *-- OrderView
+    MainController *-- ReportView
+    MainController *-- SimulatorView
+}
+
+' External Business Relationships
+Order --> Customer : places
+Order --> Restaurant : from
+Order --> Driver : delivered by
+OrderItem --> Order : belongs to
+OrderItem --> MenuItem : item
+MenuItem --> Restaurant : offered by
+Driver --> DriverStatus : status
+Order --> OrderStatus : status
+User --> UserRole : role
+SimulationRun --> LockMechanism : benchmarks
+
+@enduml
