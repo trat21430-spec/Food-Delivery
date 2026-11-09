@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3300 2500" width="3300" height="2500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3600 2500" width="3600" height="2500">
   <defs>
     <style>
       .canvas-bg { fill: #ffffff; }
@@ -8,16 +8,17 @@
       .class-box { fill: #ffffff; stroke: #000000; stroke-width: 1.5; }
       .head-title { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
       .head-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; font-style: italic; text-anchor: middle; }
-      .txt-attr { fill: #1f2937; font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; }
-      .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; }
+      .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
       .sep { stroke: #000000; stroke-width: 1; }
       .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }
       .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }
-      .edge-assoc { fill: none; stroke: #374151; stroke-width: 1.4; }
+      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }
       .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }
-      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; }
+      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }
+      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }
       .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
-      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; text-anchor: middle; }
+      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
     </style>
     <marker id="uml-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
       <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
@@ -29,728 +30,828 @@
       <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
     </marker>
   </defs>
-  <rect width="3300" height="2500" class="canvas-bg" />
-  <text x="1650" y="40" class="title-main">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM</text>
-  <text x="1650" y="65" class="title-sub">LAB211 OOP with Java | Architecture: MVC + Generic CSV Repository | Monochrome Academic UML (Nhóm 01)</text>
-  <rect x="30" y="90" width="1220" height="1080" class="pkg-box" />
-  <text x="50" y="118" class="pkg-title">1. PACKAGE: model</text>
-  <g transform="translate(490, 140)">
-    <rect x="0" y="0" width="270" height="150" class="class-box" />
-    <text x="135" y="20" class="head-title">BaseEntity</text>
-    <text x="135" y="32" class="head-sub">&lt;&lt;abstract&gt;&gt;</text>
-    <line x1="0" y1="38" x2="270" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- id: String</text>
-    <text x="8" y="68" class="txt-attr">- createdAt, updatedAt: LocalDateTime</text>
-    <text x="8" y="83" class="txt-attr">- version: long</text>
-    <line x1="0" y1="98" x2="270" y2="98" class="sep" />
-    <text x="8" y="113" class="txt-meth">+ getId() / setId(id): void</text>
-    <text x="8" y="128" class="txt-meth">+ getVersion() / setVersion(v): void</text>
-    <text x="8" y="143" class="txt-meth">+ incrementVersion(): void</text>
-    <text x="8" y="158" class="txt-meth">+ toCsvLine()*: String</text>
-    <text x="8" y="173" class="txt-meth">+ fromCsvLine(line)*: void</text>
+  <rect width="3600" height="2500" class="canvas-bg" />
+  <text x="1800" y="40" class="title-main">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (58 CLASSES)</text>
+  <text x="1800" y="65" class="title-sub">LAB211 OOP with Java | Full System Entities, Repositories, Controllers, Exceptions &amp; Views (Monochrome)</text>
+  <rect x="30" y="90" width="1380" height="1250" class="pkg-box" />
+  <text x="50" y="118" class="pkg-title">1. PACKAGE: model (Entities, Enums, Utils)</text>
+  <rect x="1450" y="90" width="2110" height="1250" class="pkg-box" />
+  <text x="1470" y="118" class="pkg-title">2. PACKAGE: repository (Generic CSV &amp; Physical File I/O)</text>
+  <rect x="30" y="1370" width="1950" height="1090" class="pkg-box" />
+  <text x="50" y="1398" class="pkg-title">3. PACKAGE: controller (MVC Flow &amp; Threads)</text>
+  <rect x="2010" y="1370" width="750" height="1090" class="pkg-box" />
+  <text x="2030" y="1398" class="pkg-title">4. PACKAGE: exception (Concurrency &amp; Validation)</text>
+  <rect x="2790" y="1370" width="770" height="1090" class="pkg-box" />
+  <text x="2810" y="1398" class="pkg-title">5. PACKAGE: view &amp; Application Entrypoint</text>
+  <g transform="translate(580, 150)">
+    <rect x="0" y="0" width="280" height="150" class="class-box" />
+    <text x="140" y="20" class="head-title">BaseEntity</text>
+    <text x="140" y="32" class="head-sub">&lt;&lt;abstract&gt;&gt;</text>
+    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- id: String</text>
+    <text x="8" y="67" class="txt-attr">- createdAt, updatedAt: LocalDateTime</text>
+    <text x="8" y="82" class="txt-attr">- version: long</text>
+    <line x1="0" y1="97" x2="280" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ getId() / setId(id): void</text>
+    <text x="8" y="127" class="txt-meth">+ getVersion() / setVersion(v): void</text>
+    <text x="8" y="142" class="txt-meth">+ incrementVersion(): void</text>
+    <text x="8" y="157" class="txt-meth">+ toCsvLine()*: String</text>
+    <text x="8" y="172" class="txt-meth">+ fromCsvLine(line)*: void</text>
   </g>
-  <g transform="translate(50, 340)">
-    <rect x="0" y="0" width="220" height="180" class="class-box" />
-    <text x="110" y="20" class="head-title">Customer</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- fullName: String</text>
-    <text x="8" y="68" class="txt-attr">- phone: String</text>
-    <text x="8" y="83" class="txt-attr">- ward: String</text>
-    <text x="8" y="98" class="txt-attr">- latitude, longitude: double</text>
-    <line x1="0" y1="113" x2="220" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ getFullName() / setFullName()</text>
-    <text x="8" y="143" class="txt-meth">+ getPhone() / setPhone()</text>
-    <text x="8" y="158" class="txt-meth">+ getWard() / setWard()</text>
-    <text x="8" y="173" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="188" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(60, 350)">
+    <rect x="0" y="0" width="230" height="160" class="class-box" />
+    <text x="115" y="20" class="head-title">Customer</text>
+    <text x="115" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="230" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- fullName, phone, ward: String</text>
+    <text x="8" y="67" class="txt-attr">- latitude, longitude: double</text>
+    <line x1="0" y1="82" x2="230" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getFullName() / setFullName()</text>
+    <text x="8" y="112" class="txt-meth">+ getPhone() / setPhone()</text>
+    <text x="8" y="127" class="txt-meth">+ getWard() / setWard()</text>
+    <text x="8" y="142" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="157" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(290, 340)">
-    <rect x="0" y="0" width="220" height="180" class="class-box" />
-    <text x="110" y="20" class="head-title">Restaurant</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- name, category, address: String</text>
-    <text x="8" y="68" class="txt-attr">- latitude, longitude: double</text>
-    <text x="8" y="83" class="txt-attr">- rating: double</text>
-    <text x="8" y="98" class="txt-attr">- open: boolean</text>
-    <line x1="0" y1="113" x2="220" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ getName() / getAddress()</text>
-    <text x="8" y="143" class="txt-meth">+ isOpen() / setOpen(open)</text>
-    <text x="8" y="158" class="txt-meth">+ getRating(): double</text>
-    <text x="8" y="173" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="188" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(320, 350)">
+    <rect x="0" y="0" width="230" height="160" class="class-box" />
+    <text x="115" y="20" class="head-title">Restaurant</text>
+    <text x="115" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="230" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- name, category, address: String</text>
+    <text x="8" y="67" class="txt-attr">- latitude, longitude: double</text>
+    <text x="8" y="82" class="txt-attr">- rating: double</text>
+    <text x="8" y="97" class="txt-attr">- open: boolean</text>
+    <line x1="0" y1="112" x2="230" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ getName() / getAddress()</text>
+    <text x="8" y="142" class="txt-meth">+ isOpen() / setOpen(open)</text>
+    <text x="8" y="157" class="txt-meth">+ getRating(): double</text>
+    <text x="8" y="172" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(530, 340)">
-    <rect x="0" y="0" width="220" height="180" class="class-box" />
-    <text x="110" y="20" class="head-title">MenuItem</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- restaurantId: String</text>
-    <text x="8" y="68" class="txt-attr">- name: String</text>
-    <text x="8" y="83" class="txt-attr">- priceVnd: double</text>
-    <text x="8" y="98" class="txt-attr">- stockQty: int</text>
-    <line x1="0" y1="113" x2="220" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ getRestaurantId(): String</text>
-    <text x="8" y="143" class="txt-meth">+ getPriceVnd() / setPriceVnd()</text>
-    <text x="8" y="158" class="txt-meth">+ getStockQty() / setStockQty()</text>
-    <text x="8" y="173" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="188" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(580, 350)">
+    <rect x="0" y="0" width="230" height="160" class="class-box" />
+    <text x="115" y="20" class="head-title">MenuItem</text>
+    <text x="115" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="230" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- restaurantId, name: String</text>
+    <text x="8" y="67" class="txt-attr">- priceVnd: double</text>
+    <text x="8" y="82" class="txt-attr">- stockQty: int</text>
+    <line x1="0" y1="97" x2="230" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ getRestaurantId(): String</text>
+    <text x="8" y="127" class="txt-meth">+ getPriceVnd() / setPriceVnd()</text>
+    <text x="8" y="142" class="txt-meth">+ getStockQty() / setStockQty()</text>
+    <text x="8" y="157" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="172" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(770, 340)">
-    <rect x="0" y="0" width="220" height="180" class="class-box" />
-    <text x="110" y="20" class="head-title">Driver</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- fullName, phone, plate: String</text>
-    <text x="8" y="68" class="txt-attr">- lat, lon: double</text>
-    <text x="8" y="83" class="txt-attr">- status: DriverStatus</text>
-    <text x="8" y="98" class="txt-attr">- currentOrderId: String</text>
-    <text x="8" y="113" class="txt-attr">- activeOrderCount: int</text>
-    <line x1="0" y1="128" x2="220" y2="128" class="sep" />
-    <text x="8" y="143" class="txt-meth">+ getStatus() / setStatus(st)</text>
-    <text x="8" y="158" class="txt-meth">+ getCurrentOrderId() / setCurrentOrderId()</text>
-    <text x="8" y="173" class="txt-meth">+ getLicensePlate(): String</text>
-    <text x="8" y="188" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="203" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(840, 350)">
+    <rect x="0" y="0" width="240" height="160" class="class-box" />
+    <text x="120" y="20" class="head-title">Driver</text>
+    <text x="120" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="240" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- fullName, phone, plate: String</text>
+    <text x="8" y="67" class="txt-attr">- lat, lon: double</text>
+    <text x="8" y="82" class="txt-attr">- status: DriverStatus</text>
+    <text x="8" y="97" class="txt-attr">- currentOrderId: String</text>
+    <text x="8" y="112" class="txt-attr">- activeOrderCount: int</text>
+    <line x1="0" y1="127" x2="240" y2="127" class="sep" />
+    <text x="8" y="142" class="txt-meth">+ getStatus() / setStatus(st)</text>
+    <text x="8" y="157" class="txt-meth">+ getCurrentOrderId() / setCurrentOrderId()</text>
+    <text x="8" y="172" class="txt-meth">+ getLicensePlate(): String</text>
+    <text x="8" y="187" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="202" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(1010, 340)">
-    <rect x="0" y="0" width="220" height="180" class="class-box" />
-    <text x="110" y="20" class="head-title">Order</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- customerId, restaurantId: String</text>
-    <text x="8" y="68" class="txt-attr">- driverId: String</text>
-    <text x="8" y="83" class="txt-attr">- status: OrderStatus</text>
-    <text x="8" y="98" class="txt-attr">- totalFoodAmount, fee: double</text>
-    <text x="8" y="113" class="txt-attr">- createdAtEpochMs: long</text>
-    <text x="8" y="128" class="txt-attr">- assignCount: int</text>
-    <line x1="0" y1="143" x2="220" y2="143" class="sep" />
-    <text x="8" y="158" class="txt-meth">+ getDriverId() / setDriverId()</text>
-    <text x="8" y="173" class="txt-meth">+ getStatus() / setStatus(st)</text>
-    <text x="8" y="188" class="txt-meth">+ getTotalAmount(): double</text>
-    <text x="8" y="203" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="218" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(1110, 350)">
+    <rect x="0" y="0" width="250" height="170" class="class-box" />
+    <text x="125" y="20" class="head-title">Order</text>
+    <text x="125" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- customerId, restaurantId: String</text>
+    <text x="8" y="67" class="txt-attr">- driverId: String</text>
+    <text x="8" y="82" class="txt-attr">- status: OrderStatus</text>
+    <text x="8" y="97" class="txt-attr">- totalFoodAmount, fee: double</text>
+    <text x="8" y="112" class="txt-attr">- createdAtEpochMs: long</text>
+    <text x="8" y="127" class="txt-attr">- assignCount: int</text>
+    <line x1="0" y1="142" x2="250" y2="142" class="sep" />
+    <text x="8" y="157" class="txt-meth">+ getDriverId() / setDriverId(did)</text>
+    <text x="8" y="172" class="txt-meth">+ getStatus() / setStatus(st)</text>
+    <text x="8" y="187" class="txt-meth">+ getTotalAmount(): double</text>
+    <text x="8" y="202" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="217" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(50, 560)">
-    <rect x="0" y="0" width="220" height="150" class="class-box" />
-    <text x="110" y="20" class="head-title">OrderItem</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- orderId: String</text>
-    <text x="8" y="68" class="txt-attr">- menuItemId: String</text>
-    <text x="8" y="83" class="txt-attr">- quantity: int</text>
-    <text x="8" y="98" class="txt-attr">- unitPriceVnd: double</text>
-    <line x1="0" y1="113" x2="220" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ getOrderId(): String</text>
-    <text x="8" y="143" class="txt-meth">+ getMenuItemId(): String</text>
-    <text x="8" y="158" class="txt-meth">+ getQuantity() / getUnitPriceVnd()</text>
-    <text x="8" y="173" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="188" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(60, 560)">
+    <rect x="0" y="0" width="230" height="140" class="class-box" />
+    <text x="115" y="20" class="head-title">OrderItem</text>
+    <text x="115" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="230" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- orderId, menuItemId: String</text>
+    <text x="8" y="67" class="txt-attr">- quantity: int</text>
+    <text x="8" y="82" class="txt-attr">- unitPriceVnd: double</text>
+    <line x1="0" y1="97" x2="230" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ getOrderId(): String</text>
+    <text x="8" y="127" class="txt-meth">+ getMenuItemId(): String</text>
+    <text x="8" y="142" class="txt-meth">+ getQuantity() / getUnitPriceVnd()</text>
+    <text x="8" y="157" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="172" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(290, 560)">
-    <rect x="0" y="0" width="220" height="150" class="class-box" />
-    <text x="110" y="20" class="head-title">DeliveryRoute</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- orderId, driverId: String</text>
-    <text x="8" y="68" class="txt-attr">- pickupDistanceKm: double</text>
-    <text x="8" y="83" class="txt-attr">- deliveryDistanceKm: double</text>
-    <text x="8" y="98" class="txt-attr">- estimatedMinutes: int</text>
-    <line x1="0" y1="113" x2="220" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ getPickupDistanceKm(): double</text>
-    <text x="8" y="143" class="txt-meth">+ getDeliveryDistanceKm(): double</text>
-    <text x="8" y="158" class="txt-meth">+ getEstimatedMinutes(): int</text>
-    <text x="8" y="173" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="188" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(320, 560)">
+    <rect x="0" y="0" width="230" height="140" class="class-box" />
+    <text x="115" y="20" class="head-title">DeliveryRoute</text>
+    <text x="115" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="230" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- orderId, driverId: String</text>
+    <text x="8" y="67" class="txt-attr">- pickupDistanceKm: double</text>
+    <text x="8" y="82" class="txt-attr">- deliveryDistanceKm: double</text>
+    <text x="8" y="97" class="txt-attr">- estimatedMinutes: int</text>
+    <line x1="0" y1="112" x2="230" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ getPickupDistanceKm(): double</text>
+    <text x="8" y="142" class="txt-meth">+ getDeliveryDistanceKm(): double</text>
+    <text x="8" y="157" class="txt-meth">+ getEstimatedMinutes(): int</text>
+    <text x="8" y="172" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(530, 560)">
-    <rect x="0" y="0" width="220" height="160" class="class-box" />
-    <text x="110" y="20" class="head-title">SimulationRun</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- mechanism: LockMechanism</text>
-    <text x="8" y="68" class="txt-attr">- totalOrders: int, durationMs: long</text>
-    <text x="8" y="83" class="txt-attr">- throughputOpsPerSec: double</text>
-    <text x="8" y="98" class="txt-attr">- doubleAssignErrors, oversell: int</text>
-    <text x="8" y="113" class="txt-attr">- driverOverloadErrors: int</text>
-    <line x1="0" y1="128" x2="220" y2="128" class="sep" />
-    <text x="8" y="143" class="txt-meth">+ getMechanism(): LockMechanism</text>
-    <text x="8" y="158" class="txt-meth">+ getThroughputOpsPerSec(): double</text>
-    <text x="8" y="173" class="txt-meth">+ getTotalErrors(): int</text>
-    <text x="8" y="188" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="203" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(580, 560)">
+    <rect x="0" y="0" width="230" height="150" class="class-box" />
+    <text x="115" y="20" class="head-title">SimulationRun</text>
+    <text x="115" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="230" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- mechanism: LockMechanism</text>
+    <text x="8" y="67" class="txt-attr">- totalOrders: int, durationMs: long</text>
+    <text x="8" y="82" class="txt-attr">- throughputOpsPerSec: double</text>
+    <text x="8" y="97" class="txt-attr">- doubleAssignErrors, oversell: int</text>
+    <text x="8" y="112" class="txt-attr">- driverOverloadErrors: int</text>
+    <line x1="0" y1="127" x2="230" y2="127" class="sep" />
+    <text x="8" y="142" class="txt-meth">+ getMechanism(): LockMechanism</text>
+    <text x="8" y="157" class="txt-meth">+ getThroughputOpsPerSec(): double</text>
+    <text x="8" y="172" class="txt-meth">+ getTotalErrors(): int</text>
+    <text x="8" y="187" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="202" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(770, 560)">
-    <rect x="0" y="0" width="220" height="170" class="class-box" />
-    <text x="110" y="20" class="head-title">User</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- username, password: String</text>
-    <text x="8" y="68" class="txt-attr">- role: UserRole</text>
-    <text x="8" y="83" class="txt-attr">- linkedEntityId: String</text>
-    <text x="8" y="98" class="txt-attr">- displayName, phone: String</text>
-    <line x1="0" y1="113" x2="220" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ getUsername() / getRole()</text>
-    <text x="8" y="143" class="txt-meth">+ getLinkedEntityId(): String</text>
-    <text x="8" y="158" class="txt-meth">+ getDisplayName(): String</text>
-    <text x="8" y="173" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="188" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(840, 560)">
+    <rect x="0" y="0" width="240" height="160" class="class-box" />
+    <text x="120" y="20" class="head-title">User</text>
+    <text x="120" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="240" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- username, password: String</text>
+    <text x="8" y="67" class="txt-attr">- role: UserRole</text>
+    <text x="8" y="82" class="txt-attr">- linkedEntityId: String</text>
+    <text x="8" y="97" class="txt-attr">- displayName, phone: String</text>
+    <line x1="0" y1="112" x2="240" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ getUsername() / getRole()</text>
+    <text x="8" y="142" class="txt-meth">+ getLinkedEntityId(): String</text>
+    <text x="8" y="157" class="txt-meth">+ getDisplayName(): String</text>
+    <text x="8" y="172" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(1010, 560)">
-    <rect x="0" y="0" width="220" height="160" class="class-box" />
-    <text x="110" y="20" class="head-title">DriverApplication</text>
-    <text x="110" y="32" class="head-sub">extends BaseEntity</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- username, password: String</text>
-    <text x="8" y="68" class="txt-attr">- fullName, phone, plate: String</text>
-    <text x="8" y="83" class="txt-attr">- vehicleType, status, note: String</text>
-    <line x1="0" y1="98" x2="220" y2="98" class="sep" />
-    <text x="8" y="113" class="txt-meth">+ getUsername() / getStatus()</text>
-    <text x="8" y="128" class="txt-meth">+ setStatus(status: String): void</text>
-    <text x="8" y="143" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="158" class="txt-meth">+ fromCsvLine(line): void</text>
+  <g transform="translate(1110, 560)">
+    <rect x="0" y="0" width="250" height="150" class="class-box" />
+    <text x="125" y="20" class="head-title">DriverApplication</text>
+    <text x="125" y="32" class="head-sub">extends BaseEntity</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- username, password: String</text>
+    <text x="8" y="67" class="txt-attr">- fullName, phone, plate: String</text>
+    <text x="8" y="82" class="txt-attr">- vehicleType, status, note: String</text>
+    <line x1="0" y1="97" x2="250" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ getUsername() / getStatus()</text>
+    <text x="8" y="127" class="txt-meth">+ setStatus(status: String): void</text>
+    <text x="8" y="142" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="157" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(50, 750)">
-    <rect x="0" y="0" width="220" height="70" class="class-box" />
-    <text x="110" y="20" class="head-title">UserAccount</text>
-    <text x="110" y="32" class="head-sub">extends User</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="220" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ UserAccount()</text>
-    <text x="8" y="83" class="txt-meth">+ UserAccount(id, user, ...)</text>
+  <g transform="translate(840, 750)">
+    <rect x="0" y="0" width="240" height="70" class="class-box" />
+    <text x="120" y="20" class="head-title">UserAccount</text>
+    <text x="120" y="32" class="head-sub">extends User</text>
+    <line x1="0" y1="38" x2="240" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="240" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ UserAccount()</text>
+    <text x="8" y="82" class="txt-meth">+ UserAccount(id, user, pass, ...)</text>
   </g>
-  <g transform="translate(290, 750)">
-    <rect x="0" y="0" width="220" height="90" class="class-box" />
-    <text x="110" y="20" class="head-title">AuthSession</text>
-    <text x="110" y="32" class="head-sub">Session Value Object</text>
-    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- role: AccountRole</text>
-    <text x="8" y="68" class="txt-attr">- userId, displayName: String</text>
-    <line x1="0" y1="83" x2="220" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ getRole(): AccountRole</text>
-    <text x="8" y="113" class="txt-meth">+ getUserId() / getDisplayName()</text>
+  <g transform="translate(1110, 740)">
+    <rect x="0" y="0" width="250" height="90" class="class-box" />
+    <text x="125" y="20" class="head-title">AuthSession</text>
+    <text x="125" y="32" class="head-sub">Value Object</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- role: AccountRole</text>
+    <text x="8" y="67" class="txt-attr">- userId: String</text>
+    <text x="8" y="82" class="txt-attr">- displayName: String</text>
+    <line x1="0" y1="97" x2="250" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ getRole(): AccountRole</text>
+    <text x="8" y="127" class="txt-meth">+ getUserId() / getDisplayName()</text>
   </g>
-  <g transform="translate(530, 750)">
-    <rect x="0" y="0" width="240" height="170" class="class-box" />
+  <g transform="translate(60, 740)">
+    <rect x="0" y="0" width="240" height="160" class="class-box" />
     <text x="120" y="20" class="head-title">GeoUtils</text>
     <text x="120" y="32" class="head-sub">Haversine Distance &amp; ETA</text>
     <line x1="0" y1="38" x2="240" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- earthRadiusKm: double = 6371.0</text>
-    <line x1="0" y1="68" x2="240" y2="68" class="sep" />
-    <text x="8" y="83" class="txt-meth">+ haversineDistance(lat1, lon1, lat2, lon2): double</text>
-    <text x="8" y="98" class="txt-meth">+ calculateDeliveryFee(dist): double</text>
-    <text x="8" y="113" class="txt-meth">+ calculatePickupMinutes(dist): int</text>
-    <text x="8" y="128" class="txt-meth">+ calculateDeliveryMinutes(pDist, dDist): int</text>
-    <text x="8" y="143" class="txt-meth">+ formatEstimatedClockTime(epoch, mins): String</text>
+    <text x="8" y="52" class="txt-attr">- earthRadiusKm: double = 6371.0</text>
+    <line x1="0" y1="67" x2="240" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ haversineDistance(lat1, lon1, lat2, lon2): double</text>
+    <text x="8" y="97" class="txt-meth">+ calculateDeliveryFee(dist): double</text>
+    <text x="8" y="112" class="txt-meth">+ calculatePickupMinutes(dist): int</text>
+    <text x="8" y="127" class="txt-meth">+ calculateDeliveryMinutes(pDist, dDist): int</text>
+    <text x="8" y="142" class="txt-meth">+ formatEstimatedClockTime(epoch, mins): String</text>
   </g>
-  <g transform="translate(800, 750)">
-    <rect x="0" y="0" width="430" height="180" class="class-box" />
-    <text x="215" y="20" class="head-title">Enumerations</text>
-    <text x="215" y="32" class="head-sub">&lt;&lt;Enumerations&gt;&gt;</text>
-    <line x1="0" y1="38" x2="430" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">• DriverStatus: AVAILABLE, BUSY, OFFLINE</text>
-    <text x="8" y="68" class="txt-attr">• OrderStatus: PENDING, CONFIRMED, DISPATCHED, DELIVERED, CANCELLED</text>
-    <text x="8" y="83" class="txt-attr">• UserRole: CUSTOMER, DRIVER, RESTAURANT, ADMIN</text>
-    <text x="8" y="98" class="txt-attr">• AccountRole: CUSTOMER, DRIVER</text>
-    <text x="8" y="113" class="txt-attr">• LockMechanism: NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK</text>
+  <g transform="translate(330, 740)">
+    <rect x="0" y="0" width="180" height="90" class="class-box" />
+    <text x="90" y="20" class="head-title">DriverStatus</text>
+    <text x="90" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="180" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">AVAILABLE</text>
+    <text x="8" y="67" class="txt-attr">BUSY</text>
+    <text x="8" y="82" class="txt-attr">OFFLINE</text>
   </g>
-  <rect x="1280" y="90" width="1980" height="1080" class="pkg-box" />
-  <text x="1300" y="118" class="pkg-title">2. PACKAGE: repository</text>
-  <g transform="translate(1310, 140)">
-    <rect x="0" y="0" width="280" height="150" class="class-box" />
-    <text x="140" y="20" class="head-title">IRepository&lt;T&gt;</text>
-    <text x="140" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="280" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ findAll(): List&amp;lt;T&amp;gt;</text>
-    <text x="8" y="83" class="txt-meth">+ findById(id: String): T</text>
-    <text x="8" y="98" class="txt-meth">+ save(entity: T): void</text>
-    <text x="8" y="113" class="txt-meth">+ saveAll(entities: List&amp;lt;T&amp;gt;): void</text>
-    <text x="8" y="128" class="txt-meth">+ deleteById(id: String): void</text>
+  <g transform="translate(540, 740)">
+    <rect x="0" y="0" width="220" height="110" class="class-box" />
+    <text x="110" y="20" class="head-title">OrderStatus</text>
+    <text x="110" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">PENDING</text>
+    <text x="8" y="67" class="txt-attr">CONFIRMED</text>
+    <text x="8" y="82" class="txt-attr">DISPATCHED</text>
+    <text x="8" y="97" class="txt-attr">DELIVERED</text>
+    <text x="8" y="112" class="txt-attr">CANCELLED</text>
   </g>
-  <g transform="translate(1630, 140)">
+  <g transform="translate(330, 870)">
+    <rect x="0" y="0" width="180" height="100" class="class-box" />
+    <text x="90" y="20" class="head-title">UserRole</text>
+    <text x="90" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="180" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">CUSTOMER</text>
+    <text x="8" y="67" class="txt-attr">DRIVER</text>
+    <text x="8" y="82" class="txt-attr">RESTAURANT</text>
+    <text x="8" y="97" class="txt-attr">ADMIN</text>
+  </g>
+  <g transform="translate(540, 880)">
+    <rect x="0" y="0" width="180" height="80" class="class-box" />
+    <text x="90" y="20" class="head-title">AccountRole</text>
+    <text x="90" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="180" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">CUSTOMER</text>
+    <text x="8" y="67" class="txt-attr">DRIVER</text>
+  </g>
+  <g transform="translate(750, 870)">
+    <rect x="0" y="0" width="200" height="100" class="class-box" />
+    <text x="100" y="20" class="head-title">LockMechanism</text>
+    <text x="100" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="200" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">NO_LOCK</text>
+    <text x="8" y="67" class="txt-attr">SYNCHRONIZED</text>
+    <text x="8" y="82" class="txt-attr">OPTIMISTIC</text>
+    <text x="8" y="97" class="txt-attr">FILE_LOCK</text>
+  </g>
+  <g transform="translate(1520, 150)">
+    <rect x="0" y="0" width="260" height="140" class="class-box" />
+    <text x="130" y="20" class="head-title">IRepository&lt;T&gt;</text>
+    <text x="130" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="260" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findAll(): List&lt;T&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ findById(id: String): T</text>
+    <text x="8" y="97" class="txt-meth">+ save(entity: T): void</text>
+    <text x="8" y="112" class="txt-meth">+ saveAll(entities: List&lt;T&gt;): void</text>
+    <text x="8" y="127" class="txt-meth">+ deleteById(id: String): void</text>
+  </g>
+  <g transform="translate(1820, 150)">
     <rect x="0" y="0" width="420" height="210" class="class-box" />
     <text x="210" y="20" class="head-title">CsvRepository&lt;T extends BaseEntity&gt;</text>
     <text x="210" y="32" class="head-sub">&lt;&lt;abstract&gt;&gt; implements IRepository&lt;T&gt;</text>
     <line x1="0" y1="38" x2="420" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- filePath, header: String</text>
-    <text x="8" y="68" class="txt-attr">- fileMonitor: Object</text>
-    <text x="8" y="83" class="txt-attr">- keyLocks: ConcurrentHashMap</text>
-    <line x1="0" y1="98" x2="420" y2="98" class="sep" />
-    <text x="8" y="113" class="txt-meth">+ CsvRepository(filePath, header)</text>
-    <text x="8" y="128" class="txt-meth">+ createEntity()*: T</text>
-    <text x="8" y="143" class="txt-meth">+ parseLine(line: String): T</text>
-    <text x="8" y="158" class="txt-meth">+ findAll() / findById(id): synchronized</text>
-    <text x="8" y="173" class="txt-meth">+ save(entity) / deleteById(id): synchronized</text>
-    <text x="8" y="188" class="txt-meth">+ getKeyLock(key: String): Object</text>
-    <text x="8" y="203" class="txt-meth">+ executeWithFileLock(action: Runnable): void</text>
-    <text x="8" y="218" class="txt-meth">+ updateWithOptimisticLock(entity, ver): void</text>
+    <text x="8" y="52" class="txt-attr">- filePath, header: String</text>
+    <text x="8" y="67" class="txt-attr">- fileMonitor: Object</text>
+    <text x="8" y="82" class="txt-attr">- keyLocks: ConcurrentHashMap</text>
+    <line x1="0" y1="97" x2="420" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ CsvRepository(filePath, header)</text>
+    <text x="8" y="127" class="txt-meth">+ createEntity()*: T</text>
+    <text x="8" y="142" class="txt-meth">+ parseLine(line: String): T</text>
+    <text x="8" y="157" class="txt-meth">+ findAll() / findById(id): synchronized</text>
+    <text x="8" y="172" class="txt-meth">+ save(entity) / deleteById(id): synchronized</text>
+    <text x="8" y="187" class="txt-meth">+ getKeyLock(key: String): Object</text>
+    <text x="8" y="202" class="txt-meth">+ executeWithFileLock(action: Runnable): void</text>
+    <text x="8" y="217" class="txt-meth">+ updateWithOptimisticLock(entity, ver): void</text>
   </g>
-  <g transform="translate(1310, 390)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">CustomerRepository</text>
-    <text x="130" y="32" class="head-sub">extends CsvRepository&lt;Customer&gt;</text>
-    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ CustomerRepository()</text>
-    <text x="8" y="83" class="txt-meth">+ createEntity(): Customer</text>
+  <g transform="translate(1520, 390)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">CustomerRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;Customer&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ CustomerRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): Customer</text>
   </g>
-  <g transform="translate(1590, 390)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">RestaurantRepository</text>
-    <text x="130" y="32" class="head-sub">extends CsvRepository&lt;Restaurant&gt;</text>
-    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ RestaurantRepository()</text>
-    <text x="8" y="83" class="txt-meth">+ createEntity(): Restaurant</text>
+  <g transform="translate(1770, 390)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">RestaurantRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;Restaurant&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ RestaurantRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): Restaurant</text>
   </g>
-  <g transform="translate(1870, 390)">
-    <rect x="0" y="0" width="330" height="160" class="class-box" />
-    <text x="165" y="20" class="head-title">MenuItemRepository</text>
-    <text x="165" y="32" class="head-sub">extends CsvRepository&lt;MenuItem&gt;</text>
-    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="330" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ findByRestaurantId(restId): List&amp;lt;MenuItem&amp;gt;</text>
-    <text x="8" y="83" class="txt-meth">+ deductStock(itemId, qty, mech): boolean</text>
-    <text x="8" y="98" class="txt-meth">- deductStockNoLock / Sync / Optimistic / FileLock</text>
-    <text x="8" y="113" class="txt-meth">+ restoreStock(itemId, qty): boolean</text>
+  <g transform="translate(2020, 390)">
+    <rect x="0" y="0" width="310" height="150" class="class-box" />
+    <text x="155" y="20" class="head-title">MenuItemRepository</text>
+    <text x="155" y="32" class="head-sub">extends CsvRepository&lt;MenuItem&gt;</text>
+    <line x1="0" y1="38" x2="310" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="310" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findByRestaurantId(restId): List&lt;MenuItem&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ deductStock(itemId, qty, mech): boolean</text>
+    <text x="8" y="97" class="txt-meth">- deductStockNoLock / Sync / Optimistic / FileLock</text>
+    <text x="8" y="112" class="txt-meth">+ restoreStock(itemId, qty): boolean</text>
   </g>
-  <g transform="translate(2220, 390)">
-    <rect x="0" y="0" width="340" height="160" class="class-box" />
-    <text x="170" y="20" class="head-title">DriverRepository</text>
-    <text x="170" y="32" class="head-sub">extends CsvRepository&lt;Driver&gt;</text>
-    <line x1="0" y1="38" x2="340" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- geoUtils: GeoUtils</text>
-    <line x1="0" y1="68" x2="340" y2="68" class="sep" />
-    <text x="8" y="83" class="txt-meth">+ findAvailableDrivers(): List&amp;lt;Driver&amp;gt;</text>
-    <text x="8" y="98" class="txt-meth">+ findNearestAvailable(lat, lon): Driver</text>
-    <text x="8" y="113" class="txt-meth">+ markBusy(driverId, orderId, mech): boolean</text>
-    <text x="8" y="128" class="txt-meth">- markBusyNoLock / Sync / Optimistic / FileLock</text>
-    <text x="8" y="143" class="txt-meth">+ markAvailable(driverId: String): boolean</text>
+  <g transform="translate(2360, 390)">
+    <rect x="0" y="0" width="320" height="150" class="class-box" />
+    <text x="160" y="20" class="head-title">DriverRepository</text>
+    <text x="160" y="32" class="head-sub">extends CsvRepository&lt;Driver&gt;</text>
+    <line x1="0" y1="38" x2="320" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- geoUtils: GeoUtils</text>
+    <line x1="0" y1="67" x2="320" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ findAvailableDrivers(): List&lt;Driver&gt;</text>
+    <text x="8" y="97" class="txt-meth">+ findNearestAvailable(lat, lon): Driver</text>
+    <text x="8" y="112" class="txt-meth">+ markBusy(driverId, orderId, mech): boolean</text>
+    <text x="8" y="127" class="txt-meth">- markBusyNoLock / Sync / Optimistic / FileLock</text>
+    <text x="8" y="142" class="txt-meth">+ markAvailable(driverId: String): boolean</text>
   </g>
-  <g transform="translate(2580, 390)">
-    <rect x="0" y="0" width="380" height="160" class="class-box" />
-    <text x="190" y="20" class="head-title">OrderRepository</text>
-    <text x="190" y="32" class="head-sub">extends CsvRepository&lt;Order&gt;</text>
-    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="380" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ processOrderAndDispatch(custId, restId, itemId, qty, mech, ...): Order</text>
-    <text x="8" y="83" class="txt-meth">+ dispatchPendingOrder(orderId, mech, ...): boolean</text>
-    <text x="8" y="98" class="txt-meth">+ autoDispatchAllPending(mech, ...): List&amp;lt;String&amp;gt;</text>
-    <text x="8" y="113" class="txt-meth">+ assignDriver(orderId, driverId, mech): boolean</text>
-    <text x="8" y="128" class="txt-meth">- assignDriverNoLock / Sync / Optimistic / FileLock</text>
+  <g transform="translate(2710, 390)">
+    <rect x="0" y="0" width="400" height="160" class="class-box" />
+    <text x="200" y="20" class="head-title">OrderRepository</text>
+    <text x="200" y="32" class="head-sub">extends CsvRepository&lt;Order&gt;</text>
+    <line x1="0" y1="38" x2="400" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="400" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ processOrderAndDispatch(custId, restId, itemId, qty, mech, ...): Order</text>
+    <text x="8" y="82" class="txt-meth">+ dispatchPendingOrder(orderId, mech, ...): boolean</text>
+    <text x="8" y="97" class="txt-meth">+ autoDispatchAllPending(mech, ...): List&lt;String&gt;</text>
+    <text x="8" y="112" class="txt-meth">+ assignDriver(orderId, driverId, mech): boolean</text>
+    <text x="8" y="127" class="txt-meth">- assignDriverNoLock / Sync / Optimistic / FileLock</text>
   </g>
-  <g transform="translate(1310, 580)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">OrderItemRepository</text>
-    <text x="130" y="32" class="head-sub">extends CsvRepository&lt;OrderItem&gt;</text>
-    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ findByOrderId(orderId): List&amp;lt;OrderItem&amp;gt;</text>
-    <text x="8" y="83" class="txt-meth">+ createEntity(): OrderItem</text>
+  <g transform="translate(1520, 580)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">OrderItemRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;OrderItem&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findByOrderId(orderId): List&lt;OrderItem&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): OrderItem</text>
   </g>
-  <g transform="translate(1590, 580)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">DeliveryRouteRepository</text>
-    <text x="130" y="32" class="head-sub">extends CsvRepository&lt;DeliveryRoute&gt;</text>
-    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ DeliveryRouteRepository()</text>
-    <text x="8" y="83" class="txt-meth">+ createEntity(): DeliveryRoute</text>
+  <g transform="translate(1770, 580)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">DeliveryRouteRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;DeliveryRoute&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ DeliveryRouteRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): DeliveryRoute</text>
   </g>
-  <g transform="translate(1870, 580)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">SimulationRunRepository</text>
-    <text x="130" y="32" class="head-sub">extends CsvRepository&lt;SimulationRun&gt;</text>
-    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ SimulationRunRepository()</text>
-    <text x="8" y="83" class="txt-meth">+ createEntity(): SimulationRun</text>
+  <g transform="translate(2020, 580)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">SimulationRunRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;SimulationRun&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ SimulationRunRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): SimulationRun</text>
   </g>
-  <g transform="translate(2150, 580)">
-    <rect x="0" y="0" width="280" height="130" class="class-box" />
-    <text x="140" y="20" class="head-title">DriverAppRepository</text>
-    <text x="140" y="32" class="head-sub">extends CsvRepository&lt;DriverApp&gt;</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="280" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ findPendingApplications(): List&amp;lt;DriverApp&amp;gt;</text>
-    <text x="8" y="83" class="txt-meth">+ findByUsername(username): DriverApp</text>
-    <text x="8" y="98" class="txt-meth">+ findByPhone(phone): DriverApp</text>
+  <g transform="translate(2270, 580)">
+    <rect x="0" y="0" width="270" height="120" class="class-box" />
+    <text x="135" y="20" class="head-title">DriverAppRepository</text>
+    <text x="135" y="32" class="head-sub">extends CsvRepository&lt;DriverApp&gt;</text>
+    <line x1="0" y1="38" x2="270" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="270" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findPendingApplications(): List&lt;DriverApp&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ findByUsername(username): DriverApp</text>
+    <text x="8" y="97" class="txt-meth">+ findByPhone(phone): DriverApp</text>
   </g>
-  <g transform="translate(2450, 580)">
-    <rect x="0" y="0" width="260" height="130" class="class-box" />
-    <text x="130" y="20" class="head-title">UserRepository</text>
-    <text x="130" y="32" class="head-sub">extends CsvRepository&lt;User&gt;</text>
-    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ findByUsername(username): User</text>
-    <text x="8" y="83" class="txt-meth">+ findByPhone(phone): User</text>
-    <text x="8" y="98" class="txt-meth">+ createEntity(): User</text>
+  <g transform="translate(2570, 580)">
+    <rect x="0" y="0" width="240" height="110" class="class-box" />
+    <text x="120" y="20" class="head-title">UserRepository</text>
+    <text x="120" y="32" class="head-sub">extends CsvRepository&lt;User&gt;</text>
+    <line x1="0" y1="38" x2="240" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="240" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findByUsername(username): User</text>
+    <text x="8" y="82" class="txt-meth">+ findByPhone(phone): User</text>
+    <text x="8" y="97" class="txt-meth">+ createEntity(): User</text>
   </g>
-  <g transform="translate(2730, 580)">
+  <g transform="translate(2840, 580)">
     <rect x="0" y="0" width="260" height="130" class="class-box" />
     <text x="130" y="20" class="head-title">AccountRepository</text>
     <text x="130" y="32" class="head-sub">PBKDF2 Password Security</text>
     <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- filePath: Path</text>
-    <text x="8" y="68" class="txt-attr">- iterations: int = 120000</text>
-    <line x1="0" y1="83" x2="260" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ register(role, id, pass): void</text>
-    <text x="8" y="113" class="txt-meth">+ authenticate(role, id, pass): boolean</text>
-    <text x="8" y="128" class="txt-meth">+ hasAccount(role, id): boolean</text>
+    <text x="8" y="52" class="txt-attr">- filePath: Path</text>
+    <text x="8" y="67" class="txt-attr">- iterations: int = 120000</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ register(role, id, pass): void</text>
+    <text x="8" y="112" class="txt-meth">+ authenticate(role, id, pass): boolean</text>
+    <text x="8" y="127" class="txt-meth">+ hasAccount(role, id): boolean</text>
   </g>
-  <rect x="30" y="1200" width="1880" height="1230" class="pkg-box" />
-  <text x="50" y="1228" class="pkg-title">3. PACKAGE: controller</text>
-  <g transform="translate(50, 1260)">
-    <rect x="0" y="0" width="340" height="220" class="class-box" />
+  <g transform="translate(60, 1460)">
+    <rect x="0" y="0" width="340" height="230" class="class-box" />
     <text x="170" y="20" class="head-title">MainController</text>
     <text x="170" y="32" class="head-sub">Central Facade Controller</text>
     <line x1="0" y1="38" x2="340" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- authController: AuthController</text>
-    <text x="8" y="68" class="txt-attr">- customerController: CustomerController</text>
-    <text x="8" y="83" class="txt-attr">- restaurantController: RestaurantController</text>
-    <text x="8" y="98" class="txt-attr">- driverController: DriverController</text>
-    <text x="8" y="113" class="txt-attr">- orderController: OrderController</text>
-    <text x="8" y="128" class="txt-attr">- simulatorController: SimulatorController</text>
-    <text x="8" y="143" class="txt-attr">- adminController: AdminController</text>
-    <text x="8" y="158" class="txt-attr">- mainView: MainView</text>
-    <line x1="0" y1="173" x2="340" y2="173" class="sep" />
-    <text x="8" y="188" class="txt-meth">+ run(): void</text>
-    <text x="8" y="203" class="txt-meth">+ login(username, password): boolean</text>
-    <text x="8" y="218" class="txt-meth">+ logout(): void</text>
-    <text x="8" y="233" class="txt-meth">+ getCurrentUser(): User</text>
-    <text x="8" y="248" class="txt-meth">+ runBenchmark(mech, orders): SimulationRun</text>
-    <text x="8" y="263" class="txt-meth">+ autoDispatchAllPending(mech): List&amp;lt;String&amp;gt;</text>
+    <text x="8" y="52" class="txt-attr">- authController: AuthController</text>
+    <text x="8" y="67" class="txt-attr">- customerController: CustomerController</text>
+    <text x="8" y="82" class="txt-attr">- restaurantController: RestaurantController</text>
+    <text x="8" y="97" class="txt-attr">- driverController: DriverController</text>
+    <text x="8" y="112" class="txt-attr">- orderController: OrderController</text>
+    <text x="8" y="127" class="txt-attr">- simulatorController: SimulatorController</text>
+    <text x="8" y="142" class="txt-attr">- adminController: AdminController</text>
+    <text x="8" y="157" class="txt-attr">- mainView: MainView</text>
+    <line x1="0" y1="172" x2="340" y2="172" class="sep" />
+    <text x="8" y="187" class="txt-meth">+ run(): void</text>
+    <text x="8" y="202" class="txt-meth">+ login(username, password): boolean</text>
+    <text x="8" y="217" class="txt-meth">+ logout(): void</text>
+    <text x="8" y="232" class="txt-meth">+ getCurrentUser(): User</text>
+    <text x="8" y="247" class="txt-meth">+ runBenchmark(mech, orders): SimulationRun</text>
+    <text x="8" y="262" class="txt-meth">+ autoDispatchAllPending(mech): List&lt;String&gt;</text>
   </g>
-  <g transform="translate(410, 1260)">
+  <g transform="translate(430, 1460)">
     <rect x="0" y="0" width="200" height="70" class="class-box" />
     <text x="100" y="20" class="head-title">AppController</text>
     <text x="100" y="32" class="head-sub">extends MainController</text>
     <line x1="0" y1="38" x2="200" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="200" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ AppController()</text>
+    <line x1="0" y1="52" x2="200" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ AppController()</text>
   </g>
-  <g transform="translate(410, 1350)">
+  <g transform="translate(430, 1550)">
     <rect x="0" y="0" width="360" height="190" class="class-box" />
     <text x="180" y="20" class="head-title">AuthController</text>
     <text x="180" y="32" class="head-sub">Authentication &amp; Registration</text>
     <line x1="0" y1="38" x2="360" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- userRepo: UserRepository</text>
-    <text x="8" y="68" class="txt-attr">- customerRepo: CustomerRepository</text>
-    <text x="8" y="83" class="txt-attr">- driverRepo: DriverRepository</text>
-    <text x="8" y="98" class="txt-attr">- driverAppRepo: DriverAppRepository</text>
-    <text x="8" y="113" class="txt-attr">- currentUser: User</text>
-    <line x1="0" y1="128" x2="360" y2="128" class="sep" />
-    <text x="8" y="143" class="txt-meth">+ login(username, password): boolean</text>
-    <text x="8" y="158" class="txt-meth">+ logout(): void</text>
-    <text x="8" y="173" class="txt-meth">+ registerCustomer(...): User</text>
-    <text x="8" y="188" class="txt-meth">+ submitDriverApplication(...): DriverApp</text>
-    <text x="8" y="203" class="txt-meth">+ registerDriver(...): User</text>
-    <text x="8" y="218" class="txt-meth">+ getAllUsers(): List&amp;lt;User&amp;gt;</text>
+    <text x="8" y="52" class="txt-attr">- userRepo: UserRepository</text>
+    <text x="8" y="67" class="txt-attr">- customerRepo: CustomerRepository</text>
+    <text x="8" y="82" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="97" class="txt-attr">- driverAppRepo: DriverAppRepository</text>
+    <text x="8" y="112" class="txt-attr">- currentUser: User</text>
+    <line x1="0" y1="127" x2="360" y2="127" class="sep" />
+    <text x="8" y="142" class="txt-meth">+ login(username, password): boolean</text>
+    <text x="8" y="157" class="txt-meth">+ logout(): void</text>
+    <text x="8" y="172" class="txt-meth">+ registerCustomer(...): User</text>
+    <text x="8" y="187" class="txt-meth">+ submitDriverApplication(...): DriverApp</text>
+    <text x="8" y="202" class="txt-meth">+ registerDriver(...): User</text>
+    <text x="8" y="217" class="txt-meth">+ getAllUsers(): List&lt;User&gt;</text>
   </g>
-  <g transform="translate(790, 1260)">
-    <rect x="0" y="0" width="320" height="170" class="class-box" />
-    <text x="160" y="20" class="head-title">CustomerController</text>
-    <text x="160" y="32" class="head-sub">Customer Flow</text>
-    <line x1="0" y1="38" x2="320" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- customerRepository: CustomerRepository</text>
-    <text x="8" y="68" class="txt-attr">- orderRepository: OrderRepository</text>
-    <line x1="0" y1="83" x2="320" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ registerCustomer(name, phone, ward, lat, lon): Customer</text>
-    <text x="8" y="113" class="txt-meth">+ getAllCustomers(): List&amp;lt;Customer&amp;gt;</text>
-    <text x="8" y="128" class="txt-meth">+ getCustomerById(id): Customer</text>
-    <text x="8" y="143" class="txt-meth">+ updateCustomer(id, ...): boolean</text>
-    <text x="8" y="158" class="txt-meth">+ getOrderHistory(customerId): List&amp;lt;Order&amp;gt;</text>
+  <g transform="translate(820, 1460)">
+    <rect x="0" y="0" width="330" height="170" class="class-box" />
+    <text x="165" y="20" class="head-title">CustomerController</text>
+    <text x="165" y="32" class="head-sub">Customer Flow</text>
+    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- customerRepository: CustomerRepository</text>
+    <text x="8" y="67" class="txt-attr">- orderRepository: OrderRepository</text>
+    <line x1="0" y1="82" x2="330" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ registerCustomer(name, phone, ward, lat, lon): Customer</text>
+    <text x="8" y="112" class="txt-meth">+ getAllCustomers(): List&lt;Customer&gt;</text>
+    <text x="8" y="127" class="txt-meth">+ getCustomerById(id): Customer</text>
+    <text x="8" y="142" class="txt-meth">+ updateCustomer(id, ...): boolean</text>
+    <text x="8" y="157" class="txt-meth">+ getOrderHistory(customerId): List&lt;Order&gt;</text>
   </g>
-  <g transform="translate(1130, 1260)">
-    <rect x="0" y="0" width="310" height="170" class="class-box" />
-    <text x="155" y="20" class="head-title">DriverController</text>
-    <text x="155" y="32" class="head-sub">Driver Flow</text>
-    <line x1="0" y1="38" x2="310" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- driverRepository: DriverRepository</text>
-    <line x1="0" y1="68" x2="310" y2="68" class="sep" />
-    <text x="8" y="83" class="txt-meth">+ getAllDrivers(): List&amp;lt;Driver&amp;gt;</text>
-    <text x="8" y="98" class="txt-meth">+ getAvailableDrivers(): List&amp;lt;Driver&amp;gt;</text>
-    <text x="8" y="113" class="txt-meth">+ getNearestAvailableDriver(lat, lon): Driver</text>
-    <text x="8" y="128" class="txt-meth">+ updateDriverStatus(id, status): boolean</text>
-    <text x="8" y="143" class="txt-meth">+ updateDriverInfo(id, ...): boolean</text>
+  <g transform="translate(1180, 1460)">
+    <rect x="0" y="0" width="330" height="170" class="class-box" />
+    <text x="165" y="20" class="head-title">DriverController</text>
+    <text x="165" y="32" class="head-sub">Driver Flow</text>
+    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- driverRepository: DriverRepository</text>
+    <line x1="0" y1="67" x2="330" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ getAllDrivers(): List&lt;Driver&gt;</text>
+    <text x="8" y="97" class="txt-meth">+ getAvailableDrivers(): List&lt;Driver&gt;</text>
+    <text x="8" y="112" class="txt-meth">+ getNearestAvailableDriver(lat, lon): Driver</text>
+    <text x="8" y="127" class="txt-meth">+ updateDriverStatus(id, status): boolean</text>
+    <text x="8" y="142" class="txt-meth">+ updateDriverInfo(id, ...): boolean</text>
   </g>
-  <g transform="translate(1460, 1260)">
-    <rect x="0" y="0" width="310" height="170" class="class-box" />
-    <text x="155" y="20" class="head-title">RestaurantController</text>
-    <text x="155" y="32" class="head-sub">Restaurant Flow</text>
-    <line x1="0" y1="38" x2="310" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- restaurantRepository: RestaurantRepository</text>
-    <text x="8" y="68" class="txt-attr">- menuItemRepository: MenuItemRepository</text>
-    <line x1="0" y1="83" x2="310" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ getAllRestaurants(): List&amp;lt;Restaurant&amp;gt;</text>
-    <text x="8" y="113" class="txt-meth">+ getMenuByRestaurant(restId): List&amp;lt;MenuItem&amp;gt;</text>
-    <text x="8" y="128" class="txt-meth">+ updateStock(menuItemId, newStock): boolean</text>
-    <text x="8" y="143" class="txt-meth">+ createMenuItem(restId, name, price, stock): MenuItem</text>
+  <g transform="translate(1540, 1460)">
+    <rect x="0" y="0" width="330" height="170" class="class-box" />
+    <text x="165" y="20" class="head-title">RestaurantController</text>
+    <text x="165" y="32" class="head-sub">Restaurant Flow</text>
+    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- restaurantRepository: RestaurantRepository</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepository: MenuItemRepository</text>
+    <line x1="0" y1="82" x2="330" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getAllRestaurants(): List&lt;Restaurant&gt;</text>
+    <text x="8" y="112" class="txt-meth">+ getMenuByRestaurant(restId): List&lt;MenuItem&gt;</text>
+    <text x="8" y="127" class="txt-meth">+ updateStock(menuItemId, newStock): boolean</text>
+    <text x="8" y="142" class="txt-meth">+ createMenuItem(restId, name, price, stock): MenuItem</text>
   </g>
-  <g transform="translate(50, 1570)">
+  <g transform="translate(60, 1770)">
     <rect x="0" y="0" width="480" height="250" class="class-box" />
     <text x="240" y="20" class="head-title">OrderController</text>
     <text x="240" y="32" class="head-sub">Order Lifecycle &amp; Auto-Dispatch</text>
     <line x1="0" y1="38" x2="480" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- orderRepository: OrderRepository</text>
-    <text x="8" y="68" class="txt-attr">- menuItemRepository: MenuItemRepository</text>
-    <text x="8" y="83" class="txt-attr">- driverRepository: DriverRepository</text>
-    <text x="8" y="98" class="txt-attr">- restaurantRepository: RestaurantRepository</text>
-    <text x="8" y="113" class="txt-attr">- orderItemRepository: OrderItemRepository</text>
-    <text x="8" y="128" class="txt-attr">- customerRepository: CustomerRepository</text>
-    <text x="8" y="143" class="txt-attr">- routeRepository: DeliveryRouteRepository</text>
-    <line x1="0" y1="158" x2="480" y2="158" class="sep" />
-    <text x="8" y="173" class="txt-meth">+ placeOrderAndDispatch(custId, restId, itemId, qty, mech): Order</text>
-    <text x="8" y="188" class="txt-meth">+ createCustomerOrder(custId, restId, itemId, qty, mech): Order</text>
-    <text x="8" y="203" class="txt-meth">+ confirmOrderByRestaurant(orderId, restId, mech): Order</text>
-    <text x="8" y="218" class="txt-meth">+ rejectOrderByRestaurant(orderId, restId, reason): boolean</text>
-    <text x="8" y="233" class="txt-meth">+ cancelOrderByCustomer(orderId, custId): boolean</text>
-    <text x="8" y="248" class="txt-meth">+ markOrderPickedUp(orderId, driverId): boolean</text>
-    <text x="8" y="263" class="txt-meth">+ markOrderDelivered(orderId, driverId, mech): boolean</text>
-    <text x="8" y="278" class="txt-meth">+ autoDispatchPendingOrders(mech): int</text>
+    <text x="8" y="52" class="txt-attr">- orderRepository: OrderRepository</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepository: MenuItemRepository</text>
+    <text x="8" y="82" class="txt-attr">- driverRepository: DriverRepository</text>
+    <text x="8" y="97" class="txt-attr">- restaurantRepository: RestaurantRepository</text>
+    <text x="8" y="112" class="txt-attr">- orderItemRepository: OrderItemRepository</text>
+    <text x="8" y="127" class="txt-attr">- customerRepository: CustomerRepository</text>
+    <text x="8" y="142" class="txt-attr">- routeRepository: DeliveryRouteRepository</text>
+    <line x1="0" y1="157" x2="480" y2="157" class="sep" />
+    <text x="8" y="172" class="txt-meth">+ placeOrderAndDispatch(custId, restId, itemId, qty, mech): Order</text>
+    <text x="8" y="187" class="txt-meth">+ createCustomerOrder(custId, restId, itemId, qty, mech): Order</text>
+    <text x="8" y="202" class="txt-meth">+ confirmOrderByRestaurant(orderId, restId, mech): Order</text>
+    <text x="8" y="217" class="txt-meth">+ rejectOrderByRestaurant(orderId, restId, reason): boolean</text>
+    <text x="8" y="232" class="txt-meth">+ cancelOrderByCustomer(orderId, custId): boolean</text>
+    <text x="8" y="247" class="txt-meth">+ markOrderPickedUp(orderId, driverId): boolean</text>
+    <text x="8" y="262" class="txt-meth">+ markOrderDelivered(orderId, driverId, mech): boolean</text>
+    <text x="8" y="277" class="txt-meth">+ autoDispatchPendingOrders(mech): int</text>
   </g>
-  <g transform="translate(550, 1570)">
+  <g transform="translate(570, 1770)">
     <rect x="0" y="0" width="410" height="200" class="class-box" />
     <text x="205" y="20" class="head-title">AdminController</text>
     <text x="205" y="32" class="head-sub">System Administration</text>
     <line x1="0" y1="38" x2="410" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- restaurantRepo: RestaurantRepository</text>
-    <text x="8" y="68" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
-    <text x="8" y="83" class="txt-attr">- customerRepo: CustomerRepository</text>
-    <text x="8" y="98" class="txt-attr">- driverRepo: DriverRepository</text>
-    <text x="8" y="113" class="txt-attr">- driverAppRepo: DriverAppRepository</text>
-    <text x="8" y="128" class="txt-attr">- userRepo: UserRepository</text>
-    <line x1="0" y1="143" x2="410" y2="143" class="sep" />
-    <text x="8" y="158" class="txt-meth">+ getPendingDriverApplications(): List&amp;lt;DriverApp&amp;gt;</text>
-    <text x="8" y="173" class="txt-meth">+ approveDriverApplication(id): User</text>
-    <text x="8" y="188" class="txt-meth">+ rejectDriverApplication(id, reason): boolean</text>
-    <text x="8" y="203" class="txt-meth">+ addRestaurant(name, cat, addr, lat, lon): Restaurant</text>
-    <text x="8" y="218" class="txt-meth">+ restockMenuItem(itemId, qty): void</text>
-    <text x="8" y="233" class="txt-meth">+ triggerAutoDispatchAllPending(mech): int</text>
+    <text x="8" y="52" class="txt-attr">- restaurantRepo: RestaurantRepository</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
+    <text x="8" y="82" class="txt-attr">- customerRepo: CustomerRepository</text>
+    <text x="8" y="97" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="112" class="txt-attr">- driverAppRepo: DriverAppRepository</text>
+    <text x="8" y="127" class="txt-attr">- userRepo: UserRepository</text>
+    <line x1="0" y1="142" x2="410" y2="142" class="sep" />
+    <text x="8" y="157" class="txt-meth">+ getPendingDriverApplications(): List&lt;DriverApp&gt;</text>
+    <text x="8" y="172" class="txt-meth">+ approveDriverApplication(id): User</text>
+    <text x="8" y="187" class="txt-meth">+ rejectDriverApplication(id, reason): boolean</text>
+    <text x="8" y="202" class="txt-meth">+ addRestaurant(name, cat, addr, lat, lon): Restaurant</text>
+    <text x="8" y="217" class="txt-meth">+ restockMenuItem(itemId, qty): void</text>
+    <text x="8" y="232" class="txt-meth">+ triggerAutoDispatchAllPending(mech): int</text>
   </g>
-  <g transform="translate(980, 1570)">
+  <g transform="translate(1010, 1770)">
     <rect x="0" y="0" width="380" height="180" class="class-box" />
     <text x="190" y="20" class="head-title">SimulatorController</text>
     <text x="190" y="32" class="head-sub">Concurrency Benchmark Simulator</text>
     <line x1="0" y1="38" x2="380" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- orderRepo: OrderRepository</text>
-    <text x="8" y="68" class="txt-attr">- driverRepo: DriverRepository</text>
-    <text x="8" y="83" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
-    <text x="8" y="98" class="txt-attr">- simRunRepo: SimulationRunRepository</text>
-    <line x1="0" y1="113" x2="380" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ runSimulation(numOrders, mechanism): SimulationRun</text>
-    <text x="8" y="143" class="txt-meth">+ runExperiment(mechanism, numOrders, baseline): SimulationRun</text>
-    <text x="8" y="158" class="txt-meth">+ detectDoubleAssignments(): int</text>
-    <text x="8" y="173" class="txt-meth">+ detectOversellItems(): int</text>
-    <text x="8" y="188" class="txt-meth">+ detectDriverOverload(): int</text>
+    <text x="8" y="52" class="txt-attr">- orderRepo: OrderRepository</text>
+    <text x="8" y="67" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="82" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
+    <text x="8" y="97" class="txt-attr">- simRunRepo: SimulationRunRepository</text>
+    <line x1="0" y1="112" x2="380" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ runSimulation(numOrders, mechanism): SimulationRun</text>
+    <text x="8" y="142" class="txt-meth">+ runExperiment(mechanism, numOrders, baseline): SimulationRun</text>
+    <text x="8" y="157" class="txt-meth">+ detectDoubleAssignments(): int</text>
+    <text x="8" y="172" class="txt-meth">+ detectOversellItems(): int</text>
+    <text x="8" y="187" class="txt-meth">+ detectDriverOverload(): int</text>
   </g>
-  <g transform="translate(1380, 1570)">
-    <rect x="0" y="0" width="380" height="130" class="class-box" />
+  <g transform="translate(1420, 1770)">
+    <rect x="0" y="0" width="380" height="110" class="class-box" />
     <text x="190" y="20" class="head-title">CustomerThread</text>
     <text x="190" y="32" class="head-sub">extends java.lang.Thread</text>
     <line x1="0" y1="38" x2="380" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- startLatch, finishLatch: CountDownLatch</text>
-    <text x="8" y="68" class="txt-attr">- orderController: OrderController</text>
-    <text x="8" y="83" class="txt-attr">- customer: Customer, restaurant: Restaurant, menuItem: MenuItem</text>
-    <line x1="0" y1="98" x2="380" y2="98" class="sep" />
-    <text x="8" y="113" class="txt-meth">+ run(): void (Executes concurrent order)</text>
+    <text x="8" y="52" class="txt-attr">- startLatch, finishLatch: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- orderController: OrderController</text>
+    <text x="8" y="82" class="txt-attr">- customer: Customer, restaurant: Restaurant, menuItem: MenuItem</text>
+    <line x1="0" y1="97" x2="380" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ run(): void (Executes concurrent order placement)</text>
   </g>
-  <g transform="translate(1380, 1720)">
-    <rect x="0" y="0" width="380" height="130" class="class-box" />
+  <g transform="translate(1420, 1900)">
+    <rect x="0" y="0" width="380" height="110" class="class-box" />
     <text x="190" y="20" class="head-title">DispatchThread</text>
     <text x="190" y="32" class="head-sub">extends java.lang.Thread</text>
     <line x1="0" y1="38" x2="380" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- startLatch, finishLatch: CountDownLatch</text>
-    <text x="8" y="68" class="txt-attr">- orderController: OrderController</text>
-    <text x="8" y="83" class="txt-attr">- orderId: String</text>
-    <text x="8" y="98" class="txt-attr">- mechanism: LockMechanism</text>
-    <line x1="0" y1="113" x2="380" y2="113" class="sep" />
-    <text x="8" y="128" class="txt-meth">+ run(): void (Executes concurrent dispatch)</text>
+    <text x="8" y="52" class="txt-attr">- startLatch, finishLatch: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- orderController: OrderController</text>
+    <text x="8" y="82" class="txt-attr">- orderId: String</text>
+    <text x="8" y="97" class="txt-attr">- mechanism: LockMechanism</text>
+    <line x1="0" y1="112" x2="380" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ run(): void (Executes concurrent dispatching)</text>
   </g>
-  <rect x="1930" y="1200" width="680" height="1230" class="pkg-box" />
-  <text x="1950" y="1228" class="pkg-title">4. PACKAGE: exception</text>
-  <g transform="translate(2050, 1260)">
-    <rect x="0" y="0" width="280" height="80" class="class-box" />
-    <text x="140" y="20" class="head-title">FoodDeliveryException</text>
-    <text x="140" y="32" class="head-sub">extends java.lang.Exception</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="280" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ FoodDeliveryException(msg)</text>
-    <text x="8" y="83" class="txt-meth">+ FoodDeliveryException(msg, cause)</text>
-  </g>
-  <g transform="translate(2050, 1370)">
-    <rect x="0" y="0" width="280" height="80" class="class-box" />
-    <text x="140" y="20" class="head-title">ConcurrencyException</text>
-    <text x="140" y="32" class="head-sub">extends FoodDeliveryException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="280" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ ConcurrencyException(msg)</text>
-    <text x="8" y="83" class="txt-meth">+ ConcurrencyException(msg, cause)</text>
-  </g>
-  <g transform="translate(1950, 1480)">
-    <rect x="0" y="0" width="280" height="120" class="class-box" />
-    <text x="140" y="20" class="head-title">DoubleAssignmentException</text>
-    <text x="140" y="32" class="head-sub">extends ConcurrencyException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- orderId: String</text>
-    <text x="8" y="68" class="txt-attr">- existingDriverId, attemptedDriverId: String</text>
-    <line x1="0" y1="83" x2="280" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ getOrderId(): String</text>
-    <text x="8" y="113" class="txt-meth">+ getExistingDriverId(): String</text>
-    <text x="8" y="128" class="txt-meth">+ getAttemptedDriverId(): String</text>
-  </g>
-  <g transform="translate(2260, 1480)">
-    <rect x="0" y="0" width="280" height="120" class="class-box" />
-    <text x="140" y="20" class="head-title">DriverOverloadException</text>
-    <text x="140" y="32" class="head-sub">extends ConcurrencyException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- driverId: String</text>
-    <text x="8" y="68" class="txt-attr">- currentOrderId: String</text>
-    <line x1="0" y1="83" x2="280" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ getDriverId(): String</text>
-    <text x="8" y="113" class="txt-meth">+ getCurrentOrderId(): String</text>
-  </g>
-  <g transform="translate(1950, 1620)">
-    <rect x="0" y="0" width="280" height="120" class="class-box" />
-    <text x="140" y="20" class="head-title">OptimisticLockException</text>
-    <text x="140" y="32" class="head-sub">extends ConcurrencyException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- entityId: String</text>
-    <text x="8" y="68" class="txt-attr">- expectedVersion, currentVersion: long</text>
-    <line x1="0" y1="83" x2="280" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ getEntityId(): String</text>
-    <text x="8" y="113" class="txt-meth">+ getExpectedVersion(): long</text>
-    <text x="8" y="128" class="txt-meth">+ getCurrentVersion(): long</text>
-  </g>
-  <g transform="translate(2260, 1620)">
-    <rect x="0" y="0" width="280" height="120" class="class-box" />
-    <text x="140" y="20" class="head-title">OversellException</text>
-    <text x="140" y="32" class="head-sub">extends ConcurrencyException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- menuItemId: String</text>
-    <text x="8" y="68" class="txt-attr">- requestedQty, availableQty: int</text>
-    <line x1="0" y1="83" x2="280" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ getMenuItemId(): String</text>
-    <text x="8" y="113" class="txt-meth">+ getRequestedQty(): int</text>
-    <text x="8" y="128" class="txt-meth">+ getAvailableQty(): int</text>
-  </g>
-  <g transform="translate(1950, 1760)">
-    <rect x="0" y="0" width="280" height="100" class="class-box" />
-    <text x="140" y="20" class="head-title">EntityNotFoundException</text>
-    <text x="140" y="32" class="head-sub">extends FoodDeliveryException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- entityName, entityId: String</text>
-    <line x1="0" y1="68" x2="280" y2="68" class="sep" />
-    <text x="8" y="83" class="txt-meth">+ getEntityName(): String</text>
-    <text x="8" y="98" class="txt-meth">+ getEntityId(): String</text>
-  </g>
-  <g transform="translate(2260, 1760)">
-    <rect x="0" y="0" width="280" height="100" class="class-box" />
-    <text x="140" y="20" class="head-title">InvalidInputException</text>
-    <text x="140" y="32" class="head-sub">extends FoodDeliveryException</text>
-    <line x1="0" y1="38" x2="280" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- fieldName: String</text>
-    <line x1="0" y1="68" x2="280" y2="68" class="sep" />
-    <text x="8" y="83" class="txt-meth">+ getFieldName(): String</text>
-  </g>
-  <rect x="2630" y="1200" width="630" height="1230" class="pkg-box" />
-  <text x="2650" y="1228" class="pkg-title">5. PACKAGE: view</text>
-  <g transform="translate(2750, 1260)">
-    <rect x="0" y="0" width="240" height="80" class="class-box" />
-    <text x="120" y="20" class="head-title">IView</text>
-    <text x="120" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
-    <line x1="0" y1="38" x2="240" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="240" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ display(): void</text>
-  </g>
-  <g transform="translate(2660, 1370)">
-    <rect x="0" y="0" width="420" height="240" class="class-box" />
-    <text x="210" y="20" class="head-title">MainView</text>
-    <text x="210" y="32" class="head-sub">implements IView</text>
-    <line x1="0" y1="38" x2="420" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- mainController: MainController</text>
-    <text x="8" y="68" class="txt-attr">- customerController, restaurantController, driverController, orderController, simulatorController, authController, adminController</text>
-    <text x="8" y="83" class="txt-attr">- mapView: MapView, simulatorView: SimulatorView, orderView: OrderView, reportView: ReportView</text>
-    <line x1="0" y1="98" x2="420" y2="98" class="sep" />
-    <text x="8" y="113" class="txt-meth">+ display(): void</text>
-    <text x="8" y="128" class="txt-meth">- displayLoginScreen(): boolean</text>
-    <text x="8" y="143" class="txt-meth">- handleCustomerMenu() / handleDriverMenu()</text>
-    <text x="8" y="158" class="txt-meth">- handleRestaurantMenu() / handleAdminMenu()</text>
-    <text x="8" y="173" class="txt-meth">- checkAndDisplayCustomerNotifications(custId): void</text>
-    <text x="8" y="188" class="txt-meth">- handleCustomerPlaceOrderFlow(custId): void</text>
-  </g>
-  <g transform="translate(2660, 1640)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">MapView</text>
-    <text x="130" y="32" class="head-sub">ASCII Map Visualizer</text>
+  <g transform="translate(2260, 1460)">
+    <rect x="0" y="0" width="260" height="80" class="class-box" />
+    <text x="130" y="20" class="head-title">FoodDeliveryException</text>
+    <text x="130" y="32" class="head-sub">extends java.lang.Exception</text>
     <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <text x="8" y="53" class="txt-attr">- rows, cols: int</text>
-    <text x="8" y="68" class="txt-attr">- minLat, maxLat, minLon, maxLon: double</text>
-    <line x1="0" y1="83" x2="260" y2="83" class="sep" />
-    <text x="8" y="98" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers): void</text>
+    <line x1="0" y1="52" x2="260" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ FoodDeliveryException(msg)</text>
+    <text x="8" y="82" class="txt-meth">+ FoodDeliveryException(msg, cause)</text>
   </g>
-  <g transform="translate(2940, 1640)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">OrderView</text>
-    <text x="130" y="32" class="head-sub">Orders &amp; Menus</text>
+  <g transform="translate(2260, 1570)">
+    <rect x="0" y="0" width="260" height="80" class="class-box" />
+    <text x="130" y="20" class="head-title">ConcurrencyException</text>
+    <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
     <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ displayMenu(restaurant, items): void</text>
-    <text x="8" y="83" class="txt-meth">+ displayRecentOrders(orders, count): void</text>
+    <line x1="0" y1="52" x2="260" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ ConcurrencyException(msg)</text>
+    <text x="8" y="82" class="txt-meth">+ ConcurrencyException(msg, cause)</text>
   </g>
-  <g transform="translate(2660, 1780)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">ReportView</text>
-    <text x="130" y="32" class="head-sub">Benchmark Summary</text>
+  <g transform="translate(2050, 1680)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">DoubleAssignmentException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
     <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ printResearchConclusion(runs): void</text>
-    <text x="8" y="83" class="txt-meth">+ renderSimulationSummary(run): void</text>
+    <text x="8" y="52" class="txt-attr">- orderId: String</text>
+    <text x="8" y="67" class="txt-attr">- existingDriverId, attemptedDriverId: String</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getOrderId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getExistingDriverId(): String</text>
+    <text x="8" y="127" class="txt-meth">+ getAttemptedDriverId(): String</text>
   </g>
-  <g transform="translate(2940, 1780)">
-    <rect x="0" y="0" width="260" height="110" class="class-box" />
-    <text x="130" y="20" class="head-title">SimulatorView</text>
-    <text x="130" y="32" class="head-sub">Benchmark Table</text>
+  <g transform="translate(2340, 1680)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">DriverOverloadException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
     <line x1="0" y1="38" x2="260" y2="38" class="sep" />
-    <line x1="0" y1="53" x2="260" y2="53" class="sep" />
-    <text x="8" y="68" class="txt-meth">+ printBenchmarkTable(runs): void</text>
-    <text x="8" y="83" class="txt-meth">+ renderComparisonTable(runs): void</text>
+    <text x="8" y="52" class="txt-attr">- driverId: String</text>
+    <text x="8" y="67" class="txt-attr">- currentOrderId: String</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getDriverId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getCurrentOrderId(): String</text>
   </g>
-  <path d="M 160 340 L 520 290" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 400 340 L 560 290" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 640 340 L 620 290" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 880 340 L 680 290" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1050 340 L 740 290" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1630 200 L 1590 200" class="edge-realize" marker-end="url(#uml-inherit)" />
-  <path d="M 1440 390 L 1700 350" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1720 390 L 1780 350" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2030 390 L 1860 350" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2390 390 L 1940 350" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2770 390 L 2020 350" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 390 1370 L 410 1370" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 390 1300 L 790 1300" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 390 1330 L 1130 1330" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 390 1350 L 1460 1350" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 290 1480 L 290 1570" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 340 1480 L 550 1570" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 360 1480 L 980 1570" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 530 1650 L 550 1650" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 950 1260 L 1440 500" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="1195" y="875" class="edge-label">uses CustomerRepo</text>
-  <path d="M 1280 1260 L 2390 550" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="1835" y="900" class="edge-label">uses DriverRepo</text>
-  <path d="M 1610 1260 L 1720 500" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="1665" y="875" class="edge-label">uses RestaurantRepo</text>
-  <path d="M 2220 470 L 770 770" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="1495" y="615" class="edge-label">calls Haversine (GeoUtils)</text>
-  <path d="M 2870 1370 L 2870 1340" class="edge-realize" marker-end="url(#uml-inherit)" />
-  <path d="M 2660 1480 L 390 1420" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="1525" y="1445" class="edge-label">invokes MainController</text>
-  <path d="M 2190 1370 L 2190 1340" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2090 1480 L 2150 1450" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2400 1480 L 2230 1450" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2090 1620 L 2170 1450" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2400 1620 L 2210 1450" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <g transform="translate(2050, 1820)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">OptimisticLockException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- entityId: String</text>
+    <text x="8" y="67" class="txt-attr">- expectedVersion, currentVersion: long</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getEntityId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getExpectedVersion(): long</text>
+    <text x="8" y="127" class="txt-meth">+ getCurrentVersion(): long</text>
+  </g>
+  <g transform="translate(2340, 1820)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">OversellException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- menuItemId: String</text>
+    <text x="8" y="67" class="txt-attr">- requestedQty, availableQty: int</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getMenuItemId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getRequestedQty(): int</text>
+    <text x="8" y="127" class="txt-meth">+ getAvailableQty(): int</text>
+  </g>
+  <g transform="translate(2050, 1960)">
+    <rect x="0" y="0" width="260" height="100" class="class-box" />
+    <text x="130" y="20" class="head-title">EntityNotFoundException</text>
+    <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- entityName, entityId: String</text>
+    <line x1="0" y1="67" x2="260" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ getEntityName(): String</text>
+    <text x="8" y="97" class="txt-meth">+ getEntityId(): String</text>
+  </g>
+  <g transform="translate(2340, 1960)">
+    <rect x="0" y="0" width="260" height="100" class="class-box" />
+    <text x="130" y="20" class="head-title">InvalidInputException</text>
+    <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- fieldName: String</text>
+    <line x1="0" y1="67" x2="260" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ getFieldName(): String</text>
+  </g>
+  <g transform="translate(2800, 1460)">
+    <rect x="0" y="0" width="220" height="80" class="class-box" />
+    <text x="110" y="20" class="head-title">Main</text>
+    <text x="110" y="32" class="head-sub">Application Entrypoint</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ main(args: String[]): void (static)</text>
+  </g>
+  <g transform="translate(3050, 1460)">
+    <rect x="0" y="0" width="200" height="80" class="class-box" />
+    <text x="100" y="20" class="head-title">IView</text>
+    <text x="100" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
+    <line x1="0" y1="38" x2="200" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="200" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ display(): void</text>
+  </g>
+  <g transform="translate(2800, 1560)">
+    <rect x="0" y="0" width="450" height="240" class="class-box" />
+    <text x="225" y="20" class="head-title">MainView</text>
+    <text x="225" y="32" class="head-sub">implements IView</text>
+    <line x1="0" y1="38" x2="450" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- mainController: MainController</text>
+    <text x="8" y="67" class="txt-attr">- customerController, restaurantController, driverController, orderController, simulatorController, authController, adminController</text>
+    <text x="8" y="82" class="txt-attr">- mapView: MapView, simulatorView: SimulatorView, orderView: OrderView, reportView: ReportView</text>
+    <line x1="0" y1="97" x2="450" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ display(): void</text>
+    <text x="8" y="127" class="txt-meth">- displayLoginScreen(): boolean</text>
+    <text x="8" y="142" class="txt-meth">- handleCustomerMenu() / handleDriverMenu()</text>
+    <text x="8" y="157" class="txt-meth">- handleRestaurantMenu() / handleAdminMenu()</text>
+    <text x="8" y="172" class="txt-meth">- checkAndDisplayCustomerNotifications(custId): void</text>
+    <text x="8" y="187" class="txt-meth">- handleCustomerPlaceOrderFlow(custId): void</text>
+  </g>
+  <g transform="translate(2800, 1830)">
+    <rect x="0" y="0" width="250" height="100" class="class-box" />
+    <text x="125" y="20" class="head-title">MapView</text>
+    <text x="125" y="32" class="head-sub">ASCII Grid Map Visualizer</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- rows, cols: int</text>
+    <text x="8" y="67" class="txt-attr">- minLat, maxLat, minLon, maxLon: double</text>
+    <line x1="0" y1="82" x2="250" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers): void</text>
+  </g>
+  <g transform="translate(3080, 1830)">
+    <rect x="0" y="0" width="250" height="100" class="class-box" />
+    <text x="125" y="20" class="head-title">OrderView</text>
+    <text x="125" y="32" class="head-sub">Orders &amp; Menus Output</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="250" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ displayMenu(restaurant, items): void</text>
+    <text x="8" y="82" class="txt-meth">+ displayRecentOrders(orders, count): void</text>
+  </g>
+  <g transform="translate(2800, 1950)">
+    <rect x="0" y="0" width="250" height="100" class="class-box" />
+    <text x="125" y="20" class="head-title">ReportView</text>
+    <text x="125" y="32" class="head-sub">Benchmark Summary</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="250" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ printResearchConclusion(runs): void</text>
+    <text x="8" y="82" class="txt-meth">+ renderSimulationSummary(run): void</text>
+  </g>
+  <g transform="translate(3080, 1950)">
+    <rect x="0" y="0" width="250" height="100" class="class-box" />
+    <text x="125" y="20" class="head-title">SimulatorView</text>
+    <text x="125" y="32" class="head-sub">Benchmark Comparison Table</text>
+    <line x1="0" y1="38" x2="250" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="250" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ printBenchmarkTable(runs): void</text>
+    <text x="8" y="82" class="txt-meth">+ renderComparisonTable(runs): void</text>
+  </g>
+  <path d="M 175 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 435 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 695 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 960 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1235 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 175 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 435 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 695 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 960 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1235 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 960 750 L 960 720" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1235 350 L 175 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="705" y="426" class="edge-label">places</text>
+  <path d="M 1235 350 L 435 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="835" y="426" class="edge-label">from</text>
+  <path d="M 1235 350 L 960 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="1097" y="426" class="edge-label">delivered by</text>
+  <path d="M 1235 520 L 650 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="942" y="626" class="edge-label">status</text>
+  <path d="M 175 560 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="705" y="536" class="edge-label">belongs to</text>
+  <path d="M 175 560 L 695 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="435" y="531" class="edge-label">item</text>
+  <path d="M 695 350 L 435 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="565" y="426" class="edge-label">offers</text>
+  <path d="M 960 510 L 420 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="690" y="621" class="edge-label">status</text>
+  <path d="M 960 720 L 420 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="690" y="791" class="edge-label">role</text>
+  <path d="M 1235 830 L 630 880" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="932" y="851" class="edge-label">role</text>
+  <path d="M 695 710 L 850 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="772" y="786" class="edge-label">mechanism</text>
+  <path d="M 435 560 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="835" y="536" class="edge-label">routes</text>
+  <path d="M 2030 150 L 1650 290" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2520 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2910 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2130 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2405 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2690 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2520 540 L 180 740" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1350" y="636" class="edge-label">calculates distance</text>
+  <path d="M 2970 710 L 630 880" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1800" y="791" class="edge-label">authenticates</text>
+  <path d="M 530 1530 L 230 1460" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 230 1690 L 610 1550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1460 L 985 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1460 L 1345 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1460 L 1705 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 775 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 1200 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 3025 1560" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 985 1460 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 985 1460 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1345 1460 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1705 1460 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1705 1460 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1970 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 2130 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 1880 L 300 1770" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="955" y="1821" class="edge-label">calls</text>
+  <path d="M 1610 1900 L 300 2020" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="955" y="1956" class="edge-label">calls</text>
+  <path d="M 2390 1570 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2910 1540 L 230 1460" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1570" y="1496" class="edge-label">instantiates</text>
+  <path d="M 3025 1560 L 3150 1540" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 3025 1800 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
 </svg>
