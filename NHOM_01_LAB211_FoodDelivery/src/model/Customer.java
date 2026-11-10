@@ -106,14 +106,20 @@ public class Customer extends BaseEntity {
 
     @Override
     public void fromCsvLine(String line) {
+        if (line == null || line.trim().isEmpty()) return;
         String[] p = line.split(",", -1);
         if (p.length >= 6) {
             this.setId(p[0].trim());
             this.fullName = p[1].trim();
             this.phone = p[2].trim();
-            this.ward = p[3].trim();
-            this.latitude = Double.parseDouble(p[4].trim());
-            this.longitude = Double.parseDouble(p[5].trim());
+            this.longitude = Double.parseDouble(p[p.length - 1].trim());
+            this.latitude = Double.parseDouble(p[p.length - 2].trim());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 3; i < p.length - 2; i++) {
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(p[i].trim());
+            }
+            this.ward = sb.toString();
         }
     }
 }

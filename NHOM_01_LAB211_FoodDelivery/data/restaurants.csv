@@ -1,211 +1,201 @@
 id,name,category,address,latitude,longitude,rating,open
-R001,Cơm Tấm Sài Gòn Xưa,Cơm tấm,143 Trần Hưng Đạo - P. Trần Phú,13.766540,109.226812,4.8,true
-R002,Bún Chả Cá Ngọc Liên,Bún & Phở,288 Hoàng Văn Thụ - P. Ngô Mây,13.770945,109.218573,4.4,true
-R003,Bánh Xèo Tôm Nhảy Gia Vỹ,Đặc sản Bình Định,306 Hoàng Văn Thụ - P. Đống Đa,13.789071,109.227128,4.2,true
-R004,Phở Khô Gia Lai Hồng,Bún & Phở,323 Lê Hồng Phong - P. Hải Cảng,13.781934,109.236807,4.7,true
-R005,Gà Chỉ Bảy Sơn,Cơm & Gà,190 Xuân Diệu - P. Quang Trung,13.763686,109.201570,4.2,true
-R006,Trà Sữa Phúc Long Quy Nhơn,Đồ uống,277 Đô Đốc Bảo - P. Quang Trung,13.762951,109.202060,4.6,true
-R007,Highlands Coffee Xuân Diệu,Cà phê & Trà,10 Xuân Diệu - P. Trần Hưng Đạo,13.772212,109.230944,4.9,true
-R008,Cơm Gà Quê Hương,Cơm & Gà,288 Tăng Bạt Hổ - P. Đống Đa,13.787604,109.228276,4.4,true
-R009,Bánh Hỏi Cháo Lòng Hồng Thanh,Đặc sản Bình Định,102 Nguyễn Thái Học - P. Đống Đa,13.788781,109.227302,5.0,true
-R010,Nem Nướng Chợ Huyện,Ăn vặt,255 Nguyễn Thái Học - P. Nguyễn Văn Cừ,13.754827,109.217645,4.6,true
-R011,Hải Sản Cây Dừa,Hải sản,42 Ngô Mây - P. Lý Thường Kiệt,13.766694,109.222866,4.2,true
-R012,Lẩu Bò Nhà Gỗ,Lẩu & Nướng,257 An Dương Vương - P. Trần Hưng Đạo,13.776303,109.230859,4.8,true
-R013,Bánh Mì Lagu Nguyễn Huệ,Bánh mì,67 Phan Bội Châu - P. Ghềnh Ráng,13.751056,109.211393,4.3,true
-R014,Chè Nhớ Ngô Mây,Tráng miệng,13 Tăng Bạt Hổ - P. Lý Thường Kiệt,13.771607,109.218060,4.2,true
-R015,Pizza 4P's Đại Lộ,Đồ Âu,181 Đô Đốc Bảo - P. Trần Hưng Đạo,13.774451,109.232280,4.9,true
-R016,Mì Cay Sasin Nguyễn Tất Thành,Món Hàn,145 Vũ Bảo - P. Trần Hưng Đạo,13.774349,109.231275,4.1,true
-R017,Cơm Tấm Sài Gòn Xưa - CN 17,Cơm tấm,199 Diên Hồng - P. Nhơn Bình,13.804249,109.212531,4.6,true
-R018,Bún Chả Cá Ngọc Liên - CN 18,Bún & Phở,350 Lê Hồng Phong - P. Hải Cảng,13.775950,109.239929,4.1,true
-R019,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 19,Đặc sản Bình Định,224 Ngô Mây - P. Nhơn Bình,13.802762,109.208629,4.4,true
-R020,Phở Khô Gia Lai Hồng - CN 20,Bún & Phở,112 Nguyễn Tất Thành - P. Nguyễn Văn Cừ,13.757735,109.214778,4.6,true
-R021,Gà Chỉ Bảy Sơn - CN 21,Cơm & Gà,76 Diên Hồng - P. Lý Thường Kiệt,13.765178,109.223323,4.9,true
-R022,Trà Sữa Phúc Long Quy Nhơn - CN 22,Đồ uống,240 Hoàng Văn Thụ - P. Quang Trung,13.765863,109.202362,4.7,true
-R023,Highlands Coffee Xuân Diệu - CN 23,Cà phê & Trà,112 Trần Hưng Đạo - P. Lê Hồng Phong,13.773127,109.222124,4.7,true
-R024,Cơm Gà Quê Hương - CN 24,Cơm & Gà,147 Phan Bội Châu - P. Quang Trung,13.763919,109.205660,4.5,true
-R025,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 25,Đặc sản Bình Định,341 Diên Hồng - P. Nhơn Bình,13.798630,109.210020,5.0,true
-R026,Nem Nướng Chợ Huyện - CN 26,Ăn vặt,121 Lý Thường Kiệt - P. Lý Thường Kiệt,13.767726,109.221665,4.5,true
-R027,Hải Sản Cây Dừa - CN 27,Hải sản,87 Vũ Bảo - P. Trần Hưng Đạo,13.777041,109.233690,4.8,true
-R028,Lẩu Bò Nhà Gỗ - CN 28,Lẩu & Nướng,339 Phan Bội Châu - P. Thị Nại,13.779997,109.231451,4.3,true
-R029,Bánh Mì Lagu Nguyễn Huệ - CN 29,Bánh mì,86 Lý Thường Kiệt - P. Ghềnh Ráng,13.750260,109.212806,4.5,true
-R030,Chè Nhớ Ngô Mây - CN 30,Tráng miệng,78 Lê Hồng Phong - P. Lê Hồng Phong,13.776797,109.223554,4.1,true
-R031,Pizza 4P's Đại Lộ - CN 31,Đồ Âu,45 Bạch Đằng - P. Thị Nại,13.781217,109.231659,4.3,true
-R032,Mì Cay Sasin Nguyễn Tất Thành - CN 32,Món Hàn,255 Phan Bội Châu - P. Ghềnh Ráng,13.745395,109.211775,4.6,true
-R033,Cơm Tấm Sài Gòn Xưa - CN 33,Cơm tấm,102 Đô Đốc Bảo - P. Lê Hồng Phong,13.775814,109.222485,4.3,true
-R034,Bún Chả Cá Ngọc Liên - CN 34,Bún & Phở,317 Phan Bội Châu - P. Trần Phú,13.770933,109.229753,4.5,true
-R035,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 35,Đặc sản Bình Định,44 Bạch Đằng - P. Lê Hồng Phong,13.774477,109.219916,4.2,true
-R036,Phở Khô Gia Lai Hồng - CN 36,Bún & Phở,277 Trần Hưng Đạo - P. Lê Hồng Phong,13.772719,109.223049,4.3,true
-R037,Gà Chỉ Bảy Sơn - CN 37,Cơm & Gà,14 Ngô Mây - P. Ghềnh Ráng,13.745573,109.209712,4.2,true
-R038,Trà Sữa Phúc Long Quy Nhơn - CN 38,Đồ uống,2 Xuân Diệu - P. Lý Thường Kiệt,13.767201,109.223743,4.8,true
-R039,Highlands Coffee Xuân Diệu - CN 39,Cà phê & Trà,268 Đô Đốc Bảo - P. Trần Hưng Đạo,13.772893,109.233937,4.9,true
-R040,Cơm Gà Quê Hương - CN 40,Cơm & Gà,5 Vũ Bảo - P. Lê Hồng Phong,13.774769,109.219726,4.7,true
-R041,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 41,Đặc sản Bình Định,104 Nguyễn Huệ - P. Đống Đa,13.785471,109.224387,5.0,true
-R042,Nem Nướng Chợ Huyện - CN 42,Ăn vặt,83 Đô Đốc Bảo - P. Nhơn Bình,13.799845,109.210097,4.3,true
-R043,Hải Sản Cây Dừa - CN 43,Hải sản,319 Xuân Diệu - P. Lê Hồng Phong,13.778861,109.217663,4.4,true
-R044,Lẩu Bò Nhà Gỗ - CN 44,Lẩu & Nướng,183 Trần Hưng Đạo - P. Trần Hưng Đạo,13.772786,109.230766,4.9,true
-R045,Bánh Mì Lagu Nguyễn Huệ - CN 45,Bánh mì,30 Vũ Bảo - P. Ngô Mây,13.768940,109.215174,4.2,true
-R046,Chè Nhớ Ngô Mây - CN 46,Tráng miệng,4 Tăng Bạt Hổ - P. Ngô Mây,13.773016,109.216457,4.9,true
-R047,Pizza 4P's Đại Lộ - CN 47,Đồ Âu,87 Nguyễn Tất Thành - P. Hải Cảng,13.775946,109.241188,4.2,true
-R048,Mì Cay Sasin Nguyễn Tất Thành - CN 48,Món Hàn,161 Xuân Diệu - P. Hải Cảng,13.777378,109.237564,4.7,true
-R049,Cơm Tấm Sài Gòn Xưa - CN 49,Cơm tấm,160 Trần Hưng Đạo - P. Ghềnh Ráng,13.748714,109.211604,4.5,true
-R050,Bún Chả Cá Ngọc Liên - CN 50,Bún & Phở,149 Hoàng Văn Thụ - P. Trần Hưng Đạo,13.770973,109.227882,4.1,true
-R051,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 51,Đặc sản Bình Định,12 Phan Bội Châu - P. Thị Nại,13.784050,109.231284,4.7,true
-R052,Phở Khô Gia Lai Hồng - CN 52,Bún & Phở,184 Lê Hồng Phong - P. Lê Hồng Phong,13.777343,109.220529,4.2,true
-R053,Gà Chỉ Bảy Sơn - CN 53,Cơm & Gà,182 Lê Hồng Phong - P. Lê Hồng Phong,13.773897,109.217985,4.9,true
-R054,Trà Sữa Phúc Long Quy Nhơn - CN 54,Đồ uống,257 Hoàng Văn Thụ - P. Nguyễn Văn Cừ,13.760709,109.218027,4.8,true
-R055,Highlands Coffee Xuân Diệu - CN 55,Cà phê & Trà,214 Ngô Mây - P. Trần Hưng Đạo,13.770506,109.231330,4.4,true
-R056,Cơm Gà Quê Hương - CN 56,Cơm & Gà,249 Nguyễn Thái Học - P. Ghềnh Ráng,13.747221,109.210860,4.6,true
-R057,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 57,Đặc sản Bình Định,196 Lý Thường Kiệt - P. Trần Phú,13.771607,109.228683,4.8,true
-R058,Nem Nướng Chợ Huyện - CN 58,Ăn vặt,14 Hoàng Văn Thụ - P. Nhơn Bình,13.802079,109.209851,4.2,true
-R059,Hải Sản Cây Dừa - CN 59,Hải sản,15 Vũ Bảo - P. Đống Đa,13.785477,109.222249,4.2,true
-R060,Lẩu Bò Nhà Gỗ - CN 60,Lẩu & Nướng,156 Ngô Mây - P. Đống Đa,13.787361,109.224141,4.8,true
-R061,Bánh Mì Lagu Nguyễn Huệ - CN 61,Bánh mì,271 Diên Hồng - P. Nguyễn Văn Cừ,13.758860,109.220013,4.5,true
-R062,Chè Nhớ Ngô Mây - CN 62,Tráng miệng,257 Lý Thường Kiệt - P. Hải Cảng,13.779597,109.241320,4.4,true
-R063,Pizza 4P's Đại Lộ - CN 63,Đồ Âu,331 Tăng Bạt Hổ - P. Ngô Mây,13.772541,109.213222,4.8,true
-R064,Mì Cay Sasin Nguyễn Tất Thành - CN 64,Món Hàn,327 Nguyễn Thái Học - P. Hải Cảng,13.775734,109.241233,4.2,true
-R065,Cơm Tấm Sài Gòn Xưa - CN 65,Cơm tấm,56 Nguyễn Thái Học - P. Ngô Mây,13.771564,109.216635,4.1,true
-R066,Bún Chả Cá Ngọc Liên - CN 66,Bún & Phở,89 Nguyễn Tất Thành - P. Nguyễn Văn Cừ,13.757530,109.219701,4.4,true
-R067,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 67,Đặc sản Bình Định,273 Trần Hưng Đạo - P. Đống Đa,13.787799,109.224887,5.0,true
-R068,Phở Khô Gia Lai Hồng - CN 68,Bún & Phở,238 Bạch Đằng - P. Nhơn Bình,13.800979,109.212880,4.8,true
-R069,Gà Chỉ Bảy Sơn - CN 69,Cơm & Gà,184 Nguyễn Thái Học - P. Đống Đa,13.785881,109.222456,4.2,true
-R070,Trà Sữa Phúc Long Quy Nhơn - CN 70,Đồ uống,121 Xuân Diệu - P. Quang Trung,13.760641,109.203091,4.4,true
-R071,Highlands Coffee Xuân Diệu - CN 71,Cà phê & Trà,186 Bạch Đằng - P. Nhơn Bình,13.800653,109.209424,4.8,true
-R072,Cơm Gà Quê Hương - CN 72,Cơm & Gà,307 Nguyễn Tất Thành - P. Thị Nại,13.780140,109.233209,4.6,true
-R073,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 73,Đặc sản Bình Định,194 Lê Hồng Phong - P. Hải Cảng,13.781669,109.240106,4.2,true
-R074,Nem Nướng Chợ Huyện - CN 74,Ăn vặt,345 An Dương Vương - P. Trần Phú,13.768578,109.231325,4.2,true
-R075,Hải Sản Cây Dừa - CN 75,Hải sản,63 Lý Thường Kiệt - P. Quang Trung,13.766189,109.207649,4.5,true
-R076,Lẩu Bò Nhà Gỗ - CN 76,Lẩu & Nướng,22 Nguyễn Tất Thành - P. Ngô Mây,13.770388,109.216711,5.0,true
-R077,Bánh Mì Lagu Nguyễn Huệ - CN 77,Bánh mì,19 Lê Hồng Phong - P. Ngô Mây,13.772167,109.217619,4.8,true
-R078,Chè Nhớ Ngô Mây - CN 78,Tráng miệng,125 An Dương Vương - P. Trần Hưng Đạo,13.771792,109.229308,4.9,true
-R079,Pizza 4P's Đại Lộ - CN 79,Đồ Âu,223 Lý Thường Kiệt - P. Lý Thường Kiệt,13.765847,109.219366,4.4,true
-R080,Mì Cay Sasin Nguyễn Tất Thành - CN 80,Món Hàn,97 Xuân Diệu - P. Nhơn Bình,13.799739,109.207273,4.3,true
-R081,Cơm Tấm Sài Gòn Xưa - CN 81,Cơm tấm,285 Hoàng Văn Thụ - P. Lý Thường Kiệt,13.766007,109.223540,4.2,true
-R082,Bún Chả Cá Ngọc Liên - CN 82,Bún & Phở,196 Tăng Bạt Hổ - P. Lý Thường Kiệt,13.769646,109.223283,4.7,true
-R083,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 83,Đặc sản Bình Định,65 Lê Hồng Phong - P. Nguyễn Văn Cừ,13.758675,109.216422,4.4,true
-R084,Phở Khô Gia Lai Hồng - CN 84,Bún & Phở,152 Ngô Mây - P. Thị Nại,13.778698,109.235114,4.8,true
-R085,Gà Chỉ Bảy Sơn - CN 85,Cơm & Gà,273 Lý Thường Kiệt - P. Lê Hồng Phong,13.774005,109.219702,4.2,true
-R086,Trà Sữa Phúc Long Quy Nhơn - CN 86,Đồ uống,194 An Dương Vương - P. Hải Cảng,13.778329,109.237824,4.4,true
-R087,Highlands Coffee Xuân Diệu - CN 87,Cà phê & Trà,199 Phan Bội Châu - P. Ngô Mây,13.772737,109.218106,4.2,true
-R088,Cơm Gà Quê Hương - CN 88,Cơm & Gà,14 Nguyễn Huệ - P. Thị Nại,13.781655,109.230872,4.3,true
-R089,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 89,Đặc sản Bình Định,45 Lý Thường Kiệt - P. Trần Phú,13.767230,109.231228,4.3,true
-R090,Nem Nướng Chợ Huyện - CN 90,Ăn vặt,319 Phan Bội Châu - P. Ngô Mây,13.774582,109.214888,5.0,true
-R091,Hải Sản Cây Dừa - CN 91,Hải sản,318 Bạch Đằng - P. Nguyễn Văn Cừ,13.760490,109.217884,4.9,true
-R092,Lẩu Bò Nhà Gỗ - CN 92,Lẩu & Nướng,248 Bạch Đằng - P. Lê Hồng Phong,13.773010,109.220816,4.5,true
-R093,Bánh Mì Lagu Nguyễn Huệ - CN 93,Bánh mì,128 Bạch Đằng - P. Trần Hưng Đạo,13.772269,109.231034,4.9,true
-R094,Chè Nhớ Ngô Mây - CN 94,Tráng miệng,2 Xuân Diệu - P. Trần Hưng Đạo,13.773989,109.234244,4.3,true
-R095,Pizza 4P's Đại Lộ - CN 95,Đồ Âu,168 Xuân Diệu - P. Trần Phú,13.770145,109.231349,4.6,true
-R096,Mì Cay Sasin Nguyễn Tất Thành - CN 96,Món Hàn,284 Tăng Bạt Hổ - P. Trần Hưng Đạo,13.773433,109.231663,4.2,true
-R097,Cơm Tấm Sài Gòn Xưa - CN 97,Cơm tấm,4 Trần Hưng Đạo - P. Nhơn Bình,13.804894,109.207581,4.6,true
-R098,Bún Chả Cá Ngọc Liên - CN 98,Bún & Phở,10 Vũ Bảo - P. Ngô Mây,13.771564,109.214453,4.1,true
-R099,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 99,Đặc sản Bình Định,73 Lý Thường Kiệt - P. Nguyễn Văn Cừ,13.760370,109.215084,4.6,true
-R100,Phở Khô Gia Lai Hồng - CN 100,Bún & Phở,77 An Dương Vương - P. Hải Cảng,13.776309,109.238446,4.6,true
-R101,Gà Chỉ Bảy Sơn - CN 101,Cơm & Gà,33 Ngô Mây - P. Hải Cảng,13.780864,109.236297,4.8,true
-R102,Trà Sữa Phúc Long Quy Nhơn - CN 102,Đồ uống,60 Tăng Bạt Hổ - P. Quang Trung,13.762831,109.206729,4.9,true
-R103,Highlands Coffee Xuân Diệu - CN 103,Cà phê & Trà,249 Tăng Bạt Hổ - P. Lý Thường Kiệt,13.768010,109.222636,4.6,true
-R104,Cơm Gà Quê Hương - CN 104,Cơm & Gà,231 Ngô Mây - P. Nhơn Bình,13.800313,109.207107,4.4,true
-R105,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 105,Đặc sản Bình Định,47 Nguyễn Thái Học - P. Đống Đa,13.789214,109.226738,4.4,true
-R106,Nem Nướng Chợ Huyện - CN 106,Ăn vặt,210 Phan Bội Châu - P. Quang Trung,13.767206,109.206522,4.2,true
-R107,Hải Sản Cây Dừa - CN 107,Hải sản,229 Nguyễn Thái Học - P. Ghềnh Ráng,13.746657,109.208721,4.7,true
-R108,Lẩu Bò Nhà Gỗ - CN 108,Lẩu & Nướng,261 Ngô Mây - P. Trần Phú,13.770310,109.228481,4.8,true
-R109,Bánh Mì Lagu Nguyễn Huệ - CN 109,Bánh mì,163 Bạch Đằng - P. Lê Hồng Phong,13.773367,109.219914,4.5,true
-R110,Chè Nhớ Ngô Mây - CN 110,Tráng miệng,143 Tăng Bạt Hổ - P. Lê Hồng Phong,13.775017,109.221330,4.7,true
-R111,Pizza 4P's Đại Lộ - CN 111,Đồ Âu,42 Diên Hồng - P. Hải Cảng,13.778193,109.238522,4.8,true
-R112,Mì Cay Sasin Nguyễn Tất Thành - CN 112,Món Hàn,54 Nguyễn Thái Học - P. Đống Đa,13.787141,109.228128,4.9,true
-R113,Cơm Tấm Sài Gòn Xưa - CN 113,Cơm tấm,196 Hoàng Văn Thụ - P. Ghềnh Ráng,13.744714,109.214899,4.3,true
-R114,Bún Chả Cá Ngọc Liên - CN 114,Bún & Phở,145 Nguyễn Thái Học - P. Trần Phú,13.769624,109.226830,5.0,true
-R115,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 115,Đặc sản Bình Định,344 Lê Hồng Phong - P. Ngô Mây,13.774411,109.219327,4.5,true
-R116,Phở Khô Gia Lai Hồng - CN 116,Bún & Phở,147 Đô Đốc Bảo - P. Lý Thường Kiệt,13.771982,109.219946,4.7,true
-R117,Gà Chỉ Bảy Sơn - CN 117,Cơm & Gà,10 Lý Thường Kiệt - P. Nhơn Bình,13.802955,109.210058,4.8,true
-R118,Trà Sữa Phúc Long Quy Nhơn - CN 118,Đồ uống,173 Xuân Diệu - P. Đống Đa,13.784581,109.222451,4.3,true
-R119,Highlands Coffee Xuân Diệu - CN 119,Cà phê & Trà,319 Lý Thường Kiệt - P. Ghềnh Ráng,13.749078,109.214712,4.6,true
-R120,Cơm Gà Quê Hương - CN 120,Cơm & Gà,289 Nguyễn Tất Thành - P. Trần Phú,13.768783,109.229917,4.5,true
-R121,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 121,Đặc sản Bình Định,96 Nguyễn Tất Thành - P. Trần Hưng Đạo,13.770902,109.229328,4.1,true
-R122,Nem Nướng Chợ Huyện - CN 122,Ăn vặt,333 Diên Hồng - P. Thị Nại,13.780819,109.233983,4.2,true
-R123,Hải Sản Cây Dừa - CN 123,Hải sản,166 Lý Thường Kiệt - P. Lý Thường Kiệt,13.770761,109.220817,4.8,true
-R124,Lẩu Bò Nhà Gỗ - CN 124,Lẩu & Nướng,240 Diên Hồng - P. Ngô Mây,13.768620,109.216642,4.8,true
-R125,Bánh Mì Lagu Nguyễn Huệ - CN 125,Bánh mì,315 Xuân Diệu - P. Hải Cảng,13.779905,109.240036,4.3,true
-R126,Chè Nhớ Ngô Mây - CN 126,Tráng miệng,204 Ngô Mây - P. Ghềnh Ráng,13.747075,109.210722,4.7,true
-R127,Pizza 4P's Đại Lộ - CN 127,Đồ Âu,153 An Dương Vương - P. Ghềnh Ráng,13.747782,109.208534,4.1,true
-R128,Mì Cay Sasin Nguyễn Tất Thành - CN 128,Món Hàn,322 Nguyễn Huệ - P. Đống Đa,13.787988,109.224051,4.3,true
-R129,Cơm Tấm Sài Gòn Xưa - CN 129,Cơm tấm,244 Tăng Bạt Hổ - P. Trần Hưng Đạo,13.777265,109.227580,4.5,true
-R130,Bún Chả Cá Ngọc Liên - CN 130,Bún & Phở,28 Nguyễn Tất Thành - P. Lý Thường Kiệt,13.766926,109.224018,4.5,true
-R131,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 131,Đặc sản Bình Định,116 Diên Hồng - P. Trần Phú,13.768395,109.228224,4.9,true
-R132,Phở Khô Gia Lai Hồng - CN 132,Bún & Phở,315 An Dương Vương - P. Lý Thường Kiệt,13.769768,109.223373,4.9,true
-R133,Gà Chỉ Bảy Sơn - CN 133,Cơm & Gà,307 An Dương Vương - P. Lý Thường Kiệt,13.771617,109.224494,4.5,true
-R134,Trà Sữa Phúc Long Quy Nhơn - CN 134,Đồ uống,70 Trần Hưng Đạo - P. Trần Hưng Đạo,13.771446,109.232159,4.9,true
-R135,Highlands Coffee Xuân Diệu - CN 135,Cà phê & Trà,127 Lê Hồng Phong - P. Trần Phú,13.770764,109.231303,4.3,true
-R136,Cơm Gà Quê Hương - CN 136,Cơm & Gà,243 Nguyễn Thái Học - P. Thị Nại,13.778085,109.232833,4.7,true
-R137,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 137,Đặc sản Bình Định,168 Trần Hưng Đạo - P. Trần Phú,13.765742,109.226639,4.9,true
-R138,Nem Nướng Chợ Huyện - CN 138,Ăn vặt,207 Phan Bội Châu - P. Trần Hưng Đạo,13.777184,109.229708,5.0,true
-R139,Hải Sản Cây Dừa - CN 139,Hải sản,49 Hoàng Văn Thụ - P. Nguyễn Văn Cừ,13.755149,109.219656,4.6,true
-R140,Lẩu Bò Nhà Gỗ - CN 140,Lẩu & Nướng,196 Đô Đốc Bảo - P. Thị Nại,13.778097,109.236847,4.1,true
-R141,Bánh Mì Lagu Nguyễn Huệ - CN 141,Bánh mì,2 Nguyễn Thái Học - P. Quang Trung,13.765627,109.207827,4.5,true
-R142,Chè Nhớ Ngô Mây - CN 142,Tráng miệng,208 Vũ Bảo - P. Nhơn Bình,13.802572,109.211155,4.6,true
-R143,Pizza 4P's Đại Lộ - CN 143,Đồ Âu,338 An Dương Vương - P. Trần Hưng Đạo,13.773240,109.232723,4.2,true
-R144,Mì Cay Sasin Nguyễn Tất Thành - CN 144,Món Hàn,247 Nguyễn Thái Học - P. Ngô Mây,13.770815,109.216953,5.0,true
-R145,Cơm Tấm Sài Gòn Xưa - CN 145,Cơm tấm,204 Diên Hồng - P. Hải Cảng,13.780088,109.240247,4.6,true
-R146,Bún Chả Cá Ngọc Liên - CN 146,Bún & Phở,9 Lý Thường Kiệt - P. Lý Thường Kiệt,13.771989,109.218122,4.3,true
-R147,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 147,Đặc sản Bình Định,87 Trần Hưng Đạo - P. Lý Thường Kiệt,13.769727,109.219067,4.3,true
-R148,Phở Khô Gia Lai Hồng - CN 148,Bún & Phở,37 Bạch Đằng - P. Thị Nại,13.782503,109.236678,4.9,true
-R149,Gà Chỉ Bảy Sơn - CN 149,Cơm & Gà,33 Tăng Bạt Hổ - P. Hải Cảng,13.779031,109.237992,4.8,true
-R150,Trà Sữa Phúc Long Quy Nhơn - CN 150,Đồ uống,237 Nguyễn Huệ - P. Đống Đa,13.787062,109.226677,4.9,true
-R151,Highlands Coffee Xuân Diệu - CN 151,Cà phê & Trà,171 Bạch Đằng - P. Lý Thường Kiệt,13.766807,109.219091,4.9,true
-R152,Cơm Gà Quê Hương - CN 152,Cơm & Gà,111 Đô Đốc Bảo - P. Nhơn Bình,13.804215,109.209335,4.4,true
-R153,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 153,Đặc sản Bình Định,338 Đô Đốc Bảo - P. Ghềnh Ráng,13.748738,109.208692,4.4,true
-R154,Nem Nướng Chợ Huyện - CN 154,Ăn vặt,79 Đô Đốc Bảo - P. Trần Hưng Đạo,13.774533,109.228537,4.1,true
-R155,Hải Sản Cây Dừa - CN 155,Hải sản,329 Nguyễn Huệ - P. Trần Hưng Đạo,13.774617,109.228789,4.3,true
-R156,Lẩu Bò Nhà Gỗ - CN 156,Lẩu & Nướng,25 Lê Hồng Phong - P. Thị Nại,13.781280,109.233245,4.7,true
-R157,Bánh Mì Lagu Nguyễn Huệ - CN 157,Bánh mì,68 Phan Bội Châu - P. Lý Thường Kiệt,13.769723,109.222371,4.7,true
-R158,Chè Nhớ Ngô Mây - CN 158,Tráng miệng,245 Phan Bội Châu - P. Lý Thường Kiệt,13.770930,109.220365,4.4,true
-R159,Pizza 4P's Đại Lộ - CN 159,Đồ Âu,177 Diên Hồng - P. Hải Cảng,13.778454,109.239978,4.3,true
-R160,Mì Cay Sasin Nguyễn Tất Thành - CN 160,Món Hàn,231 Tăng Bạt Hổ - P. Nhơn Bình,13.799504,109.211232,4.9,true
-R161,Cơm Tấm Sài Gòn Xưa - CN 161,Cơm tấm,65 Trần Hưng Đạo - P. Thị Nại,13.783168,109.234415,4.3,true
-R162,Bún Chả Cá Ngọc Liên - CN 162,Bún & Phở,327 Vũ Bảo - P. Lý Thường Kiệt,13.765817,109.222613,4.1,true
-R163,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 163,Đặc sản Bình Định,324 Xuân Diệu - P. Trần Hưng Đạo,13.774595,109.230617,4.7,true
-R164,Phở Khô Gia Lai Hồng - CN 164,Bún & Phở,1 Bạch Đằng - P. Trần Hưng Đạo,13.772548,109.228547,4.7,true
-R165,Gà Chỉ Bảy Sơn - CN 165,Cơm & Gà,114 Nguyễn Huệ - P. Ghềnh Ráng,13.747399,109.214409,4.9,true
-R166,Trà Sữa Phúc Long Quy Nhơn - CN 166,Đồ uống,176 An Dương Vương - P. Lý Thường Kiệt,13.768941,109.223153,4.2,true
-R167,Highlands Coffee Xuân Diệu - CN 167,Cà phê & Trà,222 Lý Thường Kiệt - P. Thị Nại,13.780908,109.232451,4.4,true
-R168,Cơm Gà Quê Hương - CN 168,Cơm & Gà,317 Đô Đốc Bảo - P. Trần Phú,13.772494,109.225018,4.6,true
-R169,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 169,Đặc sản Bình Định,329 Nguyễn Huệ - P. Đống Đa,13.783132,109.226794,4.3,true
-R170,Nem Nướng Chợ Huyện - CN 170,Ăn vặt,31 Hoàng Văn Thụ - P. Nguyễn Văn Cừ,13.759235,109.214745,4.7,true
-R171,Hải Sản Cây Dừa - CN 171,Hải sản,284 Vũ Bảo - P. Ghềnh Ráng,13.746429,109.210649,4.3,true
-R172,Lẩu Bò Nhà Gỗ - CN 172,Lẩu & Nướng,267 Diên Hồng - P. Lê Hồng Phong,13.777044,109.222008,4.2,true
-R173,Bánh Mì Lagu Nguyễn Huệ - CN 173,Bánh mì,19 Lê Hồng Phong - P. Trần Hưng Đạo,13.773800,109.234206,4.3,true
-R174,Chè Nhớ Ngô Mây - CN 174,Tráng miệng,28 An Dương Vương - P. Thị Nại,13.783206,109.236187,4.5,true
-R175,Pizza 4P's Đại Lộ - CN 175,Đồ Âu,108 Lý Thường Kiệt - P. Nguyễn Văn Cừ,13.759904,109.218014,4.1,true
-R176,Mì Cay Sasin Nguyễn Tất Thành - CN 176,Món Hàn,5 Nguyễn Tất Thành - P. Nhơn Bình,13.799678,109.211957,4.9,true
-R177,Cơm Tấm Sài Gòn Xưa - CN 177,Cơm tấm,87 Nguyễn Tất Thành - P. Trần Phú,13.768728,109.226353,4.5,true
-R178,Bún Chả Cá Ngọc Liên - CN 178,Bún & Phở,289 Đô Đốc Bảo - P. Trần Hưng Đạo,13.774069,109.228849,4.8,true
-R179,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 179,Đặc sản Bình Định,288 Lê Hồng Phong - P. Ngô Mây,13.773770,109.212542,4.2,true
-R180,Phở Khô Gia Lai Hồng - CN 180,Bún & Phở,185 Nguyễn Tất Thành - P. Nguyễn Văn Cừ,13.758285,109.219906,4.3,true
-R181,Gà Chỉ Bảy Sơn - CN 181,Cơm & Gà,130 Nguyễn Thái Học - P. Lê Hồng Phong,13.777882,109.224209,4.2,true
-R182,Trà Sữa Phúc Long Quy Nhơn - CN 182,Đồ uống,232 Trần Hưng Đạo - P. Trần Hưng Đạo,13.777488,109.228242,4.4,true
-R183,Highlands Coffee Xuân Diệu - CN 183,Cà phê & Trà,63 Vũ Bảo - P. Nhơn Bình,13.804649,109.212762,4.1,true
-R184,Cơm Gà Quê Hương - CN 184,Cơm & Gà,201 Nguyễn Tất Thành - P. Ngô Mây,13.770905,109.213629,4.8,true
-R185,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 185,Đặc sản Bình Định,118 Lê Hồng Phong - P. Trần Hưng Đạo,13.775468,109.229959,4.8,true
-R186,Nem Nướng Chợ Huyện - CN 186,Ăn vặt,14 Phan Bội Châu - P. Thị Nại,13.783047,109.232290,4.6,true
-R187,Hải Sản Cây Dừa - CN 187,Hải sản,67 Xuân Diệu - P. Trần Hưng Đạo,13.773651,109.231700,4.1,true
-R188,Lẩu Bò Nhà Gỗ - CN 188,Lẩu & Nướng,350 Ngô Mây - P. Lý Thường Kiệt,13.765827,109.222176,4.3,true
-R189,Bánh Mì Lagu Nguyễn Huệ - CN 189,Bánh mì,323 Nguyễn Thái Học - P. Trần Phú,13.770530,109.226662,4.3,true
-R190,Chè Nhớ Ngô Mây - CN 190,Tráng miệng,33 Lý Thường Kiệt - P. Lý Thường Kiệt,13.766602,109.219893,4.6,true
-R191,Pizza 4P's Đại Lộ - CN 191,Đồ Âu,328 Đô Đốc Bảo - P. Hải Cảng,13.776787,109.235751,4.6,true
-R192,Mì Cay Sasin Nguyễn Tất Thành - CN 192,Món Hàn,350 Nguyễn Thái Học - P. Nhơn Bình,13.800317,109.211210,4.2,true
-R193,Cơm Tấm Sài Gòn Xưa - CN 193,Cơm tấm,220 Nguyễn Thái Học - P. Nhơn Bình,13.804384,109.213224,4.2,true
-R194,Bún Chả Cá Ngọc Liên - CN 194,Bún & Phở,93 Diên Hồng - P. Quang Trung,13.763721,109.205621,4.1,true
-R195,Bánh Xèo Tôm Nhảy Gia Vỹ - CN 195,Đặc sản Bình Định,46 Nguyễn Thái Học - P. Lê Hồng Phong,13.772578,109.224342,4.5,true
-R196,Phở Khô Gia Lai Hồng - CN 196,Bún & Phở,62 Hoàng Văn Thụ - P. Lê Hồng Phong,13.772923,109.218277,4.2,true
-R197,Gà Chỉ Bảy Sơn - CN 197,Cơm & Gà,339 Phan Bội Châu - P. Ghềnh Ráng,13.745204,109.213400,4.2,true
-R198,Trà Sữa Phúc Long Quy Nhơn - CN 198,Đồ uống,334 Trần Hưng Đạo - P. Ghềnh Ráng,13.750897,109.211287,4.3,true
-R199,Highlands Coffee Xuân Diệu - CN 199,Cà phê & Trà,167 Lý Thường Kiệt - P. Ghềnh Ráng,13.747414,109.211170,4.6,true
-R200,Cơm Gà Quê Hương - CN 200,Cơm & Gà,337 Trần Hưng Đạo - P. Quang Trung,13.766583,109.206216,4.2,true
-R201,Bánh Hỏi Cháo Lòng Hồng Thanh - CN 201,Đặc sản Bình Định,246 Nguyễn Huệ - P. Hải Cảng,13.778737,109.236230,4.3,true
-R202,Nem Nướng Chợ Huyện - CN 202,Ăn vặt,218 An Dương Vương - P. Trần Phú,13.767674,109.229016,4.5,true
-R203,Hải Sản Cây Dừa - CN 203,Hải sản,60 Lý Thường Kiệt - P. Thị Nại,13.783323,109.235227,5.0,true
-R204,Lẩu Bò Nhà Gỗ - CN 204,Lẩu & Nướng,188 Tăng Bạt Hổ - P. Nguyễn Văn Cừ,13.759284,109.217447,4.9,true
-R205,Bánh Mì Lagu Nguyễn Huệ - CN 205,Bánh mì,244 Đô Đốc Bảo - P. Thị Nại,13.778604,109.237374,4.3,true
-R206,Chè Nhớ Ngô Mây - CN 206,Tráng miệng,100 Ngô Mây - P. Lê Hồng Phong,13.775239,109.218887,4.5,true
-R207,Pizza 4P's Đại Lộ - CN 207,Đồ Âu,143 Lý Thường Kiệt - P. Lê Hồng Phong,13.778802,109.218753,4.7,true
-R208,Mì Cay Sasin Nguyễn Tất Thành - CN 208,Món Hàn,320 Nguyễn Tất Thành - P. Quang Trung,13.761799,109.208232,4.8,true
-R209,Cơm Tấm Sài Gòn Xưa - CN 209,Cơm tấm,149 Trần Hưng Đạo - P. Quang Trung,13.760856,109.204032,4.8,true
-R210,Bún Chả Cá Ngọc Liên - CN 210,Bún & Phở,259 Lý Thường Kiệt - P. Trần Phú,13.770497,109.230731,4.4,true
+R001,Banh Xeo Tom Nhay Gia Vy 101,Am thuc Viet,298 Dong Da Phuong Ngo May TP Quy Nhon,13.755317,109.222201,4.6,true
+R002,Bun Cha Ca Ngoc Lien 102,Nuoc uong,251 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.759637,109.217760,4.2,true
+R003,Banh Hoi Chao Long Hong Linh 103,Am thuc Viet,247 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.783857,109.228187,4.9,true
+R004,Hai San Cay Dua 104,Am thuc Viet,243 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.775228,109.209146,4.3,true
+R005,Ga Chi Sau Cao 105,Nuoc uong,32 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.770677,109.231660,4.3,true
+R006,Com Ga Que Huong 106,Lau & Nuong,157 Ngo May Phuong Quang Trung TP Quy Nhon,13.767190,109.235510,4.2,true
+R007,Cha Ram Tom Dat Binh Dinh 107,Dac san Binh Dinh,222 Tay Son Phuong Tran Phu TP Quy Nhon,13.764473,109.230695,4.6,true
+R008,Nem Nuong Cho Huyen 108,Hai san,19 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.755286,109.215389,4.6,true
+R009,Ca Ngu Dai Duong Xuan Dieu 109,Lau & Nuong,9 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.772617,109.209513,4.5,true
+R010,Tra Sua Toc Toc Quy Nhon 110,Lau & Nuong,80 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.762394,109.228847,4.7,true
+R011,Pho Kho Gia Lai Quy Nhon 111,An vat,55 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.768521,109.216156,4.4,true
+R012,BBQ Nuong Ngoi Quy Nhon 112,Nuoc uong,261 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.760046,109.218337,4.9,true
+R013,Banh Canh Ba O 113,Hai san,185 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.765685,109.237458,4.5,true
+R014,Bun Bo Gio Heo Song Cau 114,Dac san Binh Dinh,45 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.768526,109.210730,4.8,true
+R015,Pizza Hoa Y Quy Nhon 115,Hai san,108 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.782912,109.225671,4.8,true
+R016,Lau Hai San Bien Dong 116,An vat,37 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.771865,109.227193,4.9,true
+R017,Com Tam Sai Gon Quy Nhon 117,Am thuc Viet,234 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.757702,109.221055,4.6,true
+R018,Che Nho Bien Xanh 118,Dac san Binh Dinh,42 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.779740,109.226154,4.6,true
+R019,Banh Mi Cha Ca 77 119,Lau & Nuong,287 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.781269,109.236014,4.4,true
+R020,Goi Ca Mai Ghenh Rang 120,Lau & Nuong,212 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.773071,109.208405,4.3,true
+R021,Banh Xeo Tom Nhay Gia Vy 121,Nuoc uong,256 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.784307,109.211290,4.0,true
+R022,Bun Cha Ca Ngoc Lien 122,Am thuc Viet,57 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.763928,109.213364,4.2,true
+R023,Banh Hoi Chao Long Hong Linh 123,Am thuc Viet,227 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.772613,109.209482,4.4,true
+R024,Hai San Cay Dua 124,An vat,63 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.781773,109.234795,4.9,true
+R025,Ga Chi Sau Cao 125,Dac san Binh Dinh,136 Ngo May Phuong Le Loi TP Quy Nhon,13.775972,109.212720,4.2,true
+R026,Com Ga Que Huong 126,Nuoc uong,243 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.764539,109.235780,4.8,true
+R027,Cha Ram Tom Dat Binh Dinh 127,Dac san Binh Dinh,76 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.781864,109.215579,4.8,true
+R028,Nem Nuong Cho Huyen 128,Hai san,266 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.762868,109.216903,4.4,true
+R029,Ca Ngu Dai Duong Xuan Dieu 129,An vat,201 Tay Son Phuong Quang Trung TP Quy Nhon,13.762274,109.213019,4.4,true
+R030,Tra Sua Toc Toc Quy Nhon 130,Lau & Nuong,98 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.786000,109.233582,4.5,true
+R031,Pho Kho Gia Lai Quy Nhon 131,Dac san Binh Dinh,231 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.779464,109.231656,4.2,true
+R032,BBQ Nuong Ngoi Quy Nhon 132,Am thuc Viet,182 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.762223,109.225736,4.1,true
+R033,Banh Canh Ba O 133,Hai san,297 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.752075,109.217649,4.1,true
+R034,Bun Bo Gio Heo Song Cau 134,Am thuc Viet,178 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.780257,109.223038,4.7,true
+R035,Pizza Hoa Y Quy Nhon 135,An vat,207 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.787492,109.230917,4.7,true
+R036,Lau Hai San Bien Dong 136,Am thuc Viet,195 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.753700,109.226369,4.4,true
+R037,Com Tam Sai Gon Quy Nhon 137,Dac san Binh Dinh,220 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.781695,109.214513,4.6,true
+R038,Che Nho Bien Xanh 138,Nuoc uong,223 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.763390,109.220563,4.4,true
+R039,Banh Mi Cha Ca 77 139,Lau & Nuong,200 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.759457,109.214640,4.9,true
+R040,Goi Ca Mai Ghenh Rang 140,An vat,154 Ngo May Phuong Thi Nai TP Quy Nhon,13.770969,109.236806,4.4,true
+R041,Banh Xeo Tom Nhay Gia Vy 141,Hai san,233 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.766212,109.236759,4.3,true
+R042,Bun Cha Ca Ngoc Lien 142,Dac san Binh Dinh,185 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.781387,109.237004,4.0,true
+R043,Banh Hoi Chao Long Hong Linh 143,Nuoc uong,260 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.772294,109.211132,4.5,true
+R044,Hai San Cay Dua 144,Lau & Nuong,171 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.778967,109.226135,4.4,true
+R045,Ga Chi Sau Cao 145,Hai san,191 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.773733,109.227408,4.0,true
+R046,Com Ga Que Huong 146,Hai san,262 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.760872,109.215903,4.7,true
+R047,Cha Ram Tom Dat Binh Dinh 147,Hai san,112 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.766104,109.236801,4.5,true
+R048,Nem Nuong Cho Huyen 148,An vat,147 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.779384,109.220349,4.7,true
+R049,Ca Ngu Dai Duong Xuan Dieu 149,Dac san Binh Dinh,237 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.776780,109.217154,4.6,true
+R050,Tra Sua Toc Toc Quy Nhon 150,Hai san,79 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.755919,109.237392,4.1,true
+R051,Pho Kho Gia Lai Quy Nhon 151,Nuoc uong,151 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.775822,109.214707,4.5,true
+R052,BBQ Nuong Ngoi Quy Nhon 152,Lau & Nuong,295 Dong Da Phuong Le Loi TP Quy Nhon,13.772735,109.233200,4.3,true
+R053,Banh Canh Ba O 153,Am thuc Viet,85 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.758902,109.226558,4.1,true
+R054,Bun Bo Gio Heo Song Cau 154,Lau & Nuong,287 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.756082,109.216997,4.9,true
+R055,Pizza Hoa Y Quy Nhon 155,Am thuc Viet,247 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.767211,109.233217,4.8,true
+R056,Lau Hai San Bien Dong 156,Nuoc uong,259 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.764352,109.233191,4.4,true
+R057,Com Tam Sai Gon Quy Nhon 157,An vat,176 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.752152,109.225925,4.9,true
+R058,Che Nho Bien Xanh 158,Nuoc uong,78 Ngo May Phuong Quang Trung TP Quy Nhon,13.769335,109.225912,5.0,true
+R059,Banh Mi Cha Ca 77 159,Lau & Nuong,206 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.765520,109.231769,4.1,true
+R060,Goi Ca Mai Ghenh Rang 160,Dac san Binh Dinh,259 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.771036,109.236152,4.9,true
+R061,Banh Xeo Tom Nhay Gia Vy 161,An vat,72 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.776302,109.220405,4.9,true
+R062,Bun Cha Ca Ngoc Lien 162,Am thuc Viet,6 Dong Da Phuong Thi Nai TP Quy Nhon,13.756873,109.216290,4.7,true
+R063,Banh Hoi Chao Long Hong Linh 163,Nuoc uong,13 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.756579,109.232352,4.1,true
+R064,Hai San Cay Dua 164,Hai san,173 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.767163,109.225957,4.2,true
+R065,Ga Chi Sau Cao 165,An vat,180 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.763445,109.214267,4.6,true
+R066,Com Ga Que Huong 166,Hai san,97 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.782555,109.231768,4.7,true
+R067,Cha Ram Tom Dat Binh Dinh 167,Hai san,255 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.779292,109.214080,4.5,true
+R068,Nem Nuong Cho Huyen 168,Dac san Binh Dinh,161 Ngo May Phuong Thi Nai TP Quy Nhon,13.775661,109.213697,4.4,true
+R069,Ca Ngu Dai Duong Xuan Dieu 169,Am thuc Viet,95 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.778117,109.226968,4.4,true
+R070,Tra Sua Toc Toc Quy Nhon 170,An vat,237 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.776229,109.209803,4.8,true
+R071,Pho Kho Gia Lai Quy Nhon 171,Dac san Binh Dinh,275 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.755208,109.214211,4.1,true
+R072,BBQ Nuong Ngoi Quy Nhon 172,Hai san,118 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.780621,109.218055,4.2,true
+R073,Banh Canh Ba O 173,An vat,65 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.779089,109.214388,4.9,true
+R074,Bun Bo Gio Heo Song Cau 174,An vat,62 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.773316,109.218432,4.1,true
+R075,Pizza Hoa Y Quy Nhon 175,An vat,101 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.767236,109.232115,4.8,true
+R076,Lau Hai San Bien Dong 176,Lau & Nuong,7 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.758134,109.236797,4.4,true
+R077,Com Tam Sai Gon Quy Nhon 177,Am thuc Viet,23 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.774718,109.221663,4.0,true
+R078,Che Nho Bien Xanh 178,Dac san Binh Dinh,295 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.766707,109.215820,4.1,true
+R079,Banh Mi Cha Ca 77 179,Am thuc Viet,69 Dong Da Phuong Tran Phu TP Quy Nhon,13.773587,109.213042,4.2,true
+R080,Goi Ca Mai Ghenh Rang 180,Dac san Binh Dinh,7 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.766566,109.211099,4.4,true
+R081,Banh Xeo Tom Nhay Gia Vy 181,Nuoc uong,75 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.775033,109.229173,4.1,true
+R082,Bun Cha Ca Ngoc Lien 182,Am thuc Viet,132 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.763412,109.226348,4.3,true
+R083,Banh Hoi Chao Long Hong Linh 183,Am thuc Viet,216 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.784634,109.216047,4.5,true
+R084,Hai San Cay Dua 184,Hai san,144 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.786579,109.220944,4.3,true
+R085,Ga Chi Sau Cao 185,Dac san Binh Dinh,1 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.768679,109.220670,4.6,true
+R086,Com Ga Que Huong 186,Lau & Nuong,248 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.769348,109.232146,4.6,true
+R087,Cha Ram Tom Dat Binh Dinh 187,Nuoc uong,184 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.779650,109.215191,4.9,true
+R088,Nem Nuong Cho Huyen 188,Lau & Nuong,60 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.755016,109.221044,4.9,true
+R089,Ca Ngu Dai Duong Xuan Dieu 189,Hai san,259 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.775417,109.222053,4.1,true
+R090,Tra Sua Toc Toc Quy Nhon 190,Dac san Binh Dinh,264 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.759262,109.233716,4.3,true
+R091,Pho Kho Gia Lai Quy Nhon 191,Lau & Nuong,195 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.757265,109.214984,4.0,true
+R092,BBQ Nuong Ngoi Quy Nhon 192,Dac san Binh Dinh,234 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.763188,109.222599,4.6,true
+R093,Banh Canh Ba O 193,An vat,297 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.781056,109.221053,4.7,true
+R094,Bun Bo Gio Heo Song Cau 194,Am thuc Viet,275 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.785011,109.217828,4.5,true
+R095,Pizza Hoa Y Quy Nhon 195,Nuoc uong,281 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.761965,109.220182,4.8,true
+R096,Lau Hai San Bien Dong 196,Dac san Binh Dinh,106 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.769121,109.216812,4.2,true
+R097,Com Tam Sai Gon Quy Nhon 197,An vat,209 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.771529,109.232054,5.0,true
+R098,Che Nho Bien Xanh 198,Nuoc uong,176 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.766255,109.214999,4.7,true
+R099,Banh Mi Cha Ca 77 199,Nuoc uong,69 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.777121,109.226289,4.6,true
+R100,Goi Ca Mai Ghenh Rang 200,Am thuc Viet,16 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.780973,109.231320,4.7,true
+R101,Banh Xeo Tom Nhay Gia Vy 201,Nuoc uong,8 Dong Da Phuong Thi Nai TP Quy Nhon,13.778237,109.236345,4.3,true
+R102,Bun Cha Ca Ngoc Lien 202,Lau & Nuong,106 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.785097,109.222741,4.1,true
+R103,Banh Hoi Chao Long Hong Linh 203,Nuoc uong,171 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.770746,109.210609,4.3,true
+R104,Hai San Cay Dua 204,Dac san Binh Dinh,60 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.761152,109.210670,4.5,true
+R105,Ga Chi Sau Cao 205,An vat,186 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.763888,109.226475,4.2,true
+R106,Com Ga Que Huong 206,Am thuc Viet,118 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.758326,109.224311,4.6,true
+R107,Cha Ram Tom Dat Binh Dinh 207,Am thuc Viet,144 Dong Da Phuong Thi Nai TP Quy Nhon,13.771607,109.214323,4.5,true
+R108,Nem Nuong Cho Huyen 208,Hai san,233 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.777527,109.216590,4.1,true
+R109,Ca Ngu Dai Duong Xuan Dieu 209,Dac san Binh Dinh,122 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.784709,109.223812,4.9,true
+R110,Tra Sua Toc Toc Quy Nhon 210,Hai san,131 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.783588,109.225928,4.5,true
+R111,Pho Kho Gia Lai Quy Nhon 211,Am thuc Viet,15 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.756264,109.233937,4.1,true
+R112,BBQ Nuong Ngoi Quy Nhon 212,Am thuc Viet,177 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.753709,109.213147,5.0,true
+R113,Banh Canh Ba O 213,Am thuc Viet,79 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.785270,109.211161,4.6,true
+R114,Bun Bo Gio Heo Song Cau 214,Lau & Nuong,300 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.781218,109.218320,4.7,true
+R115,Pizza Hoa Y Quy Nhon 215,Hai san,133 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.774305,109.225443,4.4,true
+R116,Lau Hai San Bien Dong 216,Dac san Binh Dinh,258 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.764489,109.235886,4.5,true
+R117,Com Tam Sai Gon Quy Nhon 217,Am thuc Viet,176 Tay Son Phuong Quang Trung TP Quy Nhon,13.756054,109.217103,4.4,true
+R118,Che Nho Bien Xanh 218,Dac san Binh Dinh,5 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.757389,109.211114,4.5,true
+R119,Banh Mi Cha Ca 77 219,Nuoc uong,262 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.753228,109.236784,4.8,true
+R120,Goi Ca Mai Ghenh Rang 220,Dac san Binh Dinh,103 Tay Son Phuong Ngo May TP Quy Nhon,13.777362,109.222755,4.7,true
+R121,Banh Xeo Tom Nhay Gia Vy 221,Lau & Nuong,188 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.771512,109.225835,4.3,true
+R122,Bun Cha Ca Ngoc Lien 222,Dac san Binh Dinh,83 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.764875,109.210831,5.0,true
+R123,Banh Hoi Chao Long Hong Linh 223,Nuoc uong,102 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.766370,109.213592,4.2,true
+R124,Hai San Cay Dua 224,Lau & Nuong,183 Ngo May Phuong Ngo May TP Quy Nhon,13.760412,109.237998,4.9,true
+R125,Ga Chi Sau Cao 225,Nuoc uong,13 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.767513,109.235497,4.4,true
+R126,Com Ga Que Huong 226,Hai san,27 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.786898,109.235266,4.1,true
+R127,Cha Ram Tom Dat Binh Dinh 227,Dac san Binh Dinh,220 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.780722,109.229777,4.9,true
+R128,Nem Nuong Cho Huyen 228,Dac san Binh Dinh,256 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.780927,109.218290,4.6,true
+R129,Ca Ngu Dai Duong Xuan Dieu 229,Hai san,45 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.767917,109.219438,4.6,true
+R130,Tra Sua Toc Toc Quy Nhon 230,Nuoc uong,70 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.781433,109.218681,4.8,true
+R131,Pho Kho Gia Lai Quy Nhon 231,Nuoc uong,134 Tay Son Phuong Quang Trung TP Quy Nhon,13.758650,109.218319,4.3,true
+R132,BBQ Nuong Ngoi Quy Nhon 232,Nuoc uong,1 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.787738,109.223130,4.9,true
+R133,Banh Canh Ba O 233,Nuoc uong,220 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.786447,109.208465,4.4,true
+R134,Bun Bo Gio Heo Song Cau 234,Am thuc Viet,71 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.753768,109.223612,4.3,true
+R135,Pizza Hoa Y Quy Nhon 235,Am thuc Viet,35 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.772269,109.228571,4.0,true
+R136,Lau Hai San Bien Dong 236,Nuoc uong,180 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.771569,109.218988,4.3,true
+R137,Com Tam Sai Gon Quy Nhon 237,Lau & Nuong,71 Ngo May Phuong Le Loi TP Quy Nhon,13.780097,109.227961,4.2,true
+R138,Che Nho Bien Xanh 238,Dac san Binh Dinh,98 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.766247,109.216113,4.4,true
+R139,Banh Mi Cha Ca 77 239,Lau & Nuong,195 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.785595,109.224565,4.4,true
+R140,Goi Ca Mai Ghenh Rang 240,Am thuc Viet,176 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.763596,109.228804,4.5,true
+R141,Banh Xeo Tom Nhay Gia Vy 241,Am thuc Viet,156 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.782009,109.221742,5.0,true
+R142,Bun Cha Ca Ngoc Lien 242,Lau & Nuong,102 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.777821,109.222025,4.2,true
+R143,Banh Hoi Chao Long Hong Linh 243,An vat,289 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.787616,109.234109,4.4,true
+R144,Hai San Cay Dua 244,Hai san,96 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.766958,109.215306,4.4,true
+R145,Ga Chi Sau Cao 245,An vat,174 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.775065,109.234697,4.0,true
+R146,Com Ga Que Huong 246,Hai san,200 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.780417,109.232254,4.5,true
+R147,Cha Ram Tom Dat Binh Dinh 247,Am thuc Viet,27 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.779047,109.211045,4.6,true
+R148,Nem Nuong Cho Huyen 248,Lau & Nuong,49 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.771104,109.218085,4.9,true
+R149,Ca Ngu Dai Duong Xuan Dieu 249,Am thuc Viet,57 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.782376,109.228646,4.1,true
+R150,Tra Sua Toc Toc Quy Nhon 250,Am thuc Viet,134 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.776051,109.225146,4.7,true
+R151,Pho Kho Gia Lai Quy Nhon 251,Hai san,276 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.758787,109.222710,4.6,true
+R152,BBQ Nuong Ngoi Quy Nhon 252,Dac san Binh Dinh,40 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.762657,109.230603,4.6,true
+R153,Banh Canh Ba O 253,An vat,24 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.771430,109.210410,4.9,true
+R154,Bun Bo Gio Heo Song Cau 254,Nuoc uong,104 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.778269,109.223871,4.8,true
+R155,Pizza Hoa Y Quy Nhon 255,An vat,45 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.766970,109.211571,4.4,true
+R156,Lau Hai San Bien Dong 256,Nuoc uong,81 Dong Da Phuong Le Loi TP Quy Nhon,13.766896,109.224166,4.0,true
+R157,Com Tam Sai Gon Quy Nhon 257,Lau & Nuong,180 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.786848,109.237822,4.1,true
+R158,Che Nho Bien Xanh 258,Am thuc Viet,238 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.775683,109.236171,4.5,true
+R159,Banh Mi Cha Ca 77 259,Nuoc uong,209 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.760020,109.214086,4.6,true
+R160,Goi Ca Mai Ghenh Rang 260,Lau & Nuong,208 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.782959,109.211500,4.8,true
+R161,Banh Xeo Tom Nhay Gia Vy 261,Hai san,231 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.786494,109.208352,4.4,true
+R162,Bun Cha Ca Ngoc Lien 262,Hai san,292 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.760227,109.233033,4.3,true
+R163,Banh Hoi Chao Long Hong Linh 263,Lau & Nuong,57 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.771225,109.221143,4.0,true
+R164,Hai San Cay Dua 264,Lau & Nuong,143 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.769573,109.212811,4.7,true
+R165,Ga Chi Sau Cao 265,Hai san,90 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.773163,109.226150,4.7,true
+R166,Com Ga Que Huong 266,Nuoc uong,79 Dong Da Phuong Le Loi TP Quy Nhon,13.778237,109.231682,5.0,true
+R167,Cha Ram Tom Dat Binh Dinh 267,Am thuc Viet,67 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.784137,109.222848,4.4,true
+R168,Nem Nuong Cho Huyen 268,Lau & Nuong,178 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.768372,109.232174,4.9,true
+R169,Ca Ngu Dai Duong Xuan Dieu 269,Hai san,210 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.777102,109.216604,4.0,true
+R170,Tra Sua Toc Toc Quy Nhon 270,Am thuc Viet,250 Ngo May Phuong Thi Nai TP Quy Nhon,13.760551,109.236840,4.5,true
+R171,Pho Kho Gia Lai Quy Nhon 271,Lau & Nuong,218 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.759435,109.236154,4.8,true
+R172,BBQ Nuong Ngoi Quy Nhon 272,Am thuc Viet,69 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.782775,109.211711,4.8,true
+R173,Banh Canh Ba O 273,Am thuc Viet,156 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.761335,109.233017,4.0,true
+R174,Bun Bo Gio Heo Song Cau 274,Am thuc Viet,62 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.780545,109.222433,4.9,true
+R175,Pizza Hoa Y Quy Nhon 275,Am thuc Viet,292 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.780939,109.236605,4.4,true
+R176,Lau Hai San Bien Dong 276,An vat,33 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.781959,109.215392,4.4,true
+R177,Com Tam Sai Gon Quy Nhon 277,Dac san Binh Dinh,48 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.756062,109.227705,4.2,true
+R178,Che Nho Bien Xanh 278,Nuoc uong,8 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.776379,109.213856,4.8,true
+R179,Banh Mi Cha Ca 77 279,Hai san,274 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.763052,109.215533,4.7,true
+R180,Goi Ca Mai Ghenh Rang 280,Nuoc uong,255 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.759582,109.213245,4.0,true
+R181,Banh Xeo Tom Nhay Gia Vy 281,An vat,1 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.760360,109.229659,4.5,true
+R182,Bun Cha Ca Ngoc Lien 282,Lau & Nuong,122 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.775684,109.218476,4.5,true
+R183,Banh Hoi Chao Long Hong Linh 283,An vat,243 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.786200,109.221247,5.0,true
+R184,Hai San Cay Dua 284,Hai san,270 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.765730,109.210521,4.9,true
+R185,Ga Chi Sau Cao 285,Lau & Nuong,46 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.770965,109.213016,4.1,true
+R186,Com Ga Que Huong 286,Hai san,102 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.753533,109.209411,4.7,true
+R187,Cha Ram Tom Dat Binh Dinh 287,Am thuc Viet,69 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.778677,109.237173,4.4,true
+R188,Nem Nuong Cho Huyen 288,Nuoc uong,237 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.779950,109.234695,4.4,true
+R189,Ca Ngu Dai Duong Xuan Dieu 289,Nuoc uong,38 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.757113,109.234791,4.4,true
+R190,Tra Sua Toc Toc Quy Nhon 290,Hai san,213 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.781764,109.214539,4.5,true
+R191,Pho Kho Gia Lai Quy Nhon 291,Am thuc Viet,202 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.762841,109.221472,4.9,true
+R192,BBQ Nuong Ngoi Quy Nhon 292,Nuoc uong,282 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.779287,109.236315,4.7,true
+R193,Banh Canh Ba O 293,Hai san,192 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.765237,109.236791,4.3,true
+R194,Bun Bo Gio Heo Song Cau 294,Dac san Binh Dinh,85 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.753539,109.219405,4.0,true
+R195,Pizza Hoa Y Quy Nhon 295,Lau & Nuong,20 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.762725,109.231470,4.3,true
+R196,Lau Hai San Bien Dong 296,Hai san,287 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.757875,109.237420,4.5,true
+R197,Com Tam Sai Gon Quy Nhon 297,Nuoc uong,171 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.771754,109.225236,4.5,true
+R198,Che Nho Bien Xanh 298,Lau & Nuong,275 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.775546,109.229045,4.8,true
+R199,Banh Mi Cha Ca 77 299,Dac san Binh Dinh,9 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.756858,109.212173,4.6,true
+R200,Goi Ca Mai Ghenh Rang 300,Dac san Binh Dinh,217 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.753944,109.233742,4.3,true

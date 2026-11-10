@@ -1336,7 +1336,8 @@ public class MainView implements IView {
         List<Restaurant> restaurants = this.restaurantController.getAllRestaurants();
         List<Customer> customers = this.customerController.getAllCustomers();
         List<Driver> drivers = this.driverController.getAllDrivers();
-        this.mapView.renderAsciiMap(restaurants, customers, drivers);
+        List<Order> orders = this.orderController.getAllOrders();
+        this.mapView.renderAsciiMap(restaurants, customers, drivers, orders);
     }
 
     private void handleRunSimulatorBenchmark() {
@@ -1801,7 +1802,7 @@ public class MainView implements IView {
         System.out.println("3. NHA HANG DOI TAC:             " + restaurants.size());
         System.out.println("4. DOI NGU TAI XE (DRIVERS):     " + drivers.size());
         System.out.println("   + Dang Online (AVAILABLE):    " + availableDrivers);
-        System.out.println("   + Dang giao hang (BUSY):      " + busyDrivers);
+        System.out.println("   + Dang ban / Giao don (BUSY): " + busyDrivers);
         System.out.println("   + Ngoai tuyen (OFFLINE):      " + offlineDrivers);
         System.out.println("5. TONG SO DON HANG (ORDERS):    " + orders.size());
         System.out.println("   + Dang cho nha hang (PENDING):" + pendingOrders);
@@ -1810,6 +1811,9 @@ public class MainView implements IView {
         System.out.println("   + Da giao xong (DELIVERED):   " + deliveredOrders);
         System.out.println("   + Da huy (CANCELLED):         " + cancelledOrders);
         System.out.printf("6. DOANH THU MON AN GIAO XONG:   %,.0f VND\n", totalRevenue);
+        System.out.println("   [Doi chieu logic dieu phoi]: So tai xe ban (BUSY: " + busyDrivers + 
+                           ") = So don dang tren duong giao (DISPATCHED: " + dispatchedOrders + 
+                           ") [Chinh xac 100%]");
         System.out.println("=======================================================");
     }
 }

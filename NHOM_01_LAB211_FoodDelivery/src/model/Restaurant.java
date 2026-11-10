@@ -117,16 +117,22 @@ public class Restaurant extends BaseEntity {
 
     @Override
     public void fromCsvLine(String line) {
+        if (line == null || line.trim().isEmpty()) return;
         String[] p = line.split(",", -1);
         if (p.length >= 8) {
             this.setId(p[0].trim());
             this.name = p[1].trim();
             this.category = p[2].trim();
-            this.address = p[3].trim();
-            this.latitude = Double.parseDouble(p[4].trim());
-            this.longitude = Double.parseDouble(p[5].trim());
-            this.rating = Double.parseDouble(p[6].trim());
-            this.open = Boolean.parseBoolean(p[7].trim());
+            this.open = Boolean.parseBoolean(p[p.length - 1].trim());
+            this.rating = Double.parseDouble(p[p.length - 2].trim());
+            this.longitude = Double.parseDouble(p[p.length - 3].trim());
+            this.latitude = Double.parseDouble(p[p.length - 4].trim());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 3; i < p.length - 4; i++) {
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(p[i].trim());
+            }
+            this.address = sb.toString();
         }
     }
 }
