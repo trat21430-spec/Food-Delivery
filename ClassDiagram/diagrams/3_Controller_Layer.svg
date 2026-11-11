@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3600 2500" width="100%" height="100%">
+  <defs>
+    <style>
+      .canvas-bg { fill: #ffffff; }
+      .pkg-box { fill: #ffffff; stroke: #000000; stroke-width: 1.8; stroke-dasharray: 6,4; rx: 8; }
+      .pkg-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #000000; }
+      .class-box { fill: #ffffff; stroke: #000000; stroke-width: 1.5; }
+      .head-title { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .head-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; font-style: italic; text-anchor: middle; }
+      .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .sep { stroke: #000000; stroke-width: 1; }
+      .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }
+      .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }
+      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }
+      .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }
+      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }
+      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }
+      .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
+      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+    </style>
+    <marker id="uml-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+    <marker id="uml-assoc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+    <marker id="uml-diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="12" markerHeight="8" orient="auto">
+      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect width="3600" height="2500" class="canvas-bg" />
+  <g class="class-node" id="node-MainController" data-id="MainController" data-cx="230" data-cy="1575" transform="translate(60, 1460)">
+    <rect x="0" y="0" width="340" height="230" class="class-box" />
+    <text x="170" y="20" class="head-title">MainController</text>
+    <text x="170" y="32" class="head-sub">Central Facade Controller</text>
+    <line x1="0" y1="38" x2="340" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- authController: AuthController</text>
+    <text x="8" y="67" class="txt-attr">- customerController: CustomerController</text>
+    <text x="8" y="82" class="txt-attr">- restaurantController: RestaurantController</text>
+    <text x="8" y="97" class="txt-attr">- driverController: DriverController</text>
+    <text x="8" y="112" class="txt-attr">- orderController: OrderController</text>
+    <text x="8" y="127" class="txt-attr">- simulatorController: SimulatorController</text>
+    <text x="8" y="142" class="txt-attr">- adminController: AdminController</text>
+    <text x="8" y="157" class="txt-attr">- mainView: MainView</text>
+    <line x1="0" y1="172" x2="340" y2="172" class="sep" />
+    <text x="8" y="187" class="txt-meth">+ run(): void</text>
+    <text x="8" y="202" class="txt-meth">+ login(username, password): boolean</text>
+    <text x="8" y="217" class="txt-meth">+ logout(): void</text>
+    <text x="8" y="232" class="txt-meth">+ getCurrentUser(): User</text>
+    <text x="8" y="247" class="txt-meth">+ runBenchmark(mech, orders): SimulationRun</text>
+    <text x="8" y="262" class="txt-meth">+ autoDispatchAllPending(mech): List&lt;String&gt;</text>
+  </g>
+  <g class="class-node" id="node-AppController" data-id="AppController" data-cx="530" data-cy="1495" transform="translate(430, 1460)">
+    <rect x="0" y="0" width="200" height="70" class="class-box" />
+    <text x="100" y="20" class="head-title">AppController</text>
+    <text x="100" y="32" class="head-sub">extends MainController</text>
+    <line x1="0" y1="38" x2="200" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="200" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ AppController()</text>
+  </g>
+  <g class="class-node" id="node-AuthController" data-id="AuthController" data-cx="610" data-cy="1645" transform="translate(430, 1550)">
+    <rect x="0" y="0" width="360" height="190" class="class-box" />
+    <text x="180" y="20" class="head-title">AuthController</text>
+    <text x="180" y="32" class="head-sub">Authentication &amp; Registration</text>
+    <line x1="0" y1="38" x2="360" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- userRepo: UserRepository</text>
+    <text x="8" y="67" class="txt-attr">- customerRepo: CustomerRepository</text>
+    <text x="8" y="82" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="97" class="txt-attr">- driverAppRepo: DriverAppRepository</text>
+    <text x="8" y="112" class="txt-attr">- currentUser: User</text>
+    <line x1="0" y1="127" x2="360" y2="127" class="sep" />
+    <text x="8" y="142" class="txt-meth">+ login(username, password): boolean</text>
+    <text x="8" y="157" class="txt-meth">+ logout(): void</text>
+    <text x="8" y="172" class="txt-meth">+ registerCustomer(...): User</text>
+    <text x="8" y="187" class="txt-meth">+ submitDriverApplication(...): DriverApp</text>
+    <text x="8" y="202" class="txt-meth">+ registerDriver(...): User</text>
+    <text x="8" y="217" class="txt-meth">+ getAllUsers(): List&lt;User&gt;</text>
+  </g>
+  <g class="class-node" id="node-CustomerController" data-id="CustomerController" data-cx="985" data-cy="1545" transform="translate(820, 1460)">
+    <rect x="0" y="0" width="330" height="170" class="class-box" />
+    <text x="165" y="20" class="head-title">CustomerController</text>
+    <text x="165" y="32" class="head-sub">Customer Flow</text>
+    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- customerRepository: CustomerRepository</text>
+    <text x="8" y="67" class="txt-attr">- orderRepository: OrderRepository</text>
+    <line x1="0" y1="82" x2="330" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ registerCustomer(name, phone, ward, lat, lon): Customer</text>
+    <text x="8" y="112" class="txt-meth">+ getAllCustomers(): List&lt;Customer&gt;</text>
+    <text x="8" y="127" class="txt-meth">+ getCustomerById(id): Customer</text>
+    <text x="8" y="142" class="txt-meth">+ updateCustomer(id, ...): boolean</text>
+    <text x="8" y="157" class="txt-meth">+ getOrderHistory(customerId): List&lt;Order&gt;</text>
+  </g>
+  <g class="class-node" id="node-DriverController" data-id="DriverController" data-cx="1345" data-cy="1545" transform="translate(1180, 1460)">
+    <rect x="0" y="0" width="330" height="170" class="class-box" />
+    <text x="165" y="20" class="head-title">DriverController</text>
+    <text x="165" y="32" class="head-sub">Driver Flow</text>
+    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- driverRepository: DriverRepository</text>
+    <line x1="0" y1="67" x2="330" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ getAllDrivers(): List&lt;Driver&gt;</text>
+    <text x="8" y="97" class="txt-meth">+ getAvailableDrivers(): List&lt;Driver&gt;</text>
+    <text x="8" y="112" class="txt-meth">+ getNearestAvailableDriver(lat, lon): Driver</text>
+    <text x="8" y="127" class="txt-meth">+ updateDriverStatus(id, status): boolean</text>
+    <text x="8" y="142" class="txt-meth">+ updateDriverInfo(id, ...): boolean</text>
+  </g>
+  <g class="class-node" id="node-RestaurantController" data-id="RestaurantController" data-cx="1705" data-cy="1545" transform="translate(1540, 1460)">
+    <rect x="0" y="0" width="330" height="170" class="class-box" />
+    <text x="165" y="20" class="head-title">RestaurantController</text>
+    <text x="165" y="32" class="head-sub">Restaurant Flow</text>
+    <line x1="0" y1="38" x2="330" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- restaurantRepository: RestaurantRepository</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepository: MenuItemRepository</text>
+    <line x1="0" y1="82" x2="330" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getAllRestaurants(): List&lt;Restaurant&gt;</text>
+    <text x="8" y="112" class="txt-meth">+ getMenuByRestaurant(restId): List&lt;MenuItem&gt;</text>
+    <text x="8" y="127" class="txt-meth">+ updateStock(menuItemId, newStock): boolean</text>
+    <text x="8" y="142" class="txt-meth">+ createMenuItem(restId, name, price, stock): MenuItem</text>
+  </g>
+  <g class="class-node" id="node-OrderController" data-id="OrderController" data-cx="300" data-cy="1895" transform="translate(60, 1770)">
+    <rect x="0" y="0" width="480" height="250" class="class-box" />
+    <text x="240" y="20" class="head-title">OrderController</text>
+    <text x="240" y="32" class="head-sub">Order Lifecycle &amp; Auto-Dispatch</text>
+    <line x1="0" y1="38" x2="480" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- orderRepository: OrderRepository</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepository: MenuItemRepository</text>
+    <text x="8" y="82" class="txt-attr">- driverRepository: DriverRepository</text>
+    <text x="8" y="97" class="txt-attr">- restaurantRepository: RestaurantRepository</text>
+    <text x="8" y="112" class="txt-attr">- orderItemRepository: OrderItemRepository</text>
+    <text x="8" y="127" class="txt-attr">- customerRepository: CustomerRepository</text>
+    <text x="8" y="142" class="txt-attr">- routeRepository: DeliveryRouteRepository</text>
+    <line x1="0" y1="157" x2="480" y2="157" class="sep" />
+    <text x="8" y="172" class="txt-meth">+ placeOrderAndDispatch(custId, restId, itemId, qty, mech): Order</text>
+    <text x="8" y="187" class="txt-meth">+ createCustomerOrder(custId, restId, itemId, qty, mech): Order</text>
+    <text x="8" y="202" class="txt-meth">+ confirmOrderByRestaurant(orderId, restId, mech): Order</text>
+    <text x="8" y="217" class="txt-meth">+ rejectOrderByRestaurant(orderId, restId, reason): boolean</text>
+    <text x="8" y="232" class="txt-meth">+ cancelOrderByCustomer(orderId, custId): boolean</text>
+    <text x="8" y="247" class="txt-meth">+ markOrderPickedUp(orderId, driverId): boolean</text>
+    <text x="8" y="262" class="txt-meth">+ markOrderDelivered(orderId, driverId, mech): boolean</text>
+    <text x="8" y="277" class="txt-meth">+ autoDispatchPendingOrders(mech): int</text>
+  </g>
+  <g class="class-node" id="node-AdminController" data-id="AdminController" data-cx="775" data-cy="1870" transform="translate(570, 1770)">
+    <rect x="0" y="0" width="410" height="200" class="class-box" />
+    <text x="205" y="20" class="head-title">AdminController</text>
+    <text x="205" y="32" class="head-sub">System Administration</text>
+    <line x1="0" y1="38" x2="410" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- restaurantRepo: RestaurantRepository</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
+    <text x="8" y="82" class="txt-attr">- customerRepo: CustomerRepository</text>
+    <text x="8" y="97" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="112" class="txt-attr">- driverAppRepo: DriverAppRepository</text>
+    <text x="8" y="127" class="txt-attr">- userRepo: UserRepository</text>
+    <line x1="0" y1="142" x2="410" y2="142" class="sep" />
+    <text x="8" y="157" class="txt-meth">+ getPendingDriverApplications(): List&lt;DriverApp&gt;</text>
+    <text x="8" y="172" class="txt-meth">+ approveDriverApplication(id): User</text>
+    <text x="8" y="187" class="txt-meth">+ rejectDriverApplication(id, reason): boolean</text>
+    <text x="8" y="202" class="txt-meth">+ addRestaurant(name, cat, addr, lat, lon): Restaurant</text>
+    <text x="8" y="217" class="txt-meth">+ restockMenuItem(itemId, qty): void</text>
+    <text x="8" y="232" class="txt-meth">+ triggerAutoDispatchAllPending(mech): int</text>
+  </g>
+  <g class="class-node" id="node-SimulatorController" data-id="SimulatorController" data-cx="1200" data-cy="1860" transform="translate(1010, 1770)">
+    <rect x="0" y="0" width="380" height="180" class="class-box" />
+    <text x="190" y="20" class="head-title">SimulatorController</text>
+    <text x="190" y="32" class="head-sub">Concurrency Benchmark Simulator</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- orderRepo: OrderRepository</text>
+    <text x="8" y="67" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="82" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
+    <text x="8" y="97" class="txt-attr">- simRunRepo: SimulationRunRepository</text>
+    <line x1="0" y1="112" x2="380" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ runSimulation(numOrders, mechanism): SimulationRun</text>
+    <text x="8" y="142" class="txt-meth">+ runExperiment(mechanism, numOrders, baseline): SimulationRun</text>
+    <text x="8" y="157" class="txt-meth">+ detectDoubleAssignments(): int</text>
+    <text x="8" y="172" class="txt-meth">+ detectOversellItems(): int</text>
+    <text x="8" y="187" class="txt-meth">+ detectDriverOverload(): int</text>
+  </g>
+  <g class="class-node" id="node-CustomerThread" data-id="CustomerThread" data-cx="1610" data-cy="1825" transform="translate(1420, 1770)">
+    <rect x="0" y="0" width="380" height="110" class="class-box" />
+    <text x="190" y="20" class="head-title">CustomerThread</text>
+    <text x="190" y="32" class="head-sub">extends java.lang.Thread</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- startLatch, finishLatch: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- orderController: OrderController</text>
+    <text x="8" y="82" class="txt-attr">- customer: Customer, restaurant: Restaurant, menuItem: MenuItem</text>
+    <line x1="0" y1="97" x2="380" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ run(): void (Executes concurrent order placement)</text>
+  </g>
+  <g class="class-node" id="node-DispatchThread" data-id="DispatchThread" data-cx="1610" data-cy="1955" transform="translate(1420, 1900)">
+    <rect x="0" y="0" width="380" height="110" class="class-box" />
+    <text x="190" y="20" class="head-title">DispatchThread</text>
+    <text x="190" y="32" class="head-sub">extends java.lang.Thread</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- startLatch, finishLatch: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- orderController: OrderController</text>
+    <text x="8" y="82" class="txt-attr">- orderId: String</text>
+    <text x="8" y="97" class="txt-attr">- mechanism: LockMechanism</text>
+    <line x1="0" y1="112" x2="380" y2="112" class="sep" />
+    <text x="8" y="127" class="txt-meth">+ run(): void (Executes concurrent dispatching)</text>
+  </g>
+  <g class="class-node" id="node-CustomerSimTask" data-id="CustomerSimTask" data-cx="1610" data-cy="2090" transform="translate(1420, 2030)">
+    <rect x="0" y="0" width="380" height="120" class="class-box" />
+    <text x="190" y="20" class="head-title">CustomerSimTask</text>
+    <text x="190" y="32" class="head-sub">implements java.lang.Runnable</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- startGate, doneGate: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
+    <text x="8" y="82" class="txt-attr">- targetItemId: String</text>
+    <text x="8" y="97" class="txt-attr">- mechanism: LockMechanism</text>
+    <text x="8" y="112" class="txt-attr">- simulatedOversell: AtomicInteger</text>
+    <line x1="0" y1="127" x2="380" y2="127" class="sep" />
+    <text x="8" y="142" class="txt-meth">+ CustomerSimTask(...)</text>
+    <text x="8" y="157" class="txt-meth">+ run(): void (Executes concurrent stock deduction)</text>
+  </g>
+  <g class="class-node" id="node-DispatchSimTask" data-id="DispatchSimTask" data-cx="1610" data-cy="2235" transform="translate(1420, 2170)">
+    <rect x="0" y="0" width="380" height="130" class="class-box" />
+    <text x="190" y="20" class="head-title">DispatchSimTask</text>
+    <text x="190" y="32" class="head-sub">implements java.lang.Runnable</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- startGate, doneGate: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="82" class="txt-attr">- orderRepo: OrderRepository</text>
+    <text x="8" y="97" class="txt-attr">- targetOrderId, targetDriverId: String</text>
+    <text x="8" y="112" class="txt-attr">- mechanism: LockMechanism</text>
+    <text x="8" y="127" class="txt-attr">- simulatedDoubleAssign, simulatedDriverOverload: AtomicInteger</text>
+    <line x1="0" y1="142" x2="380" y2="142" class="sep" />
+    <text x="8" y="157" class="txt-meth">+ DispatchSimTask(...)</text>
+    <text x="8" y="172" class="txt-meth">+ run(): void (Executes concurrent driver dispatch)</text>
+  </g>
+  <path d="M 530 1530 L 230 1460" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 230 1690 L 610 1550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1460 L 985 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1460 L 1345 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1460 L 1705 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 775 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 1200 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1970 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1950 L 1610 2030" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <text x="1405" y="1986" class="edge-label">creates task</text>
+  <path d="M 1200 1950 L 1610 2170" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <text x="1405" y="2056" class="edge-label">creates task</text>
+  <path d="M 1610 1880 L 300 1770" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="955" y="1821" class="edge-label">calls</text>
+  <path d="M 1610 1900 L 300 2020" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="955" y="1956" class="edge-label">calls</text>
+</svg>

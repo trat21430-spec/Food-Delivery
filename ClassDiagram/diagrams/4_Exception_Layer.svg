@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3600 2500" width="100%" height="100%">
+  <defs>
+    <style>
+      .canvas-bg { fill: #ffffff; }
+      .pkg-box { fill: #ffffff; stroke: #000000; stroke-width: 1.8; stroke-dasharray: 6,4; rx: 8; }
+      .pkg-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #000000; }
+      .class-box { fill: #ffffff; stroke: #000000; stroke-width: 1.5; }
+      .head-title { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .head-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; font-style: italic; text-anchor: middle; }
+      .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .sep { stroke: #000000; stroke-width: 1; }
+      .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }
+      .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }
+      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }
+      .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }
+      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }
+      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }
+      .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
+      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+    </style>
+    <marker id="uml-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+    <marker id="uml-assoc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+    <marker id="uml-diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="12" markerHeight="8" orient="auto">
+      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect width="3600" height="2500" class="canvas-bg" />
+  <g class="class-node" id="node-FoodDeliveryException" data-id="FoodDeliveryException" data-cx="2390" data-cy="1500" transform="translate(2260, 1460)">
+    <rect x="0" y="0" width="260" height="80" class="class-box" />
+    <text x="130" y="20" class="head-title">FoodDeliveryException</text>
+    <text x="130" y="32" class="head-sub">extends java.lang.Exception</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="260" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ FoodDeliveryException(msg)</text>
+    <text x="8" y="82" class="txt-meth">+ FoodDeliveryException(msg, cause)</text>
+  </g>
+  <g class="class-node" id="node-ConcurrencyException" data-id="ConcurrencyException" data-cx="2390" data-cy="1610" transform="translate(2260, 1570)">
+    <rect x="0" y="0" width="260" height="80" class="class-box" />
+    <text x="130" y="20" class="head-title">ConcurrencyException</text>
+    <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="260" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ ConcurrencyException(msg)</text>
+    <text x="8" y="82" class="txt-meth">+ ConcurrencyException(msg, cause)</text>
+  </g>
+  <g class="class-node" id="node-DoubleAssignmentException" data-id="DoubleAssignmentException" data-cx="2180" data-cy="1740" transform="translate(2050, 1680)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">DoubleAssignmentException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- orderId: String</text>
+    <text x="8" y="67" class="txt-attr">- existingDriverId, attemptedDriverId: String</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getOrderId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getExistingDriverId(): String</text>
+    <text x="8" y="127" class="txt-meth">+ getAttemptedDriverId(): String</text>
+  </g>
+  <g class="class-node" id="node-DriverOverloadException" data-id="DriverOverloadException" data-cx="2470" data-cy="1740" transform="translate(2340, 1680)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">DriverOverloadException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- driverId: String</text>
+    <text x="8" y="67" class="txt-attr">- currentOrderId: String</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getDriverId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getCurrentOrderId(): String</text>
+  </g>
+  <g class="class-node" id="node-OptimisticLockException" data-id="OptimisticLockException" data-cx="2180" data-cy="1880" transform="translate(2050, 1820)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">OptimisticLockException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- entityId: String</text>
+    <text x="8" y="67" class="txt-attr">- expectedVersion, currentVersion: long</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getEntityId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getExpectedVersion(): long</text>
+    <text x="8" y="127" class="txt-meth">+ getCurrentVersion(): long</text>
+  </g>
+  <g class="class-node" id="node-OversellException" data-id="OversellException" data-cx="2470" data-cy="1880" transform="translate(2340, 1820)">
+    <rect x="0" y="0" width="260" height="120" class="class-box" />
+    <text x="130" y="20" class="head-title">OversellException</text>
+    <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- menuItemId: String</text>
+    <text x="8" y="67" class="txt-attr">- requestedQty, availableQty: int</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ getMenuItemId(): String</text>
+    <text x="8" y="112" class="txt-meth">+ getRequestedQty(): int</text>
+    <text x="8" y="127" class="txt-meth">+ getAvailableQty(): int</text>
+  </g>
+  <g class="class-node" id="node-EntityNotFoundException" data-id="EntityNotFoundException" data-cx="2180" data-cy="2010" transform="translate(2050, 1960)">
+    <rect x="0" y="0" width="260" height="100" class="class-box" />
+    <text x="130" y="20" class="head-title">EntityNotFoundException</text>
+    <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- entityName, entityId: String</text>
+    <line x1="0" y1="67" x2="260" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ getEntityName(): String</text>
+    <text x="8" y="97" class="txt-meth">+ getEntityId(): String</text>
+  </g>
+  <g class="class-node" id="node-InvalidInputException" data-id="InvalidInputException" data-cx="2470" data-cy="2010" transform="translate(2340, 1960)">
+    <rect x="0" y="0" width="260" height="100" class="class-box" />
+    <text x="130" y="20" class="head-title">InvalidInputException</text>
+    <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- fieldName: String</text>
+    <line x1="0" y1="67" x2="260" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ getFieldName(): String</text>
+  </g>
+  <path d="M 2390 1570 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+</svg>

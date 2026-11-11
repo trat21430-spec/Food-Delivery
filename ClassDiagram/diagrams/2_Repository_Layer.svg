@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3600 2500" width="100%" height="100%">
+  <defs>
+    <style>
+      .canvas-bg { fill: #ffffff; }
+      .pkg-box { fill: #ffffff; stroke: #000000; stroke-width: 1.8; stroke-dasharray: 6,4; rx: 8; }
+      .pkg-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #000000; }
+      .class-box { fill: #ffffff; stroke: #000000; stroke-width: 1.5; }
+      .head-title { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .head-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; font-style: italic; text-anchor: middle; }
+      .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
+      .sep { stroke: #000000; stroke-width: 1; }
+      .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }
+      .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }
+      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }
+      .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }
+      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }
+      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }
+      .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
+      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+    </style>
+    <marker id="uml-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+    <marker id="uml-assoc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+    <marker id="uml-diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="12" markerHeight="8" orient="auto">
+      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect width="3600" height="2500" class="canvas-bg" />
+  <g class="class-node" id="node-IRepository" data-id="IRepository" data-cx="1650" data-cy="220" transform="translate(1520, 150)">
+    <rect x="0" y="0" width="260" height="140" class="class-box" />
+    <text x="130" y="20" class="head-title">IRepository&lt;T&gt;</text>
+    <text x="130" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="260" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findAll(): List&lt;T&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ findById(id: String): T</text>
+    <text x="8" y="97" class="txt-meth">+ save(entity: T): void</text>
+    <text x="8" y="112" class="txt-meth">+ saveAll(entities: List&lt;T&gt;): void</text>
+    <text x="8" y="127" class="txt-meth">+ deleteById(id: String): void</text>
+  </g>
+  <g class="class-node" id="node-CsvRepository" data-id="CsvRepository" data-cx="2030" data-cy="255" transform="translate(1820, 150)">
+    <rect x="0" y="0" width="420" height="210" class="class-box" />
+    <text x="210" y="20" class="head-title">CsvRepository&lt;T extends BaseEntity&gt;</text>
+    <text x="210" y="32" class="head-sub">&lt;&lt;abstract&gt;&gt; implements IRepository&lt;T&gt;</text>
+    <line x1="0" y1="38" x2="420" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- filePath, header: String</text>
+    <text x="8" y="67" class="txt-attr">- fileMonitor: Object</text>
+    <text x="8" y="82" class="txt-attr">- keyLocks: ConcurrentHashMap</text>
+    <line x1="0" y1="97" x2="420" y2="97" class="sep" />
+    <text x="8" y="112" class="txt-meth">+ CsvRepository(filePath, header)</text>
+    <text x="8" y="127" class="txt-meth">+ createEntity()*: T</text>
+    <text x="8" y="142" class="txt-meth">+ parseLine(line: String): T</text>
+    <text x="8" y="157" class="txt-meth">+ findAll() / findById(id): synchronized</text>
+    <text x="8" y="172" class="txt-meth">+ save(entity) / deleteById(id): synchronized</text>
+    <text x="8" y="187" class="txt-meth">+ getKeyLock(key: String): Object</text>
+    <text x="8" y="202" class="txt-meth">+ executeWithFileLock(action: Runnable): void</text>
+    <text x="8" y="217" class="txt-meth">+ updateWithOptimisticLock(entity, ver): void</text>
+  </g>
+  <g class="class-node" id="node-CustomerRepository" data-id="CustomerRepository" data-cx="1630" data-cy="435" transform="translate(1520, 390)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">CustomerRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;Customer&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ CustomerRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): Customer</text>
+  </g>
+  <g class="class-node" id="node-RestaurantRepository" data-id="RestaurantRepository" data-cx="1880" data-cy="435" transform="translate(1770, 390)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">RestaurantRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;Restaurant&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ RestaurantRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): Restaurant</text>
+  </g>
+  <g class="class-node" id="node-MenuItemRepository" data-id="MenuItemRepository" data-cx="2175" data-cy="465" transform="translate(2020, 390)">
+    <rect x="0" y="0" width="310" height="150" class="class-box" />
+    <text x="155" y="20" class="head-title">MenuItemRepository</text>
+    <text x="155" y="32" class="head-sub">extends CsvRepository&lt;MenuItem&gt;</text>
+    <line x1="0" y1="38" x2="310" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="310" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findByRestaurantId(restId): List&lt;MenuItem&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ deductStock(itemId, qty, mech): boolean</text>
+    <text x="8" y="97" class="txt-meth">- deductStockNoLock / Sync / Optimistic / FileLock</text>
+    <text x="8" y="112" class="txt-meth">+ restoreStock(itemId, qty): boolean</text>
+  </g>
+  <g class="class-node" id="node-DriverRepository" data-id="DriverRepository" data-cx="2520" data-cy="465" transform="translate(2360, 390)">
+    <rect x="0" y="0" width="320" height="150" class="class-box" />
+    <text x="160" y="20" class="head-title">DriverRepository</text>
+    <text x="160" y="32" class="head-sub">extends CsvRepository&lt;Driver&gt;</text>
+    <line x1="0" y1="38" x2="320" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- geoUtils: GeoUtils</text>
+    <line x1="0" y1="67" x2="320" y2="67" class="sep" />
+    <text x="8" y="82" class="txt-meth">+ findAvailableDrivers(): List&lt;Driver&gt;</text>
+    <text x="8" y="97" class="txt-meth">+ findNearestAvailable(lat, lon): Driver</text>
+    <text x="8" y="112" class="txt-meth">+ markBusy(driverId, orderId, mech): boolean</text>
+    <text x="8" y="127" class="txt-meth">- markBusyNoLock / Sync / Optimistic / FileLock</text>
+    <text x="8" y="142" class="txt-meth">+ markAvailable(driverId: String): boolean</text>
+  </g>
+  <g class="class-node" id="node-OrderRepository" data-id="OrderRepository" data-cx="2910" data-cy="470" transform="translate(2710, 390)">
+    <rect x="0" y="0" width="400" height="160" class="class-box" />
+    <text x="200" y="20" class="head-title">OrderRepository</text>
+    <text x="200" y="32" class="head-sub">extends CsvRepository&lt;Order&gt;</text>
+    <line x1="0" y1="38" x2="400" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="400" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ processOrderAndDispatch(custId, restId, itemId, qty, mech, ...): Order</text>
+    <text x="8" y="82" class="txt-meth">+ dispatchPendingOrder(orderId, mech, ...): boolean</text>
+    <text x="8" y="97" class="txt-meth">+ autoDispatchAllPending(mech, ...): List&lt;String&gt;</text>
+    <text x="8" y="112" class="txt-meth">+ assignDriver(orderId, driverId, mech): boolean</text>
+    <text x="8" y="127" class="txt-meth">- assignDriverNoLock / Sync / Optimistic / FileLock</text>
+  </g>
+  <g class="class-node" id="node-OrderItemRepository" data-id="OrderItemRepository" data-cx="1630" data-cy="625" transform="translate(1520, 580)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">OrderItemRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;OrderItem&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findByOrderId(orderId): List&lt;OrderItem&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): OrderItem</text>
+  </g>
+  <g class="class-node" id="node-DeliveryRouteRepository" data-id="DeliveryRouteRepository" data-cx="1880" data-cy="625" transform="translate(1770, 580)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">DeliveryRouteRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;DeliveryRoute&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ DeliveryRouteRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): DeliveryRoute</text>
+  </g>
+  <g class="class-node" id="node-SimulationRunRepository" data-id="SimulationRunRepository" data-cx="2130" data-cy="625" transform="translate(2020, 580)">
+    <rect x="0" y="0" width="220" height="90" class="class-box" />
+    <text x="110" y="20" class="head-title">SimulationRunRepository</text>
+    <text x="110" y="32" class="head-sub">extends CsvRepository&lt;SimulationRun&gt;</text>
+    <line x1="0" y1="38" x2="220" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="220" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ SimulationRunRepository()</text>
+    <text x="8" y="82" class="txt-meth">+ createEntity(): SimulationRun</text>
+  </g>
+  <g class="class-node" id="node-DriverApplicationRepository" data-id="DriverApplicationRepository" data-cx="2405" data-cy="640" transform="translate(2270, 580)">
+    <rect x="0" y="0" width="270" height="120" class="class-box" />
+    <text x="135" y="20" class="head-title">DriverAppRepository</text>
+    <text x="135" y="32" class="head-sub">extends CsvRepository&lt;DriverApp&gt;</text>
+    <line x1="0" y1="38" x2="270" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="270" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findPendingApplications(): List&lt;DriverApp&gt;</text>
+    <text x="8" y="82" class="txt-meth">+ findByUsername(username): DriverApp</text>
+    <text x="8" y="97" class="txt-meth">+ findByPhone(phone): DriverApp</text>
+  </g>
+  <g class="class-node" id="node-UserRepository" data-id="UserRepository" data-cx="2690" data-cy="635" transform="translate(2570, 580)">
+    <rect x="0" y="0" width="240" height="110" class="class-box" />
+    <text x="120" y="20" class="head-title">UserRepository</text>
+    <text x="120" y="32" class="head-sub">extends CsvRepository&lt;User&gt;</text>
+    <line x1="0" y1="38" x2="240" y2="38" class="sep" />
+    <line x1="0" y1="52" x2="240" y2="52" class="sep" />
+    <text x="8" y="67" class="txt-meth">+ findByUsername(username): User</text>
+    <text x="8" y="82" class="txt-meth">+ findByPhone(phone): User</text>
+    <text x="8" y="97" class="txt-meth">+ createEntity(): User</text>
+  </g>
+  <g class="class-node" id="node-AccountRepository" data-id="AccountRepository" data-cx="2970" data-cy="645" transform="translate(2840, 580)">
+    <rect x="0" y="0" width="260" height="130" class="class-box" />
+    <text x="130" y="20" class="head-title">AccountRepository</text>
+    <text x="130" y="32" class="head-sub">PBKDF2 Password Security</text>
+    <line x1="0" y1="38" x2="260" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- filePath: Path</text>
+    <text x="8" y="67" class="txt-attr">- iterations: int = 120000</text>
+    <line x1="0" y1="82" x2="260" y2="82" class="sep" />
+    <text x="8" y="97" class="txt-meth">+ register(role, id, pass): void</text>
+    <text x="8" y="112" class="txt-meth">+ authenticate(role, id, pass): boolean</text>
+    <text x="8" y="127" class="txt-meth">+ hasAccount(role, id): boolean</text>
+  </g>
+  <path d="M 2030 150 L 1650 290" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2520 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2910 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2130 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2405 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2690 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+</svg>

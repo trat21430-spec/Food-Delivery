@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Generates 100% COMPLETE, STANDARDIZED 60-CLASS UML DIAGRAM MATCHING EXACT PRODUCTION CODE.
+ * GENERATES 100% COMPLETE, STANDARDIZED 60-CLASS UML DIAGRAM MATCHING EXACT PRODUCTION CODE.
  * Covers EVERY class, interface, enum, and nested runnable task in src/.
- * Formats: Draw.io (.drawio), Vector SVG (.svg), Interactive HTML (.html), and GitHub Mermaid (.md).
- * Monochrome / Greyscale styled strictly per academic & LAB211 presentation rubrics.
+ * Features:
+ *  1. Multi-Tab Draw.io (.drawio) with 6 Tabs (Full Overview + 5 Isolated Package Tabs).
+ *  2. Infinite Canvas (page="0") to eliminate coordinate shifting and page break slicing.
+ *  3. Interactive SVG Pan-Zoom HTML Viewer with instant search, layer jumping, and auto-fit.
+ *  4. Modular Draw.io and SVG files in docs/diagrams/ for lightweight opening.
+ *  5. Segmented and Complete Mermaid diagrams in docs/class_diagram.md.
  */
 public class DiagramGenerator {
 
@@ -63,16 +67,24 @@ public class DiagramGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println("=== GENERATING EXACT 60-CLASS UML CLASS DIAGRAM MATCHING 100% SOURCE CODE ===");
+        System.out.println("=== GENERATING EXACT 60-CLASS UML CLASS DIAGRAM (MULTI-TAB, MODULAR & INTERACTIVE) ===");
         try {
             List<UmlClass> classes = buildClasses();
             List<UmlEdge> edges = buildEdges();
 
+            // 1. Generate Full SVG and Interactive HTML Pan-Zoom
             generateSvgAndHtml(classes, edges);
-            generateDrawio(classes, edges);
+
+            // 2. Generate Multi-Tab Draw.io (Overview + 5 Layers)
+            generateMultiTabDrawio(classes, edges);
+
+            // 3. Generate Modular Files (0_Full, 1_Model, 2_Repo, 3_Ctrl, 4_Ex, 5_View)
+            generateModularDiagrams(classes, edges);
+
+            // 4. Generate Complete & Segmented Mermaid Markdown
             generateMermaidMarkdown(classes, edges);
 
-            System.out.println(">>> COMPLETED ALL 60 CLASSES & 120+ RELATIONSHIPS GENERATION IN ALL FORMATS! <<<");
+            System.out.println(">>> COMPLETED ALL 60 CLASSES & 112 RELATIONSHIPS GENERATION IN ALL FORMATS! <<<");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +94,7 @@ public class DiagramGenerator {
         List<UmlClass> list = new ArrayList<>();
 
         // ==========================================
-        // 1. MODEL LAYER (x: 40 to 1440, y: 100 to 1340) - 19 Classes/Enums
+        // 1. MODEL LAYER (19 Classes/Enums)
         // ==========================================
         list.add(new UmlClass("BaseEntity", "BaseEntity", "<<abstract>>",
                 new String[]{"- id: String", "- createdAt, updatedAt: LocalDateTime", "- version: long"},
@@ -173,7 +185,7 @@ public class DiagramGenerator {
                 new String[]{"NO_LOCK", "SYNCHRONIZED", "OPTIMISTIC", "FILE_LOCK"}, new String[]{}, "pkg_model", 750, 870, 200, 100));
 
         // ==========================================
-        // 2. REPOSITORY LAYER (x: 1480 to 3540, y: 100 to 1340) - 13 Classes/Interfaces
+        // 2. REPOSITORY LAYER (13 Classes/Interfaces)
         // ==========================================
         list.add(new UmlClass("IRepository", "IRepository<T>", "<<interface>>",
                 new String[]{},
@@ -227,7 +239,7 @@ public class DiagramGenerator {
                 "pkg_repo", 2840, 580, 260, 130));
 
         // ==========================================
-        // 3. CONTROLLER LAYER (x: 40 to 2000, y: 1400 to 2440) - 13 Classes/Tasks
+        // 3. CONTROLLER LAYER (13 Classes/Tasks)
         // ==========================================
         list.add(new UmlClass("MainController", "MainController", "Central Facade Controller",
                 new String[]{
@@ -314,7 +326,7 @@ public class DiagramGenerator {
                 "pkg_ctrl", 1420, 2170, 380, 130));
 
         // ==========================================
-        // 4. EXCEPTION LAYER (x: 2030 to 2750, y: 1400 to 2440) - 8 Classes
+        // 4. EXCEPTION LAYER (8 Classes)
         // ==========================================
         list.add(new UmlClass("FoodDeliveryException", "FoodDeliveryException", "extends java.lang.Exception",
                 new String[]{}, new String[]{"+ FoodDeliveryException(msg)", "+ FoodDeliveryException(msg, cause)"}, "pkg_ex", 2260, 1460, 260, 80));
@@ -347,7 +359,7 @@ public class DiagramGenerator {
                 new String[]{"+ getFieldName(): String"}, "pkg_ex", 2340, 1960, 260, 100));
 
         // ==========================================
-        // 5. VIEW LAYER & ENTRYPOINT (x: 2780 to 3540, y: 1400 to 2440) - 7 Classes/Interfaces
+        // 5. VIEW LAYER & ENTRYPOINT (7 Classes/Interfaces)
         // ==========================================
         list.add(new UmlClass("Main", "Main", "Application Entrypoint",
                 new String[]{}, new String[]{"+ main(args: String[]): void (static)"}, "pkg_view", 2800, 1460, 220, 80));
@@ -540,12 +552,190 @@ public class DiagramGenerator {
     }
 
     private static void generateSvgAndHtml(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
-        StringBuilder svg = new StringBuilder();
         int width = 3600;
         int height = 2500;
+        String svgContent = renderSvgContent(classes, edges, width, height, true);
 
+        // Save SVG
+        writeFile(new File("docs/Full_Class_Diagram.svg"), svgContent);
+        writeFile(new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.svg"), svgContent);
+
+        // Save Full-Featured Interactive HTML Viewer with Native SVG ViewBox Pan-Zoom
+        StringBuilder html = new StringBuilder();
+        html.append("<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n");
+        html.append("  <meta charset=\"UTF-8\">\n");
+        html.append("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
+        html.append("  <title>Full 60-Class UML Class Diagram - Food Delivery LAB211</title>\n");
+        html.append("  <style>\n");
+        html.append("    * { box-sizing: border-box; margin: 0; padding: 0; }\n");
+        html.append("    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }\n");
+        html.append("    .navbar { height: 60px; background: #1e293b; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; gap: 12px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); flex-shrink: 0; }\n");
+        html.append("    .title-group { display: flex; align-items: center; gap: 10px; }\n");
+        html.append("    .title-group h1 { font-size: 16px; font-weight: 700; color: #f8fafc; letter-spacing: 0.5px; }\n");
+        html.append("    .badge { background: #3b82f6; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 9999px; text-transform: uppercase; }\n");
+        html.append("    .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }\n");
+        html.append("    .btn { background: #334155; color: #f8fafc; border: 1px solid #475569; padding: 6px 12px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 4px; }\n");
+        html.append("    .btn:hover { background: #475569; border-color: #64748b; }\n");
+        html.append("    .btn.active { background: #2563eb; border-color: #3b82f6; color: #ffffff; }\n");
+        html.append("    .btn-action { background: #059669; border-color: #10b981; }\n");
+        html.append("    .btn-action:hover { background: #10b981; }\n");
+        html.append("    .search-box { position: relative; display: flex; align-items: center; }\n");
+        html.append("    .search-input { background: #0f172a; border: 1px solid #475569; color: #f8fafc; padding: 6px 12px; border-radius: 6px; font-size: 12.5px; width: 180px; outline: none; transition: 0.2s; }\n");
+        html.append("    .search-input:focus { border-color: #3b82f6; width: 220px; box-shadow: 0 0 0 2px rgba(59,130,246,0.3); }\n");
+        html.append("    .viewer-container { flex: 1; width: 100%; height: calc(100vh - 60px); position: relative; background: #ffffff; overflow: hidden; cursor: grab; user-select: none; }\n");
+        html.append("    .viewer-container:active { cursor: grabbing; }\n");
+        html.append("    svg#main-svg { width: 100%; height: 100%; display: block; }\n");
+        html.append("    .highlighted rect.class-box { fill: #fef08a !important; stroke: #ca8a04 !important; stroke-width: 3px !important; }\n");
+        html.append("    .hud-tip { position: absolute; bottom: 12px; left: 16px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); padding: 6px 12px; border-radius: 6px; font-size: 11.5px; color: #94a3b8; border: 1px solid #334155; pointer-events: none; }\n");
+        html.append("    .hud-scale { position: absolute; bottom: 12px; right: 16px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); padding: 6px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 600; color: #38bdf8; border: 1px solid #334155; pointer-events: none; }\n");
+        html.append("  </style>\n");
+        html.append("</head>\n<body>\n");
+        html.append("  <div class=\"navbar\">\n");
+        html.append("    <div class=\"title-group\">\n");
+        html.append("      <h1>🏛️ FOOD DELIVERY — UML CLASS DIAGRAM</h1>\n");
+        html.append("      <span class=\"badge\">60 CLASSES &bull; 100% CODE</span>\n");
+        html.append("    </div>\n");
+        html.append("    <div class=\"controls\">\n");
+        html.append("      <button class=\"btn active\" id=\"btn-all\" onclick=\"jumpTo('all')\">🌐 Toàn Bộ (60)</button>\n");
+        html.append("      <button class=\"btn\" id=\"btn-model\" onclick=\"jumpTo('model')\">1. Model (19)</button>\n");
+        html.append("      <button class=\"btn\" id=\"btn-repo\" onclick=\"jumpTo('repo')\">2. Repository (13)</button>\n");
+        html.append("      <button class=\"btn\" id=\"btn-ctrl\" onclick=\"jumpTo('ctrl')\">3. Controller (13)</button>\n");
+        html.append("      <button class=\"btn\" id=\"btn-ex\" onclick=\"jumpTo('ex')\">4. Exception (8)</button>\n");
+        html.append("      <button class=\"btn\" id=\"btn-view\" onclick=\"jumpTo('view')\">5. View (7)</button>\n");
+        html.append("      <div class=\"search-box\">\n");
+        html.append("        <input type=\"text\" id=\"searchInput\" class=\"search-input\" placeholder=\"🔎 Tìm Class...\" oninput=\"searchClass(this.value)\">\n");
+        html.append("      </div>\n");
+        html.append("      <button class=\"btn\" onclick=\"zoomDelta(0.8)\">➕</button>\n");
+        html.append("      <button class=\"btn\" onclick=\"zoomDelta(1.25)\">➖</button>\n");
+        html.append("      <button class=\"btn\" onclick=\"fitScreen()\">🎯 Fit</button>\n");
+        html.append("      <button class=\"btn btn-action\" onclick=\"window.print()\">🖨️ In / PDF</button>\n");
+        html.append("    </div>\n");
+        html.append("  </div>\n");
+        html.append("  <div class=\"viewer-container\" id=\"container\">\n");
+        html.append(svgContent);
+        html.append("    <div class=\"hud-tip\">💡 Kéo chuột để di chuyển (Pan) &bull; Lăn chuột để phóng to/thu nhỏ tại con trỏ &bull; Nhấp đúp để Reset</div>\n");
+        html.append("    <div class=\"hud-scale\" id=\"scaleIndicator\">Zoom: 100%</div>\n");
+        html.append("  </div>\n");
+        html.append("  <script>\n");
+        html.append("    const svg = document.getElementById('main-svg');\n");
+        html.append("    const container = document.getElementById('container');\n");
+        html.append("    const scaleIndicator = document.getElementById('scaleIndicator');\n");
+        html.append("    let vb = { x: 0, y: 0, w: 3600, h: 2500 };\n");
+        html.append("    const defaultVb = { x: 0, y: 0, w: 3600, h: 2500 };\n");
+        html.append("    const layers = {\n");
+        html.append("      all: { x: 0, y: 0, w: 3600, h: 2500 },\n");
+        html.append("      model: { x: 20, y: 80, w: 1400, h: 1270 },\n");
+        html.append("      repo: { x: 1440, y: 80, w: 2130, h: 1270 },\n");
+        html.append("      ctrl: { x: 20, y: 1360, w: 1970, h: 1110 },\n");
+        html.append("      ex: { x: 2000, y: 1360, w: 770, h: 1110 },\n");
+        html.append("      view: { x: 2780, y: 1360, w: 790, h: 1110 }\n");
+        html.append("    };\n");
+        html.append("    function updateViewBox() {\n");
+        html.append("      svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);\n");
+        html.append("      const zoom = Math.round((3600 / vb.w) * 100);\n");
+        html.append("      scaleIndicator.innerText = `Zoom: ${zoom}%`;\n");
+        html.append("    }\n");
+        html.append("    function fitScreen() { jumpTo('all'); }\n");
+        html.append("    function jumpTo(layerKey) {\n");
+        html.append("      const target = layers[layerKey];\n");
+        html.append("      if (!target) return;\n");
+        html.append("      document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));\n");
+        html.append("      const btn = document.getElementById('btn-' + layerKey);\n");
+        html.append("      if (btn) btn.classList.add('active');\n");
+        html.append("      animateViewBox(target);\n");
+        html.append("    }\n");
+        html.append("    function animateViewBox(tgt) {\n");
+        html.append("      const start = { ...vb };\n");
+        html.append("      const startTime = performance.now();\n");
+        html.append("      const duration = 250;\n");
+        html.append("      function step(now) {\n");
+        html.append("        const p = Math.min((now - startTime) / duration, 1);\n");
+        html.append("        const ease = 0.5 - Math.cos(p * Math.PI) / 2;\n");
+        html.append("        vb.x = start.x + (tgt.x - start.x) * ease;\n");
+        html.append("        vb.y = start.y + (tgt.y - start.y) * ease;\n");
+        html.append("        vb.w = start.w + (tgt.w - start.w) * ease;\n");
+        html.append("        vb.h = start.h + (tgt.h - start.h) * ease;\n");
+        html.append("        updateViewBox();\n");
+        html.append("        if (p < 1) requestAnimationFrame(step);\n");
+        html.append("      }\n");
+        html.append("      requestAnimationFrame(step);\n");
+        html.append("    }\n");
+        html.append("    function zoomDelta(factor) {\n");
+        html.append("      const cx = vb.x + vb.w / 2;\n");
+        html.append("      const cy = vb.y + vb.h / 2;\n");
+        html.append("      vb.w *= factor;\n");
+        html.append("      vb.h *= factor;\n");
+        html.append("      vb.x = cx - vb.w / 2;\n");
+        html.append("      vb.y = cy - vb.h / 2;\n");
+        html.append("      updateViewBox();\n");
+        html.append("    }\n");
+        html.append("    let isDragging = false, startX = 0, startY = 0;\n");
+        html.append("    container.addEventListener('mousedown', (e) => {\n");
+        html.append("      if (e.button !== 0) return;\n");
+        html.append("      isDragging = true;\n");
+        html.append("      startX = e.clientX;\n");
+        html.append("      startY = e.clientY;\n");
+        html.append("    });\n");
+        html.append("    window.addEventListener('mousemove', (e) => {\n");
+        html.append("      if (!isDragging) return;\n");
+        html.append("      const rect = container.getBoundingClientRect();\n");
+        html.append("      const dx = (e.clientX - startX) * (vb.w / rect.width);\n");
+        html.append("      const dy = (e.clientY - startY) * (vb.h / rect.height);\n");
+        html.append("      vb.x -= dx;\n");
+        html.append("      vb.y -= dy;\n");
+        html.append("      startX = e.clientX;\n");
+        html.append("      startY = e.clientY;\n");
+        html.append("      updateViewBox();\n");
+        html.append("    });\n");
+        html.append("    window.addEventListener('mouseup', () => { isDragging = false; });\n");
+        html.append("    container.addEventListener('wheel', (e) => {\n");
+        html.append("      e.preventDefault();\n");
+        html.append("      const factor = e.deltaY < 0 ? 0.85 : 1.15;\n");
+        html.append("      const rect = container.getBoundingClientRect();\n");
+        html.append("      const mouseX = e.clientX - rect.left;\n");
+        html.append("      const mouseY = e.clientY - rect.top;\n");
+        html.append("      const svgX = vb.x + (mouseX / rect.width) * vb.w;\n");
+        html.append("      const svgY = vb.y + (mouseY / rect.height) * vb.h;\n");
+        html.append("      vb.w *= factor;\n");
+        html.append("      vb.h *= factor;\n");
+        html.append("      vb.x = svgX - (mouseX / rect.width) * vb.w;\n");
+        html.append("      vb.y = svgY - (mouseY / rect.height) * vb.h;\n");
+        html.append("      updateViewBox();\n");
+        html.append("    }, { passive: false });\n");
+        html.append("    container.addEventListener('dblclick', () => { jumpTo('all'); });\n");
+        html.append("    function searchClass(query) {\n");
+        html.append("      const q = query.trim().toLowerCase();\n");
+        html.append("      document.querySelectorAll('.class-node').forEach(node => {\n");
+        html.append("        node.classList.remove('highlighted');\n");
+        html.append("      });\n");
+        html.append("      if (!q) return;\n");
+        html.append("      let firstMatch = null;\n");
+        html.append("      document.querySelectorAll('.class-node').forEach(node => {\n");
+        html.append("        const id = node.getAttribute('data-id').toLowerCase();\n");
+        html.append("        if (id.includes(q)) {\n");
+        html.append("          node.classList.add('highlighted');\n");
+        html.append("          if (!firstMatch) firstMatch = node;\n");
+        html.append("        }\n");
+        html.append("      });\n");
+        html.append("      if (firstMatch) {\n");
+        html.append("        const cx = parseFloat(firstMatch.getAttribute('data-cx'));\n");
+        html.append("        const cy = parseFloat(firstMatch.getAttribute('data-cy'));\n");
+        html.append("        const w = 700, h = 500;\n");
+        html.append("        animateViewBox({ x: cx - w/2, y: cy - h/2, w: w, h: h });\n");
+        html.append("      }\n");
+        html.append("    }\n");
+        html.append("    updateViewBox();\n");
+        html.append("  </script>\n");
+        html.append("</body>\n</html>\n");
+
+        writeFile(new File("docs/class_diagram_view.html"), html.toString());
+        writeFile(new File("../Lab211-Group1/ClassDiagram/class_diagram_view.html"), html.toString());
+    }
+
+    private static String renderSvgContent(List<UmlClass> classes, List<UmlEdge> edges, int width, int height, boolean full) {
+        StringBuilder svg = new StringBuilder();
         svg.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 ").append(width).append(" ").append(height).append("\" width=\"").append(width).append("\" height=\"").append(height).append("\">\n");
+        svg.append("<svg id=\"main-svg\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 ").append(width).append(" ").append(height).append("\" width=\"100%\" height=\"100%\">\n");
         svg.append("  <defs>\n");
         svg.append("    <style>\n");
         svg.append("      .canvas-bg { fill: #ffffff; }\n");
@@ -580,28 +770,31 @@ public class DiagramGenerator {
         svg.append("  </defs>\n");
 
         svg.append("  <rect width=\"").append(width).append("\" height=\"").append(height).append("\" class=\"canvas-bg\" />\n");
-        svg.append("  <text x=\"").append(width / 2).append("\" y=\"40\" class=\"title-main\">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (60 CLASSES)</text>\n");
-        svg.append("  <text x=\"").append(width / 2).append("\" y=\"65\" class=\"title-sub\">LAB211 OOP with Java | Full System Entities, Repositories, Controllers, Exceptions &amp; Views (Monochrome)</text>\n");
 
-        // Package Frames
-        svg.append("  <rect x=\"30\" y=\"90\" width=\"1380\" height=\"1250\" class=\"pkg-box\" />\n");
-        svg.append("  <text x=\"50\" y=\"118\" class=\"pkg-title\">1. PACKAGE: model (Entities, Enums, Utils)</text>\n");
+        if (full) {
+            svg.append("  <text x=\"").append(width / 2).append("\" y=\"40\" class=\"title-main\">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (60 CLASSES)</text>\n");
+            svg.append("  <text x=\"").append(width / 2).append("\" y=\"65\" class=\"title-sub\">LAB211 OOP with Java | Full System Entities, Repositories, Controllers, Exceptions &amp; Views (Monochrome)</text>\n");
 
-        svg.append("  <rect x=\"1450\" y=\"90\" width=\"2110\" height=\"1250\" class=\"pkg-box\" />\n");
-        svg.append("  <text x=\"1470\" y=\"118\" class=\"pkg-title\">2. PACKAGE: repository (Generic CSV &amp; Physical File I/O)</text>\n");
+            // Package Frames
+            svg.append("  <rect x=\"30\" y=\"90\" width=\"1380\" height=\"1250\" class=\"pkg-box\" />\n");
+            svg.append("  <text x=\"50\" y=\"118\" class=\"pkg-title\">1. PACKAGE: model (Entities, Enums, Utils)</text>\n");
 
-        svg.append("  <rect x=\"30\" y=\"1370\" width=\"1950\" height=\"1090\" class=\"pkg-box\" />\n");
-        svg.append("  <text x=\"50\" y=\"1398\" class=\"pkg-title\">3. PACKAGE: controller (MVC Flow &amp; Threads)</text>\n");
+            svg.append("  <rect x=\"1450\" y=\"90\" width=\"2110\" height=\"1250\" class=\"pkg-box\" />\n");
+            svg.append("  <text x=\"1470\" y=\"118\" class=\"pkg-title\">2. PACKAGE: repository (Generic CSV &amp; Physical File I/O)</text>\n");
 
-        svg.append("  <rect x=\"2010\" y=\"1370\" width=\"750\" height=\"1090\" class=\"pkg-box\" />\n");
-        svg.append("  <text x=\"2030\" y=\"1398\" class=\"pkg-title\">4. PACKAGE: exception (Concurrency &amp; Validation)</text>\n");
+            svg.append("  <rect x=\"30\" y=\"1370\" width=\"1950\" height=\"1090\" class=\"pkg-box\" />\n");
+            svg.append("  <text x=\"50\" y=\"1398\" class=\"pkg-title\">3. PACKAGE: controller (MVC Flow &amp; Threads)</text>\n");
 
-        svg.append("  <rect x=\"2790\" y=\"1370\" width=\"770\" height=\"1090\" class=\"pkg-box\" />\n");
-        svg.append("  <text x=\"2810\" y=\"1398\" class=\"pkg-title\">5. PACKAGE: view &amp; Application Entrypoint</text>\n");
+            svg.append("  <rect x=\"2010\" y=\"1370\" width=\"750\" height=\"1090\" class=\"pkg-box\" />\n");
+            svg.append("  <text x=\"2030\" y=\"1398\" class=\"pkg-title\">4. PACKAGE: exception (Concurrency &amp; Validation)</text>\n");
+
+            svg.append("  <rect x=\"2790\" y=\"1370\" width=\"770\" height=\"1090\" class=\"pkg-box\" />\n");
+            svg.append("  <text x=\"2810\" y=\"1398\" class=\"pkg-title\">5. PACKAGE: view &amp; Application Entrypoint</text>\n");
+        }
 
         // Render Classes
         for (UmlClass c : classes) {
-            svg.append("  <g transform=\"translate(").append(c.x).append(", ").append(c.y).append(")\">\n");
+            svg.append("  <g class=\"class-node\" id=\"node-").append(c.id).append("\" data-id=\"").append(c.id).append("\" data-cx=\"").append(c.cx()).append("\" data-cy=\"").append(c.cy()).append("\" transform=\"translate(").append(c.x).append(", ").append(c.y).append(")\">\n");
             svg.append("    <rect x=\"0\" y=\"0\" width=\"").append(c.w).append("\" height=\"").append(c.h).append("\" class=\"class-box\" />\n");
             svg.append("    <text x=\"").append(c.w / 2).append("\" y=\"20\" class=\"head-title\">").append(escapeXml(c.name)).append("</text>\n");
             if (c.sub != null && !c.sub.isEmpty()) {
@@ -668,95 +861,79 @@ public class DiagramGenerator {
         }
 
         svg.append("</svg>\n");
-
-        // Save SVG
-        File svgFile = new File("docs/Full_Class_Diagram.svg");
-        writeFile(svgFile, svg.toString());
-        File labSvg = new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.svg");
-        writeFile(labSvg, svg.toString());
-
-        // Save HTML Viewer
-        StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n");
-        html.append("  <meta charset=\"UTF-8\">\n");
-        html.append("  <title>Full 60-Class UML Diagram - Food Delivery LAB211</title>\n");
-        html.append("  <style>\n");
-        html.append("    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f3f4f6; color: #111827; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }\n");
-        html.append("    .toolbar { position: sticky; top: 10px; z-index: 100; background: #ffffff; border: 1px solid #d1d5db; border-radius: 10px; padding: 10px 20px; display: flex; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); align-items: center; }\n");
-        html.append("    .btn { background: #111827; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13.5px; }\n");
-        html.append("    .btn:hover { background: #374151; }\n");
-        html.append("    .btn-outline { background: #ffffff; color: #111827; border: 1px solid #9ca3af; }\n");
-        html.append("    .btn-outline:hover { background: #f3f4f6; }\n");
-        html.append("    .status { font-size: 13px; color: #4b5563; font-weight: 500; }\n");
-        html.append("    .viewer { width: 100%; max-width: 98vw; overflow: auto; background: #ffffff; border: 1px solid #d1d5db; border-radius: 12px; padding: 20px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }\n");
-        html.append("    #svg-wrap { transform-origin: top left; transition: transform 0.15s ease-out; }\n");
-        html.append("  </style>\n");
-        html.append("</head>\n<body>\n");
-        html.append("  <div class=\"toolbar\">\n");
-        html.append("    <span style=\"font-weight: bold; color: #000000;\">🏛️ Full 60-Class UML Diagram with ALL Relationships (LAB211)</span>\n");
-        html.append("    <button class=\"btn\" onclick=\"zoomIn()\">➕ Phóng to</button>\n");
-        html.append("    <button class=\"btn\" onclick=\"zoomOut()\">➖ Thu nhỏ</button>\n");
-        html.append("    <button class=\"btn btn-outline\" onclick=\"resetZoom()\">🔄 Vừa màn hình</button>\n");
-        html.append("    <button class=\"btn btn-outline\" onclick=\"window.print()\">🖨️ In / Lưu PDF</button>\n");
-        html.append("    <span class=\"status\" id=\"zoom-text\">Tỉ lệ: 50%</span>\n");
-        html.append("  </div>\n");
-        html.append("  <div class=\"viewer\" id=\"viewer\">\n");
-        html.append("    <div id=\"svg-wrap\">\n");
-        html.append(svg.toString());
-        html.append("    </div>\n");
-        html.append("  </div>\n");
-        html.append("  <script>\n");
-        html.append("    let scale = 0.50;\n");
-        html.append("    const wrap = document.getElementById('svg-wrap');\n");
-        html.append("    const txt = document.getElementById('zoom-text');\n");
-        html.append("    function apply() {\n");
-        html.append("      wrap.style.transform = 'scale(' + scale + ')';\n");
-        html.append("      txt.innerText = 'Tỉ lệ: ' + Math.round(scale * 100) + '%';\n");
-        html.append("    }\n");
-        html.append("    function zoomIn() { scale += 0.1; apply(); }\n");
-        html.append("    function zoomOut() { if (scale > 0.2) scale -= 0.1; apply(); }\n");
-        html.append("    function resetZoom() { scale = 0.50; apply(); }\n");
-        html.append("    apply();\n");
-        html.append("  </script>\n");
-        html.append("</body>\n</html>\n");
-
-        File htmlFile = new File("docs/class_diagram_view.html");
-        writeFile(htmlFile, html.toString());
-        File labHtml = new File("../Lab211-Group1/ClassDiagram/class_diagram_view.html");
-        writeFile(labHtml, html.toString());
+        return svg.toString();
     }
 
-    private static void generateDrawio(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
+    private static void generateMultiTabDrawio(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
         StringBuilder xml = new StringBuilder();
         xml.append("<mxfile host=\"app.diagrams.net\" modified=\"2026-11-11T08:00:00.000Z\" agent=\"Antigravity\" version=\"22.0.0\" type=\"device\">\n");
-        xml.append("  <diagram id=\"FullClassDiagramLAB211\" name=\"Food Delivery Full Class Diagram\">\n");
-        xml.append("    <mxGraphModel dx=\"2800\" dy=\"2000\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"3600\" pageHeight=\"2600\" math=\"0\" shadow=\"0\">\n");
-        xml.append("      <root>\n");
-        xml.append("        <mxCell id=\"0\" />\n");
-        xml.append("        <mxCell id=\"1\" parent=\"0\" />\n");
 
-        // Group Containers at parent="1"
-        xml.append("        <mxCell id=\"pkg_model\" value=\"1. Model Layer (Entities, Enums, Utils)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
-        xml.append("          <mxGeometry x=\"30\" y=\"90\" width=\"1380\" height=\"1250\" as=\"geometry\" />\n");
-        xml.append("        </mxCell>\n");
+        // Tab 0: Toàn bộ Hệ Thống (60 Classes)
+        xml.append(buildDrawioDiagramXml("FullArchitecture", "0. Toàn bộ Hệ Thống (60 Classes)", classes, edges, true));
 
-        xml.append("        <mxCell id=\"pkg_repo\" value=\"2. Repository Layer (Generic CSV &amp; Physical File I/O)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
-        xml.append("          <mxGeometry x=\"1450\" y=\"90\" width=\"2110\" height=\"1250\" as=\"geometry\" />\n");
-        xml.append("        </mxCell>\n");
+        // Tab 1: Model Layer (19 Classes)
+        List<UmlClass> modelClasses = filterClassesByPkg(classes, "pkg_model");
+        List<UmlEdge> modelEdges = filterEdgesByClasses(edges, modelClasses);
+        xml.append(buildDrawioDiagramXml("ModelLayer", "1. Model Layer (19 Classes)", modelClasses, modelEdges, false));
 
-        xml.append("        <mxCell id=\"pkg_ctrl\" value=\"3. Controller Layer (MVC Flow &amp; Threads)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
-        xml.append("          <mxGeometry x=\"30\" y=\"1370\" width=\"1950\" height=\"1090\" as=\"geometry\" />\n");
-        xml.append("        </mxCell>\n");
+        // Tab 2: Repository Layer (13 Classes)
+        List<UmlClass> repoClasses = filterClassesByPkg(classes, "pkg_repo");
+        List<UmlEdge> repoEdges = filterEdgesByClasses(edges, repoClasses);
+        xml.append(buildDrawioDiagramXml("RepoLayer", "2. Repository Layer (13 Classes)", repoClasses, repoEdges, false));
 
-        xml.append("        <mxCell id=\"pkg_ex\" value=\"4. Exception Layer (Concurrency &amp; Validation)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
-        xml.append("          <mxGeometry x=\"2010\" y=\"1370\" width=\"750\" height=\"1090\" as=\"geometry\" />\n");
-        xml.append("        </mxCell>\n");
+        // Tab 3: Controller Layer (13 Classes)
+        List<UmlClass> ctrlClasses = filterClassesByPkg(classes, "pkg_ctrl");
+        List<UmlEdge> ctrlEdges = filterEdgesByClasses(edges, ctrlClasses);
+        xml.append(buildDrawioDiagramXml("CtrlLayer", "3. Controller Layer (13 Classes)", ctrlClasses, ctrlEdges, false));
 
-        xml.append("        <mxCell id=\"pkg_view\" value=\"5. View Layer &amp; Application Entrypoint\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
-        xml.append("          <mxGeometry x=\"2790\" y=\"1370\" width=\"770\" height=\"1090\" as=\"geometry\" />\n");
-        xml.append("        </mxCell>\n");
+        // Tab 4: Exception Layer (8 Classes)
+        List<UmlClass> exClasses = filterClassesByPkg(classes, "pkg_ex");
+        List<UmlEdge> exEdges = filterEdgesByClasses(edges, exClasses);
+        xml.append(buildDrawioDiagramXml("ExLayer", "4. Exception Layer (8 Classes)", exClasses, exEdges, false));
 
-        // Classes positioned globally at parent="1" for rock-solid routing & zero coordinate shifting
+        // Tab 5: View Layer (7 Classes)
+        List<UmlClass> viewClasses = filterClassesByPkg(classes, "pkg_view");
+        List<UmlEdge> viewEdges = filterEdgesByClasses(edges, viewClasses);
+        xml.append(buildDrawioDiagramXml("ViewLayer", "5. View Layer (7 Classes)", viewClasses, viewEdges, false));
+
+        xml.append("</mxfile>\n");
+
+        writeFile(new File("docs/Full_Class_Diagram.drawio"), xml.toString());
+        writeFile(new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.drawio"), xml.toString());
+    }
+
+    private static String buildDrawioDiagramXml(String diagId, String diagName, List<UmlClass> classes, List<UmlEdge> edges, boolean isFull) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("  <diagram id=\"").append(diagId).append("\" name=\"").append(escapeXml(diagName)).append("\">\n");
+        sb.append("    <mxGraphModel dx=\"0\" dy=\"0\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"0\" pageScale=\"1\" math=\"0\" shadow=\"0\">\n");
+        sb.append("      <root>\n");
+        sb.append("        <mxCell id=\"0\" />\n");
+        sb.append("        <mxCell id=\"1\" parent=\"0\" />\n");
+
+        if (isFull) {
+            // Group Containers
+            sb.append("        <mxCell id=\"pkg_model\" value=\"1. Model Layer (Entities, Enums, Utils)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
+            sb.append("          <mxGeometry x=\"30\" y=\"90\" width=\"1380\" height=\"1250\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
+
+            sb.append("        <mxCell id=\"pkg_repo\" value=\"2. Repository Layer (Generic CSV &amp; Physical File I/O)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
+            sb.append("          <mxGeometry x=\"1450\" y=\"90\" width=\"2110\" height=\"1250\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
+
+            sb.append("        <mxCell id=\"pkg_ctrl\" value=\"3. Controller Layer (MVC Flow &amp; Threads)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
+            sb.append("          <mxGeometry x=\"30\" y=\"1370\" width=\"1950\" height=\"1090\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
+
+            sb.append("        <mxCell id=\"pkg_ex\" value=\"4. Exception Layer (Concurrency &amp; Validation)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
+            sb.append("          <mxGeometry x=\"2010\" y=\"1370\" width=\"750\" height=\"1090\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
+
+            sb.append("        <mxCell id=\"pkg_view\" value=\"5. View Layer &amp; Application Entrypoint\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
+            sb.append("          <mxGeometry x=\"2790\" y=\"1370\" width=\"770\" height=\"1090\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
+        }
+
+        // Classes
         for (UmlClass c : classes) {
             StringBuilder val = new StringBuilder();
             val.append("<p style=\"margin:0px;padding-top:4px;text-align:center;\"><b>").append(escapeXml(c.name)).append("</b>");
@@ -783,14 +960,14 @@ public class DiagramGenerator {
                 val.append("</p>");
             }
 
-            xml.append("        <mxCell id=\"").append(c.id).append("\" value=\"").append(escapeXml(val.toString())).append("\" ");
-            xml.append("style=\"verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;strokeWidth=1.5;\" ");
-            xml.append("vertex=\"1\" parent=\"1\">\n");
-            xml.append("          <mxGeometry x=\"").append(c.x).append("\" y=\"").append(c.y).append("\" width=\"").append(c.w).append("\" height=\"").append(c.h).append("\" as=\"geometry\" />\n");
-            xml.append("        </mxCell>\n");
+            sb.append("        <mxCell id=\"").append(c.id).append("\" value=\"").append(escapeXml(val.toString())).append("\" ");
+            sb.append("style=\"verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;strokeWidth=1.5;\" ");
+            sb.append("vertex=\"1\" parent=\"1\">\n");
+            sb.append("          <mxGeometry x=\"").append(c.x).append("\" y=\"").append(c.y).append("\" width=\"").append(c.w).append("\" height=\"").append(c.h).append("\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
         }
 
-        // Draw.io Edges
+        // Edges
         for (UmlEdge e : edges) {
             String style;
             if ("inherit".equals(e.type)) {
@@ -805,32 +982,123 @@ public class DiagramGenerator {
                 style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;";
             }
 
-            xml.append("        <mxCell id=\"").append(e.id).append("\" value=\"").append(escapeXml(e.label)).append("\" ");
-            xml.append("style=\"").append(style).append("fontColor=#000000;fontSize=10;\" ");
-            xml.append("edge=\"1\" parent=\"1\" source=\"").append(e.sourceId).append("\" target=\"").append(e.targetId).append("\">\n");
-            xml.append("          <mxGeometry relative=\"1\" as=\"geometry\" />\n");
-            xml.append("        </mxCell>\n");
+            sb.append("        <mxCell id=\"").append(e.id).append("\" value=\"").append(escapeXml(e.label)).append("\" ");
+            sb.append("style=\"").append(style).append("fontColor=#000000;fontSize=10;\" ");
+            sb.append("edge=\"1\" parent=\"1\" source=\"").append(e.sourceId).append("\" target=\"").append(e.targetId).append("\">\n");
+            sb.append("          <mxGeometry relative=\"1\" as=\"geometry\" />\n");
+            sb.append("        </mxCell>\n");
         }
 
-        xml.append("      </root>\n");
-        xml.append("    </mxGraphModel>\n");
-        xml.append("  </diagram>\n");
-        xml.append("</mxfile>\n");
+        sb.append("      </root>\n");
+        sb.append("    </mxGraphModel>\n");
+        sb.append("  </diagram>\n");
+        return sb.toString();
+    }
 
-        File drawioFile = new File("docs/Full_Class_Diagram.drawio");
-        writeFile(drawioFile, xml.toString());
-        File labDrawio = new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.drawio");
-        writeFile(labDrawio, xml.toString());
+    private static void generateModularDiagrams(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
+        File dir = new File("docs/diagrams");
+        if (!dir.exists()) dir.mkdirs();
+
+        String[] pkgKeys = {"pkg_model", "pkg_repo", "pkg_ctrl", "pkg_ex", "pkg_view"};
+        String[] fileNames = {"1_Model_Layer", "2_Repository_Layer", "3_Controller_Layer", "4_Exception_Layer", "5_View_Layer"};
+        String[] titles = {"1. Model Layer (19 Classes)", "2. Repository Layer (13 Classes)", "3. Controller Layer (13 Classes)", "4. Exception Layer (8 Classes)", "5. View Layer (7 Classes)"};
+
+        for (int i = 0; i < pkgKeys.length; i++) {
+            List<UmlClass> subClasses = filterClassesByPkg(classes, pkgKeys[i]);
+            List<UmlEdge> subEdges = filterEdgesByClasses(edges, subClasses);
+
+            // Compute bounding box
+            int minX = 99999, minY = 99999, maxX = 0, maxY = 0;
+            for (UmlClass c : subClasses) {
+                if (c.x < minX) minX = c.x;
+                if (c.y < minY) minY = c.y;
+                if (c.right() > maxX) maxX = c.right();
+                if (c.bottom() > maxY) maxY = c.bottom();
+            }
+            int pad = 50;
+            int width = (maxX - minX) + pad * 2;
+            int height = (maxY - minY) + pad * 2;
+
+            // Generate Draw.io
+            StringBuilder xml = new StringBuilder();
+            xml.append("<mxfile host=\"app.diagrams.net\" modified=\"2026-11-11T08:00:00.000Z\" agent=\"Antigravity\" version=\"22.0.0\" type=\"device\">\n");
+            xml.append(buildDrawioDiagramXml("Diag_" + fileNames[i], titles[i], subClasses, subEdges, false));
+            xml.append("</mxfile>\n");
+            writeFile(new File("docs/diagrams/" + fileNames[i] + ".drawio"), xml.toString());
+
+            // Generate SVG
+            String svg = renderSvgContent(subClasses, subEdges, 3600, 2500, false);
+            writeFile(new File("docs/diagrams/" + fileNames[i] + ".svg"), svg);
+        }
+
+        // Copy full to diagrams as well
+        writeFile(new File("docs/diagrams/0_Full_Architecture.drawio"), new File("docs/Full_Class_Diagram.drawio"));
+        writeFile(new File("docs/diagrams/0_Full_Architecture.svg"), new File("docs/Full_Class_Diagram.svg"));
+    }
+
+    private static List<UmlClass> filterClassesByPkg(List<UmlClass> classes, String pkg) {
+        List<UmlClass> res = new ArrayList<>();
+        for (UmlClass c : classes) {
+            if (pkg.equals(c.pkg)) res.add(c);
+        }
+        return res;
+    }
+
+    private static List<UmlEdge> filterEdgesByClasses(List<UmlEdge> edges, List<UmlClass> classes) {
+        List<UmlEdge> res = new ArrayList<>();
+        for (UmlEdge e : edges) {
+            boolean hasSrc = false, hasTgt = false;
+            for (UmlClass c : classes) {
+                if (c.id.equals(e.sourceId)) hasSrc = true;
+                if (c.id.equals(e.targetId)) hasTgt = true;
+            }
+            if (hasSrc && hasTgt) res.add(e);
+        }
+        return res;
     }
 
     private static void generateMermaidMarkdown(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
         StringBuilder md = new StringBuilder();
-        md.append("# 🏛️ TOÀN BỘ CLASS DIAGRAM HỆ THỐNG (60 CLASSES - 120+ RELATIONSHIPS)\n\n");
+        md.append("# 🏛️ TOÀN BỘ CLASS DIAGRAM HỆ THỐNG (60 CLASSES - 112 RELATIONSHIPS)\n\n");
         md.append("> **Đồ án:** Food Delivery Network Simulation  \n");
         md.append("> **Môn học:** LAB211 – OOP with Java | FPT University  \n");
         md.append("> **Kiến trúc:** 100% OOP (Không static ngoài main, không final/protected, 100% this., MVC Pattern trên CSV)\n\n");
-        md.append("```mermaid\nclassDiagram\n    direction TB\n\n");
 
+        md.append("## 📑 MỤC LỤC & PHÂN PHIA PHÂN HỆ\n");
+        md.append("1. [Phân hệ 1: Model Layer (19 Classes & Enums)](#1-phân-hệ-1-model-layer-19-classes--enums)\n");
+        md.append("2. [Phân hệ 2: Repository Layer (13 Classes)](#2-phân-hệ-2-repository-layer-13-classes)\n");
+        md.append("3. [Phân hệ 3: Controller Layer (13 Classes)](#3-phân-hệ-3-controller-layer-13-classes)\n");
+        md.append("4. [Phân hệ 4: Exception Layer (8 Classes)](#4-phân-hệ-4-exception-layer-8-classes)\n");
+        md.append("5. [Phân hệ 5: View Layer & Main (7 Classes)](#5-phân-hệ-5-view-layer--main-7-classes)\n");
+        md.append("6. [Sơ đồ Tổng Thể Toàn Hệ Thống](#6-sơ-đồ-tổng-thể-toàn-hệ-thống)\n\n");
+
+        String[] pkgKeys = {"pkg_model", "pkg_repo", "pkg_ctrl", "pkg_ex", "pkg_view"};
+        String[] titles = {
+                "### 1. Phân hệ 1: Model Layer (19 Classes & Enums)",
+                "### 2. Phân hệ 2: Repository Layer (13 Classes)",
+                "### 3. Phân hệ 3: Controller Layer (13 Classes)",
+                "### 4. Phân hệ 4: Exception Layer (8 Classes)",
+                "### 5. Phân hệ 5: View Layer & Main (7 Classes)"
+        };
+
+        for (int i = 0; i < pkgKeys.length; i++) {
+            List<UmlClass> subClasses = filterClassesByPkg(classes, pkgKeys[i]);
+            List<UmlEdge> subEdges = filterEdgesByClasses(edges, subClasses);
+
+            md.append(titles[i]).append("\n\n```mermaid\nclassDiagram\n    direction TB\n\n");
+            renderMermaidClassesAndEdges(md, subClasses, subEdges);
+            md.append("```\n\n");
+        }
+
+        md.append("### 6. Sơ đồ Tổng Thể Toàn Hệ Thống (Full 60 Classes)\n\n```mermaid\nclassDiagram\n    direction TB\n\n");
+        renderMermaidClassesAndEdges(md, classes, edges);
+        md.append("```\n");
+
+        writeFile(new File("docs/class_diagram.md"), md.toString());
+        writeFile(new File("../Lab211-Group1/ClassDiagram/class_diagram.md"), md.toString());
+    }
+
+    private static void renderMermaidClassesAndEdges(StringBuilder md, List<UmlClass> classes, List<UmlEdge> edges) {
         for (UmlClass c : classes) {
             md.append("    class ").append(c.id).append(" {\n");
             if (c.sub != null && !c.sub.isEmpty()) {
@@ -838,12 +1106,12 @@ public class DiagramGenerator {
             }
             if (c.attrs != null) {
                 for (String a : c.attrs) {
-                    md.append("        ").append(a.replace(":", "")).append("\n");
+                    md.append("        ").append(a.replace(":", "").replace("<", "~").replace(">", "~")).append("\n");
                 }
             }
             if (c.meths != null) {
                 for (String m : c.meths) {
-                    md.append("        ").append(m.replace(":", "")).append("\n");
+                    md.append("        ").append(m.replace(":", "").replace("<", "~").replace(">", "~").replace("*", "")).append("\n");
                 }
             }
             md.append("    }\n");
@@ -864,19 +1132,13 @@ public class DiagramGenerator {
             } else if ("depend".equals(e.type)) {
                 op = " ..> ";
                 md.append("    ").append(e.sourceId).append(op).append(e.targetId)
-                  .append(e.label.isEmpty() ? "" : " : " + e.label).append("\n");
+                        .append(e.label.isEmpty() ? "" : " : " + e.label).append("\n");
             } else {
                 op = " --> ";
                 md.append("    ").append(e.sourceId).append(op).append(e.targetId)
-                  .append(e.label.isEmpty() ? "" : " : " + e.label).append("\n");
+                        .append(e.label.isEmpty() ? "" : " : " + e.label).append("\n");
             }
         }
-        md.append("```\n");
-
-        File mdFile = new File("docs/class_diagram.md");
-        writeFile(mdFile, md.toString());
-        File labMd = new File("../Lab211-Group1/ClassDiagram/class_diagram.md");
-        writeFile(labMd, md.toString());
     }
 
     private static String escapeXml(String s) {
@@ -895,5 +1157,13 @@ public class DiagramGenerator {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
             bw.write(content);
         }
+    }
+
+    private static void writeFile(File dest, File src) throws Exception {
+        if (dest.getParentFile() != null && !dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        byte[] bytes = java.nio.file.Files.readAllBytes(src.toPath());
+        java.nio.file.Files.write(dest.toPath(), bytes);
     }
 }

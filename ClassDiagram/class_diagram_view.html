@@ -2,32 +2,57 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Full 60-Class UML Diagram - Food Delivery LAB211</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full 60-Class UML Class Diagram - Food Delivery LAB211</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f3f4f6; color: #111827; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-    .toolbar { position: sticky; top: 10px; z-index: 100; background: #ffffff; border: 1px solid #d1d5db; border-radius: 10px; padding: 10px 20px; display: flex; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); align-items: center; }
-    .btn { background: #111827; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13.5px; }
-    .btn:hover { background: #374151; }
-    .btn-outline { background: #ffffff; color: #111827; border: 1px solid #9ca3af; }
-    .btn-outline:hover { background: #f3f4f6; }
-    .status { font-size: 13px; color: #4b5563; font-weight: 500; }
-    .viewer { width: 100%; max-width: 98vw; overflow: auto; background: #ffffff; border: 1px solid #d1d5db; border-radius: 12px; padding: 20px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    #svg-wrap { transform-origin: top left; transition: transform 0.15s ease-out; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    .navbar { height: 60px; background: #1e293b; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; gap: 12px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); flex-shrink: 0; }
+    .title-group { display: flex; align-items: center; gap: 10px; }
+    .title-group h1 { font-size: 16px; font-weight: 700; color: #f8fafc; letter-spacing: 0.5px; }
+    .badge { background: #3b82f6; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 9999px; text-transform: uppercase; }
+    .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .btn { background: #334155; color: #f8fafc; border: 1px solid #475569; padding: 6px 12px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 4px; }
+    .btn:hover { background: #475569; border-color: #64748b; }
+    .btn.active { background: #2563eb; border-color: #3b82f6; color: #ffffff; }
+    .btn-action { background: #059669; border-color: #10b981; }
+    .btn-action:hover { background: #10b981; }
+    .search-box { position: relative; display: flex; align-items: center; }
+    .search-input { background: #0f172a; border: 1px solid #475569; color: #f8fafc; padding: 6px 12px; border-radius: 6px; font-size: 12.5px; width: 180px; outline: none; transition: 0.2s; }
+    .search-input:focus { border-color: #3b82f6; width: 220px; box-shadow: 0 0 0 2px rgba(59,130,246,0.3); }
+    .viewer-container { flex: 1; width: 100%; height: calc(100vh - 60px); position: relative; background: #ffffff; overflow: hidden; cursor: grab; user-select: none; }
+    .viewer-container:active { cursor: grabbing; }
+    svg#main-svg { width: 100%; height: 100%; display: block; }
+    .highlighted rect.class-box { fill: #fef08a !important; stroke: #ca8a04 !important; stroke-width: 3px !important; }
+    .hud-tip { position: absolute; bottom: 12px; left: 16px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); padding: 6px 12px; border-radius: 6px; font-size: 11.5px; color: #94a3b8; border: 1px solid #334155; pointer-events: none; }
+    .hud-scale { position: absolute; bottom: 12px; right: 16px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); padding: 6px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 600; color: #38bdf8; border: 1px solid #334155; pointer-events: none; }
   </style>
 </head>
 <body>
-  <div class="toolbar">
-    <span style="font-weight: bold; color: #000000;">🏛️ Full 60-Class UML Diagram with ALL Relationships (LAB211)</span>
-    <button class="btn" onclick="zoomIn()">➕ Phóng to</button>
-    <button class="btn" onclick="zoomOut()">➖ Thu nhỏ</button>
-    <button class="btn btn-outline" onclick="resetZoom()">🔄 Vừa màn hình</button>
-    <button class="btn btn-outline" onclick="window.print()">🖨️ In / Lưu PDF</button>
-    <span class="status" id="zoom-text">Tỉ lệ: 50%</span>
+  <div class="navbar">
+    <div class="title-group">
+      <h1>🏛️ FOOD DELIVERY — UML CLASS DIAGRAM</h1>
+      <span class="badge">60 CLASSES &bull; 100% CODE</span>
+    </div>
+    <div class="controls">
+      <button class="btn active" id="btn-all" onclick="jumpTo('all')">🌐 Toàn Bộ (60)</button>
+      <button class="btn" id="btn-model" onclick="jumpTo('model')">1. Model (19)</button>
+      <button class="btn" id="btn-repo" onclick="jumpTo('repo')">2. Repository (13)</button>
+      <button class="btn" id="btn-ctrl" onclick="jumpTo('ctrl')">3. Controller (13)</button>
+      <button class="btn" id="btn-ex" onclick="jumpTo('ex')">4. Exception (8)</button>
+      <button class="btn" id="btn-view" onclick="jumpTo('view')">5. View (7)</button>
+      <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔎 Tìm Class..." oninput="searchClass(this.value)">
+      </div>
+      <button class="btn" onclick="zoomDelta(0.8)">➕</button>
+      <button class="btn" onclick="zoomDelta(1.25)">➖</button>
+      <button class="btn" onclick="fitScreen()">🎯 Fit</button>
+      <button class="btn btn-action" onclick="window.print()">🖨️ In / PDF</button>
+    </div>
   </div>
-  <div class="viewer" id="viewer">
-    <div id="svg-wrap">
+  <div class="viewer-container" id="container">
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3600 2500" width="3600" height="2500">
+<svg id="main-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3600 2500" width="100%" height="100%">
   <defs>
     <style>
       .canvas-bg { fill: #ffffff; }
@@ -71,7 +96,7 @@
   <text x="2030" y="1398" class="pkg-title">4. PACKAGE: exception (Concurrency &amp; Validation)</text>
   <rect x="2790" y="1370" width="770" height="1090" class="pkg-box" />
   <text x="2810" y="1398" class="pkg-title">5. PACKAGE: view &amp; Application Entrypoint</text>
-  <g transform="translate(580, 150)">
+  <g class="class-node" id="node-BaseEntity" data-id="BaseEntity" data-cx="720" data-cy="225" transform="translate(580, 150)">
     <rect x="0" y="0" width="280" height="150" class="class-box" />
     <text x="140" y="20" class="head-title">BaseEntity</text>
     <text x="140" y="32" class="head-sub">&lt;&lt;abstract&gt;&gt;</text>
@@ -86,7 +111,7 @@
     <text x="8" y="157" class="txt-meth">+ toCsvLine()*: String</text>
     <text x="8" y="172" class="txt-meth">+ fromCsvLine(line)*: void</text>
   </g>
-  <g transform="translate(60, 350)">
+  <g class="class-node" id="node-Customer" data-id="Customer" data-cx="175" data-cy="430" transform="translate(60, 350)">
     <rect x="0" y="0" width="230" height="160" class="class-box" />
     <text x="115" y="20" class="head-title">Customer</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
@@ -100,7 +125,7 @@
     <text x="8" y="142" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="157" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(320, 350)">
+  <g class="class-node" id="node-Restaurant" data-id="Restaurant" data-cx="435" data-cy="430" transform="translate(320, 350)">
     <rect x="0" y="0" width="230" height="160" class="class-box" />
     <text x="115" y="20" class="head-title">Restaurant</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
@@ -116,7 +141,7 @@
     <text x="8" y="172" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(580, 350)">
+  <g class="class-node" id="node-MenuItem" data-id="MenuItem" data-cx="695" data-cy="430" transform="translate(580, 350)">
     <rect x="0" y="0" width="230" height="160" class="class-box" />
     <text x="115" y="20" class="head-title">MenuItem</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
@@ -131,7 +156,7 @@
     <text x="8" y="157" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="172" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(840, 350)">
+  <g class="class-node" id="node-Driver" data-id="Driver" data-cx="960" data-cy="430" transform="translate(840, 350)">
     <rect x="0" y="0" width="240" height="160" class="class-box" />
     <text x="120" y="20" class="head-title">Driver</text>
     <text x="120" y="32" class="head-sub">extends BaseEntity</text>
@@ -148,7 +173,7 @@
     <text x="8" y="187" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="202" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(1110, 350)">
+  <g class="class-node" id="node-Order" data-id="Order" data-cx="1235" data-cy="435" transform="translate(1110, 350)">
     <rect x="0" y="0" width="250" height="170" class="class-box" />
     <text x="125" y="20" class="head-title">Order</text>
     <text x="125" y="32" class="head-sub">extends BaseEntity</text>
@@ -166,7 +191,7 @@
     <text x="8" y="202" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="217" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(60, 560)">
+  <g class="class-node" id="node-OrderItem" data-id="OrderItem" data-cx="175" data-cy="630" transform="translate(60, 560)">
     <rect x="0" y="0" width="230" height="140" class="class-box" />
     <text x="115" y="20" class="head-title">OrderItem</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
@@ -181,7 +206,7 @@
     <text x="8" y="157" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="172" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(320, 560)">
+  <g class="class-node" id="node-DeliveryRoute" data-id="DeliveryRoute" data-cx="435" data-cy="630" transform="translate(320, 560)">
     <rect x="0" y="0" width="230" height="140" class="class-box" />
     <text x="115" y="20" class="head-title">DeliveryRoute</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
@@ -197,7 +222,7 @@
     <text x="8" y="172" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(580, 560)">
+  <g class="class-node" id="node-SimulationRun" data-id="SimulationRun" data-cx="695" data-cy="640" transform="translate(580, 560)">
     <rect x="0" y="0" width="230" height="160" class="class-box" />
     <text x="115" y="20" class="head-title">SimulationRun</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
@@ -216,7 +241,7 @@
     <text x="8" y="217" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="232" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(840, 560)">
+  <g class="class-node" id="node-User" data-id="User" data-cx="960" data-cy="640" transform="translate(840, 560)">
     <rect x="0" y="0" width="240" height="160" class="class-box" />
     <text x="120" y="20" class="head-title">User</text>
     <text x="120" y="32" class="head-sub">extends BaseEntity</text>
@@ -232,7 +257,7 @@
     <text x="8" y="172" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(1110, 560)">
+  <g class="class-node" id="node-DriverApplication" data-id="DriverApplication" data-cx="1235" data-cy="635" transform="translate(1110, 560)">
     <rect x="0" y="0" width="250" height="150" class="class-box" />
     <text x="125" y="20" class="head-title">DriverApplication</text>
     <text x="125" y="32" class="head-sub">extends BaseEntity</text>
@@ -246,7 +271,7 @@
     <text x="8" y="142" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="157" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
-  <g transform="translate(840, 750)">
+  <g class="class-node" id="node-UserAccount" data-id="UserAccount" data-cx="960" data-cy="785" transform="translate(840, 750)">
     <rect x="0" y="0" width="240" height="70" class="class-box" />
     <text x="120" y="20" class="head-title">UserAccount</text>
     <text x="120" y="32" class="head-sub">extends User</text>
@@ -255,7 +280,7 @@
     <text x="8" y="67" class="txt-meth">+ UserAccount()</text>
     <text x="8" y="82" class="txt-meth">+ UserAccount(id, user, pass, ...)</text>
   </g>
-  <g transform="translate(1110, 740)">
+  <g class="class-node" id="node-AuthSession" data-id="AuthSession" data-cx="1235" data-cy="785" transform="translate(1110, 740)">
     <rect x="0" y="0" width="250" height="90" class="class-box" />
     <text x="125" y="20" class="head-title">AuthSession</text>
     <text x="125" y="32" class="head-sub">Value Object</text>
@@ -267,7 +292,7 @@
     <text x="8" y="112" class="txt-meth">+ getRole(): AccountRole</text>
     <text x="8" y="127" class="txt-meth">+ getUserId() / getDisplayName()</text>
   </g>
-  <g transform="translate(60, 740)">
+  <g class="class-node" id="node-GeoUtils" data-id="GeoUtils" data-cx="180" data-cy="820" transform="translate(60, 740)">
     <rect x="0" y="0" width="240" height="160" class="class-box" />
     <text x="120" y="20" class="head-title">GeoUtils</text>
     <text x="120" y="32" class="head-sub">Haversine Distance &amp; ETA</text>
@@ -280,7 +305,7 @@
     <text x="8" y="127" class="txt-meth">+ calculateDeliveryMinutes(pDist, dDist): int</text>
     <text x="8" y="142" class="txt-meth">+ formatEstimatedClockTime(epoch, mins): String</text>
   </g>
-  <g transform="translate(330, 740)">
+  <g class="class-node" id="node-DriverStatus" data-id="DriverStatus" data-cx="420" data-cy="785" transform="translate(330, 740)">
     <rect x="0" y="0" width="180" height="90" class="class-box" />
     <text x="90" y="20" class="head-title">DriverStatus</text>
     <text x="90" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
@@ -289,7 +314,7 @@
     <text x="8" y="67" class="txt-attr">BUSY</text>
     <text x="8" y="82" class="txt-attr">OFFLINE</text>
   </g>
-  <g transform="translate(540, 740)">
+  <g class="class-node" id="node-OrderStatus" data-id="OrderStatus" data-cx="650" data-cy="795" transform="translate(540, 740)">
     <rect x="0" y="0" width="220" height="110" class="class-box" />
     <text x="110" y="20" class="head-title">OrderStatus</text>
     <text x="110" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
@@ -300,7 +325,7 @@
     <text x="8" y="97" class="txt-attr">DELIVERED</text>
     <text x="8" y="112" class="txt-attr">CANCELLED</text>
   </g>
-  <g transform="translate(330, 870)">
+  <g class="class-node" id="node-UserRole" data-id="UserRole" data-cx="430" data-cy="940" transform="translate(330, 870)">
     <rect x="0" y="0" width="200" height="140" class="class-box" />
     <text x="100" y="20" class="head-title">UserRole</text>
     <text x="100" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
@@ -314,7 +339,7 @@
     <text x="8" y="142" class="txt-attr">SYSTEM_ADMIN</text>
     <text x="8" y="157" class="txt-attr">USER_ADMIN</text>
   </g>
-  <g transform="translate(560, 880)">
+  <g class="class-node" id="node-AccountRole" data-id="AccountRole" data-cx="640" data-cy="920" transform="translate(560, 880)">
     <rect x="0" y="0" width="160" height="80" class="class-box" />
     <text x="80" y="20" class="head-title">AccountRole</text>
     <text x="80" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
@@ -322,7 +347,7 @@
     <text x="8" y="52" class="txt-attr">CUSTOMER</text>
     <text x="8" y="67" class="txt-attr">DRIVER</text>
   </g>
-  <g transform="translate(750, 870)">
+  <g class="class-node" id="node-LockMechanism" data-id="LockMechanism" data-cx="850" data-cy="920" transform="translate(750, 870)">
     <rect x="0" y="0" width="200" height="100" class="class-box" />
     <text x="100" y="20" class="head-title">LockMechanism</text>
     <text x="100" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
@@ -332,7 +357,7 @@
     <text x="8" y="82" class="txt-attr">OPTIMISTIC</text>
     <text x="8" y="97" class="txt-attr">FILE_LOCK</text>
   </g>
-  <g transform="translate(1520, 150)">
+  <g class="class-node" id="node-IRepository" data-id="IRepository" data-cx="1650" data-cy="220" transform="translate(1520, 150)">
     <rect x="0" y="0" width="260" height="140" class="class-box" />
     <text x="130" y="20" class="head-title">IRepository&lt;T&gt;</text>
     <text x="130" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
@@ -344,7 +369,7 @@
     <text x="8" y="112" class="txt-meth">+ saveAll(entities: List&lt;T&gt;): void</text>
     <text x="8" y="127" class="txt-meth">+ deleteById(id: String): void</text>
   </g>
-  <g transform="translate(1820, 150)">
+  <g class="class-node" id="node-CsvRepository" data-id="CsvRepository" data-cx="2030" data-cy="255" transform="translate(1820, 150)">
     <rect x="0" y="0" width="420" height="210" class="class-box" />
     <text x="210" y="20" class="head-title">CsvRepository&lt;T extends BaseEntity&gt;</text>
     <text x="210" y="32" class="head-sub">&lt;&lt;abstract&gt;&gt; implements IRepository&lt;T&gt;</text>
@@ -362,7 +387,7 @@
     <text x="8" y="202" class="txt-meth">+ executeWithFileLock(action: Runnable): void</text>
     <text x="8" y="217" class="txt-meth">+ updateWithOptimisticLock(entity, ver): void</text>
   </g>
-  <g transform="translate(1520, 390)">
+  <g class="class-node" id="node-CustomerRepository" data-id="CustomerRepository" data-cx="1630" data-cy="435" transform="translate(1520, 390)">
     <rect x="0" y="0" width="220" height="90" class="class-box" />
     <text x="110" y="20" class="head-title">CustomerRepository</text>
     <text x="110" y="32" class="head-sub">extends CsvRepository&lt;Customer&gt;</text>
@@ -371,7 +396,7 @@
     <text x="8" y="67" class="txt-meth">+ CustomerRepository()</text>
     <text x="8" y="82" class="txt-meth">+ createEntity(): Customer</text>
   </g>
-  <g transform="translate(1770, 390)">
+  <g class="class-node" id="node-RestaurantRepository" data-id="RestaurantRepository" data-cx="1880" data-cy="435" transform="translate(1770, 390)">
     <rect x="0" y="0" width="220" height="90" class="class-box" />
     <text x="110" y="20" class="head-title">RestaurantRepository</text>
     <text x="110" y="32" class="head-sub">extends CsvRepository&lt;Restaurant&gt;</text>
@@ -380,7 +405,7 @@
     <text x="8" y="67" class="txt-meth">+ RestaurantRepository()</text>
     <text x="8" y="82" class="txt-meth">+ createEntity(): Restaurant</text>
   </g>
-  <g transform="translate(2020, 390)">
+  <g class="class-node" id="node-MenuItemRepository" data-id="MenuItemRepository" data-cx="2175" data-cy="465" transform="translate(2020, 390)">
     <rect x="0" y="0" width="310" height="150" class="class-box" />
     <text x="155" y="20" class="head-title">MenuItemRepository</text>
     <text x="155" y="32" class="head-sub">extends CsvRepository&lt;MenuItem&gt;</text>
@@ -391,7 +416,7 @@
     <text x="8" y="97" class="txt-meth">- deductStockNoLock / Sync / Optimistic / FileLock</text>
     <text x="8" y="112" class="txt-meth">+ restoreStock(itemId, qty): boolean</text>
   </g>
-  <g transform="translate(2360, 390)">
+  <g class="class-node" id="node-DriverRepository" data-id="DriverRepository" data-cx="2520" data-cy="465" transform="translate(2360, 390)">
     <rect x="0" y="0" width="320" height="150" class="class-box" />
     <text x="160" y="20" class="head-title">DriverRepository</text>
     <text x="160" y="32" class="head-sub">extends CsvRepository&lt;Driver&gt;</text>
@@ -404,7 +429,7 @@
     <text x="8" y="127" class="txt-meth">- markBusyNoLock / Sync / Optimistic / FileLock</text>
     <text x="8" y="142" class="txt-meth">+ markAvailable(driverId: String): boolean</text>
   </g>
-  <g transform="translate(2710, 390)">
+  <g class="class-node" id="node-OrderRepository" data-id="OrderRepository" data-cx="2910" data-cy="470" transform="translate(2710, 390)">
     <rect x="0" y="0" width="400" height="160" class="class-box" />
     <text x="200" y="20" class="head-title">OrderRepository</text>
     <text x="200" y="32" class="head-sub">extends CsvRepository&lt;Order&gt;</text>
@@ -416,7 +441,7 @@
     <text x="8" y="112" class="txt-meth">+ assignDriver(orderId, driverId, mech): boolean</text>
     <text x="8" y="127" class="txt-meth">- assignDriverNoLock / Sync / Optimistic / FileLock</text>
   </g>
-  <g transform="translate(1520, 580)">
+  <g class="class-node" id="node-OrderItemRepository" data-id="OrderItemRepository" data-cx="1630" data-cy="625" transform="translate(1520, 580)">
     <rect x="0" y="0" width="220" height="90" class="class-box" />
     <text x="110" y="20" class="head-title">OrderItemRepository</text>
     <text x="110" y="32" class="head-sub">extends CsvRepository&lt;OrderItem&gt;</text>
@@ -425,7 +450,7 @@
     <text x="8" y="67" class="txt-meth">+ findByOrderId(orderId): List&lt;OrderItem&gt;</text>
     <text x="8" y="82" class="txt-meth">+ createEntity(): OrderItem</text>
   </g>
-  <g transform="translate(1770, 580)">
+  <g class="class-node" id="node-DeliveryRouteRepository" data-id="DeliveryRouteRepository" data-cx="1880" data-cy="625" transform="translate(1770, 580)">
     <rect x="0" y="0" width="220" height="90" class="class-box" />
     <text x="110" y="20" class="head-title">DeliveryRouteRepository</text>
     <text x="110" y="32" class="head-sub">extends CsvRepository&lt;DeliveryRoute&gt;</text>
@@ -434,7 +459,7 @@
     <text x="8" y="67" class="txt-meth">+ DeliveryRouteRepository()</text>
     <text x="8" y="82" class="txt-meth">+ createEntity(): DeliveryRoute</text>
   </g>
-  <g transform="translate(2020, 580)">
+  <g class="class-node" id="node-SimulationRunRepository" data-id="SimulationRunRepository" data-cx="2130" data-cy="625" transform="translate(2020, 580)">
     <rect x="0" y="0" width="220" height="90" class="class-box" />
     <text x="110" y="20" class="head-title">SimulationRunRepository</text>
     <text x="110" y="32" class="head-sub">extends CsvRepository&lt;SimulationRun&gt;</text>
@@ -443,7 +468,7 @@
     <text x="8" y="67" class="txt-meth">+ SimulationRunRepository()</text>
     <text x="8" y="82" class="txt-meth">+ createEntity(): SimulationRun</text>
   </g>
-  <g transform="translate(2270, 580)">
+  <g class="class-node" id="node-DriverApplicationRepository" data-id="DriverApplicationRepository" data-cx="2405" data-cy="640" transform="translate(2270, 580)">
     <rect x="0" y="0" width="270" height="120" class="class-box" />
     <text x="135" y="20" class="head-title">DriverAppRepository</text>
     <text x="135" y="32" class="head-sub">extends CsvRepository&lt;DriverApp&gt;</text>
@@ -453,7 +478,7 @@
     <text x="8" y="82" class="txt-meth">+ findByUsername(username): DriverApp</text>
     <text x="8" y="97" class="txt-meth">+ findByPhone(phone): DriverApp</text>
   </g>
-  <g transform="translate(2570, 580)">
+  <g class="class-node" id="node-UserRepository" data-id="UserRepository" data-cx="2690" data-cy="635" transform="translate(2570, 580)">
     <rect x="0" y="0" width="240" height="110" class="class-box" />
     <text x="120" y="20" class="head-title">UserRepository</text>
     <text x="120" y="32" class="head-sub">extends CsvRepository&lt;User&gt;</text>
@@ -463,7 +488,7 @@
     <text x="8" y="82" class="txt-meth">+ findByPhone(phone): User</text>
     <text x="8" y="97" class="txt-meth">+ createEntity(): User</text>
   </g>
-  <g transform="translate(2840, 580)">
+  <g class="class-node" id="node-AccountRepository" data-id="AccountRepository" data-cx="2970" data-cy="645" transform="translate(2840, 580)">
     <rect x="0" y="0" width="260" height="130" class="class-box" />
     <text x="130" y="20" class="head-title">AccountRepository</text>
     <text x="130" y="32" class="head-sub">PBKDF2 Password Security</text>
@@ -475,7 +500,7 @@
     <text x="8" y="112" class="txt-meth">+ authenticate(role, id, pass): boolean</text>
     <text x="8" y="127" class="txt-meth">+ hasAccount(role, id): boolean</text>
   </g>
-  <g transform="translate(60, 1460)">
+  <g class="class-node" id="node-MainController" data-id="MainController" data-cx="230" data-cy="1575" transform="translate(60, 1460)">
     <rect x="0" y="0" width="340" height="230" class="class-box" />
     <text x="170" y="20" class="head-title">MainController</text>
     <text x="170" y="32" class="head-sub">Central Facade Controller</text>
@@ -496,7 +521,7 @@
     <text x="8" y="247" class="txt-meth">+ runBenchmark(mech, orders): SimulationRun</text>
     <text x="8" y="262" class="txt-meth">+ autoDispatchAllPending(mech): List&lt;String&gt;</text>
   </g>
-  <g transform="translate(430, 1460)">
+  <g class="class-node" id="node-AppController" data-id="AppController" data-cx="530" data-cy="1495" transform="translate(430, 1460)">
     <rect x="0" y="0" width="200" height="70" class="class-box" />
     <text x="100" y="20" class="head-title">AppController</text>
     <text x="100" y="32" class="head-sub">extends MainController</text>
@@ -504,7 +529,7 @@
     <line x1="0" y1="52" x2="200" y2="52" class="sep" />
     <text x="8" y="67" class="txt-meth">+ AppController()</text>
   </g>
-  <g transform="translate(430, 1550)">
+  <g class="class-node" id="node-AuthController" data-id="AuthController" data-cx="610" data-cy="1645" transform="translate(430, 1550)">
     <rect x="0" y="0" width="360" height="190" class="class-box" />
     <text x="180" y="20" class="head-title">AuthController</text>
     <text x="180" y="32" class="head-sub">Authentication &amp; Registration</text>
@@ -522,7 +547,7 @@
     <text x="8" y="202" class="txt-meth">+ registerDriver(...): User</text>
     <text x="8" y="217" class="txt-meth">+ getAllUsers(): List&lt;User&gt;</text>
   </g>
-  <g transform="translate(820, 1460)">
+  <g class="class-node" id="node-CustomerController" data-id="CustomerController" data-cx="985" data-cy="1545" transform="translate(820, 1460)">
     <rect x="0" y="0" width="330" height="170" class="class-box" />
     <text x="165" y="20" class="head-title">CustomerController</text>
     <text x="165" y="32" class="head-sub">Customer Flow</text>
@@ -536,7 +561,7 @@
     <text x="8" y="142" class="txt-meth">+ updateCustomer(id, ...): boolean</text>
     <text x="8" y="157" class="txt-meth">+ getOrderHistory(customerId): List&lt;Order&gt;</text>
   </g>
-  <g transform="translate(1180, 1460)">
+  <g class="class-node" id="node-DriverController" data-id="DriverController" data-cx="1345" data-cy="1545" transform="translate(1180, 1460)">
     <rect x="0" y="0" width="330" height="170" class="class-box" />
     <text x="165" y="20" class="head-title">DriverController</text>
     <text x="165" y="32" class="head-sub">Driver Flow</text>
@@ -549,7 +574,7 @@
     <text x="8" y="127" class="txt-meth">+ updateDriverStatus(id, status): boolean</text>
     <text x="8" y="142" class="txt-meth">+ updateDriverInfo(id, ...): boolean</text>
   </g>
-  <g transform="translate(1540, 1460)">
+  <g class="class-node" id="node-RestaurantController" data-id="RestaurantController" data-cx="1705" data-cy="1545" transform="translate(1540, 1460)">
     <rect x="0" y="0" width="330" height="170" class="class-box" />
     <text x="165" y="20" class="head-title">RestaurantController</text>
     <text x="165" y="32" class="head-sub">Restaurant Flow</text>
@@ -562,7 +587,7 @@
     <text x="8" y="127" class="txt-meth">+ updateStock(menuItemId, newStock): boolean</text>
     <text x="8" y="142" class="txt-meth">+ createMenuItem(restId, name, price, stock): MenuItem</text>
   </g>
-  <g transform="translate(60, 1770)">
+  <g class="class-node" id="node-OrderController" data-id="OrderController" data-cx="300" data-cy="1895" transform="translate(60, 1770)">
     <rect x="0" y="0" width="480" height="250" class="class-box" />
     <text x="240" y="20" class="head-title">OrderController</text>
     <text x="240" y="32" class="head-sub">Order Lifecycle &amp; Auto-Dispatch</text>
@@ -584,7 +609,7 @@
     <text x="8" y="262" class="txt-meth">+ markOrderDelivered(orderId, driverId, mech): boolean</text>
     <text x="8" y="277" class="txt-meth">+ autoDispatchPendingOrders(mech): int</text>
   </g>
-  <g transform="translate(570, 1770)">
+  <g class="class-node" id="node-AdminController" data-id="AdminController" data-cx="775" data-cy="1870" transform="translate(570, 1770)">
     <rect x="0" y="0" width="410" height="200" class="class-box" />
     <text x="205" y="20" class="head-title">AdminController</text>
     <text x="205" y="32" class="head-sub">System Administration</text>
@@ -603,7 +628,7 @@
     <text x="8" y="217" class="txt-meth">+ restockMenuItem(itemId, qty): void</text>
     <text x="8" y="232" class="txt-meth">+ triggerAutoDispatchAllPending(mech): int</text>
   </g>
-  <g transform="translate(1010, 1770)">
+  <g class="class-node" id="node-SimulatorController" data-id="SimulatorController" data-cx="1200" data-cy="1860" transform="translate(1010, 1770)">
     <rect x="0" y="0" width="380" height="180" class="class-box" />
     <text x="190" y="20" class="head-title">SimulatorController</text>
     <text x="190" y="32" class="head-sub">Concurrency Benchmark Simulator</text>
@@ -619,7 +644,7 @@
     <text x="8" y="172" class="txt-meth">+ detectOversellItems(): int</text>
     <text x="8" y="187" class="txt-meth">+ detectDriverOverload(): int</text>
   </g>
-  <g transform="translate(1420, 1770)">
+  <g class="class-node" id="node-CustomerThread" data-id="CustomerThread" data-cx="1610" data-cy="1825" transform="translate(1420, 1770)">
     <rect x="0" y="0" width="380" height="110" class="class-box" />
     <text x="190" y="20" class="head-title">CustomerThread</text>
     <text x="190" y="32" class="head-sub">extends java.lang.Thread</text>
@@ -630,7 +655,7 @@
     <line x1="0" y1="97" x2="380" y2="97" class="sep" />
     <text x="8" y="112" class="txt-meth">+ run(): void (Executes concurrent order placement)</text>
   </g>
-  <g transform="translate(1420, 1900)">
+  <g class="class-node" id="node-DispatchThread" data-id="DispatchThread" data-cx="1610" data-cy="1955" transform="translate(1420, 1900)">
     <rect x="0" y="0" width="380" height="110" class="class-box" />
     <text x="190" y="20" class="head-title">DispatchThread</text>
     <text x="190" y="32" class="head-sub">extends java.lang.Thread</text>
@@ -642,7 +667,7 @@
     <line x1="0" y1="112" x2="380" y2="112" class="sep" />
     <text x="8" y="127" class="txt-meth">+ run(): void (Executes concurrent dispatching)</text>
   </g>
-  <g transform="translate(1420, 2030)">
+  <g class="class-node" id="node-CustomerSimTask" data-id="CustomerSimTask" data-cx="1610" data-cy="2090" transform="translate(1420, 2030)">
     <rect x="0" y="0" width="380" height="120" class="class-box" />
     <text x="190" y="20" class="head-title">CustomerSimTask</text>
     <text x="190" y="32" class="head-sub">implements java.lang.Runnable</text>
@@ -656,7 +681,7 @@
     <text x="8" y="142" class="txt-meth">+ CustomerSimTask(...)</text>
     <text x="8" y="157" class="txt-meth">+ run(): void (Executes concurrent stock deduction)</text>
   </g>
-  <g transform="translate(1420, 2170)">
+  <g class="class-node" id="node-DispatchSimTask" data-id="DispatchSimTask" data-cx="1610" data-cy="2235" transform="translate(1420, 2170)">
     <rect x="0" y="0" width="380" height="130" class="class-box" />
     <text x="190" y="20" class="head-title">DispatchSimTask</text>
     <text x="190" y="32" class="head-sub">implements java.lang.Runnable</text>
@@ -671,7 +696,7 @@
     <text x="8" y="157" class="txt-meth">+ DispatchSimTask(...)</text>
     <text x="8" y="172" class="txt-meth">+ run(): void (Executes concurrent driver dispatch)</text>
   </g>
-  <g transform="translate(2260, 1460)">
+  <g class="class-node" id="node-FoodDeliveryException" data-id="FoodDeliveryException" data-cx="2390" data-cy="1500" transform="translate(2260, 1460)">
     <rect x="0" y="0" width="260" height="80" class="class-box" />
     <text x="130" y="20" class="head-title">FoodDeliveryException</text>
     <text x="130" y="32" class="head-sub">extends java.lang.Exception</text>
@@ -680,7 +705,7 @@
     <text x="8" y="67" class="txt-meth">+ FoodDeliveryException(msg)</text>
     <text x="8" y="82" class="txt-meth">+ FoodDeliveryException(msg, cause)</text>
   </g>
-  <g transform="translate(2260, 1570)">
+  <g class="class-node" id="node-ConcurrencyException" data-id="ConcurrencyException" data-cx="2390" data-cy="1610" transform="translate(2260, 1570)">
     <rect x="0" y="0" width="260" height="80" class="class-box" />
     <text x="130" y="20" class="head-title">ConcurrencyException</text>
     <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
@@ -689,7 +714,7 @@
     <text x="8" y="67" class="txt-meth">+ ConcurrencyException(msg)</text>
     <text x="8" y="82" class="txt-meth">+ ConcurrencyException(msg, cause)</text>
   </g>
-  <g transform="translate(2050, 1680)">
+  <g class="class-node" id="node-DoubleAssignmentException" data-id="DoubleAssignmentException" data-cx="2180" data-cy="1740" transform="translate(2050, 1680)">
     <rect x="0" y="0" width="260" height="120" class="class-box" />
     <text x="130" y="20" class="head-title">DoubleAssignmentException</text>
     <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
@@ -701,7 +726,7 @@
     <text x="8" y="112" class="txt-meth">+ getExistingDriverId(): String</text>
     <text x="8" y="127" class="txt-meth">+ getAttemptedDriverId(): String</text>
   </g>
-  <g transform="translate(2340, 1680)">
+  <g class="class-node" id="node-DriverOverloadException" data-id="DriverOverloadException" data-cx="2470" data-cy="1740" transform="translate(2340, 1680)">
     <rect x="0" y="0" width="260" height="120" class="class-box" />
     <text x="130" y="20" class="head-title">DriverOverloadException</text>
     <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
@@ -712,7 +737,7 @@
     <text x="8" y="97" class="txt-meth">+ getDriverId(): String</text>
     <text x="8" y="112" class="txt-meth">+ getCurrentOrderId(): String</text>
   </g>
-  <g transform="translate(2050, 1820)">
+  <g class="class-node" id="node-OptimisticLockException" data-id="OptimisticLockException" data-cx="2180" data-cy="1880" transform="translate(2050, 1820)">
     <rect x="0" y="0" width="260" height="120" class="class-box" />
     <text x="130" y="20" class="head-title">OptimisticLockException</text>
     <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
@@ -724,7 +749,7 @@
     <text x="8" y="112" class="txt-meth">+ getExpectedVersion(): long</text>
     <text x="8" y="127" class="txt-meth">+ getCurrentVersion(): long</text>
   </g>
-  <g transform="translate(2340, 1820)">
+  <g class="class-node" id="node-OversellException" data-id="OversellException" data-cx="2470" data-cy="1880" transform="translate(2340, 1820)">
     <rect x="0" y="0" width="260" height="120" class="class-box" />
     <text x="130" y="20" class="head-title">OversellException</text>
     <text x="130" y="32" class="head-sub">extends ConcurrencyException</text>
@@ -736,7 +761,7 @@
     <text x="8" y="112" class="txt-meth">+ getRequestedQty(): int</text>
     <text x="8" y="127" class="txt-meth">+ getAvailableQty(): int</text>
   </g>
-  <g transform="translate(2050, 1960)">
+  <g class="class-node" id="node-EntityNotFoundException" data-id="EntityNotFoundException" data-cx="2180" data-cy="2010" transform="translate(2050, 1960)">
     <rect x="0" y="0" width="260" height="100" class="class-box" />
     <text x="130" y="20" class="head-title">EntityNotFoundException</text>
     <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
@@ -746,7 +771,7 @@
     <text x="8" y="82" class="txt-meth">+ getEntityName(): String</text>
     <text x="8" y="97" class="txt-meth">+ getEntityId(): String</text>
   </g>
-  <g transform="translate(2340, 1960)">
+  <g class="class-node" id="node-InvalidInputException" data-id="InvalidInputException" data-cx="2470" data-cy="2010" transform="translate(2340, 1960)">
     <rect x="0" y="0" width="260" height="100" class="class-box" />
     <text x="130" y="20" class="head-title">InvalidInputException</text>
     <text x="130" y="32" class="head-sub">extends FoodDeliveryException</text>
@@ -755,7 +780,7 @@
     <line x1="0" y1="67" x2="260" y2="67" class="sep" />
     <text x="8" y="82" class="txt-meth">+ getFieldName(): String</text>
   </g>
-  <g transform="translate(2800, 1460)">
+  <g class="class-node" id="node-Main" data-id="Main" data-cx="2910" data-cy="1500" transform="translate(2800, 1460)">
     <rect x="0" y="0" width="220" height="80" class="class-box" />
     <text x="110" y="20" class="head-title">Main</text>
     <text x="110" y="32" class="head-sub">Application Entrypoint</text>
@@ -763,7 +788,7 @@
     <line x1="0" y1="52" x2="220" y2="52" class="sep" />
     <text x="8" y="67" class="txt-meth">+ main(args: String[]): void (static)</text>
   </g>
-  <g transform="translate(3050, 1460)">
+  <g class="class-node" id="node-IView" data-id="IView" data-cx="3150" data-cy="1500" transform="translate(3050, 1460)">
     <rect x="0" y="0" width="200" height="80" class="class-box" />
     <text x="100" y="20" class="head-title">IView</text>
     <text x="100" y="32" class="head-sub">&lt;&lt;interface&gt;&gt;</text>
@@ -771,7 +796,7 @@
     <line x1="0" y1="52" x2="200" y2="52" class="sep" />
     <text x="8" y="67" class="txt-meth">+ display(): void</text>
   </g>
-  <g transform="translate(2800, 1560)">
+  <g class="class-node" id="node-MainView" data-id="MainView" data-cx="3025" data-cy="1680" transform="translate(2800, 1560)">
     <rect x="0" y="0" width="450" height="240" class="class-box" />
     <text x="225" y="20" class="head-title">MainView</text>
     <text x="225" y="32" class="head-sub">implements IView</text>
@@ -787,7 +812,7 @@
     <text x="8" y="172" class="txt-meth">- checkAndDisplayCustomerNotifications(custId): void</text>
     <text x="8" y="187" class="txt-meth">- handleCustomerPlaceOrderFlow(custId): void</text>
   </g>
-  <g transform="translate(2800, 1830)">
+  <g class="class-node" id="node-MapView" data-id="MapView" data-cx="2925" data-cy="1880" transform="translate(2800, 1830)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
     <text x="125" y="20" class="head-title">MapView</text>
     <text x="125" y="32" class="head-sub">ASCII Grid Map Visualizer</text>
@@ -797,7 +822,7 @@
     <line x1="0" y1="82" x2="250" y2="82" class="sep" />
     <text x="8" y="97" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers, orders): void</text>
   </g>
-  <g transform="translate(3080, 1830)">
+  <g class="class-node" id="node-OrderView" data-id="OrderView" data-cx="3205" data-cy="1880" transform="translate(3080, 1830)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
     <text x="125" y="20" class="head-title">OrderView</text>
     <text x="125" y="32" class="head-sub">Orders &amp; Menus Output</text>
@@ -806,7 +831,7 @@
     <text x="8" y="67" class="txt-meth">+ renderOrders(orders: List&lt;Order&gt;): void</text>
     <text x="8" y="82" class="txt-meth">+ displayMenu(restaurant, items): void</text>
   </g>
-  <g transform="translate(2800, 1950)">
+  <g class="class-node" id="node-ReportView" data-id="ReportView" data-cx="2925" data-cy="2000" transform="translate(2800, 1950)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
     <text x="125" y="20" class="head-title">ReportView</text>
     <text x="125" y="32" class="head-sub">Benchmark Summary</text>
@@ -815,7 +840,7 @@
     <text x="8" y="67" class="txt-meth">+ printResearchConclusion(runs): void</text>
     <text x="8" y="82" class="txt-meth">+ renderSimulationSummary(run): void</text>
   </g>
-  <g transform="translate(3080, 1950)">
+  <g class="class-node" id="node-SimulatorView" data-id="SimulatorView" data-cx="3205" data-cy="2000" transform="translate(3080, 1950)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
     <text x="125" y="20" class="head-title">SimulatorView</text>
     <text x="125" y="32" class="head-sub">Benchmark Comparison Table</text>
@@ -969,20 +994,118 @@
   <path d="M 2925 1830 L 1235 520" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="2080" y="1171" class="edge-label">audits active</text>
 </svg>
-    </div>
+    <div class="hud-tip">💡 Kéo chuột để di chuyển (Pan) &bull; Lăn chuột để phóng to/thu nhỏ tại con trỏ &bull; Nhấp đúp để Reset</div>
+    <div class="hud-scale" id="scaleIndicator">Zoom: 100%</div>
   </div>
   <script>
-    let scale = 0.50;
-    const wrap = document.getElementById('svg-wrap');
-    const txt = document.getElementById('zoom-text');
-    function apply() {
-      wrap.style.transform = 'scale(' + scale + ')';
-      txt.innerText = 'Tỉ lệ: ' + Math.round(scale * 100) + '%';
+    const svg = document.getElementById('main-svg');
+    const container = document.getElementById('container');
+    const scaleIndicator = document.getElementById('scaleIndicator');
+    let vb = { x: 0, y: 0, w: 3600, h: 2500 };
+    const defaultVb = { x: 0, y: 0, w: 3600, h: 2500 };
+    const layers = {
+      all: { x: 0, y: 0, w: 3600, h: 2500 },
+      model: { x: 20, y: 80, w: 1400, h: 1270 },
+      repo: { x: 1440, y: 80, w: 2130, h: 1270 },
+      ctrl: { x: 20, y: 1360, w: 1970, h: 1110 },
+      ex: { x: 2000, y: 1360, w: 770, h: 1110 },
+      view: { x: 2780, y: 1360, w: 790, h: 1110 }
+    };
+    function updateViewBox() {
+      svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+      const zoom = Math.round((3600 / vb.w) * 100);
+      scaleIndicator.innerText = `Zoom: ${zoom}%`;
     }
-    function zoomIn() { scale += 0.1; apply(); }
-    function zoomOut() { if (scale > 0.2) scale -= 0.1; apply(); }
-    function resetZoom() { scale = 0.50; apply(); }
-    apply();
+    function fitScreen() { jumpTo('all'); }
+    function jumpTo(layerKey) {
+      const target = layers[layerKey];
+      if (!target) return;
+      document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('btn-' + layerKey);
+      if (btn) btn.classList.add('active');
+      animateViewBox(target);
+    }
+    function animateViewBox(tgt) {
+      const start = { ...vb };
+      const startTime = performance.now();
+      const duration = 250;
+      function step(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const ease = 0.5 - Math.cos(p * Math.PI) / 2;
+        vb.x = start.x + (tgt.x - start.x) * ease;
+        vb.y = start.y + (tgt.y - start.y) * ease;
+        vb.w = start.w + (tgt.w - start.w) * ease;
+        vb.h = start.h + (tgt.h - start.h) * ease;
+        updateViewBox();
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    function zoomDelta(factor) {
+      const cx = vb.x + vb.w / 2;
+      const cy = vb.y + vb.h / 2;
+      vb.w *= factor;
+      vb.h *= factor;
+      vb.x = cx - vb.w / 2;
+      vb.y = cy - vb.h / 2;
+      updateViewBox();
+    }
+    let isDragging = false, startX = 0, startY = 0;
+    container.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const rect = container.getBoundingClientRect();
+      const dx = (e.clientX - startX) * (vb.w / rect.width);
+      const dy = (e.clientY - startY) * (vb.h / rect.height);
+      vb.x -= dx;
+      vb.y -= dy;
+      startX = e.clientX;
+      startY = e.clientY;
+      updateViewBox();
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? 0.85 : 1.15;
+      const rect = container.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const svgX = vb.x + (mouseX / rect.width) * vb.w;
+      const svgY = vb.y + (mouseY / rect.height) * vb.h;
+      vb.w *= factor;
+      vb.h *= factor;
+      vb.x = svgX - (mouseX / rect.width) * vb.w;
+      vb.y = svgY - (mouseY / rect.height) * vb.h;
+      updateViewBox();
+    }, { passive: false });
+    container.addEventListener('dblclick', () => { jumpTo('all'); });
+    function searchClass(query) {
+      const q = query.trim().toLowerCase();
+      document.querySelectorAll('.class-node').forEach(node => {
+        node.classList.remove('highlighted');
+      });
+      if (!q) return;
+      let firstMatch = null;
+      document.querySelectorAll('.class-node').forEach(node => {
+        const id = node.getAttribute('data-id').toLowerCase();
+        if (id.includes(q)) {
+          node.classList.add('highlighted');
+          if (!firstMatch) firstMatch = node;
+        }
+      });
+      if (firstMatch) {
+        const cx = parseFloat(firstMatch.getAttribute('data-cx'));
+        const cy = parseFloat(firstMatch.getAttribute('data-cy'));
+        const w = 700, h = 500;
+        animateViewBox({ x: cx - w/2, y: cy - h/2, w: w, h: h });
+      }
+    }
+    updateViewBox();
   </script>
 </body>
 </html>
