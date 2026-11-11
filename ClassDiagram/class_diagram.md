@@ -1,4 +1,4 @@
-# 🏛️ TOÀN BỘ CLASS DIAGRAM HỆ THỐNG (58 CLASSES - 110+ RELATIONSHIPS)
+# 🏛️ TOÀN BỘ CLASS DIAGRAM HỆ THỐNG (60 CLASSES - 120+ RELATIONSHIPS)
 
 > **Đồ án:** Food Delivery Network Simulation  
 > **Môn học:** LAB211 – OOP with Java | FPT University  
@@ -54,14 +54,14 @@ classDiagram
     }
     class Driver {
         <<extends BaseEntity>>
-        - fullName, phone, plate String
-        - lat, lon double
+        - fullName, phone, licensePlate String
+        - latitude, longitude double
         - status DriverStatus
-        - currentOrderId String
         - activeOrderCount int
+        - currentOrderId String
         + getStatus() / setStatus(st)
+        + getActiveOrderCount() / setActiveOrderCount()
         + getCurrentOrderId() / setCurrentOrderId()
-        + getLicensePlate() String
         + toCsvLine() String
         + fromCsvLine(line) void
     }
@@ -70,7 +70,7 @@ classDiagram
         - customerId, restaurantId String
         - driverId String
         - status OrderStatus
-        - totalFoodAmount, fee double
+        - totalFoodAmount, deliveryFee double
         - createdAtEpochMs long
         - assignCount int
         + getDriverId() / setDriverId(did)
@@ -107,10 +107,12 @@ classDiagram
         - mechanism LockMechanism
         - totalOrders int, durationMs long
         - throughputOpsPerSec double
-        - doubleAssignErrors, oversell int
+        - throughputDropPercent double
+        - doubleAssignErrors, oversellErrors int
         - driverOverloadErrors int
         + getMechanism() LockMechanism
         + getThroughputOpsPerSec() double
+        + getThroughputDropPercent() double
         + getTotalErrors() int
         + toCsvLine() String
         + fromCsvLine(line) void
@@ -130,7 +132,7 @@ classDiagram
     class DriverApplication {
         <<extends BaseEntity>>
         - username, password String
-        - fullName, phone, plate String
+        - fullName, phone, licensePlate String
         - vehicleType, status, note String
         + getUsername() / getStatus()
         + setStatus(status String) void
@@ -178,7 +180,11 @@ classDiagram
         CUSTOMER
         DRIVER
         RESTAURANT
+        DISPATCHER
         ADMIN
+        RESTAURANT_ADMIN
+        SYSTEM_ADMIN
+        USER_ADMIN
     }
     class AccountRole {
         <<enum>>
@@ -406,6 +412,27 @@ classDiagram
         - mechanism LockMechanism
         + run() void (Executes concurrent dispatching)
     }
+    class CustomerSimTask {
+        <<implements java.lang.Runnable>>
+        - startGate, doneGate CountDownLatch
+        - menuItemRepo MenuItemRepository
+        - targetItemId String
+        - mechanism LockMechanism
+        - simulatedOversell AtomicInteger
+        + CustomerSimTask(...)
+        + run() void (Executes concurrent stock deduction)
+    }
+    class DispatchSimTask {
+        <<implements java.lang.Runnable>>
+        - startGate, doneGate CountDownLatch
+        - driverRepo DriverRepository
+        - orderRepo OrderRepository
+        - targetOrderId, targetDriverId String
+        - mechanism LockMechanism
+        - simulatedDoubleAssign, simulatedDriverOverload AtomicInteger
+        + DispatchSimTask(...)
+        + run() void (Executes concurrent driver dispatch)
+    }
     class FoodDeliveryException {
         <<extends java.lang.Exception>>
         + FoodDeliveryException(msg)
@@ -579,6 +606,13 @@ classDiagram
     SimulatorController o-- OrderRepository
     SimulatorController o-- DriverRepository
     SimulatorController o-- MenuItemRepository
+    SimulatorController o-- CustomerSimTask
+    SimulatorController o-- DispatchSimTask
+    CustomerSimTask o-- MenuItemRepository
+    CustomerSimTask --> LockMechanism
+    DispatchSimTask o-- DriverRepository
+    DispatchSimTask o-- OrderRepository
+    DispatchSimTask --> LockMechanism
     CustomerThread ..> OrderController : calls
     DispatchThread ..> OrderController : calls
     DispatchThread ..> LockMechanism : uses mechanism

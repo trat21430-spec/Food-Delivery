@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Full 58-Class UML Diagram - Food Delivery LAB211</title>
+  <title>Full 60-Class UML Diagram - Food Delivery LAB211</title>
   <style>
     body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f3f4f6; color: #111827; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
     .toolbar { position: sticky; top: 10px; z-index: 100; background: #ffffff; border: 1px solid #d1d5db; border-radius: 10px; padding: 10px 20px; display: flex; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); align-items: center; }
@@ -17,7 +17,7 @@
 </head>
 <body>
   <div class="toolbar">
-    <span style="font-weight: bold; color: #000000;">🏛️ Full 58-Class UML Diagram with ALL Relationships (LAB211)</span>
+    <span style="font-weight: bold; color: #000000;">🏛️ Full 60-Class UML Diagram with ALL Relationships (LAB211)</span>
     <button class="btn" onclick="zoomIn()">➕ Phóng to</button>
     <button class="btn" onclick="zoomOut()">➖ Thu nhỏ</button>
     <button class="btn btn-outline" onclick="resetZoom()">🔄 Vừa màn hình</button>
@@ -59,7 +59,7 @@
     </marker>
   </defs>
   <rect width="3600" height="2500" class="canvas-bg" />
-  <text x="1800" y="40" class="title-main">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (58 CLASSES)</text>
+  <text x="1800" y="40" class="title-main">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (60 CLASSES)</text>
   <text x="1800" y="65" class="title-sub">LAB211 OOP with Java | Full System Entities, Repositories, Controllers, Exceptions &amp; Views (Monochrome)</text>
   <rect x="30" y="90" width="1380" height="1250" class="pkg-box" />
   <text x="50" y="118" class="pkg-title">1. PACKAGE: model (Entities, Enums, Utils)</text>
@@ -136,15 +136,15 @@
     <text x="120" y="20" class="head-title">Driver</text>
     <text x="120" y="32" class="head-sub">extends BaseEntity</text>
     <line x1="0" y1="38" x2="240" y2="38" class="sep" />
-    <text x="8" y="52" class="txt-attr">- fullName, phone, plate: String</text>
-    <text x="8" y="67" class="txt-attr">- lat, lon: double</text>
+    <text x="8" y="52" class="txt-attr">- fullName, phone, licensePlate: String</text>
+    <text x="8" y="67" class="txt-attr">- latitude, longitude: double</text>
     <text x="8" y="82" class="txt-attr">- status: DriverStatus</text>
-    <text x="8" y="97" class="txt-attr">- currentOrderId: String</text>
-    <text x="8" y="112" class="txt-attr">- activeOrderCount: int</text>
+    <text x="8" y="97" class="txt-attr">- activeOrderCount: int</text>
+    <text x="8" y="112" class="txt-attr">- currentOrderId: String</text>
     <line x1="0" y1="127" x2="240" y2="127" class="sep" />
     <text x="8" y="142" class="txt-meth">+ getStatus() / setStatus(st)</text>
-    <text x="8" y="157" class="txt-meth">+ getCurrentOrderId() / setCurrentOrderId()</text>
-    <text x="8" y="172" class="txt-meth">+ getLicensePlate(): String</text>
+    <text x="8" y="157" class="txt-meth">+ getActiveOrderCount() / setActiveOrderCount()</text>
+    <text x="8" y="172" class="txt-meth">+ getCurrentOrderId() / setCurrentOrderId()</text>
     <text x="8" y="187" class="txt-meth">+ toCsvLine(): String</text>
     <text x="8" y="202" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
@@ -156,7 +156,7 @@
     <text x="8" y="52" class="txt-attr">- customerId, restaurantId: String</text>
     <text x="8" y="67" class="txt-attr">- driverId: String</text>
     <text x="8" y="82" class="txt-attr">- status: OrderStatus</text>
-    <text x="8" y="97" class="txt-attr">- totalFoodAmount, fee: double</text>
+    <text x="8" y="97" class="txt-attr">- totalFoodAmount, deliveryFee: double</text>
     <text x="8" y="112" class="txt-attr">- createdAtEpochMs: long</text>
     <text x="8" y="127" class="txt-attr">- assignCount: int</text>
     <line x1="0" y1="142" x2="250" y2="142" class="sep" />
@@ -198,21 +198,23 @@
     <text x="8" y="187" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
   <g transform="translate(580, 560)">
-    <rect x="0" y="0" width="230" height="150" class="class-box" />
+    <rect x="0" y="0" width="230" height="160" class="class-box" />
     <text x="115" y="20" class="head-title">SimulationRun</text>
     <text x="115" y="32" class="head-sub">extends BaseEntity</text>
     <line x1="0" y1="38" x2="230" y2="38" class="sep" />
     <text x="8" y="52" class="txt-attr">- mechanism: LockMechanism</text>
     <text x="8" y="67" class="txt-attr">- totalOrders: int, durationMs: long</text>
     <text x="8" y="82" class="txt-attr">- throughputOpsPerSec: double</text>
-    <text x="8" y="97" class="txt-attr">- doubleAssignErrors, oversell: int</text>
-    <text x="8" y="112" class="txt-attr">- driverOverloadErrors: int</text>
-    <line x1="0" y1="127" x2="230" y2="127" class="sep" />
-    <text x="8" y="142" class="txt-meth">+ getMechanism(): LockMechanism</text>
-    <text x="8" y="157" class="txt-meth">+ getThroughputOpsPerSec(): double</text>
-    <text x="8" y="172" class="txt-meth">+ getTotalErrors(): int</text>
-    <text x="8" y="187" class="txt-meth">+ toCsvLine(): String</text>
-    <text x="8" y="202" class="txt-meth">+ fromCsvLine(line): void</text>
+    <text x="8" y="97" class="txt-attr">- throughputDropPercent: double</text>
+    <text x="8" y="112" class="txt-attr">- doubleAssignErrors, oversellErrors: int</text>
+    <text x="8" y="127" class="txt-attr">- driverOverloadErrors: int</text>
+    <line x1="0" y1="142" x2="230" y2="142" class="sep" />
+    <text x="8" y="157" class="txt-meth">+ getMechanism(): LockMechanism</text>
+    <text x="8" y="172" class="txt-meth">+ getThroughputOpsPerSec(): double</text>
+    <text x="8" y="187" class="txt-meth">+ getThroughputDropPercent(): double</text>
+    <text x="8" y="202" class="txt-meth">+ getTotalErrors(): int</text>
+    <text x="8" y="217" class="txt-meth">+ toCsvLine(): String</text>
+    <text x="8" y="232" class="txt-meth">+ fromCsvLine(line): void</text>
   </g>
   <g transform="translate(840, 560)">
     <rect x="0" y="0" width="240" height="160" class="class-box" />
@@ -236,7 +238,7 @@
     <text x="125" y="32" class="head-sub">extends BaseEntity</text>
     <line x1="0" y1="38" x2="250" y2="38" class="sep" />
     <text x="8" y="52" class="txt-attr">- username, password: String</text>
-    <text x="8" y="67" class="txt-attr">- fullName, phone, plate: String</text>
+    <text x="8" y="67" class="txt-attr">- fullName, phone, licensePlate: String</text>
     <text x="8" y="82" class="txt-attr">- vehicleType, status, note: String</text>
     <line x1="0" y1="97" x2="250" y2="97" class="sep" />
     <text x="8" y="112" class="txt-meth">+ getUsername() / getStatus()</text>
@@ -299,20 +301,24 @@
     <text x="8" y="112" class="txt-attr">CANCELLED</text>
   </g>
   <g transform="translate(330, 870)">
-    <rect x="0" y="0" width="180" height="100" class="class-box" />
-    <text x="90" y="20" class="head-title">UserRole</text>
-    <text x="90" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
-    <line x1="0" y1="38" x2="180" y2="38" class="sep" />
+    <rect x="0" y="0" width="200" height="140" class="class-box" />
+    <text x="100" y="20" class="head-title">UserRole</text>
+    <text x="100" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="200" y2="38" class="sep" />
     <text x="8" y="52" class="txt-attr">CUSTOMER</text>
     <text x="8" y="67" class="txt-attr">DRIVER</text>
     <text x="8" y="82" class="txt-attr">RESTAURANT</text>
-    <text x="8" y="97" class="txt-attr">ADMIN</text>
+    <text x="8" y="97" class="txt-attr">DISPATCHER</text>
+    <text x="8" y="112" class="txt-attr">ADMIN</text>
+    <text x="8" y="127" class="txt-attr">RESTAURANT_ADMIN</text>
+    <text x="8" y="142" class="txt-attr">SYSTEM_ADMIN</text>
+    <text x="8" y="157" class="txt-attr">USER_ADMIN</text>
   </g>
-  <g transform="translate(540, 880)">
-    <rect x="0" y="0" width="180" height="80" class="class-box" />
-    <text x="90" y="20" class="head-title">AccountRole</text>
-    <text x="90" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
-    <line x1="0" y1="38" x2="180" y2="38" class="sep" />
+  <g transform="translate(560, 880)">
+    <rect x="0" y="0" width="160" height="80" class="class-box" />
+    <text x="80" y="20" class="head-title">AccountRole</text>
+    <text x="80" y="32" class="head-sub">&lt;&lt;enum&gt;&gt;</text>
+    <line x1="0" y1="38" x2="160" y2="38" class="sep" />
     <text x="8" y="52" class="txt-attr">CUSTOMER</text>
     <text x="8" y="67" class="txt-attr">DRIVER</text>
   </g>
@@ -636,6 +642,35 @@
     <line x1="0" y1="112" x2="380" y2="112" class="sep" />
     <text x="8" y="127" class="txt-meth">+ run(): void (Executes concurrent dispatching)</text>
   </g>
+  <g transform="translate(1420, 2030)">
+    <rect x="0" y="0" width="380" height="120" class="class-box" />
+    <text x="190" y="20" class="head-title">CustomerSimTask</text>
+    <text x="190" y="32" class="head-sub">implements java.lang.Runnable</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- startGate, doneGate: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- menuItemRepo: MenuItemRepository</text>
+    <text x="8" y="82" class="txt-attr">- targetItemId: String</text>
+    <text x="8" y="97" class="txt-attr">- mechanism: LockMechanism</text>
+    <text x="8" y="112" class="txt-attr">- simulatedOversell: AtomicInteger</text>
+    <line x1="0" y1="127" x2="380" y2="127" class="sep" />
+    <text x="8" y="142" class="txt-meth">+ CustomerSimTask(...)</text>
+    <text x="8" y="157" class="txt-meth">+ run(): void (Executes concurrent stock deduction)</text>
+  </g>
+  <g transform="translate(1420, 2170)">
+    <rect x="0" y="0" width="380" height="130" class="class-box" />
+    <text x="190" y="20" class="head-title">DispatchSimTask</text>
+    <text x="190" y="32" class="head-sub">implements java.lang.Runnable</text>
+    <line x1="0" y1="38" x2="380" y2="38" class="sep" />
+    <text x="8" y="52" class="txt-attr">- startGate, doneGate: CountDownLatch</text>
+    <text x="8" y="67" class="txt-attr">- driverRepo: DriverRepository</text>
+    <text x="8" y="82" class="txt-attr">- orderRepo: OrderRepository</text>
+    <text x="8" y="97" class="txt-attr">- targetOrderId, targetDriverId: String</text>
+    <text x="8" y="112" class="txt-attr">- mechanism: LockMechanism</text>
+    <text x="8" y="127" class="txt-attr">- simulatedDoubleAssign, simulatedDriverOverload: AtomicInteger</text>
+    <line x1="0" y1="142" x2="380" y2="142" class="sep" />
+    <text x="8" y="157" class="txt-meth">+ DispatchSimTask(...)</text>
+    <text x="8" y="172" class="txt-meth">+ run(): void (Executes concurrent driver dispatch)</text>
+  </g>
   <g transform="translate(2260, 1460)">
     <rect x="0" y="0" width="260" height="80" class="class-box" />
     <text x="130" y="20" class="head-title">FoodDeliveryException</text>
@@ -760,7 +795,7 @@
     <text x="8" y="52" class="txt-attr">- rows, cols: int</text>
     <text x="8" y="67" class="txt-attr">- minLat, maxLat, minLon, maxLon: double</text>
     <line x1="0" y1="82" x2="250" y2="82" class="sep" />
-    <text x="8" y="97" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers): void</text>
+    <text x="8" y="97" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers, orders): void</text>
   </g>
   <g transform="translate(3080, 1830)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
@@ -768,8 +803,8 @@
     <text x="125" y="32" class="head-sub">Orders &amp; Menus Output</text>
     <line x1="0" y1="38" x2="250" y2="38" class="sep" />
     <line x1="0" y1="52" x2="250" y2="52" class="sep" />
-    <text x="8" y="67" class="txt-meth">+ displayMenu(restaurant, items): void</text>
-    <text x="8" y="82" class="txt-meth">+ displayRecentOrders(orders, count): void</text>
+    <text x="8" y="67" class="txt-meth">+ renderOrders(orders: List&lt;Order&gt;): void</text>
+    <text x="8" y="82" class="txt-meth">+ displayMenu(restaurant, items): void</text>
   </g>
   <g transform="translate(2800, 1950)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
@@ -816,14 +851,16 @@
   <text x="565" y="426" class="edge-label">offers</text>
   <path d="M 960 510 L 420 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
   <text x="690" y="621" class="edge-label">status</text>
-  <path d="M 960 720 L 420 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="690" y="791" class="edge-label">role</text>
-  <path d="M 1235 830 L 630 880" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="932" y="851" class="edge-label">role</text>
-  <path d="M 695 710 L 850 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="772" y="786" class="edge-label">mechanism</text>
+  <path d="M 960 720 L 430 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="695" y="791" class="edge-label">role</text>
+  <path d="M 1235 830 L 640 880" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="937" y="851" class="edge-label">role</text>
+  <path d="M 695 720 L 850 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="772" y="791" class="edge-label">mechanism</text>
   <path d="M 435 560 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
   <text x="835" y="536" class="edge-label">routes</text>
+  <path d="M 435 560 L 960 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="697" y="531" class="edge-label">assigned driver</text>
   <path d="M 2030 150 L 1650 290" class="edge-realize" marker-end="url(#uml-inherit)" />
   <path d="M 1630 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 1880 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
@@ -837,8 +874,8 @@
   <path d="M 2690 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2520 540 L 180 740" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="1350" y="636" class="edge-label">calculates distance</text>
-  <path d="M 2970 710 L 630 880" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1800" y="791" class="edge-label">authenticates</text>
+  <path d="M 2970 710 L 640 880" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1805" y="791" class="edge-label">authenticates</text>
   <path d="M 530 1530 L 230 1460" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 230 1690 L 610 1550" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 230 1460 L 985 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
@@ -848,6 +885,10 @@
   <path d="M 230 1690 L 775 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 230 1690 L 1200 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 230 1690 L 3025 1560" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 610 1550 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 610 1550 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 610 1550 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
@@ -860,14 +901,38 @@
   <path d="M 300 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 300 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 300 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1630 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1880 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 180 900" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="240" y="1331" class="edge-label">calculates fee &amp; distance</text>
+  <path d="M 775 1770 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 775 1770 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 775 1970 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 1200 1770 L 2130 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 1200 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1950 L 1610 2030" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <text x="1405" y="1986" class="edge-label">creates task</text>
+  <path d="M 1200 1950 L 1610 2170" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <text x="1405" y="2056" class="edge-label">creates task</text>
+  <path d="M 1610 2030 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 2030 L 850 970" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <path d="M 1610 2170 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 2170 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 2170 L 850 970" class="edge-assoc" marker-end="url(#uml-assoc)" />
   <path d="M 1610 1880 L 300 1770" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="955" y="1821" class="edge-label">calls</text>
   <path d="M 1610 1900 L 300 2020" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="955" y="1956" class="edge-label">calls</text>
+  <path d="M 1610 1900 L 850 970" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1230" y="1431" class="edge-label">uses mechanism</text>
   <path d="M 2390 1570 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2180 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2470 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
@@ -875,13 +940,34 @@
   <path d="M 2470 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2180 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2470 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 540 L 2470 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2322" y="1176" class="edge-label">throws</text>
+  <path d="M 2910 550 L 2180 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2545" y="1111" class="edge-label">throws</text>
+  <path d="M 2520 540 L 2470 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2495" y="1106" class="edge-label">throws</text>
+  <path d="M 2910 550 L 2180 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2545" y="1181" class="edge-label">throws</text>
+  <path d="M 300 2020 L 2470 1960" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1385" y="1986" class="edge-label">throws</text>
+  <path d="M 300 2020 L 2180 1960" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1240" y="1986" class="edge-label">throws</text>
   <path d="M 2910 1540 L 230 1460" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="1570" y="1496" class="edge-label">instantiates</text>
   <path d="M 3025 1560 L 3150 1540" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 3025 1560 L 230 1690" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 2925 1830 L 435 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1680" y="1166" class="edge-label">displays [R]</text>
+  <path d="M 2925 1830 L 175 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1550" y="1166" class="edge-label">displays [C]</text>
+  <path d="M 2925 1830 L 960 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1942" y="1166" class="edge-label">displays [D]/[B]</text>
+  <path d="M 2925 1830 L 1235 520" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2080" y="1171" class="edge-label">audits active</text>
 </svg>
     </div>
   </div>

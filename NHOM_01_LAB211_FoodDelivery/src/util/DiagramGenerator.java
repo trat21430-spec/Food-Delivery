@@ -8,6 +8,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generates 100% COMPLETE, STANDARDIZED 60-CLASS UML DIAGRAM MATCHING EXACT PRODUCTION CODE.
+ * Covers EVERY class, interface, enum, and nested runnable task in src/.
+ * Formats: Draw.io (.drawio), Vector SVG (.svg), Interactive HTML (.html), and GitHub Mermaid (.md).
+ * Monochrome / Greyscale styled strictly per academic & LAB211 presentation rubrics.
+ */
 public class DiagramGenerator {
 
     static class UmlClass {
@@ -57,14 +63,16 @@ public class DiagramGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println("Generating 100% COMPLETE 58-Class UML Diagram with ALL Relationships (Monochrome)...");
+        System.out.println("=== GENERATING EXACT 60-CLASS UML CLASS DIAGRAM MATCHING 100% SOURCE CODE ===");
         try {
             List<UmlClass> classes = buildClasses();
             List<UmlEdge> edges = buildEdges();
 
             generateSvgAndHtml(classes, edges);
             generateDrawio(classes, edges);
-            System.out.println("COMPLETED ALL 58 CLASSES & 90+ RELATIONSHIPS GENERATION!");
+            generateMermaidMarkdown(classes, edges);
+
+            System.out.println(">>> COMPLETED ALL 60 CLASSES & 120+ RELATIONSHIPS GENERATION IN ALL FORMATS! <<<");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +82,7 @@ public class DiagramGenerator {
         List<UmlClass> list = new ArrayList<>();
 
         // ==========================================
-        // 1. MODEL LAYER (x: 40 to 1440, y: 100 to 1340)
+        // 1. MODEL LAYER (x: 40 to 1440, y: 100 to 1340) - 19 Classes/Enums
         // ==========================================
         list.add(new UmlClass("BaseEntity", "BaseEntity", "<<abstract>>",
                 new String[]{"- id: String", "- createdAt, updatedAt: LocalDateTime", "- version: long"},
@@ -98,12 +106,12 @@ public class DiagramGenerator {
                 "pkg_model", 580, 350, 230, 160));
 
         list.add(new UmlClass("Driver", "Driver", "extends BaseEntity",
-                new String[]{"- fullName, phone, plate: String", "- lat, lon: double", "- status: DriverStatus", "- currentOrderId: String", "- activeOrderCount: int"},
-                new String[]{"+ getStatus() / setStatus(st)", "+ getCurrentOrderId() / setCurrentOrderId()", "+ getLicensePlate(): String", "+ toCsvLine(): String", "+ fromCsvLine(line): void"},
+                new String[]{"- fullName, phone, licensePlate: String", "- latitude, longitude: double", "- status: DriverStatus", "- activeOrderCount: int", "- currentOrderId: String"},
+                new String[]{"+ getStatus() / setStatus(st)", "+ getActiveOrderCount() / setActiveOrderCount()", "+ getCurrentOrderId() / setCurrentOrderId()", "+ toCsvLine(): String", "+ fromCsvLine(line): void"},
                 "pkg_model", 840, 350, 240, 160));
 
         list.add(new UmlClass("Order", "Order", "extends BaseEntity",
-                new String[]{"- customerId, restaurantId: String", "- driverId: String", "- status: OrderStatus", "- totalFoodAmount, fee: double", "- createdAtEpochMs: long", "- assignCount: int"},
+                new String[]{"- customerId, restaurantId: String", "- driverId: String", "- status: OrderStatus", "- totalFoodAmount, deliveryFee: double", "- createdAtEpochMs: long", "- assignCount: int"},
                 new String[]{"+ getDriverId() / setDriverId(did)", "+ getStatus() / setStatus(st)", "+ getTotalAmount(): double", "+ toCsvLine(): String", "+ fromCsvLine(line): void"},
                 "pkg_model", 1110, 350, 250, 170));
 
@@ -119,9 +127,9 @@ public class DiagramGenerator {
                 "pkg_model", 320, 560, 230, 140));
 
         list.add(new UmlClass("SimulationRun", "SimulationRun", "extends BaseEntity",
-                new String[]{"- mechanism: LockMechanism", "- totalOrders: int, durationMs: long", "- throughputOpsPerSec: double", "- doubleAssignErrors, oversell: int", "- driverOverloadErrors: int"},
-                new String[]{"+ getMechanism(): LockMechanism", "+ getThroughputOpsPerSec(): double", "+ getTotalErrors(): int", "+ toCsvLine(): String", "+ fromCsvLine(line): void"},
-                "pkg_model", 580, 560, 230, 150));
+                new String[]{"- mechanism: LockMechanism", "- totalOrders: int, durationMs: long", "- throughputOpsPerSec: double", "- throughputDropPercent: double", "- doubleAssignErrors, oversellErrors: int", "- driverOverloadErrors: int"},
+                new String[]{"+ getMechanism(): LockMechanism", "+ getThroughputOpsPerSec(): double", "+ getThroughputDropPercent(): double", "+ getTotalErrors(): int", "+ toCsvLine(): String", "+ fromCsvLine(line): void"},
+                "pkg_model", 580, 560, 230, 160));
 
         list.add(new UmlClass("User", "User", "extends BaseEntity",
                 new String[]{"- username, password: String", "- role: UserRole", "- linkedEntityId: String", "- displayName, phone: String"},
@@ -129,7 +137,7 @@ public class DiagramGenerator {
                 "pkg_model", 840, 560, 240, 160));
 
         list.add(new UmlClass("DriverApplication", "DriverApplication", "extends BaseEntity",
-                new String[]{"- username, password: String", "- fullName, phone, plate: String", "- vehicleType, status, note: String"},
+                new String[]{"- username, password: String", "- fullName, phone, licensePlate: String", "- vehicleType, status, note: String"},
                 new String[]{"+ getUsername() / getStatus()", "+ setStatus(status: String): void", "+ toCsvLine(): String", "+ fromCsvLine(line): void"},
                 "pkg_model", 1110, 560, 250, 150));
 
@@ -148,7 +156,7 @@ public class DiagramGenerator {
                 new String[]{"+ haversineDistance(lat1, lon1, lat2, lon2): double", "+ calculateDeliveryFee(dist): double", "+ calculatePickupMinutes(dist): int", "+ calculateDeliveryMinutes(pDist, dDist): int", "+ formatEstimatedClockTime(epoch, mins): String"},
                 "pkg_model", 60, 740, 240, 160));
 
-        // Separate Enums in Model
+        // Enums in Model
         list.add(new UmlClass("DriverStatus", "DriverStatus", "<<enum>>",
                 new String[]{"AVAILABLE", "BUSY", "OFFLINE"}, new String[]{}, "pkg_model", 330, 740, 180, 90));
 
@@ -156,16 +164,16 @@ public class DiagramGenerator {
                 new String[]{"PENDING", "CONFIRMED", "DISPATCHED", "DELIVERED", "CANCELLED"}, new String[]{}, "pkg_model", 540, 740, 220, 110));
 
         list.add(new UmlClass("UserRole", "UserRole", "<<enum>>",
-                new String[]{"CUSTOMER", "DRIVER", "RESTAURANT", "ADMIN"}, new String[]{}, "pkg_model", 330, 870, 180, 100));
+                new String[]{"CUSTOMER", "DRIVER", "RESTAURANT", "DISPATCHER", "ADMIN", "RESTAURANT_ADMIN", "SYSTEM_ADMIN", "USER_ADMIN"}, new String[]{}, "pkg_model", 330, 870, 200, 140));
 
         list.add(new UmlClass("AccountRole", "AccountRole", "<<enum>>",
-                new String[]{"CUSTOMER", "DRIVER"}, new String[]{}, "pkg_model", 540, 880, 180, 80));
+                new String[]{"CUSTOMER", "DRIVER"}, new String[]{}, "pkg_model", 560, 880, 160, 80));
 
         list.add(new UmlClass("LockMechanism", "LockMechanism", "<<enum>>",
                 new String[]{"NO_LOCK", "SYNCHRONIZED", "OPTIMISTIC", "FILE_LOCK"}, new String[]{}, "pkg_model", 750, 870, 200, 100));
 
         // ==========================================
-        // 2. REPOSITORY LAYER (x: 1480 to 3540, y: 100 to 1340)
+        // 2. REPOSITORY LAYER (x: 1480 to 3540, y: 100 to 1340) - 13 Classes/Interfaces
         // ==========================================
         list.add(new UmlClass("IRepository", "IRepository<T>", "<<interface>>",
                 new String[]{},
@@ -219,7 +227,7 @@ public class DiagramGenerator {
                 "pkg_repo", 2840, 580, 260, 130));
 
         // ==========================================
-        // 3. CONTROLLER LAYER (x: 40 to 2000, y: 1400 to 2440)
+        // 3. CONTROLLER LAYER (x: 40 to 2000, y: 1400 to 2440) - 13 Classes/Tasks
         // ==========================================
         list.add(new UmlClass("MainController", "MainController", "Central Facade Controller",
                 new String[]{
@@ -295,8 +303,18 @@ public class DiagramGenerator {
                 new String[]{"- startLatch, finishLatch: CountDownLatch", "- orderController: OrderController", "- orderId: String", "- mechanism: LockMechanism"},
                 new String[]{"+ run(): void (Executes concurrent dispatching)"}, "pkg_ctrl", 1420, 1900, 380, 110));
 
+        list.add(new UmlClass("CustomerSimTask", "CustomerSimTask", "implements java.lang.Runnable",
+                new String[]{"- startGate, doneGate: CountDownLatch", "- menuItemRepo: MenuItemRepository", "- targetItemId: String", "- mechanism: LockMechanism", "- simulatedOversell: AtomicInteger"},
+                new String[]{"+ CustomerSimTask(...)", "+ run(): void (Executes concurrent stock deduction)"},
+                "pkg_ctrl", 1420, 2030, 380, 120));
+
+        list.add(new UmlClass("DispatchSimTask", "DispatchSimTask", "implements java.lang.Runnable",
+                new String[]{"- startGate, doneGate: CountDownLatch", "- driverRepo: DriverRepository", "- orderRepo: OrderRepository", "- targetOrderId, targetDriverId: String", "- mechanism: LockMechanism", "- simulatedDoubleAssign, simulatedDriverOverload: AtomicInteger"},
+                new String[]{"+ DispatchSimTask(...)", "+ run(): void (Executes concurrent driver dispatch)"},
+                "pkg_ctrl", 1420, 2170, 380, 130));
+
         // ==========================================
-        // 4. EXCEPTION LAYER (x: 2030 to 2750, y: 1400 to 2440)
+        // 4. EXCEPTION LAYER (x: 2030 to 2750, y: 1400 to 2440) - 8 Classes
         // ==========================================
         list.add(new UmlClass("FoodDeliveryException", "FoodDeliveryException", "extends java.lang.Exception",
                 new String[]{}, new String[]{"+ FoodDeliveryException(msg)", "+ FoodDeliveryException(msg, cause)"}, "pkg_ex", 2260, 1460, 260, 80));
@@ -329,7 +347,7 @@ public class DiagramGenerator {
                 new String[]{"+ getFieldName(): String"}, "pkg_ex", 2340, 1960, 260, 100));
 
         // ==========================================
-        // 5. VIEW LAYER & ENTRYPOINT (x: 2780 to 3540, y: 1400 to 2440)
+        // 5. VIEW LAYER & ENTRYPOINT (x: 2780 to 3540, y: 1400 to 2440) - 7 Classes/Interfaces
         // ==========================================
         list.add(new UmlClass("Main", "Main", "Application Entrypoint",
                 new String[]{}, new String[]{"+ main(args: String[]): void (static)"}, "pkg_view", 2800, 1460, 220, 80));
@@ -353,10 +371,10 @@ public class DiagramGenerator {
 
         list.add(new UmlClass("MapView", "MapView", "ASCII Grid Map Visualizer",
                 new String[]{"- rows, cols: int", "- minLat, maxLat, minLon, maxLon: double"},
-                new String[]{"+ renderAsciiMap(restaurants, customers, drivers): void"}, "pkg_view", 2800, 1830, 250, 100));
+                new String[]{"+ renderAsciiMap(restaurants, customers, drivers, orders): void"}, "pkg_view", 2800, 1830, 250, 100));
 
         list.add(new UmlClass("OrderView", "OrderView", "Orders & Menus Output",
-                new String[]{}, new String[]{"+ displayMenu(restaurant, items): void", "+ displayRecentOrders(orders, count): void"}, "pkg_view", 3080, 1830, 250, 100));
+                new String[]{}, new String[]{"+ renderOrders(orders: List<Order>): void", "+ displayMenu(restaurant, items): void"}, "pkg_view", 3080, 1830, 250, 100));
 
         list.add(new UmlClass("ReportView", "ReportView", "Benchmark Summary",
                 new String[]{}, new String[]{"+ printResearchConclusion(runs): void", "+ renderSimulationSummary(run): void"}, "pkg_view", 2800, 1950, 250, 100));
@@ -396,6 +414,7 @@ public class DiagramGenerator {
         edges.add(new UmlEdge("e_session_role", "AuthSession", "AccountRole", "assoc", "role"));
         edges.add(new UmlEdge("e_sim_lock", "SimulationRun", "LockMechanism", "assoc", "mechanism"));
         edges.add(new UmlEdge("e_route_ord", "DeliveryRoute", "Order", "assoc", "routes"));
+        edges.add(new UmlEdge("e_route_drv", "DeliveryRoute", "Driver", "assoc", "assigned driver"));
 
         // 3. Repository Layer: Realization & Inheritance
         edges.add(new UmlEdge("e_csv_irepo", "CsvRepository", "IRepository", "realize", ""));
@@ -410,7 +429,7 @@ public class DiagramGenerator {
         edges.add(new UmlEdge("e_drvapprepo_csv", "DriverApplicationRepository", "CsvRepository", "inherit", ""));
         edges.add(new UmlEdge("e_userrepo_csv", "UserRepository", "CsvRepository", "inherit", ""));
 
-        // Repositories using Models
+        // Repositories using Models & Utilities
         edges.add(new UmlEdge("e_drvrepo_geo", "DriverRepository", "GeoUtils", "depend", "calculates distance"));
         edges.add(new UmlEdge("e_accrepo_role", "AccountRepository", "AccountRole", "depend", "authenticates"));
 
@@ -424,6 +443,10 @@ public class DiagramGenerator {
         edges.add(new UmlEdge("e_mc_adm", "MainController", "AdminController", "aggr", ""));
         edges.add(new UmlEdge("e_mc_sim", "MainController", "SimulatorController", "aggr", ""));
         edges.add(new UmlEdge("e_mc_view", "MainController", "MainView", "aggr", ""));
+        edges.add(new UmlEdge("e_mc_map", "MainController", "MapView", "aggr", ""));
+        edges.add(new UmlEdge("e_mc_oview", "MainController", "OrderView", "aggr", ""));
+        edges.add(new UmlEdge("e_mc_rview", "MainController", "ReportView", "aggr", ""));
+        edges.add(new UmlEdge("e_mc_sview", "MainController", "SimulatorView", "aggr", ""));
 
         // Controllers to Repositories
         edges.add(new UmlEdge("e_auth_userrepo", "AuthController", "UserRepository", "aggr", ""));
@@ -442,15 +465,37 @@ public class DiagramGenerator {
         edges.add(new UmlEdge("e_ordctrl_ordrepo", "OrderController", "OrderRepository", "aggr", ""));
         edges.add(new UmlEdge("e_ordctrl_itemrepo", "OrderController", "MenuItemRepository", "aggr", ""));
         edges.add(new UmlEdge("e_ordctrl_drvrepo", "OrderController", "DriverRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_ordctrl_restrepo", "OrderController", "RestaurantRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_ordctrl_itemrepo_oi", "OrderController", "OrderItemRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_ordctrl_custrepo", "OrderController", "CustomerRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_ordctrl_routerepo", "OrderController", "DeliveryRouteRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_ordctrl_geo", "OrderController", "GeoUtils", "depend", "calculates fee & distance"));
 
+        edges.add(new UmlEdge("e_admctrl_restrepo", "AdminController", "RestaurantRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_admctrl_itemrepo", "AdminController", "MenuItemRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_admctrl_custrepo", "AdminController", "CustomerRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_admctrl_drvrepo", "AdminController", "DriverRepository", "aggr", ""));
         edges.add(new UmlEdge("e_admctrl_apprepo", "AdminController", "DriverApplicationRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_admctrl_userrepo", "AdminController", "UserRepository", "aggr", ""));
         edges.add(new UmlEdge("e_admctrl_ordctrl", "AdminController", "OrderController", "aggr", ""));
 
         edges.add(new UmlEdge("e_simctrl_simrepo", "SimulatorController", "SimulationRunRepository", "aggr", ""));
         edges.add(new UmlEdge("e_simctrl_ordrepo", "SimulatorController", "OrderRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_simctrl_drvrepo", "SimulatorController", "DriverRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_simctrl_itemrepo", "SimulatorController", "MenuItemRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_simctrl_custtask", "SimulatorController", "CustomerSimTask", "aggr", "creates task"));
+        edges.add(new UmlEdge("e_simctrl_disptask", "SimulatorController", "DispatchSimTask", "aggr", "creates task"));
+
+        edges.add(new UmlEdge("e_custsim_itemrepo", "CustomerSimTask", "MenuItemRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_custsim_lock", "CustomerSimTask", "LockMechanism", "assoc", ""));
+
+        edges.add(new UmlEdge("e_dispsim_drvrepo", "DispatchSimTask", "DriverRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_dispsim_ordrepo", "DispatchSimTask", "OrderRepository", "aggr", ""));
+        edges.add(new UmlEdge("e_dispsim_lock", "DispatchSimTask", "LockMechanism", "assoc", ""));
 
         edges.add(new UmlEdge("e_custthread_ordctrl", "CustomerThread", "OrderController", "depend", "calls"));
         edges.add(new UmlEdge("e_dispthread_ordctrl", "DispatchThread", "OrderController", "depend", "calls"));
+        edges.add(new UmlEdge("e_dispthread_lock", "DispatchThread", "LockMechanism", "depend", "uses mechanism"));
 
         // 5. Exception Layer: Inheritance
         edges.add(new UmlEdge("e_conc_food", "ConcurrencyException", "FoodDeliveryException", "inherit", ""));
@@ -462,13 +507,27 @@ public class DiagramGenerator {
         edges.add(new UmlEdge("e_opt_conc", "OptimisticLockException", "ConcurrencyException", "inherit", ""));
         edges.add(new UmlEdge("e_ov_conc", "OversellException", "ConcurrencyException", "inherit", ""));
 
+        // Repositories & Controllers throwing Exceptions
+        edges.add(new UmlEdge("e_itemrepo_ov", "MenuItemRepository", "OversellException", "depend", "throws"));
+        edges.add(new UmlEdge("e_ordrepo_da", "OrderRepository", "DoubleAssignmentException", "depend", "throws"));
+        edges.add(new UmlEdge("e_drvrepo_do", "DriverRepository", "DriverOverloadException", "depend", "throws"));
+        edges.add(new UmlEdge("e_ordrepo_opt", "OrderRepository", "OptimisticLockException", "depend", "throws"));
+        edges.add(new UmlEdge("e_ordctrl_inv", "OrderController", "InvalidInputException", "depend", "throws"));
+        edges.add(new UmlEdge("e_ordctrl_enf", "OrderController", "EntityNotFoundException", "depend", "throws"));
+
         // 6. View Layer & Entrypoint
         edges.add(new UmlEdge("e_main_mc", "Main", "MainController", "depend", "instantiates"));
         edges.add(new UmlEdge("e_mv_iview", "MainView", "IView", "realize", ""));
+        edges.add(new UmlEdge("e_mv_mc", "MainView", "MainController", "aggr", ""));
         edges.add(new UmlEdge("e_mv_map", "MainView", "MapView", "aggr", ""));
         edges.add(new UmlEdge("e_mv_order", "MainView", "OrderView", "aggr", ""));
         edges.add(new UmlEdge("e_mv_report", "MainView", "ReportView", "aggr", ""));
         edges.add(new UmlEdge("e_mv_sim", "MainView", "SimulatorView", "aggr", ""));
+
+        edges.add(new UmlEdge("e_map_rest", "MapView", "Restaurant", "depend", "displays [R]"));
+        edges.add(new UmlEdge("e_map_cust", "MapView", "Customer", "depend", "displays [C]"));
+        edges.add(new UmlEdge("e_map_drv", "MapView", "Driver", "depend", "displays [D]/[B]"));
+        edges.add(new UmlEdge("e_map_ord", "MapView", "Order", "depend", "audits active"));
 
         return edges;
     }
@@ -521,7 +580,7 @@ public class DiagramGenerator {
         svg.append("  </defs>\n");
 
         svg.append("  <rect width=\"").append(width).append("\" height=\"").append(height).append("\" class=\"canvas-bg\" />\n");
-        svg.append("  <text x=\"").append(width / 2).append("\" y=\"40\" class=\"title-main\">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (58 CLASSES)</text>\n");
+        svg.append("  <text x=\"").append(width / 2).append("\" y=\"40\" class=\"title-main\">FOOD DELIVERY NETWORK SIMULATION — FULL UML CLASS DIAGRAM (60 CLASSES)</text>\n");
         svg.append("  <text x=\"").append(width / 2).append("\" y=\"65\" class=\"title-sub\">LAB211 OOP with Java | Full System Entities, Repositories, Controllers, Exceptions &amp; Views (Monochrome)</text>\n");
 
         // Package Frames
@@ -613,13 +672,14 @@ public class DiagramGenerator {
         // Save SVG
         File svgFile = new File("docs/Full_Class_Diagram.svg");
         writeFile(svgFile, svg.toString());
-        System.out.println("Monochrome 58-Class SVG saved: " + svgFile.getAbsolutePath());
+        File labSvg = new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.svg");
+        writeFile(labSvg, svg.toString());
 
         // Save HTML Viewer
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n");
         html.append("  <meta charset=\"UTF-8\">\n");
-        html.append("  <title>Full 58-Class UML Diagram - Food Delivery LAB211</title>\n");
+        html.append("  <title>Full 60-Class UML Diagram - Food Delivery LAB211</title>\n");
         html.append("  <style>\n");
         html.append("    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f3f4f6; color: #111827; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }\n");
         html.append("    .toolbar { position: sticky; top: 10px; z-index: 100; background: #ffffff; border: 1px solid #d1d5db; border-radius: 10px; padding: 10px 20px; display: flex; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); align-items: center; }\n");
@@ -633,7 +693,7 @@ public class DiagramGenerator {
         html.append("  </style>\n");
         html.append("</head>\n<body>\n");
         html.append("  <div class=\"toolbar\">\n");
-        html.append("    <span style=\"font-weight: bold; color: #000000;\">🏛️ Full 58-Class UML Diagram with ALL Relationships (LAB211)</span>\n");
+        html.append("    <span style=\"font-weight: bold; color: #000000;\">🏛️ Full 60-Class UML Diagram with ALL Relationships (LAB211)</span>\n");
         html.append("    <button class=\"btn\" onclick=\"zoomIn()\">➕ Phóng to</button>\n");
         html.append("    <button class=\"btn\" onclick=\"zoomOut()\">➖ Thu nhỏ</button>\n");
         html.append("    <button class=\"btn btn-outline\" onclick=\"resetZoom()\">🔄 Vừa màn hình</button>\n");
@@ -662,19 +722,20 @@ public class DiagramGenerator {
 
         File htmlFile = new File("docs/class_diagram_view.html");
         writeFile(htmlFile, html.toString());
-        System.out.println("Monochrome HTML saved: " + htmlFile.getAbsolutePath());
+        File labHtml = new File("../Lab211-Group1/ClassDiagram/class_diagram_view.html");
+        writeFile(labHtml, html.toString());
     }
 
     private static void generateDrawio(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
         StringBuilder xml = new StringBuilder();
-        xml.append("<mxfile host=\"app.diagrams.net\" modified=\"2026-11-09T10:00:00.000Z\" agent=\"Antigravity\" version=\"22.0.0\" type=\"device\">\n");
+        xml.append("<mxfile host=\"app.diagrams.net\" modified=\"2026-11-11T08:00:00.000Z\" agent=\"Antigravity\" version=\"22.0.0\" type=\"device\">\n");
         xml.append("  <diagram id=\"FullClassDiagramLAB211\" name=\"Food Delivery Full Class Diagram\">\n");
         xml.append("    <mxGraphModel dx=\"2800\" dy=\"2000\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"3600\" pageHeight=\"2600\" math=\"0\" shadow=\"0\">\n");
         xml.append("      <root>\n");
         xml.append("        <mxCell id=\"0\" />\n");
         xml.append("        <mxCell id=\"1\" parent=\"0\" />\n");
 
-        // Swimlanes
+        // Group Containers at parent="1"
         xml.append("        <mxCell id=\"pkg_model\" value=\"1. Model Layer (Entities, Enums, Utils)\" style=\"swimlane;html=1;startSize=26;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=14;strokeWidth=1.5;\" vertex=\"1\" parent=\"1\">\n");
         xml.append("          <mxGeometry x=\"30\" y=\"90\" width=\"1380\" height=\"1250\" as=\"geometry\" />\n");
         xml.append("        </mxCell>\n");
@@ -695,7 +756,7 @@ public class DiagramGenerator {
         xml.append("          <mxGeometry x=\"2790\" y=\"1370\" width=\"770\" height=\"1090\" as=\"geometry\" />\n");
         xml.append("        </mxCell>\n");
 
-        // Classes
+        // Classes positioned globally at parent="1" for rock-solid routing & zero coordinate shifting
         for (UmlClass c : classes) {
             StringBuilder val = new StringBuilder();
             val.append("<p style=\"margin:0px;padding-top:4px;text-align:center;\"><b>").append(escapeXml(c.name)).append("</b>");
@@ -724,7 +785,7 @@ public class DiagramGenerator {
 
             xml.append("        <mxCell id=\"").append(c.id).append("\" value=\"").append(escapeXml(val.toString())).append("\" ");
             xml.append("style=\"verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;strokeWidth=1.5;\" ");
-            xml.append("vertex=\"1\" parent=\"").append(c.pkg).append("\">\n");
+            xml.append("vertex=\"1\" parent=\"1\">\n");
             xml.append("          <mxGeometry x=\"").append(c.x).append("\" y=\"").append(c.y).append("\" width=\"").append(c.w).append("\" height=\"").append(c.h).append("\" as=\"geometry\" />\n");
             xml.append("        </mxCell>\n");
         }
@@ -758,12 +819,64 @@ public class DiagramGenerator {
 
         File drawioFile = new File("docs/Full_Class_Diagram.drawio");
         writeFile(drawioFile, xml.toString());
-        System.out.println("Monochrome Draw.io saved: " + drawioFile.getAbsolutePath());
+        File labDrawio = new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.drawio");
+        writeFile(labDrawio, xml.toString());
+    }
 
-        File rootDrawio = new File("../Lab211-Group1/ClassDiagram/Full_Class_Diagram.drawio");
-        if (rootDrawio.getParentFile().exists()) {
-            writeFile(rootDrawio, xml.toString());
+    private static void generateMermaidMarkdown(List<UmlClass> classes, List<UmlEdge> edges) throws Exception {
+        StringBuilder md = new StringBuilder();
+        md.append("# 🏛️ TOÀN BỘ CLASS DIAGRAM HỆ THỐNG (60 CLASSES - 120+ RELATIONSHIPS)\n\n");
+        md.append("> **Đồ án:** Food Delivery Network Simulation  \n");
+        md.append("> **Môn học:** LAB211 – OOP with Java | FPT University  \n");
+        md.append("> **Kiến trúc:** 100% OOP (Không static ngoài main, không final/protected, 100% this., MVC Pattern trên CSV)\n\n");
+        md.append("```mermaid\nclassDiagram\n    direction TB\n\n");
+
+        for (UmlClass c : classes) {
+            md.append("    class ").append(c.id).append(" {\n");
+            if (c.sub != null && !c.sub.isEmpty()) {
+                md.append("        <<").append(c.sub.replace("<<", "").replace(">>", "")).append(">>\n");
+            }
+            if (c.attrs != null) {
+                for (String a : c.attrs) {
+                    md.append("        ").append(a.replace(":", "")).append("\n");
+                }
+            }
+            if (c.meths != null) {
+                for (String m : c.meths) {
+                    md.append("        ").append(m.replace(":", "")).append("\n");
+                }
+            }
+            md.append("    }\n");
         }
+
+        md.append("\n    %% RELATIONSHIPS\n");
+        for (UmlEdge e : edges) {
+            String op;
+            if ("inherit".equals(e.type)) {
+                op = " <|-- ";
+                md.append("    ").append(e.targetId).append(op).append(e.sourceId).append("\n");
+            } else if ("realize".equals(e.type)) {
+                op = " <|.. ";
+                md.append("    ").append(e.targetId).append(op).append(e.sourceId).append("\n");
+            } else if ("aggr".equals(e.type)) {
+                op = " o-- ";
+                md.append("    ").append(e.sourceId).append(op).append(e.targetId).append("\n");
+            } else if ("depend".equals(e.type)) {
+                op = " ..> ";
+                md.append("    ").append(e.sourceId).append(op).append(e.targetId)
+                  .append(e.label.isEmpty() ? "" : " : " + e.label).append("\n");
+            } else {
+                op = " --> ";
+                md.append("    ").append(e.sourceId).append(op).append(e.targetId)
+                  .append(e.label.isEmpty() ? "" : " : " + e.label).append("\n");
+            }
+        }
+        md.append("```\n");
+
+        File mdFile = new File("docs/class_diagram.md");
+        writeFile(mdFile, md.toString());
+        File labMd = new File("../Lab211-Group1/ClassDiagram/class_diagram.md");
+        writeFile(labMd, md.toString());
     }
 
     private static String escapeXml(String s) {
