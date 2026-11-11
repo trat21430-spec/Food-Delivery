@@ -732,7 +732,7 @@
     <text x="8" y="52" class="txt-attr">- rows, cols: int</text>
     <text x="8" y="67" class="txt-attr">- minLat, maxLat, minLon, maxLon: double</text>
     <line x1="0" y1="82" x2="250" y2="82" class="sep" />
-    <text x="8" y="97" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers): void</text>
+    <text x="8" y="97" class="txt-meth">+ renderAsciiMap(restaurants, customers, drivers, orders): void</text>
   </g>
   <g transform="translate(3080, 1830)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
@@ -740,8 +740,8 @@
     <text x="125" y="32" class="head-sub">Orders &amp; Menus Output</text>
     <line x1="0" y1="38" x2="250" y2="38" class="sep" />
     <line x1="0" y1="52" x2="250" y2="52" class="sep" />
-    <text x="8" y="67" class="txt-meth">+ displayMenu(restaurant, items): void</text>
-    <text x="8" y="82" class="txt-meth">+ displayRecentOrders(orders, count): void</text>
+    <text x="8" y="67" class="txt-meth">+ renderOrders(orders: List&lt;Order&gt;): void</text>
+    <text x="8" y="82" class="txt-meth">+ displayMenu(restaurant, items): void</text>
   </g>
   <g transform="translate(2800, 1950)">
     <rect x="0" y="0" width="250" height="100" class="class-box" />
@@ -796,6 +796,8 @@
   <text x="772" y="786" class="edge-label">mechanism</text>
   <path d="M 435 560 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
   <text x="835" y="536" class="edge-label">routes</text>
+  <path d="M 435 560 L 960 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <text x="697" y="531" class="edge-label">assigned driver</text>
   <path d="M 2030 150 L 1650 290" class="edge-realize" marker-end="url(#uml-inherit)" />
   <path d="M 1630 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 1880 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
@@ -820,6 +822,10 @@
   <path d="M 230 1690 L 775 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 230 1690 L 1200 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 230 1690 L 3025 1560" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 610 1550 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 610 1550 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 610 1550 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
@@ -832,14 +838,29 @@
   <path d="M 300 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 300 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 300 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1630 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 1880 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 180 900" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="240" y="1331" class="edge-label">calculates fee &amp; distance</text>
+  <path d="M 775 1770 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 775 1770 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 775 1970 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 1200 1770 L 2130 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 1200 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 1610 1880 L 300 1770" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="955" y="1821" class="edge-label">calls</text>
   <path d="M 1610 1900 L 300 2020" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="955" y="1956" class="edge-label">calls</text>
+  <path d="M 1610 1900 L 850 970" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1230" y="1431" class="edge-label">uses mechanism</text>
   <path d="M 2390 1570 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2180 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2470 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
@@ -847,11 +868,32 @@
   <path d="M 2470 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2180 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 2470 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 540 L 2470 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2322" y="1176" class="edge-label">throws</text>
+  <path d="M 2910 550 L 2180 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2545" y="1111" class="edge-label">throws</text>
+  <path d="M 2520 540 L 2470 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2495" y="1106" class="edge-label">throws</text>
+  <path d="M 2910 550 L 2180 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2545" y="1181" class="edge-label">throws</text>
+  <path d="M 300 2020 L 2470 1960" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1385" y="1986" class="edge-label">throws</text>
+  <path d="M 300 2020 L 2180 1960" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1240" y="1986" class="edge-label">throws</text>
   <path d="M 2910 1540 L 230 1460" class="edge-depend" marker-end="url(#uml-assoc)" />
   <text x="1570" y="1496" class="edge-label">instantiates</text>
   <path d="M 3025 1560 L 3150 1540" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 3025 1560 L 230 1690" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
   <path d="M 3025 1800 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 2925 1830 L 435 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1680" y="1166" class="edge-label">displays [R]</text>
+  <path d="M 2925 1830 L 175 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1550" y="1166" class="edge-label">displays [C]</text>
+  <path d="M 2925 1830 L 960 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="1942" y="1166" class="edge-label">displays [D]/[B]</text>
+  <path d="M 2925 1830 L 1235 520" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <text x="2080" y="1171" class="edge-label">audits active</text>
 </svg>
