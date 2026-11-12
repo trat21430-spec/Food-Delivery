@@ -43,44 +43,109 @@
         <mxCell id="DispatchSimTask" value="&lt;p style=&quot;margin:0px;padding-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DispatchSimTask&lt;/b&gt;&lt;br&gt;&lt;i style=&quot;font-size:10px;color:#4b5563;&quot;&gt;implements java.lang.Runnable&lt;/i&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-color:#000000;&quot;&gt;&lt;p style=&quot;margin:0px;padding-left:6px;font-family:Courier New;font-size:11px;&quot;&gt;- startGate, doneGate: CountDownLatch&lt;br&gt;- driverRepo: DriverRepository&lt;br&gt;- orderRepo: OrderRepository&lt;br&gt;- targetOrderId, targetDriverId: String&lt;br&gt;- mechanism: LockMechanism&lt;br&gt;- simulatedDoubleAssign, simulatedDriverOverload: AtomicInteger&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-color:#000000;&quot;&gt;&lt;p style=&quot;margin:0px;padding-left:6px;font-family:Courier New;font-size:11px;&quot;&gt;+ DispatchSimTask(...)&lt;br&gt;+ run(): void (Executes concurrent driver dispatch)&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
           <mxGeometry x="1420" y="2170" width="380" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="e_app_mc" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="AppController" target="MainController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_app_mc" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;strokeColor=#0f172a;strokeWidth=1.8;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="AppController" target="MainController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="1501" />
+              <mxPoint x="230" y="1501" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_auth" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="AuthController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_auth" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="AuthController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1608" />
+              <mxPoint x="610" y="1608" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_cust" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="CustomerController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_cust" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="CustomerController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1717" />
+              <mxPoint x="985" y="1717" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_drv" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="DriverController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_drv" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="DriverController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1711" />
+              <mxPoint x="1345" y="1711" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_rest" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="RestaurantController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_rest" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="RestaurantController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1723" />
+              <mxPoint x="1705" y="1723" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_ord" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="OrderController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_ord" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="OrderController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1730" />
+              <mxPoint x="300" y="1730" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_adm" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="AdminController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_adm" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="AdminController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1736" />
+              <mxPoint x="775" y="1736" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mc_sim" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="MainController" target="SimulatorController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_mc_sim" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="MainController" target="SimulatorController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="1724" />
+              <mxPoint x="1200" y="1724" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_admctrl_ordctrl" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="AdminController" target="OrderController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_admctrl_ordctrl" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="AdminController" target="OrderController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="775" y="2035" />
+              <mxPoint x="300" y="2035" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_simctrl_custtask" value="creates task" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="SimulatorController" target="CustomerSimTask">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_simctrl_custtask" value="creates task" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="SimulatorController" target="CustomerSimTask">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="2002" />
+              <mxPoint x="1610" y="2002" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_simctrl_disptask" value="creates task" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="SimulatorController" target="DispatchSimTask">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_simctrl_disptask" value="creates task" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="SimulatorController" target="DispatchSimTask">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="2048" />
+              <mxPoint x="1610" y="2048" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_custthread_ordctrl" value="calls" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="CustomerThread" target="OrderController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_custthread_ordctrl" value="calls" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#64748b;strokeWidth=1.2;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="CustomerThread" target="OrderController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1610" y="1825" />
+              <mxPoint x="300" y="1825" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_dispthread_ordctrl" value="calls" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;fontSize=10;" edge="1" parent="1" source="DispatchThread" target="OrderController">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_dispthread_ordctrl" value="calls" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#64748b;strokeWidth=1.2;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontColor=#0f172a;fontSize=10;" edge="1" parent="1" source="DispatchThread" target="OrderController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1610" y="2053" />
+              <mxPoint x="300" y="2053" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

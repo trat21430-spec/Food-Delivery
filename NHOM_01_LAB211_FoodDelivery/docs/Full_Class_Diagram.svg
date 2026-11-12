@@ -11,23 +11,24 @@
       .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
       .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
       .sep { stroke: #000000; stroke-width: 1; }
-      .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }
-      .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }
-      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }
-      .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }
-      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }
-      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }
-      .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
-      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+      .edge-inherit { fill: none; stroke: #0f172a; stroke-width: 2.0; }
+      .edge-realize { fill: none; stroke: #0f172a; stroke-width: 2.0; stroke-dasharray: 6,4; }
+      .edge-assoc { fill: none; stroke: #475569; stroke-width: 1.4; }
+      .edge-aggr { fill: none; stroke: #1e293b; stroke-width: 1.6; }
+      .edge-depend { fill: none; stroke: #64748b; stroke-width: 1.2; stroke-dasharray: 4,4; }
+      .edge-label-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 0.8; rx: 3; ry: 3; }
+      .edge-label { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 600; text-anchor: middle; }
+      .title-main { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
+      .title-sub { fill: #475569; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
     </style>
     <marker id="uml-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
-      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#0f172a" stroke-width="1.8"/>
     </marker>
     <marker id="uml-assoc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#000000" stroke-width="1.5"/>
+      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#475569" stroke-width="1.5"/>
     </marker>
     <marker id="uml-diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="12" markerHeight="8" orient="auto">
-      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#1e293b" stroke-width="1.8"/>
     </marker>
   </defs>
   <rect width="3600" height="2500" class="canvas-bg" />
@@ -798,148 +799,244 @@
     <text x="8" y="67" class="txt-meth">+ printBenchmarkTable(runs): void</text>
     <text x="8" y="82" class="txt-meth">+ renderComparisonTable(runs): void</text>
   </g>
-  <path d="M 175 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 435 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 695 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 960 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1235 350 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 175 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 435 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 695 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 960 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1235 560 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 175 350 L 175 331 L 720 331 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 435 350 L 435 313 L 720 313 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 695 350 L 695 319 L 720 319 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 960 350 L 960 331 L 720 331 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1235 350 L 1235 313 L 720 313 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 175 560 L 175 430 L 720 430 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 435 560 L 435 418 L 720 418 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 695 560 L 695 418 L 720 418 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 960 560 L 960 442 L 720 442 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1235 560 L 1235 442 L 720 442 L 720 300" class="edge-inherit" marker-end="url(#uml-inherit)" />
   <path d="M 960 750 L 960 720" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1235 350 L 175 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="705" y="426" class="edge-label">places</text>
-  <path d="M 1235 350 L 435 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="835" y="426" class="edge-label">from</text>
-  <path d="M 1235 350 L 960 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="1097" y="426" class="edge-label">delivered by</text>
-  <path d="M 1235 520 L 650 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="942" y="626" class="edge-label">status</text>
-  <path d="M 175 560 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="705" y="536" class="edge-label">belongs to</text>
-  <path d="M 175 560 L 695 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="435" y="531" class="edge-label">item</text>
-  <path d="M 695 350 L 435 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="565" y="426" class="edge-label">offers</text>
-  <path d="M 960 510 L 420 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="690" y="621" class="edge-label">status</text>
-  <path d="M 960 720 L 430 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="695" y="791" class="edge-label">role</text>
-  <path d="M 1235 830 L 640 880" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="937" y="851" class="edge-label">role</text>
-  <path d="M 695 720 L 850 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="772" y="791" class="edge-label">mechanism</text>
-  <path d="M 435 560 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="835" y="536" class="edge-label">routes</text>
-  <path d="M 435 560 L 960 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <text x="697" y="531" class="edge-label">assigned driver</text>
-  <path d="M 2030 150 L 1650 290" class="edge-realize" marker-end="url(#uml-inherit)" />
-  <path d="M 1630 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1880 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2175 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2520 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2910 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1630 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1880 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2130 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2405 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2690 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2520 540 L 180 740" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1350" y="636" class="edge-label">calculates distance</text>
-  <path d="M 2970 710 L 640 880" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1805" y="791" class="edge-label">authenticates</text>
-  <path d="M 530 1530 L 230 1460" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 230 1690 L 610 1550" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1460 L 985 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1460 L 1345 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1460 L 1705 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 775 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 1200 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 3025 1560" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 230 1690 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 610 1550 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 610 1550 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 610 1550 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 610 1550 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 985 1460 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 985 1460 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1345 1460 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1705 1460 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1705 1460 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 1630 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 1880 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 300 1770 L 180 900" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="240" y="1331" class="edge-label">calculates fee &amp; distance</text>
-  <path d="M 775 1770 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 775 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 775 1770 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 775 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 775 1770 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 775 1770 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 775 1970 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1200 1770 L 2130 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1200 1770 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1200 1770 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1200 1770 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1200 1950 L 1610 2030" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <text x="1405" y="1986" class="edge-label">creates task</text>
-  <path d="M 1200 1950 L 1610 2170" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <text x="1405" y="2056" class="edge-label">creates task</text>
-  <path d="M 1610 2030 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1610 2030 L 850 970" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <path d="M 1610 2170 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1610 2170 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 1610 2170 L 850 970" class="edge-assoc" marker-end="url(#uml-assoc)" />
-  <path d="M 1610 1880 L 300 1770" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="955" y="1821" class="edge-label">calls</text>
-  <path d="M 1610 1900 L 300 2020" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="955" y="1956" class="edge-label">calls</text>
-  <path d="M 1610 1900 L 850 970" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1230" y="1431" class="edge-label">uses mechanism</text>
+  <path d="M 1235 520 L 1235 541 L 175 541 L 175 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(705, 541)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">places</text>
+  </g>
+  <path d="M 1235 520 L 1235 535 L 435 535 L 435 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(835, 535)">
+    <rect x="-18" y="-9" width="36" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">from</text>
+  </g>
+  <path d="M 1110 435 L 1080 430" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1095, 432)">
+    <rect x="-46" y="-9" width="92" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">delivered by</text>
+  </g>
+  <path d="M 1235 520 L 1235 618 L 650 618 L 650 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(942, 618)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">status</text>
+  </g>
+  <path d="M 175 560 L 175 534 L 1235 534 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(705, 534)">
+    <rect x="-39" y="-9" width="78" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">belongs to</text>
+  </g>
+  <path d="M 175 560 L 175 535 L 695 535 L 695 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(435, 535)">
+    <rect x="-18" y="-9" width="36" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">item</text>
+  </g>
+  <path d="M 580 430 L 550 430" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(565, 430)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">offers</text>
+  </g>
+  <path d="M 960 510 L 960 625 L 420 625 L 420 740" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(690, 625)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">status</text>
+  </g>
+  <path d="M 960 720 L 960 795 L 430 795 L 430 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(695, 795)">
+    <rect x="-18" y="-9" width="36" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">role</text>
+  </g>
+  <path d="M 1235 830 L 1235 849 L 640 849 L 640 880" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(937, 849)">
+    <rect x="-18" y="-9" width="36" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">role</text>
+  </g>
+  <path d="M 695 720 L 695 789 L 850 789 L 850 870" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(772, 789)">
+    <rect x="-35" y="-9" width="71" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">mechanism</text>
+  </g>
+  <path d="M 435 560 L 435 546 L 1235 546 L 1235 520" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(835, 546)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">routes</text>
+  </g>
+  <path d="M 435 560 L 435 523 L 960 523 L 960 510" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <g transform="translate(697, 523)">
+    <rect x="-56" y="-9" width="113" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">assigned driver</text>
+  </g>
+  <path d="M 1820 255 L 1780 220" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 390 L 1630 375 L 2030 375 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 390 L 1880 375 L 2030 375 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 390 L 2175 387 L 2030 387 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2520 390 L 2520 381 L 2030 381 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2910 390 L 2910 363 L 2030 363 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 580 L 1630 458 L 2030 458 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 580 L 1880 464 L 2030 464 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2130 580 L 2130 470 L 2030 470 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2405 580 L 2405 482 L 2030 482 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2690 580 L 2690 458 L 2030 458 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2520 540 L 2520 634 L 180 634 L 180 740" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1350, 634)">
+    <rect x="-70" y="-9" width="141" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">calculates distance</text>
+  </g>
+  <path d="M 2970 710 L 2970 807 L 640 807 L 640 880" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1805, 807)">
+    <rect x="-49" y="-9" width="99" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">authenticates</text>
+  </g>
+  <path d="M 530 1530 L 530 1501 L 230 1501 L 230 1460" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 230 1690 L 230 1608 L 610 1608 L 610 1550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 1717 L 985 1717 L 985 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 1711 L 1345 1711 L 1345 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 1723 L 1705 1723 L 1705 1630" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 1730 L 300 1730 L 300 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 1736 L 775 1736 L 775 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 1724 L 1200 1724 L 1200 1770" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 2440 L 3025 2440 L 3025 1800" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 2448 L 2925 2448 L 2925 1930" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 2464 L 3205 2464 L 3205 1930" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 2440 L 2925 2440 L 2925 2050" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 230 1690 L 230 2464 L 3205 2464 L 3205 2050" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 610 1285 L 2690 1285 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 610 1345 L 1630 1345 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 610 1255 L 2520 1255 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 610 1550 L 610 1255 L 2405 1255 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 985 1460 L 985 1255 L 1630 1255 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 985 1460 L 985 1335 L 2910 1335 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1345 1460 L 1345 1255 L 2520 1255 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1705 1460 L 1705 1295 L 1880 1295 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1705 1460 L 1705 1275 L 2175 1275 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1742 L 40 1742 L 40 1335 L 2910 1335 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1748 L 40 1748 L 40 1275 L 2175 1275 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1736 L 40 1736 L 40 1325 L 2520 1325 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1748 L 40 1748 L 40 1335 L 1880 1335 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1736 L 40 1736 L 40 1355 L 1630 1355 L 1630 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1754 L 40 1754 L 40 1285 L 1630 1285 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1736 L 40 1736 L 40 1285 L 1880 1285 L 1880 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 300 1770 L 300 1730 L 40 1730 L 40 1335 L 180 1335 L 180 900" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(240, 1532)">
+    <rect x="-91" y="-9" width="183" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">calculates fee &amp; distance</text>
+  </g>
+  <path d="M 775 1770 L 775 1754 L 805 1754 L 805 1305 L 1880 1305 L 1880 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 775 1742 L 805 1742 L 805 1295 L 2175 1295 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 775 1748 L 805 1748 L 805 1355 L 1630 1355 L 1630 480" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 775 1736 L 805 1736 L 805 1255 L 2520 1255 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 775 1730 L 805 1730 L 805 1295 L 2405 1295 L 2405 700" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1770 L 775 1748 L 805 1748 L 805 1345 L 2690 1345 L 2690 690" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 775 1970 L 775 2035 L 300 2035 L 300 2020" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 1200 1754 L 1165 1754 L 1165 1335 L 2130 1335 L 2130 670" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 1200 1748 L 1165 1748 L 1165 1265 L 2910 1265 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 1200 1748 L 1165 1748 L 1165 1255 L 2520 1255 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1770 L 1200 1748 L 1165 1748 L 1165 1355 L 2175 1355 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1200 1950 L 1200 2002 L 1610 2002 L 1610 2030" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <g transform="translate(1405, 2002)">
+    <rect x="-46" y="-9" width="92" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">creates task</text>
+  </g>
+  <path d="M 1200 1950 L 1200 2048 L 1610 2048 L 1610 2170" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <g transform="translate(1405, 2048)">
+    <rect x="-46" y="-9" width="92" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">creates task</text>
+  </g>
+  <path d="M 1610 2030 L 1610 1748 L 1995 1748 L 1995 1315 L 2175 1315 L 2175 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 2030 L 1610 1742 L 1995 1742 L 1995 1295 L 850 1295 L 850 970" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <path d="M 1610 2170 L 1610 1742 L 1995 1742 L 1995 1295 L 2520 1295 L 2520 540" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 2170 L 1610 1754 L 1995 1754 L 1995 1335 L 2910 1335 L 2910 550" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 1610 2170 L 1610 1736 L 1995 1736 L 1995 1355 L 850 1355 L 850 970" class="edge-assoc" marker-end="url(#uml-assoc)" />
+  <path d="M 1610 1880 L 1610 1825 L 300 1825 L 300 1770" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(955, 1825)">
+    <rect x="-21" y="-9" width="43" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">calls</text>
+  </g>
+  <path d="M 1610 2010 L 1610 2053 L 300 2053 L 300 2020" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(955, 2053)">
+    <rect x="-21" y="-9" width="43" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">calls</text>
+  </g>
+  <path d="M 1610 1900 L 1610 1742 L 1995 1742 L 1995 1265 L 850 1265 L 850 970" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1230, 1503)">
+    <rect x="-53" y="-9" width="106" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">uses mechanism</text>
+  </g>
   <path d="M 2390 1570 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2180 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2470 1960 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2180 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2470 1680 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2180 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2470 1820 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2175 540 L 2470 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="2322" y="1176" class="edge-label">throws</text>
-  <path d="M 2910 550 L 2180 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="2545" y="1111" class="edge-label">throws</text>
-  <path d="M 2520 540 L 2470 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="2495" y="1106" class="edge-label">throws</text>
-  <path d="M 2910 550 L 2180 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="2545" y="1181" class="edge-label">throws</text>
-  <path d="M 300 2020 L 2470 1960" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1385" y="1986" class="edge-label">throws</text>
-  <path d="M 300 2020 L 2180 1960" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1240" y="1986" class="edge-label">throws</text>
-  <path d="M 2910 1540 L 230 1460" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1570" y="1496" class="edge-label">instantiates</text>
-  <path d="M 3025 1560 L 3150 1540" class="edge-realize" marker-end="url(#uml-inherit)" />
-  <path d="M 3025 1560 L 230 1690" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 3025 1800 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 3025 1800 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 3025 1800 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 3025 1800 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
-  <path d="M 2925 1830 L 435 510" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1680" y="1166" class="edge-label">displays [R]</text>
-  <path d="M 2925 1830 L 175 510" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1550" y="1166" class="edge-label">displays [C]</text>
-  <path d="M 2925 1830 L 960 510" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="1942" y="1166" class="edge-label">displays [D]/[B]</text>
-  <path d="M 2925 1830 L 1235 520" class="edge-depend" marker-end="url(#uml-assoc)" />
-  <text x="2080" y="1171" class="edge-label">audits active</text>
+  <path d="M 2180 1960 L 2180 1762 L 2390 1762 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1960 L 2470 1744 L 2390 1744 L 2390 1540" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1680 L 2180 1659 L 2390 1659 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1680 L 2470 1653 L 2390 1653 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2180 1820 L 2180 1741 L 2390 1741 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2470 1820 L 2470 1723 L 2390 1723 L 2390 1650" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 540 L 2175 1355 L 2470 1355 L 2470 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(2322, 1355)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">throws</text>
+  </g>
+  <path d="M 2910 550 L 2910 1335 L 2180 1335 L 2180 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(2545, 1335)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">throws</text>
+  </g>
+  <path d="M 2520 540 L 2520 1325 L 2470 1325 L 2470 1680" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(2495, 1325)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">throws</text>
+  </g>
+  <path d="M 2910 550 L 2910 1325 L 2180 1325 L 2180 1820" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(2545, 1325)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">throws</text>
+  </g>
+  <path d="M 540 1895 L 1995 1895 L 1995 2010 L 2340 2010" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1995, 1952)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">throws</text>
+  </g>
+  <path d="M 540 1895 L 1995 1895 L 1995 2010 L 2050 2010" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1995, 1952)">
+    <rect x="-25" y="-9" width="50" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">throws</text>
+  </g>
+  <path d="M 2910 1540 L 2910 1500 L 230 1500 L 230 1460" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1570, 1500)">
+    <rect x="-46" y="-9" width="92" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">instantiates</text>
+  </g>
+  <path d="M 3025 1560 L 3025 1562 L 3150 1562 L 3150 1540" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 3025 1560 L 3025 1619 L 230 1619 L 230 1690" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 3025 1827 L 2925 1827 L 2925 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 3025 1815 L 3205 1815 L 3205 1830" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 3025 1887 L 2925 1887 L 2925 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 3025 1800 L 3025 1863 L 3205 1863 L 3205 1950" class="edge-aggr" marker-start="url(#uml-diamond)" />
+  <path d="M 2925 1830 L 2925 1730 L 1995 1730 L 1995 1355 L 435 1355 L 435 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1680, 1542)">
+    <rect x="-46" y="-9" width="92" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">displays [R]</text>
+  </g>
+  <path d="M 2925 1830 L 2925 1736 L 1995 1736 L 1995 1325 L 175 1325 L 175 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1550, 1530)">
+    <rect x="-46" y="-9" width="92" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">displays [C]</text>
+  </g>
+  <path d="M 2925 1830 L 2925 1748 L 1995 1748 L 1995 1295 L 960 1295 L 960 510" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(1942, 1521)">
+    <rect x="-60" y="-9" width="120" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">displays [D]/[B]</text>
+  </g>
+  <path d="M 2925 1830 L 2925 1736 L 1995 1736 L 1995 1335 L 1235 1335 L 1235 520" class="edge-depend" marker-end="url(#uml-assoc)" />
+  <g transform="translate(2080, 1535)">
+    <rect x="-49" y="-9" width="99" height="15" class="edge-label-bg" />
+    <text x="0" y="2" class="edge-label">audits active</text>
+  </g>
 </svg>

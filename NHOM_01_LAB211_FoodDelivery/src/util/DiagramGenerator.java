@@ -66,6 +66,29 @@ public class DiagramGenerator {
         }
     }
 
+    static class Point {
+        int x, y;
+        Point(int x, int y) { this.x = x; this.y = y; }
+    }
+
+    static class EdgeRoute {
+        Point start;
+        Point end;
+        List<Point> waypoints;
+        double exitX, exitY;
+        double entryX, entryY;
+
+        EdgeRoute(Point start, Point end, List<Point> waypoints, double exitX, double exitY, double entryX, double entryY) {
+            this.start = start;
+            this.end = end;
+            this.waypoints = waypoints;
+            this.exitX = exitX;
+            this.exitY = exitY;
+            this.entryX = entryX;
+            this.entryY = entryY;
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("=== GENERATING EXACT 60-CLASS UML CLASS DIAGRAM (MULTI-TAB, MODULAR & INTERACTIVE) ===");
         try {
@@ -733,6 +756,145 @@ public class DiagramGenerator {
         writeFile(new File("../Lab211-Group1/ClassDiagram/class_diagram_view.html"), html.toString());
     }
 
+    private static EdgeRoute calculateRoute(UmlClass src, UmlClass tgt, UmlEdge e, boolean isFullDiag) {
+        List<Point> pts = new ArrayList<>();
+        double exitX = 0.5, exitY = 0.5;
+        double entryX = 0.5, entryY = 0.5;
+        Point start;
+        Point end;
+
+        int hash = Math.abs(e.id.hashCode());
+
+        boolean srcUpper = src.cy() < 1350;
+        boolean tgtUpper = tgt.cy() < 1350;
+
+        if (isFullDiag && srcUpper != tgtUpper) {
+            // 1. Cross-Layer Highway Routing (y = 1255 to 1355)
+            int laneIdx = hash % 11;
+            int highwayY = 1255 + laneIdx * 10;
+
+            if (!srcUpper && tgtUpper) {
+                // Lower Layer (Controller / View / Exception) -> Upper Layer (Repo / Model)
+                exitX = 0.5; exitY = 0.0;
+                entryX = 0.5; entryY = 1.0;
+                start = new Point(src.cx(), src.top());
+                end = new Point(tgt.cx(), tgt.bottom());
+
+                if (src.top() >= 1700) {
+                    int gutterY = 1730 + (hash % 5) * 6;
+                    int escapeX;
+                    if (src.cx() < 550) {
+                        escapeX = 40;
+                    } else if (src.cx() < 950) {
+                        escapeX = 805;
+                    } else if (src.cx() < 1400) {
+                        escapeX = 1165;
+                    } else {
+                        escapeX = 1995;
+                    }
+                    pts.add(new Point(src.cx(), gutterY));
+                    pts.add(new Point(escapeX, gutterY));
+                    pts.add(new Point(escapeX, highwayY));
+                    pts.add(new Point(tgt.cx(), highwayY));
+                } else {
+                    pts.add(new Point(src.cx(), highwayY));
+                    pts.add(new Point(tgt.cx(), highwayY));
+                }
+            } else {
+                // Upper Layer -> Lower Layer
+                exitX = 0.5; exitY = 1.0;
+                entryX = 0.5; entryY = 0.0;
+                start = new Point(src.cx(), src.bottom());
+                end = new Point(tgt.cx(), tgt.top());
+
+                pts.add(new Point(src.cx(), highwayY));
+                pts.add(new Point(tgt.cx(), highwayY));
+            }
+        } else if (isFullDiag && "pkg_ctrl".equals(src.pkg) && "pkg_ex".equals(tgt.pkg)) {
+            // 2. Controller -> Exception (Horizontal Inter-Package)
+            int verticalGutterX = 1995;
+            exitX = 1.0; exitY = 0.5;
+            entryX = 0.0; entryY = 0.5;
+            start = new Point(src.right(), src.cy());
+            end = new Point(tgt.left(), tgt.cy());
+            pts.add(new Point(verticalGutterX, src.cy()));
+            pts.add(new Point(verticalGutterX, tgt.cy()));
+        } else if (isFullDiag && "pkg_ex".equals(src.pkg) && "pkg_view".equals(tgt.pkg)) {
+            // 3. Exception -> View (Horizontal Inter-Package)
+            int verticalGutterX = 2775;
+            exitX = 1.0; exitY = 0.5;
+            entryX = 0.0; entryY = 0.5;
+            start = new Point(src.right(), src.cy());
+            end = new Point(tgt.left(), tgt.cy());
+            pts.add(new Point(verticalGutterX, src.cy()));
+            pts.add(new Point(verticalGutterX, tgt.cy()));
+        } else if (isFullDiag && "pkg_ctrl".equals(src.pkg) && "pkg_view".equals(tgt.pkg)) {
+            // 4. Controller -> View (Bypass Exception Layer via Bottom Gutter)
+            int lowerGutterY = 2440 + (hash % 4) * 8;
+            exitX = 0.5; exitY = 1.0;
+            entryX = 0.5; entryY = 1.0;
+            start = new Point(src.cx(), src.bottom());
+            end = new Point(tgt.cx(), tgt.bottom());
+            pts.add(new Point(src.cx(), lowerGutterY));
+            pts.add(new Point(tgt.cx(), lowerGutterY));
+        } else if (Math.abs(src.cy() - tgt.cy()) < 65 && Math.abs(src.cx() - tgt.cx()) <= 380) {
+            // 5. Immediate Horizontal Neighbors (Same Row)
+            if (src.right() <= tgt.left()) {
+                exitX = 1.0; exitY = 0.5;
+                entryX = 0.0; entryY = 0.5;
+                start = new Point(src.right(), src.cy());
+                end = new Point(tgt.left(), tgt.cy());
+            } else {
+                exitX = 0.0; exitY = 0.5;
+                entryX = 1.0; entryY = 0.5;
+                start = new Point(src.left(), src.cy());
+                end = new Point(tgt.right(), tgt.cy());
+            }
+        } else if (Math.abs(src.cy() - tgt.cy()) < 65 && Math.abs(src.cx() - tgt.cx()) > 380) {
+            // 6. Same Row But Separated (Bypass via Row Bottom Gutter)
+            exitX = 0.5; exitY = 1.0;
+            entryX = 0.5; entryY = 1.0;
+            start = new Point(src.cx(), src.bottom());
+            end = new Point(tgt.cx(), tgt.bottom());
+
+            int bypassY = Math.max(src.bottom(), tgt.bottom()) + 15 + (hash % 4) * 6;
+            pts.add(new Point(src.cx(), bypassY));
+            pts.add(new Point(tgt.cx(), bypassY));
+        } else if (src.cy() > tgt.cy()) {
+            // 7. Src Below Tgt (Subclass -> Superclass, Row 2 -> Row 1)
+            exitX = 0.5; exitY = 0.0;
+            entryX = 0.5; entryY = 1.0;
+            start = new Point(src.cx(), src.top());
+            end = new Point(tgt.cx(), tgt.bottom());
+
+            int midY = (src.top() + tgt.bottom()) / 2;
+            int jitter = (hash % 5) * 6 - 12;
+            midY += jitter;
+
+            if (Math.abs(src.cx() - tgt.cx()) > 10) {
+                pts.add(new Point(src.cx(), midY));
+                pts.add(new Point(tgt.cx(), midY));
+            }
+        } else {
+            // 8. Src Above Tgt (Row 1 -> Row 2)
+            exitX = 0.5; exitY = 1.0;
+            entryX = 0.5; entryY = 0.0;
+            start = new Point(src.cx(), src.bottom());
+            end = new Point(tgt.cx(), tgt.top());
+
+            int midY = (src.bottom() + tgt.top()) / 2;
+            int jitter = (hash % 5) * 6 - 12;
+            midY += jitter;
+
+            if (Math.abs(src.cx() - tgt.cx()) > 10) {
+                pts.add(new Point(src.cx(), midY));
+                pts.add(new Point(tgt.cx(), midY));
+            }
+        }
+
+        return new EdgeRoute(start, end, pts, exitX, exitY, entryX, entryY);
+    }
+
     private static String renderSvgContent(List<UmlClass> classes, List<UmlEdge> edges, int width, int height, boolean full) {
         StringBuilder svg = new StringBuilder();
         svg.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -748,25 +910,26 @@ public class DiagramGenerator {
         svg.append("      .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }\n");
         svg.append("      .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }\n");
         svg.append("      .sep { stroke: #000000; stroke-width: 1; }\n");
-        svg.append("      .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }\n");
-        svg.append("      .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }\n");
-        svg.append("      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }\n");
-        svg.append("      .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }\n");
-        svg.append("      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }\n");
-        svg.append("      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }\n");
-        svg.append("      .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }\n");
-        svg.append("      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }\n");
+        svg.append("      .edge-inherit { fill: none; stroke: #0f172a; stroke-width: 2.0; }\n");
+        svg.append("      .edge-realize { fill: none; stroke: #0f172a; stroke-width: 2.0; stroke-dasharray: 6,4; }\n");
+        svg.append("      .edge-assoc { fill: none; stroke: #475569; stroke-width: 1.4; }\n");
+        svg.append("      .edge-aggr { fill: none; stroke: #1e293b; stroke-width: 1.6; }\n");
+        svg.append("      .edge-depend { fill: none; stroke: #64748b; stroke-width: 1.2; stroke-dasharray: 4,4; }\n");
+        svg.append("      .edge-label-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 0.8; rx: 3; ry: 3; }\n");
+        svg.append("      .edge-label { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 600; text-anchor: middle; }\n");
+        svg.append("      .title-main { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }\n");
+        svg.append("      .title-sub { fill: #475569; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }\n");
         svg.append("    </style>\n");
 
         // Markers
         svg.append("    <marker id=\"uml-inherit\" viewBox=\"0 0 12 12\" refX=\"11\" refY=\"6\" markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\">\n");
-        svg.append("      <polygon points=\"1 1, 11 6, 1 11\" fill=\"#ffffff\" stroke=\"#000000\" stroke-width=\"1.5\"/>\n");
+        svg.append("      <polygon points=\"1 1, 11 6, 1 11\" fill=\"#ffffff\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n");
         svg.append("    </marker>\n");
         svg.append("    <marker id=\"uml-assoc\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\">\n");
-        svg.append("      <polyline points=\"1 1, 9 5, 1 9\" fill=\"none\" stroke=\"#000000\" stroke-width=\"1.5\"/>\n");
+        svg.append("      <polyline points=\"1 1, 9 5, 1 9\" fill=\"none\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n");
         svg.append("    </marker>\n");
         svg.append("    <marker id=\"uml-diamond\" viewBox=\"0 0 16 10\" refX=\"1\" refY=\"5\" markerWidth=\"12\" markerHeight=\"8\" orient=\"auto\">\n");
-        svg.append("      <polygon points=\"1 5, 8 1, 15 5, 8 9\" fill=\"#ffffff\" stroke=\"#000000\" stroke-width=\"1.5\"/>\n");
+        svg.append("      <polygon points=\"1 5, 8 1, 15 5, 8 9\" fill=\"#ffffff\" stroke=\"#1e293b\" stroke-width=\"1.8\"/>\n");
         svg.append("    </marker>\n");
         svg.append("  </defs>\n");
 
@@ -826,10 +989,7 @@ public class DiagramGenerator {
             UmlClass tgt = findClass(classes, e.targetId);
             if (src == null || tgt == null) continue;
 
-            int sx = src.cx();
-            int sy = (src.cy() < tgt.cy()) ? src.bottom() : src.top();
-            int tx = tgt.cx();
-            int ty = (src.cy() < tgt.cy()) ? tgt.top() : tgt.bottom();
+            EdgeRoute route = calculateRoute(src, tgt, e, full);
 
             String cls;
             String marker;
@@ -850,14 +1010,31 @@ public class DiagramGenerator {
                 marker = "marker-end=\"url(#uml-assoc)\"";
             }
 
-            svg.append("  <path d=\"M ").append(sx).append(" ").append(sy).append(" L ").append(tx).append(" ").append(ty)
-                    .append("\" class=\"").append(cls).append("\" ").append(marker).append(" />\n");
+            StringBuilder pathD = new StringBuilder();
+            pathD.append("M ").append(route.start.x).append(" ").append(route.start.y);
+            for (Point p : route.waypoints) {
+                pathD.append(" L ").append(p.x).append(" ").append(p.y);
+            }
+            pathD.append(" L ").append(route.end.x).append(" ").append(route.end.y);
+
+            svg.append("  <path d=\"").append(pathD.toString()).append("\" class=\"").append(cls).append("\" ").append(marker).append(" />\n");
 
             if (e.label != null && !e.label.isEmpty()) {
-                int mx = (sx + tx) / 2;
-                int my = (sy + ty) / 2 - 4;
-                svg.append("  <text x=\"").append(mx).append("\" y=\"").append(my).append("\" class=\"edge-label\">")
-                        .append(escapeXml(e.label)).append("</text>\n");
+                int lx, ly;
+                if (!route.waypoints.isEmpty()) {
+                    Point p1 = route.waypoints.get(0);
+                    Point p2 = route.waypoints.get(route.waypoints.size() - 1);
+                    lx = (p1.x + p2.x) / 2;
+                    ly = (p1.y + p2.y) / 2;
+                } else {
+                    lx = (route.start.x + route.end.x) / 2;
+                    ly = (route.start.y + route.end.y) / 2;
+                }
+                int pillW = e.label.length() * 7 + 8;
+                svg.append("  <g transform=\"translate(").append(lx).append(", ").append(ly).append(")\">\n");
+                svg.append("    <rect x=\"").append(-pillW / 2).append("\" y=\"-9\" width=\"").append(pillW).append("\" height=\"15\" class=\"edge-label-bg\" />\n");
+                svg.append("    <text x=\"0\" y=\"2\" class=\"edge-label\">").append(escapeXml(e.label)).append("</text>\n");
+                svg.append("  </g>\n");
             }
         }
 
@@ -970,23 +1147,39 @@ public class DiagramGenerator {
 
         // Edges
         for (UmlEdge e : edges) {
+            UmlClass src = findClass(classes, e.sourceId);
+            UmlClass tgt = findClass(classes, e.targetId);
+            if (src == null || tgt == null) continue;
+
+            EdgeRoute route = calculateRoute(src, tgt, e, isFull);
+
             String style;
             if ("inherit".equals(e.type)) {
-                style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;strokeColor=#000000;strokeWidth=1.5;";
+                style = "edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;strokeColor=#0f172a;strokeWidth=1.8;";
             } else if ("realize".equals(e.type)) {
-                style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#000000;strokeWidth=1.5;";
+                style = "edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#0f172a;strokeWidth=1.8;";
             } else if ("aggr".equals(e.type)) {
-                style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#000000;strokeWidth=1.5;";
+                style = "edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamond;startFill=0;endArrow=none;strokeColor=#1e293b;strokeWidth=1.6;";
             } else if ("depend".equals(e.type)) {
-                style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;";
+                style = "edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#64748b;strokeWidth=1.2;";
             } else {
-                style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;";
+                style = "edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;strokeColor=#475569;strokeWidth=1.3;";
             }
 
+            style += "exitX=" + route.exitX + ";exitY=" + route.exitY + ";exitDx=0;exitDy=0;entryX=" + route.entryX + ";entryY=" + route.entryY + ";entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;";
+
             sb.append("        <mxCell id=\"").append(e.id).append("\" value=\"").append(escapeXml(e.label)).append("\" ");
-            sb.append("style=\"").append(style).append("fontColor=#000000;fontSize=10;\" ");
+            sb.append("style=\"").append(style).append("fontColor=#0f172a;fontSize=10;\" ");
             sb.append("edge=\"1\" parent=\"1\" source=\"").append(e.sourceId).append("\" target=\"").append(e.targetId).append("\">\n");
-            sb.append("          <mxGeometry relative=\"1\" as=\"geometry\" />\n");
+            sb.append("          <mxGeometry relative=\"1\" as=\"geometry\">\n");
+            if (route.waypoints != null && !route.waypoints.isEmpty()) {
+                sb.append("            <Array as=\"points\">\n");
+                for (Point p : route.waypoints) {
+                    sb.append("              <mxPoint x=\"").append(p.x).append("\" y=\"").append(p.y).append("\" />\n");
+                }
+                sb.append("            </Array>\n");
+            }
+            sb.append("          </mxGeometry>\n");
             sb.append("        </mxCell>\n");
         }
 

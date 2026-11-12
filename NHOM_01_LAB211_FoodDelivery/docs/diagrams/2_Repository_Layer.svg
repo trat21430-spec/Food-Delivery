@@ -11,23 +11,24 @@
       .txt-attr { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
       .txt-meth { fill: #111827; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; }
       .sep { stroke: #000000; stroke-width: 1; }
-      .edge-inherit { fill: none; stroke: #000000; stroke-width: 1.6; }
-      .edge-realize { fill: none; stroke: #000000; stroke-width: 1.6; stroke-dasharray: 5,4; }
-      .edge-assoc { fill: none; stroke: #1f2937; stroke-width: 1.4; }
-      .edge-aggr { fill: none; stroke: #000000; stroke-width: 1.5; }
-      .edge-depend { fill: none; stroke: #374151; stroke-width: 1.4; stroke-dasharray: 4,4; }
-      .edge-label { fill: #111827; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; text-anchor: middle; }
-      .title-main { fill: #000000; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
-      .title-sub { fill: #4b5563; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+      .edge-inherit { fill: none; stroke: #0f172a; stroke-width: 2.0; }
+      .edge-realize { fill: none; stroke: #0f172a; stroke-width: 2.0; stroke-dasharray: 6,4; }
+      .edge-assoc { fill: none; stroke: #475569; stroke-width: 1.4; }
+      .edge-aggr { fill: none; stroke: #1e293b; stroke-width: 1.6; }
+      .edge-depend { fill: none; stroke: #64748b; stroke-width: 1.2; stroke-dasharray: 4,4; }
+      .edge-label-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 0.8; rx: 3; ry: 3; }
+      .edge-label { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 600; text-anchor: middle; }
+      .title-main { fill: #0f172a; font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: bold; text-anchor: middle; }
+      .title-sub { fill: #475569; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; text-anchor: middle; }
     </style>
     <marker id="uml-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
-      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="1 1, 11 6, 1 11" fill="#ffffff" stroke="#0f172a" stroke-width="1.8"/>
     </marker>
     <marker id="uml-assoc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#000000" stroke-width="1.5"/>
+      <polyline points="1 1, 9 5, 1 9" fill="none" stroke="#475569" stroke-width="1.5"/>
     </marker>
     <marker id="uml-diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="12" markerHeight="8" orient="auto">
-      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="1 5, 8 1, 15 5, 8 9" fill="#ffffff" stroke="#1e293b" stroke-width="1.8"/>
     </marker>
   </defs>
   <rect width="3600" height="2500" class="canvas-bg" />
@@ -174,15 +175,15 @@
     <text x="8" y="112" class="txt-meth">+ authenticate(role, id, pass): boolean</text>
     <text x="8" y="127" class="txt-meth">+ hasAccount(role, id): boolean</text>
   </g>
-  <path d="M 2030 150 L 1650 290" class="edge-realize" marker-end="url(#uml-inherit)" />
-  <path d="M 1630 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1880 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2175 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2520 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2910 390 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1630 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 1880 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2130 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2405 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
-  <path d="M 2690 580 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1820 255 L 1780 220" class="edge-realize" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 390 L 1630 375 L 2030 375 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 390 L 1880 375 L 2030 375 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2175 390 L 2175 387 L 2030 387 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2520 390 L 2520 381 L 2030 381 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2910 390 L 2910 363 L 2030 363 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1630 580 L 1630 458 L 2030 458 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 1880 580 L 1880 464 L 2030 464 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2130 580 L 2130 470 L 2030 470 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2405 580 L 2405 482 L 2030 482 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
+  <path d="M 2690 580 L 2690 458 L 2030 458 L 2030 360" class="edge-inherit" marker-end="url(#uml-inherit)" />
 </svg>
