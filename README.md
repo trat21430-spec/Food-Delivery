@@ -37,6 +37,7 @@
 
 | # | Chủ đề |
 |:-:|---|
+| 0 | 🎯 [Tài liệu Đồng bộ 4 tầng & Phát biểu bài toán chính thức](#-0-tài-liệu-đồng-bộ-4-tầng--phát-biểu-bài-toán-chính-thức) |
 | 1 | 🌐 [Tổng quan hệ thống](#-1-tổng-quan-hệ-thống) |
 | 2 | 🎭 [Actor của hệ thống](#-2-actor-của-hệ-thống) |
 | 3 | 🔄 [Luồng nghiệp vụ chính](#-3-luồng-nghiệp-vụ-chính) |
@@ -54,6 +55,21 @@
 | 15 | 📁 [Các file CSV chính](#-15-các-file-csv-chính) |
 | 16 | 🧵 [Mối liên hệ giữa các phần](#-16-mối-liên-hệ-giữa-các-phần) |
 | 17 | 🏁 [Kết luận](#-17-kết-luận) |
+
+---
+
+## 🎯 0. Tài liệu Đồng bộ 4 tầng & Phát biểu bài toán chính thức
+
+Hệ thống được thiết kế và thực thi theo nguyên tắc **Đồng bộ tuyệt đối 4 tầng**:  
+$$\text{Phát biểu bài toán} \iff \text{51 Use Cases} \iff \text{60 Classes UML} \iff \text{Mã nguồn Java & CSV}$$
+
+### 📌 Các tài liệu chính thức theo từng thư mục:
+* 📄 **Phát biểu bài toán chi tiết & Đặc tả 51 Use Cases:** [`Usecase/use_case_diagram.md`](Usecase/use_case_diagram.md)
+* 🖼️ **Hình vẽ Use Case Diagram toàn hệ thống:** [`Usecase/Full_UseCase_Diagram.jpg`](Usecase/Full_UseCase_Diagram.jpg) | [`Usecase/Full_UseCase_Diagram.drawio`](Usecase/Full_UseCase_Diagram.drawio)
+* 🌐 **Trình duyệt Web xem Use Case (Pan-Zoom & Tra cứu):** [`Usecase/use_case_view.html`](Usecase/use_case_view.html)
+* 🖼️ **Hình vẽ Class Diagram (60 Classes, đi dây xa lộ rõ ràng):** [`diagram/Full_Class_Diagram.jpg`](diagram/Full_Class_Diagram.jpg) | [`ClassDiagram/Full_Class_Diagram.drawio`](ClassDiagram/Full_Class_Diagram.drawio)
+* 📄 **Đặc tả 60 Class & 112 Quan hệ:** [`ClassDiagram/class_diagram.md`](ClassDiagram/class_diagram.md)
+* 🌐 **Trình duyệt Web xem Class Diagram (Pan-Zoom theo Layer):** [`ClassDiagram/class_diagram_view.html`](ClassDiagram/class_diagram_view.html)
 
 ---
 
