@@ -1,199 +1,266 @@
-# TÀI LIỆU ĐẶC TẢ VÀ SƠ ĐỒ USE CASE TOÀN DIỆN (FOOD DELIVERY SIMULATION SYSTEM - FDS)
-**Môn học:** LAB211 — Lập trình Hướng đối tượng với Java | FPT University  
-**Phạm vi triển khai:** Hệ thống Đặt & Giao đồ ăn trực tuyến (Thành phố Quy Nhơn)  
-**Quy chuẩn thiết kế:** UML 2.5 Academic Monochrome Specification (Đen - Trắng chuẩn đồ án)  
-**Độ phủ kiểm chứng:** 100% khớp các menu và hàm điều khiển trong `MainView.java` và các `Controller`  
+# 🎯 TÀI LIỆU ĐỒNG BỘ TOÀN DIỆN: PHÁT BIỂU BÀI TOÁN — USE CASE — CLASS DIAGRAM — SOURCE CODE
+**Dự án:** Food Delivery Network Simulation (FDS)  
+**Môn học:** LAB211 — OOP with Java | FPT University  
+**Phạm vi:** Hệ thống mô phỏng đặt & giao đồ ăn trực tuyến tại TP. Quy Nhơn  
+**Nguyên tắc cốt lõi:** 100% Đồng bộ 4 tầng (Phát biểu bài toán $\iff$ Use Case $\iff$ Class Diagram $\iff$ Mã nguồn)  
+**Ràng buộc kỹ thuật:** 100% OOP thuần túy, 0% static ngoài `main`, 0% final/protected, 100% `this.`, lưu trữ hoàn toàn trên file CSV vật lý.
 
 ---
 
-## 1. TỔNG QUAN HỆ THỐNG VÀ DANH SÁCH TÁC NHÂN (ACTORS)
+## 1. PHÁT BIỂU BÀI TOÁN CHÍNH THỨC (PROBLEM STATEMENT)
 
-| STT | Mã Actor | Tên Tác Nhân | Vai Trò (Role) | Phân Loại | Nhiệm Vụ Trọng Tâm |
+### 1.1. Bối cảnh Nghiệp vụ (Business Context)
+Xây dựng hệ thống phần mềm mô phỏng mạng lưới giao nhận đồ ăn trực tuyến tại khu vực Thành phố Quy Nhơn, kết nối giữa 4 thực thể chính:
+1. **Khách hàng (Customer):** Xem danh sách quán ăn, duyệt menu món, đặt đơn trực tuyến, hệ thống tự động tính khoảng cách và phí giao hàng theo tọa độ GPS bằng công thức **Haversine**, theo dõi trạng thái đơn hàng thời gian thực hoặc hủy đơn khi quán chưa giao.
+2. **Nhà hàng Đối tác (Restaurant):** Quản lý thực đơn món ăn, cập nhật số lượng tồn kho (stock), tiếp nhận đơn hàng mới và duyệt đơn (`CONFIRMED`) hoặc từ chối đơn (`CANCELLED`).
+3. **Tài xế Giao hàng (Driver):** Nộp hồ sơ ứng tuyển, bật/tắt nhận cuốc (`AVAILABLE` / `OFFLINE`), nhận cuốc xe được điều phối tự động, đến quán lấy món (`DISPATCHED`) và giao tận tay khách hàng (`DELIVERED`).
+4. **Trung tâm Điều phối (Dispatcher):** Giám sát bản đồ mạng lưới ASCII (16 hàng x 50 cột), quét hàng đợi các đơn đã được quán xác nhận, tự động tìm và gán tài xế rảnh gần quán ăn nhất.
+
+### 1.2. Thách thức Kỹ thuật & Câu hỏi Nghiên cứu Lớn (Big Research Question)
+* **Ràng buộc lưu trữ:** Hệ thống không được sử dụng hệ quản trị cơ sở dữ liệu (MySQL, SQL Server, MongoDB) mà phải **đọc/ghi trực tiếp trên các tệp vật lý định dạng CSV** (`customers.csv`, `restaurants.csv`, `menu_items.csv`, `drivers.csv`, `orders.csv`, ...).
+* **Vấn đề tương tranh (Concurrency):** Khi có hàng trăm khách hàng cùng đặt món và nhiều luồng điều phối cùng lúc, việc đọc/ghi đồng thời trên file CSV dễ dẫn đến **Race Condition** gây ra 3 thảm họa dữ liệu:
+  1. **Double Assignment:** 1 đơn hàng bị 2 tài xế cùng nhận do 2 luồng điều phối đọc đơn cùng lúc.
+  2. **Oversell Item:** Món ăn bị bán vượt quá tồn kho (kho bị âm) do 2 khách cùng bấm mua món cuối cùng tại cùng 1 nano-giây.
+  3. **Driver Overload:** 1 tài xế bị gán cùng lúc nhiều hơn 1 đơn hàng active khi đang trên đường giao.
+* **Câu hỏi nghiên cứu (Big Question):**
+  > *"Trong điều kiện lưu trữ file vật lý (.csv), cơ chế đồng bộ hóa nào (NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK) tối ưu nhất để triệt tiêu 100% lỗi tương tranh (Race Condition) mà không làm suy giảm thông lượng xử lý (Throughput) quá 30%?"*
+
+---
+
+## 2. DANH SÁCH TÁC NHÂN (ACTORS) VÀ ÁNH XẠ NGHIỆP VỤ
+
+| STT | Mã Actor | Tên Tác Nhân | Vai Trò Nghiệp Vụ | Phân Loại | Thực thể Tương Ứng Trong Code & Class Diagram |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| 1 | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Người dùng cuối | Human | Tìm kiếm quán ăn Quy Nhơn, đặt món, tính phí ship Haversine, theo dõi đơn, hủy đơn (`extends`) và xem thông báo ETA. |
-| 2 | `ACT_RESTAURANT` | **Quản lý Nhà hàng** (Restaurant) | Đối tác ẩm thực | Human | Quản lý menu món ăn, cập nhật tồn kho (stock), duyệt hoặc từ chối đơn hàng, kích hoạt điều phối, xem doanh thu. |
-| 3 | `ACT_DRIVER` | **Tài xế Đối tác** (Driver) | Đối tác vận chuyển | Human | Bật/tắt trạng thái nhận cuốc, cập nhật GPS, nhận đơn điều phối, xác nhận lấy hàng và giao thành công. |
-| 4 | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Điều hành hệ thống | Human | Quản lý tài khoản, duyệt đơn ứng tuyển tài xế, quản lý mạng lưới nhà hàng, sinh dữ liệu CSV và chạy kiểm thử đa luồng. |
-| 5 | `ACT_DISPATCHER` | **Điều phối viên** (Dispatcher Console) | Điều hành chuyến xe | Human | Quét hàng đợi `PENDING`, kích hoạt tự động điều phối, xem bản đồ mạng lưới ASCII Grid Map và giám sát đội tài xế. |
-| 6 | `ACT_SIMULATOR` | **Bộ Mô phỏng Đa luồng** (Simulator Engine) | Hệ thống kiểm thử | System | Khởi tạo nhiều luồng đồng thời (Customer/Dispatch Thread), so chuẩn 4 cơ chế khóa và phát hiện Race Conditions (`includes`). |
+| **1** | `ACT_CUSTOMER` | **Khách hàng** (Customer) | Tìm quán, đặt món ăn, tính phí ship GPS, hủy đơn | Human | [`Customer`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/Customer.java), [`CustomerController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/CustomerController.java) |
+| **2** | `ACT_RESTAURANT` | **Quản lý Nhà hàng** (Restaurant) | Quản lý menu, cập nhật tồn kho, duyệt/từ chối đơn | Human | [`Restaurant`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/Restaurant.java), [`MenuItem`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/MenuItem.java), [`RestaurantController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/RestaurantController.java) |
+| **3** | `ACT_DRIVER` | **Tài xế Đối tác** (Driver) | Bật/tắt nhận cuốc, lấy hàng, giao hàng thành công | Human | [`Driver`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/Driver.java), [`DriverController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/DriverController.java) |
+| **4** | `ACT_DISPATCHER` | **Điều phối viên** (Dispatcher) | Giám sát bản đồ ASCII, điều phối tài xế gần nhất | Human | [`MapView`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/view/MapView.java), [`OrderController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java) |
+| **5** | `ACT_ADMIN` | **Quản trị viên** (Administrator) | Duyệt tài xế, quản lý người dùng, sinh dữ liệu CSV | Human | [`User`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/User.java), [`AdminController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/AdminController.java) |
+| **6** | `ACT_SIMULATOR` | **Bộ Mô phỏng Đa luồng** (Simulator) | Khởi tạo nhiều luồng đồng thời, đối soát 4 cơ chế khóa | System | [`SimulatorController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/SimulatorController.java), [`CustomerThread`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/CustomerThread.java), [`DispatchThread`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/DispatchThread.java) |
 
 ---
 
-## 2. BẢNG ĐẶC TẢ CHI TIẾT 51 USE CASES THEO PHÂN HỆ VÀ CODE TRIỂN KHAI
+## 3. BẢNG ĐẶC TẢ CHI TIẾT 51 USE CASES ĐỒNG BỘ 100% VỚI CODE & CLASS DIAGRAM
 
-### Phân hệ 1: Xác thực & Quản lý Truy cập (`SUB1`)
-*Tên tiếng Anh:* Authentication & Access Management  
+### Phân hệ 1: Xác thực & Quản lý Truy cập (`SUB1 - Authentication & Access`)
+Khớp với: [`AuthController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/AuthController.java), [`UserRepository`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/UserRepository.java), [`AccountRepository`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/AccountRepository.java).
 
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
 | :---: | :--- | :--- | :---: | :--- |
-| **UC01** | Đăng ký tài khoản Khách hàng mới (CustomerRegistration) | Khách hàng | ─ | `UC01` trong package tương ứng. |
-| **UC02** | Đăng nhập hệ thống (Customer, Restaurant, Driver, Admin, Dispatcher) | Khách hàng, Quản lý Nhà hàng, Tài xế Đối tác, Quản trị viên, Điều phối viên | ─ | `UC02` trong package tương ứng. |
-| **UC05** | Đăng xuất tài khoản khỏi hệ thống (Logout) | Khách hàng, Quản lý Nhà hàng, Tài xế Đối tác, Quản trị viên, Điều phối viên | ─ | `UC05` trong package tương ứng. |
-| **UC03** | Gửi hồ sơ đăng ký đối tác tài xế giao hàng (DriverApplication) | Khách hàng | ─ | `UC03` trong package tương ứng. |
-| **UC04** | Xem thông tin các tài khoản mẫu định sẵn cho đánh giá (DemoAccounts) | Khách hàng | ─ | `UC04` trong package tương ứng. |
-
-### Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn (`SUB2`)
-*Tên tiếng Anh:* Customer Portal & Food Ordering  
-
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
-| :---: | :--- | :--- | :---: | :--- |
-| **UC06** | Xem danh sách nhà hàng và thực đơn món ăn tại Quy Nhơn | Khách hàng | ─ | `UC06` trong package tương ứng. |
-| **UC07** | Đặt món ăn trực tuyến và tạo đơn hàng mới (PlaceOrder) | Khách hàng | <<include>> UC08<br><<include>> UC09<br>UC12 <<extend>> | `UC07` trong package tương ứng. |
-| **UC11** | Theo dõi trạng thái đơn hàng thời gian thực (Track & View My Orders) | Khách hàng | ─ | `UC11` trong package tương ứng. |
-| **UC14** | Xem thông tin cá nhân và địa chỉ giao hàng (CustomerProfile) | Khách hàng | ─ | `UC14` trong package tương ứng. |
-| **UC15** | Nhận thông báo tài xế đã nhận đơn và thời gian giao dự kiến (Notifications) | Khách hàng | ─ | `UC15` trong package tương ứng. |
-| **UC08** | Trừ số lượng tồn kho món ăn tức thời khi đặt (DeductStock) | Hệ thống tự động | UC07 <<include>> | `UC08` trong package tương ứng. |
-| **UC09** | Tính phí giao hàng khoảng cách Haversine giữa Quán và Khách | Hệ thống tự động | UC07 <<include>><br><<include>> UC10 | `UC09` trong package tương ứng. |
-| **UC12** | Hủy đơn hàng chưa điều phối (extends UC07 PlaceOrder) | Khách hàng | <<extend>> UC07<br><<include>> UC13 | `UC12` trong package tương ứng. |
-| **UC10** | Xác thực địa chỉ và tọa độ GPS khách hàng trong phạm vi Quy Nhơn | Hệ thống tự động | UC09 <<include>> | `UC10` trong package tương ứng. |
-| **UC13** | Tự động hoàn trả tồn kho món ăn khi đơn bị hủy hoặc từ chối (RestoreStock) | Hệ thống tự động | UC12 <<include>><br>UC21 <<include>> | `UC13` trong package tương ứng. |
-
-### Phân hệ 3: Quản lý Nhà hàng & Thực đơn (`SUB3`)
-*Tên tiếng Anh:* Restaurant Catalog & Order Processing  
-
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
-| :---: | :--- | :--- | :---: | :--- |
-| **UC16** | Xem danh sách món ăn và số lượng tồn kho của quán (ViewMenuAndStock) | Quản lý Nhà hàng | ─ | `UC16` trong package tương ứng. |
-| **UC17** | Cập nhật giá bán và nhập thêm tồn kho món ăn (UpdatePriceAndStock) | Quản lý Nhà hàng | ─ | `UC17` trong package tương ứng. |
-| **UC18** | Xem các đơn hàng mới đặt chờ xác nhận (ViewIncomingOrders) | Quản lý Nhà hàng | ─ | `UC18` trong package tương ứng. |
-| **UC19** | Xác nhận chấp nhận đơn hàng và chuẩn bị món (ConfirmOrder) | Quản lý Nhà hàng | <<include>> UC20 | `UC19` trong package tương ứng. |
-| **UC21** | Từ chối tiếp nhận đơn hàng và hoàn trả tồn kho (RejectOrder) | Quản lý Nhà hàng | <<include>> UC13 | `UC21` trong package tương ứng. |
-| **UC22** | Xem tổng doanh thu và lịch sử đơn hàng của quán (RestaurantRevenue) | Quản lý Nhà hàng | ─ | `UC22` trong package tương ứng. |
-| **UC20** | Tự động chuyển đơn vào hàng đợi điều phối tài xế gần nhất (AutoDispatch) | Hệ thống tự động | UC19 <<include>> | `UC20` trong package tương ứng. |
-
-### Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn (`SUB4`)
-*Tên tiếng Anh:* Driver Delivery & Trip Operations  
-
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
-| :---: | :--- | :--- | :---: | :--- |
-| **UC23** | Xem thông tin tài xế, biển số, xe máy và số cuốc xe đã giao (DriverProfile) | Tài xế Đối tác | ─ | `UC23` trong package tương ứng. |
-| **UC24** | Bật hoặc tắt trạng thái sẵn sàng nhận cuốc của tài xế (ToggleStatus) | Tài xế Đối tác | ─ | `UC24` trong package tương ứng. |
-| **UC25** | Xem chi tiết các đơn hàng được gán cho tài xế (ViewAssignedOrders) | Tài xế Đối tác | ─ | `UC25` trong package tương ứng. |
-| **UC26** | Xác nhận đã lấy món ăn tại quán và bắt đầu đi giao (ConfirmPickedUp) | Tài xế Đối tác | ─ | `UC26` trong package tương ứng. |
-| **UC27** | Xác nhận đã giao hàng thành công tới khách hàng (ConfirmDelivered) | Tài xế Đối tác | <<include>> UC28 | `UC27` trong package tương ứng. |
-| **UC28** | Tự động cập nhật tài xế về trạng thái AVAILABLE để nhận đơn mới | Hệ thống tự động | UC27 <<include>> | `UC28` trong package tương ứng. |
-
-### Phân hệ 6: Quản trị Hệ thống Toàn diện (`SUB6`)
-*Tên tiếng Anh:* System Administration & Super Control  
-
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
-| :---: | :--- | :--- | :---: | :--- |
-| **UC36** | Xem và xét duyệt các hồ sơ xin làm tài xế đang chờ (DriverApplications) | Quản trị viên | UC37 <<extend>><br>UC38 <<extend>> | `UC36` trong package tương ứng. |
-| **UC39** | Quản lý danh sách tài khoản, mật khẩu và quyền hạn (UserManagement) | Quản trị viên | ─ | `UC39` trong package tương ứng. |
-| **UC40** | Thêm nhà hàng mới, sửa menu, và bổ sung tồn kho hệ thống (RestaurantCRUD) | Quản trị viên | ─ | `UC40` trong package tương ứng. |
-| **UC41** | Xem thông tin, địa chỉ và lịch sử của tất cả khách hàng (CustomerManagement) | Quản trị viên | ─ | `UC41` trong package tương ứng. |
-| **UC42** | Xem và theo dõi tất cả đơn hàng trên toàn hệ thống (ViewAllOrders) | Quản trị viên | ─ | `UC42` trong package tương ứng. |
-| **UC43** | Tạo bộ dữ liệu mô phỏng lớn gồm 18,000 dòng dữ liệu vào file CSV | Quản trị viên | ─ | `UC43` trong package tương ứng. |
-| **UC37** | Duyệt đơn và tự động sinh mã D000x + tài khoản DRIVER (ApproveApplication) | Hệ thống tự động | <<extend>> UC36 | `UC37` trong package tương ứng. |
-| **UC38** | Từ chối hồ sơ đăng ký tài xế kèm lý do (RejectApplication) | Hệ thống tự động | <<extend>> UC36 | `UC38` trong package tương ứng. |
-| **UC44** | Xem tổng kết số liệu và báo cáo giải quyết vấn đề Big Question | Quản trị viên | ─ | `UC44` trong package tương ứng. |
-
-### Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid (`SUB5`)
-*Tên tiếng Anh:* Central Dispatching & Network Grid  
-
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
-| :---: | :--- | :--- | :---: | :--- |
-| **UC29** | Xem hàng đợi các đơn hàng đang chờ ghép tài xế (ViewPendingOrders) | Điều phối viên | ─ | `UC29` trong package tương ứng. |
-| **UC30** | Kích hoạt thuật toán tự động ghép nối tất cả đơn PENDING (AutoDispatchAll) | Điều phối viên | <<include>> UC31<br><<include>> UC32<br><<include>> UC33 | `UC30` trong package tương ứng. |
-| **UC34** | Kiểm tra vị trí và trạng thái hoạt động của tài xế (DriverFleetStatus) | Điều phối viên | ─ | `UC34` trong package tương ứng. |
-| **UC35** | Vẽ bản đồ trực quan tọa độ nhà hàng, khách hàng, tài xế bằng ký tự ASCII | Điều phối viên | ─ | `UC35` trong package tương ứng. |
-| **UC31** | Tìm tài xế AVAILABLE có khoảng cách Haversine ngắn nhất tới quán | Hệ thống tự động | UC30 <<include>> | `UC31` trong package tương ứng. |
-| **UC32** | Tính toán thời gian dự kiến tài xế đến quán và đến nhà khách hàng | Hệ thống tự động | UC30 <<include>> | `UC32` trong package tương ứng. |
-| **UC33** | Gán đơn hàng cho tài xế và chuyển trạng thái tài xế sang BUSY | Hệ thống tự động | UC30 <<include>> | `UC33` trong package tương ứng. |
-
-### Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh (`SUB7`)
-*Tên tiếng Anh:* Concurrency Stress Testing & Race Detection  
-
-| Mã UC | Tên Use Case | Tác Nhân Chính | Quan Hệ Phụ Thuộc | Hàm Code Triển Khai Trong Dự Án |
-| :---: | :--- | :--- | :---: | :--- |
-| **UC45** | Chọn số lượng đơn hàng và 1 trong 4 cơ chế khóa kiểm thử (SimulatorConfig) | Quản trị viên | ─ | `UC45` trong package tương ứng. |
-| **UC46** | Bắt đầu chạy kịch bản mô phỏng tương tranh đa luồng (RunSimulation) | Quản trị viên, Bộ Mô phỏng Đa luồng | <<include>> UC47<br><<include>> UC48<br><<include>> UC49 | `UC46` trong package tương ứng. |
-| **UC50** | So sánh hiệu năng NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK | Bộ Mô phỏng Đa luồng | ─ | `UC50` trong package tương ứng. |
-| **UC51** | Hiển thị bảng tổng kết thông lượng, thời gian và tỷ lệ xung đột (BenchmarkTable) | Hệ thống tự động | <<extend>> UC49 | `UC51` trong package tương ứng. |
-| **UC47** | Mô phỏng đồng thời nhiều khách hàng đặt hàng cùng lúc (CustomerThread) | Hệ thống tự động | UC46 <<include>> | `UC47` trong package tương ứng. |
-| **UC48** | Mô phỏng đồng thời nhiều tiến trình gán đơn cùng lúc (DispatchThread) | Hệ thống tự động | UC46 <<include>> | `UC48` trong package tương ứng. |
-| **UC49** | Tự động phát hiện Double Assignment, Oversell, Driver Overload | Bộ Mô phỏng Đa luồng | UC46 <<include>><br>UC51 <<extend>> | `UC49` trong package tương ứng. |
+| **UC01** | Đăng ký tài khoản Khách hàng mới | Khách hàng | ─ | `AuthController.registerCustomer(fullName, phone, ward, lat, lon)` |
+| **UC02** | Đăng nhập hệ thống (Customer, Restaurant, Driver, Admin, Dispatcher) | Đa tác nhân | ─ | `AuthController.login(username, password)` (Kiểm tra PBKDF2 qua `AccountRepository.authenticate`) |
+| **UC03** | Gửi hồ sơ đăng ký đối tác tài xế | Khách hàng | ─ | `AuthController.submitDriverApplication(username, pass, name, phone, plate, vehicle, note)` |
+| **UC04** | Xem thông tin tài khoản mẫu Demo | Khách hàng | ─ | `AuthController.getAllUsers()` & `MainView.displayLoginScreen()` |
+| **UC05** | Đăng xuất khỏi hệ thống | Đa tác nhân | ─ | `AuthController.logout()` (Reset `currentUser = null`) |
 
 ---
 
-## 3. SƠ ĐỒ USE CASE DẠNG MERMAID CODE
+### Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn (`SUB2 - Customer Portal & Ordering`)
+Khớp với: [`CustomerController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/CustomerController.java), [`OrderController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java), [`MenuItemRepository`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/MenuItemRepository.java), [`GeoUtils`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/GeoUtils.java).
+
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
+| :---: | :--- | :--- | :---: | :--- |
+| **UC06** | Xem danh sách quán ăn & thực đơn tại Quy Nhơn | Khách hàng | ─ | `RestaurantController.getAllRestaurants()`, `getMenuByRestaurant(restId)` |
+| **UC07** | Đặt món ăn và khởi tạo đơn hàng mới | Khách hàng | `<<include>>` UC08, UC09<br>`<<extend>>` UC12 | `OrderController.createCustomerOrder(custId, restId, itemId, qty, mech)` |
+| **UC08** | Trừ tồn kho món ăn tức thời (tránh Oversell) | Hệ thống | `<<include>>` UC07 | `MenuItemRepository.deductStock(itemId, qty, mech)` (Ném `OversellException` nếu thiếu hàng) |
+| **UC09** | Tính phí giao hàng khoảng cách Haversine | Hệ thống | `<<include>>` UC07, UC10 | `GeoUtils.haversineDistance(lat1, lon1, lat2, lon2)` & `calculateDeliveryFee(dist)` |
+| **UC10** | Xác thực tọa độ GPS khách hàng phạm vi Quy Nhơn | Hệ thống | `<<include>>` UC09 | `GeoUtils` validation toạ độ (`lat: 13.75 - 13.79, lon: 109.20 - 109.24`) |
+| **UC11** | Theo dõi trạng thái đơn hàng thời gian thực | Khách hàng | ─ | `CustomerController.getOrderHistory(customerId)` |
+| **UC12** | Hủy đơn hàng khi quán chưa giao | Khách hàng | `<<extend>>` UC07<br>`<<include>>` UC13 | `OrderController.cancelOrderByCustomer(orderId, custId)` |
+| **UC13** | Hoàn trả số lượng tồn kho khi đơn bị hủy/từ chối | Hệ thống | `<<include>>` UC12, UC21 | `MenuItemRepository.restoreStock(menuItemId, quantity)` |
+| **UC14** | Xem hồ sơ và thông tin cá nhân khách hàng | Khách hàng | ─ | `CustomerController.getCustomerById(id)` |
+| **UC15** | Nhận thông báo tài xế nhận đơn & thời gian ETA | Khách hàng | ─ | `MainView.checkAndDisplayCustomerNotifications(custId)` |
+
+---
+
+### Phân hệ 3: Quản lý Nhà hàng & Thực đơn (`SUB3 - Restaurant Operations`)
+Khớp với: [`RestaurantController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/RestaurantController.java), [`MenuItemRepository`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/MenuItemRepository.java), [`OrderController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java).
+
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
+| :---: | :--- | :--- | :---: | :--- |
+| **UC16** | Xem danh sách món ăn & số lượng tồn kho | Nhà hàng | ─ | `RestaurantController.getMenuByRestaurant(restaurantId)` |
+| **UC17** | Cập nhật đơn giá bán & nhập thêm tồn kho | Nhà hàng | ─ | `RestaurantController.updateStock(itemId, newStock)`, `createMenuItem(...)` |
+| **UC18** | Xem danh sách đơn hàng mới đặt chờ xác nhận | Nhà hàng | ─ | `OrderRepository.findAll()` lọc theo `restaurantId` và `status == PENDING` |
+| **UC19** | Xác nhận chấp nhận đơn hàng (Accept Order) | Nhà hàng | `<<include>>` UC20 | `OrderController.confirmOrderByRestaurant(orderId, restId, mech)` $\rightarrow$ trạng thái `CONFIRMED` |
+| **UC20** | Tự động chuyển đơn vào hàng đợi điều phối | Hệ thống | `<<include>>` UC19 | `OrderController.autoDispatchPendingOrders(mech)` |
+| **UC21** | Từ chối tiếp nhận đơn hàng (Reject Order) | Nhà hàng | `<<include>>` UC13 | `OrderController.rejectOrderByRestaurant(orderId, restId, reason)` |
+| **UC22** | Xem tổng doanh thu và lịch sử đơn của quán | Nhà hàng | ─ | `OrderRepository.findAll()` tính tổng `totalFoodAmount` các đơn `DELIVERED` |
+
+---
+
+### Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn (`SUB4 - Driver Operations`)
+Khớp với: [`DriverController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/DriverController.java), [`DriverRepository`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/DriverRepository.java), [`OrderController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java).
+
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
+| :---: | :--- | :--- | :---: | :--- |
+| **UC23** | Xem thông tin tài xế, biển số & số cuốc đã giao | Tài xế | ─ | `DriverController.getAllDrivers()` / `Driver.getActiveOrderCount()` |
+| **UC24** | Bật hoặc tắt trạng thái nhận cuốc | Tài xế | ─ | `DriverController.updateDriverStatus(driverId, DriverStatus.AVAILABLE / OFFLINE)` |
+| **UC25** | Xem thông tin chi tiết đơn hàng được gán | Tài xế | ─ | `OrderRepository.findAll()` lọc theo `driverId` và `status == DISPATCHED` |
+| **UC26** | Xác nhận đã lấy món ăn tại quán (Picked Up) | Tài xế | ─ | `OrderController.markOrderPickedUp(orderId, driverId)` |
+| **UC27** | Xác nhận hoàn tất giao hàng tới khách (Delivered)| Tài xế | `<<include>>` UC28 | `OrderController.markOrderDelivered(orderId, driverId, mech)` |
+| **UC28** | Tự động giải phóng tài xế về trạng thái AVAILABLE | Hệ thống | `<<include>>` UC27 | `DriverRepository.markAvailable(driverId)` (Reset `currentOrderId = null`) |
+
+---
+
+### Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid (`SUB5 - Central Dispatching & Map`)
+Khớp với: [`OrderController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java), [`DriverRepository`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/DriverRepository.java), [`MapView`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/view/MapView.java), [`GeoUtils`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/GeoUtils.java).
+
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
+| :---: | :--- | :--- | :---: | :--- |
+| **UC29** | Xem danh sách đơn hàng chờ ghép tài xế | Điều phối viên | ─ | `OrderRepository.findAll()` lọc các đơn có `status == CONFIRMED` |
+| **UC30** | Kích hoạt tự động ghép nối tất cả đơn chờ | Điều phối viên | `<<include>>` UC31, UC32, UC33 | `MainController.autoDispatchAllPending(mech)` / `OrderController.autoDispatchPendingOrders(mech)` |
+| **UC31** | Tìm tài xế AVAILABLE gần nhất theo Haversine | Hệ thống | `<<include>>` UC30 | `DriverRepository.findNearestAvailable(lat, lon)` dùng `GeoUtils.haversineDistance` |
+| **UC32** | Tính toán thời gian dự kiến ETA lấy hàng & giao | Hệ thống | `<<include>>` UC30 | `GeoUtils.calculatePickupMinutes(dist)` & `calculateDeliveryMinutes(pDist, dDist)` |
+| **UC33** | Gán đơn & khóa tài xế sang BUSY (Chống Double Assign) | Hệ thống | `<<include>>` UC30 | `OrderRepository.assignDriver(orderId, driverId, mech)` & `DriverRepository.markBusy(...)` |
+| **UC34** | Giám sát vị trí và số lượng tài xế rảnh / bận | Điều phối viên | ─ | `DriverController.getAvailableDrivers()` / `DriverController.getAllDrivers()` |
+| **UC35** | Vẽ bản đồ trực quan ASCII Grid Map Quy Nhơn (16x50) | Điều phối viên | ─ | `MapView.renderAsciiMap(restaurants, customers, drivers, orders)` |
+
+---
+
+### Phân hệ 6: Quản trị Hệ thống Toàn diện (`SUB6 - System Administration`)
+Khớp với: [`AdminController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/AdminController.java), [`ReportView`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/view/ReportView.java), `DataGenerator`.
+
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
+| :---: | :--- | :--- | :---: | :--- |
+| **UC36** | Xem danh sách hồ sơ xin làm tài xế đang chờ duyệt | Quản trị viên | `<<extend>>` UC37, UC38 | `AdminController.getPendingDriverApplications()` |
+| **UC37** | Phê duyệt hồ sơ & tự động cấp mã Driver + User | Quản trị viên | `<<extend>>` UC36 | `AdminController.approveDriverApplication(applicationId)` |
+| **UC38** | Từ chối hồ sơ đăng ký tài xế kèm lý do | Quản trị viên | `<<extend>>` UC36 | `AdminController.rejectDriverApplication(applicationId, reason)` |
+| **UC39** | Quản lý danh sách tài khoản, mật khẩu & quyền hạn | Quản trị viên | ─ | `AuthController.getAllUsers()` & `AccountRepository` |
+| **UC40** | Thêm nhà hàng mới, sửa menu và bổ sung tồn kho | Quản trị viên | ─ | `AdminController.addRestaurant(...)`, `AdminController.restockMenuItem(...)` |
+| **UC41** | Xem và quản lý thông tin khách hàng Quy Nhơn | Quản trị viên | ─ | `CustomerController.getAllCustomers()` |
+| **UC42** | Giám sát toàn bộ đơn hàng trên toàn hệ thống | Quản trị viên | ─ | `OrderRepository.findAll()` |
+| **UC43** | Sinh dữ liệu mô phỏng lớn (>= 18,000 dòng CSV) | Quản trị viên | ─ | `util.DataGenerator.generateAllCsvFiles()` / `DataGenerator.main()` |
+| **UC44** | Xem báo cáo tổng kết và kết luận Big Question | Quản trị viên | ─ | `ReportView.printResearchConclusion(runs)` |
+
+---
+
+### Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh (`SUB7 - Concurrency Benchmark Simulator`)
+Khớp với: [`SimulatorController`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/SimulatorController.java), [`CustomerThread`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/CustomerThread.java), [`DispatchThread`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/DispatchThread.java), [`SimulatorView`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/view/SimulatorView.java).
+
+| Mã UC | Tên Use Case | Tác Nhân | Quan Hệ | Hàm Thực Hiện Cụ Thể Trong Source Code |
+| :---: | :--- | :--- | :---: | :--- |
+| **UC45** | Chọn số lượng đơn hàng (500-10,000) & cơ chế khóa | Quản trị viên | ─ | `SimulatorController` tiếp nhận tham số cấu hình |
+| **UC46** | Khởi chạy kịch bản mô phỏng tương tranh đa luồng | Quản trị viên, Bộ mô phỏng | `<<include>>` UC47, UC48, UC49 | `SimulatorController.runSimulation(numOrders, mechanism)` |
+| **UC47** | Mô phỏng nhiều khách hàng tranh mua đồng thời | Hệ thống | `<<include>>` UC46 | `CustomerThread.run()` / `CustomerSimTask.run()` qua `CountDownLatch` |
+| **UC48** | Mô phỏng nhiều luồng điều phối tranh gán tài xế | Hệ thống | `<<include>>` UC46 | `DispatchThread.run()` / `DispatchSimTask.run()` qua `CountDownLatch` |
+| **UC49** | Tự động phát hiện lỗi Race Condition trên CSV | Bộ mô phỏng | `<<include>>` UC46<br>`<<extend>>` UC51 | `SimulatorController.detectDoubleAssignments()`, `detectOversellItems()`, `detectDriverOverload()` |
+| **UC50** | So chuẩn 4 cơ chế (NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK) | Bộ mô phỏng | ─ | `SimulatorController.runExperiment(mechanism, numOrders, baseline)` |
+| **UC51** | Hiển thị bảng so sánh thông lượng và tỷ lệ sụt giảm | Hệ thống | `<<extend>>` UC49 | `SimulatorView.printBenchmarkTable(runs)` & `renderComparisonTable(runs)` |
+
+---
+
+## 4. MA TRẬN TRUY VẾT 4 CHIỀU (TRACEABILITY MATRIX)
+Bảng chứng minh sự **đồng bộ 100% không kẽ hở** giữa Phát biểu bài toán, Use Case, Class Diagram và Source Code:
+
+```
+┌──────────────────────────────┐
+│  1. PHÁT BIỂU BÀI TOÁN       │  (Nghiệp vụ thực tế: Đặt món, Điều phối Haversine, Concurrency CSV)
+└──────────────┬───────────────┘
+               │ ánh xạ 1-1
+┌──────────────▼───────────────┐
+│  2. ĐẶC TẢ USE CASE (51 UC)  │  (7 Phân hệ, 6 Actors: ACT_CUSTOMER, ACT_DRIVER, ACT_SIMULATOR...)
+└──────────────┬───────────────┘
+               │ hiện thực hóa bởi
+┌──────────────▼───────────────┐
+│  3. CLASS DIAGRAM (60 Classes)│ (BaseEntity, 11 Repositories, 13 Controllers, 8 Exceptions, 7 Views)
+└──────────────┬───────────────┘
+               │ mã nguồn 100%
+┌──────────────▼───────────────┐
+│  4. MÃ NGUỒN JAVA (.java)    │  (src/model/, src/repository/, src/controller/, src/view/, src/exception/)
+└──────────────────────────────┘
+```
+
+| Mục Tiêu Bài Toán | Mã Use Case | Lớp trong Class Diagram | File Mã Nguồn Java Cụ Thể |
+| :--- | :--- | :--- | :--- |
+| **1. Đặt món ăn & Trừ kho an toàn** | UC07, UC08 | `Order`, `MenuItem`, `OrderController`, `MenuItemRepository`, `OversellException` | [`src/controller/OrderController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java)<br>[`src/repository/MenuItemRepository.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/MenuItemRepository.java) |
+| **2. Định vị Haversine & Phí ship** | UC09, UC10, UC31 | `GeoUtils`, `DriverRepository`, `DeliveryRoute` | [`src/model/GeoUtils.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/model/GeoUtils.java)<br>[`src/repository/DriverRepository.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/DriverRepository.java) |
+| **3. Nhà hàng duyệt & Từ chối đơn** | UC18, UC19, UC21 | `Restaurant`, `Order`, `RestaurantController`, `OrderController` | [`src/controller/RestaurantController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/RestaurantController.java)<br>[`src/controller/OrderController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java) |
+| **4. Điều phối tự động & Chống Double Assign** | UC29, UC30, UC33 | `OrderController`, `DriverRepository`, `DoubleAssignmentException`, `LockMechanism` | [`src/controller/OrderController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java)<br>[`src/repository/OrderRepository.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/repository/OrderRepository.java) |
+| **5. Tài xế nhận cuốc, lấy & giao món** | UC24, UC26, UC27, UC28 | `Driver`, `DriverController`, `OrderController`, `DriverStatus` | [`src/controller/DriverController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/DriverController.java)<br>[`src/controller/OrderController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/OrderController.java) |
+| **6. Giám sát bản đồ ASCII Quy Nhơn** | UC35 | `MapView`, `GeoUtils`, `MainController` | [`src/view/MapView.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/view/MapView.java) |
+| **7. Quản trị hệ thống & Duyệt tài xế** | UC36, UC37, UC38, UC43 | `DriverApplication`, `AdminController`, `DataGenerator` | [`src/controller/AdminController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/AdminController.java)<br>[`src/util/DataGenerator.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/util/DataGenerator.java) |
+| **8. Đo kiểm Concurrency & Trả lời Big Question** | UC45, UC46, UC49, UC50, UC51 | `SimulatorController`, `CustomerThread`, `DispatchThread`, `SimulationRun`, `SimulatorView` | [`src/controller/SimulatorController.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/controller/SimulatorController.java)<br>[`src/view/SimulatorView.java`](file:///d:/NHOM_01_LAB211_FoodDelivery/src/view/SimulatorView.java) |
+
+---
+
+## 5. SƠ ĐỒ USE CASE MERMAID TỔNG HỢP
 
 ```mermaid
 graph LR
     subgraph FDS ["HỆ THỐNG ĐẶT VÀ GIAO ĐỒ ĂN TRỰC TUYẾN (FOOD DELIVERY SIMULATION SYSTEM)"]
         subgraph SUB1 ["Phân hệ 1: Xác thực & Quản lý Truy cập"]
-            UC01(("UC01: Đăng ký tài khoản Khách hàng mới"))
-            UC02(("UC02: Đăng nhập Hệ thống đa vai trò"))
-            UC05(("UC05: Đăng xuất khỏi Phiên làm việc"))
-            UC03(("UC03: Nộp hồ sơ đăng ký Làm Tài xế (Chờ duyệt)"))
-            UC04(("UC04: Xem danh sách Tài khoản mẫu Demo"))
+            UC01(("UC01: Đăng ký khách hàng"))
+            UC02(("UC02: Đăng nhập hệ thống"))
+            UC03(("UC03: Nộp hồ sơ tài xế"))
+            UC04(("UC04: Xem tài khoản demo"))
+            UC05(("UC05: Đăng xuất"))
         end
         subgraph SUB2 ["Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn"]
-            UC06(("UC06: Xem danh sách Nhà hàng & Thực đơn"))
-            UC07(("UC07: Đặt món & Khởi tạo Đơn hàng"))
-            UC11(("UC11: Theo dõi & Xem Đơn hàng của tôi"))
-            UC14(("UC14: Xem thông tin Tài khoản cá nhân"))
-            UC15(("UC15: Kiểm tra hộp thư Thông báo tài xế & ETA"))
-            UC08(("UC08: Trừ tồn kho Món ăn tức thời"))
-            UC09(("UC09: Tính phí ship theo Haversine"))
-            UC12(("UC12: Hủy đơn hàng (khi đang PENDING)"))
-            UC10(("UC10: Xác thực GPS Giao hàng Quy Nhơn"))
-            UC13(("UC13: Hoàn trả số lượng Tồn kho món ăn"))
+            UC06(("UC06: Xem danh sách quán & menu"))
+            UC07(("UC07: Đặt món ăn & Tạo đơn"))
+            UC08(("UC08: Trừ tồn kho tức thời"))
+            UC09(("UC09: Tính phí ship Haversine"))
+            UC10(("UC10: Xác thực GPS Quy Nhơn"))
+            UC11(("UC11: Theo dõi đơn hàng của tôi"))
+            UC12(("UC12: Hủy đơn hàng PENDING"))
+            UC13(("UC13: Hoàn trả tồn kho"))
+            UC14(("UC14: Xem hồ sơ cá nhân"))
+            UC15(("UC15: Nhận thông báo tài xế & ETA"))
         end
         subgraph SUB3 ["Phân hệ 3: Quản lý Nhà hàng & Thực đơn"]
-            UC16(("UC16: Xem thực đơn & Tình trạng tồn kho"))
-            UC17(("UC17: Cập nhật đơn giá & Bổ sung tồn kho"))
-            UC18(("UC18: Xem danh sách Đơn hàng đến quán"))
-            UC19(("UC19: Xác nhận đơn (Accept Order)"))
-            UC21(("UC21: Từ chối đơn (Reject Order)"))
-            UC22(("UC22: Thống kê doanh thu Báo cáo bán hàng"))
-            UC20(("UC20: Kích hoạt tự động Điều phối Tài xế"))
+            UC16(("UC16: Xem menu & Tồn kho"))
+            UC17(("UC17: Cập nhật giá & Nhập kho"))
+            UC18(("UC18: Xem đơn mới chờ duyệt"))
+            UC19(("UC19: Xác nhận đơn (Accept)"))
+            UC20(("UC20: Chuyển điều phối tự động"))
+            UC21(("UC21: Từ chối đơn (Reject)"))
+            UC22(("UC22: Thống kê doanh thu quán"))
         end
-        subgraph SUB4 ["Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn"]
-            UC23(("UC23: Xem hồ sơ & Thống kê cá nhân"))
-            UC24(("UC24: Chuyển trạng thái AVAILABLE / OFFLINE"))
-            UC25(("UC25: Xem các đơn hàng Được phân công"))
-            UC26(("UC26: Xác nhận lấy hàng (Chuyển DISPATCHED)"))
-            UC27(("UC27: Xác nhận hoàn tất Giao hàng (DELIVERED)"))
-            UC28(("UC28: Tự động chuyển về Sẵn sàng (AVAILABLE)"))
-        end
-        subgraph SUB6 ["Phân hệ 6: Quản trị Hệ thống Toàn diện"]
-            UC36(("UC36: Xét duyệt hồ sơ Đăng ký làm Tài xế"))
-            UC39(("UC39: Quản lý Người dùng & Phân quyền hệ thống"))
-            UC40(("UC40: Quản lý Nhà hàng, Thực đơn & Nhập kho"))
-            UC41(("UC41: Quản lý Danh sách Khách hàng Quy Nhơn"))
-            UC42(("UC42: Giám sát toàn bộ Đơn hàng trong Hệ thống"))
-            UC43(("UC43: Sinh dữ liệu mẫu CSV (>= 18,000 Rows)"))
-            UC37(("UC37: Phê duyệt hồ sơ & Tự động cấp mã Driver"))
-            UC38(("UC38: Từ chối hồ sơ Kèm lý do cụ thể"))
-            UC44(("UC44: Báo cáo Tổng quan & Nghiên cứu Big Question"))
+        subgraph SUB4 ["Phân hệ 4: Vận hành Tài xế & Giao nhận"]
+            UC23(("UC23: Xem hồ sơ & Số cuốc xe"))
+            UC24(("UC24: Chuyển AVAILABLE / OFFLINE"))
+            UC25(("UC25: Xem đơn được phân công"))
+            UC26(("UC26: Xác nhận lấy hàng quán"))
+            UC27(("UC27: Xác nhận giao thành công"))
+            UC28(("UC28: Tự động về AVAILABLE"))
         end
         subgraph SUB5 ["Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid"]
-            UC29(("UC29: Xem danh sách đơn Chờ điều phối (PENDING)"))
-            UC30(("UC30: Tự động điều phối Tất cả đơn hàng chờ"))
-            UC34(("UC34: Giám sát trạng thái Đội ngũ Tài xế"))
-            UC35(("UC35: Hiển thị Bản đồ ASCII Grid Map Quy Nhơn"))
-            UC31(("UC31: Tìm kiếm tài xế Gần nhất (Haversine)"))
-            UC32(("UC32: Tính toán ETA Lấy món & Giao hàng"))
-            UC33(("UC33: Ghép nối đơn & Khóa tài xế (BUSY)"))
+            UC29(("UC29: Xem đơn chờ ghép tài xế"))
+            UC30(("UC30: Tự động điều phối toàn bộ"))
+            UC31(("UC31: Tìm tài xế gần nhất"))
+            UC32(("UC32: Tính ETA lấy & giao hàng"))
+            UC33(("UC33: Gán đơn & Khóa tài xế BUSY"))
+            UC34(("UC34: Giám sát đội ngũ tài xế"))
+            UC35(("UC35: Vẽ bản đồ ASCII Grid Map"))
         end
-        subgraph SUB7 ["Phân hệ 7: Mô phỏng Đa luồng & Kiểm định Tương tranh"]
-            UC45(("UC45: Cấu hình tham số Kiểm thử (Threads/Lock)"))
-            UC46(("UC46: Khởi chạy mô phỏng Đa luồng đồng thời"))
-            UC50(("UC50: Đo kiểm so chuẩn 4 cơ chế khóa (Benchmark)"))
-            UC51(("UC51: Xuất bảng so sánh Hiệu năng & Kết luận"))
-            UC47(("UC47: Mô phỏng Đặt hàng (CustomerThread)"))
-            UC48(("UC48: Mô phỏng Điều phối (DispatchThread)"))
-            UC49(("UC49: Tự động phát hiện Lỗi Race Conditions"))
+        subgraph SUB6 ["Phân hệ 6: Quản trị Hệ thống Toàn diện"]
+            UC36(("UC36: Xem hồ sơ tài xế chờ duyệt"))
+            UC37(("UC37: Phê duyệt cấp mã Driver"))
+            UC38(("UC38: Từ chối hồ sơ kèm lý do"))
+            UC39(("UC39: Quản lý tài khoản & phân quyền"))
+            UC40(("UC40: Quản lý nhà hàng & menu"))
+            UC41(("UC41: Quản lý khách hàng"))
+            UC42(("UC42: Giám sát toàn bộ đơn hàng"))
+            UC43(("UC43: Sinh dữ liệu mẫu CSV >= 18k dòng"))
+            UC44(("UC44: Báo cáo kết luận Big Question"))
+        end
+        subgraph SUB7 ["Phân hệ 7: Mô phỏng Đa luồng & Kiểm định"]
+            UC45(("UC45: Cấu hình đơn & cơ chế khóa"))
+            UC46(("UC46: Khởi chạy mô phỏng tải cao"))
+            UC47(("UC47: Luồng khách đặt (CustomerThread)"))
+            UC48(("UC48: Luồng điều phối (DispatchThread)"))
+            UC49(("UC49: Phát hiện lỗi Race Conditions"))
+            UC50(("UC50: So chuẩn 4 cơ chế khóa"))
+            UC51(("UC51: Xuất bảng đối soát hiệu năng"))
         end
     end
 
     ACT_CUSTOMER["👤 Khách hàng"]
     ACT_RESTAURANT["👤 Quản lý Nhà hàng"]
     ACT_DRIVER["👤 Tài xế Đối tác"]
-    ACT_ADMIN["👤 Quản trị viên"]
     ACT_DISPATCHER["👤 Điều phối viên"]
-    ACT_SIMULATOR["👤 Bộ Mô phỏng Đa luồng"]
+    ACT_ADMIN["👤 Quản trị viên"]
+    ACT_SIMULATOR["⚙️ Bộ Mô phỏng Đa luồng"]
 
     ACT_CUSTOMER --- UC01
     ACT_CUSTOMER --- UC02
@@ -206,6 +273,7 @@ graph LR
     ACT_CUSTOMER --- UC12
     ACT_CUSTOMER --- UC14
     ACT_CUSTOMER --- UC15
+
     ACT_RESTAURANT --- UC02
     ACT_RESTAURANT --- UC05
     ACT_RESTAURANT --- UC16
@@ -214,6 +282,7 @@ graph LR
     ACT_RESTAURANT --- UC19
     ACT_RESTAURANT --- UC21
     ACT_RESTAURANT --- UC22
+
     ACT_DRIVER --- UC02
     ACT_DRIVER --- UC05
     ACT_DRIVER --- UC23
@@ -221,6 +290,14 @@ graph LR
     ACT_DRIVER --- UC25
     ACT_DRIVER --- UC26
     ACT_DRIVER --- UC27
+
+    ACT_DISPATCHER --- UC02
+    ACT_DISPATCHER --- UC05
+    ACT_DISPATCHER --- UC29
+    ACT_DISPATCHER --- UC30
+    ACT_DISPATCHER --- UC34
+    ACT_DISPATCHER --- UC35
+
     ACT_ADMIN --- UC02
     ACT_ADMIN --- UC05
     ACT_ADMIN --- UC36
@@ -230,39 +307,26 @@ graph LR
     ACT_ADMIN --- UC42
     ACT_ADMIN --- UC43
     ACT_ADMIN --- UC44
-    ACT_ADMIN --- UC45
-    ACT_ADMIN --- UC46
-    ACT_DISPATCHER --- UC02
-    ACT_DISPATCHER --- UC05
-    ACT_DISPATCHER --- UC29
-    ACT_DISPATCHER --- UC30
-    ACT_DISPATCHER --- UC34
-    ACT_DISPATCHER --- UC35
+
     ACT_SIMULATOR --- UC46
-    ACT_SIMULATOR --- UC50
     ACT_SIMULATOR --- UC49
-    UC07 -. "&lt;&lt;include&gt;&gt;" .-> UC08
-    UC07 -. "&lt;&lt;include&gt;&gt;" .-> UC09
-    UC09 -. "&lt;&lt;include&gt;&gt;" .-> UC10
-    UC12 -. "&lt;&lt;extend&gt;&gt;" .-> UC07
-    UC12 -. "&lt;&lt;include&gt;&gt;" .-> UC13
-    UC19 -. "&lt;&lt;include&gt;&gt;" .-> UC20
-    UC21 -. "&lt;&lt;include&gt;&gt;" .-> UC13
-    UC27 -. "&lt;&lt;include&gt;&gt;" .-> UC28
-    UC37 -. "&lt;&lt;extend&gt;&gt;" .-> UC36
-    UC38 -. "&lt;&lt;extend&gt;&gt;" .-> UC36
-    UC30 -. "&lt;&lt;include&gt;&gt;" .-> UC31
-    UC30 -. "&lt;&lt;include&gt;&gt;" .-> UC32
-    UC30 -. "&lt;&lt;include&gt;&gt;" .-> UC33
-    UC46 -. "&lt;&lt;include&gt;&gt;" .-> UC47
-    UC46 -. "&lt;&lt;include&gt;&gt;" .-> UC48
-    UC46 -. "&lt;&lt;include&gt;&gt;" .-> UC49
-    UC51 -. "&lt;&lt;extend&gt;&gt;" .-> UC49
+    ACT_SIMULATOR --- UC50
+
+    UC07 -.->|<<include>>| UC08
+    UC07 -.->|<<include>>| UC09
+    UC09 -.->|<<include>>| UC10
+    UC12 -.->|<<extend>>| UC07
+    UC12 -.->|<<include>>| UC13
+    UC21 -.->|<<include>>| UC13
+    UC19 -.->|<<include>>| UC20
+    UC27 -.->|<<include>>| UC28
+    UC30 -.->|<<include>>| UC31
+    UC30 -.->|<<include>>| UC32
+    UC30 -.->|<<include>>| UC33
+    UC37 -.->|<<extend>>| UC36
+    UC38 -.->|<<extend>>| UC36
+    UC46 -.->|<<include>>| UC47
+    UC46 -.->|<<include>>| UC48
+    UC46 -.->|<<include>>| UC49
+    UC51 -.->|<<extend>>| UC49
 ```
-
----
-
-## 4. DANH MỤC FILE XUẤT BẢN ĐÍNH KÈM
-- **Vector SVG Standalone:** [`docs/Full_UseCase_Diagram.svg`](file:///D:/NHOM_01_LAB211_FoodDelivery/docs/Full_UseCase_Diagram.svg) (Đen trắng chuẩn in ấn)
-- **Trang xem tương tác Offline:** [`docs/use_case_view.html`](file:///D:/NHOM_01_LAB211_FoodDelivery/docs/use_case_view.html) (Có Zoom, Pan, Tìm kiếm, In ấn)
-- **File thiết kế gốc Draw.io:** [`docs/Full_UseCase_Diagram.drawio`](file:///D:/NHOM_01_LAB211_FoodDelivery/docs/Full_UseCase_Diagram.drawio) (Kéo thả, chỉnh sửa trực tiếp)
