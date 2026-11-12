@@ -426,14 +426,15 @@ classDiagram
         - orderItemRepository OrderItemRepository
         - customerRepository CustomerRepository
         - routeRepository DeliveryRouteRepository
-        + placeOrderAndDispatch(custId, restId, itemId, qty, mech) Order
-        + createCustomerOrder(custId, restId, itemId, qty, mech) Order
-        + confirmOrderByRestaurant(orderId, restId, mech) Order
+        + placeOrderAndDispatch(custId, restId, itemId, qty, [mech]) Order
+        + createCustomerOrder(custId, restId, itemId, qty, [mech]) Order
+        + confirmOrderByRestaurant(orderId, restId, [mech]) Order
         + rejectOrderByRestaurant(orderId, restId, reason) boolean
         + cancelOrderByCustomer(orderId, custId) boolean
         + markOrderPickedUp(orderId, driverId) boolean
-        + markOrderDelivered(orderId, driverId, mech) boolean
-        + autoDispatchPendingOrders(mech) int
+        + markOrderDelivered(orderId, driverId, [mech]) boolean
+        + autoDispatchPendingOrders([mech]) int
+        + getRouteRepository() DeliveryRouteRepository
     }
     class AdminController {
         <<System Administration>>
@@ -449,6 +450,7 @@ classDiagram
         + addRestaurant(name, cat, addr, lat, lon) Restaurant
         + restockMenuItem(itemId, qty) void
         + triggerAutoDispatchAllPending(mech) int
+        + getCustomerRepo() CustomerRepository
     }
     class SimulatorController {
         <<Concurrency Benchmark Simulator>>
@@ -999,14 +1001,15 @@ classDiagram
         - orderItemRepository OrderItemRepository
         - customerRepository CustomerRepository
         - routeRepository DeliveryRouteRepository
-        + placeOrderAndDispatch(custId, restId, itemId, qty, mech) Order
-        + createCustomerOrder(custId, restId, itemId, qty, mech) Order
-        + confirmOrderByRestaurant(orderId, restId, mech) Order
+        + placeOrderAndDispatch(custId, restId, itemId, qty, [mech]) Order
+        + createCustomerOrder(custId, restId, itemId, qty, [mech]) Order
+        + confirmOrderByRestaurant(orderId, restId, [mech]) Order
         + rejectOrderByRestaurant(orderId, restId, reason) boolean
         + cancelOrderByCustomer(orderId, custId) boolean
         + markOrderPickedUp(orderId, driverId) boolean
-        + markOrderDelivered(orderId, driverId, mech) boolean
-        + autoDispatchPendingOrders(mech) int
+        + markOrderDelivered(orderId, driverId, [mech]) boolean
+        + autoDispatchPendingOrders([mech]) int
+        + getRouteRepository() DeliveryRouteRepository
     }
     class AdminController {
         <<System Administration>>
@@ -1022,6 +1025,7 @@ classDiagram
         + addRestaurant(name, cat, addr, lat, lon) Restaurant
         + restockMenuItem(itemId, qty) void
         + triggerAutoDispatchAllPending(mech) int
+        + getCustomerRepo() CustomerRepository
     }
     class SimulatorController {
         <<Concurrency Benchmark Simulator>>

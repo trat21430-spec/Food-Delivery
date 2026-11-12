@@ -2,7 +2,6 @@ package controller;
 
 import model.Restaurant;
 import model.MenuItem;
-import model.Customer;
 import model.Driver;
 import model.DriverStatus;
 import model.DriverApplication;
@@ -131,5 +130,9 @@ public class AdminController {
 
     public int triggerAutoDispatchAllPending(LockMechanism mechanism) {
         return this.orderController.autoDispatchPendingOrders(mechanism);
+    }
+
+    public CustomerRepository getCustomerRepo() {
+        return this.customerRepo;
     }
 }

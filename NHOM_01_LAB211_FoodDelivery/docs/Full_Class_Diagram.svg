@@ -547,14 +547,15 @@
     <text x="8" y="127" class="txt-attr">- customerRepository: CustomerRepository</text>
     <text x="8" y="142" class="txt-attr">- routeRepository: DeliveryRouteRepository</text>
     <line x1="0" y1="157" x2="480" y2="157" class="sep" />
-    <text x="8" y="172" class="txt-meth">+ placeOrderAndDispatch(custId, restId, itemId, qty, mech): Order</text>
-    <text x="8" y="187" class="txt-meth">+ createCustomerOrder(custId, restId, itemId, qty, mech): Order</text>
-    <text x="8" y="202" class="txt-meth">+ confirmOrderByRestaurant(orderId, restId, mech): Order</text>
+    <text x="8" y="172" class="txt-meth">+ placeOrderAndDispatch(custId, restId, itemId, qty, [mech]): Order</text>
+    <text x="8" y="187" class="txt-meth">+ createCustomerOrder(custId, restId, itemId, qty, [mech]): Order</text>
+    <text x="8" y="202" class="txt-meth">+ confirmOrderByRestaurant(orderId, restId, [mech]): Order</text>
     <text x="8" y="217" class="txt-meth">+ rejectOrderByRestaurant(orderId, restId, reason): boolean</text>
     <text x="8" y="232" class="txt-meth">+ cancelOrderByCustomer(orderId, custId): boolean</text>
     <text x="8" y="247" class="txt-meth">+ markOrderPickedUp(orderId, driverId): boolean</text>
-    <text x="8" y="262" class="txt-meth">+ markOrderDelivered(orderId, driverId, mech): boolean</text>
-    <text x="8" y="277" class="txt-meth">+ autoDispatchPendingOrders(mech): int</text>
+    <text x="8" y="262" class="txt-meth">+ markOrderDelivered(orderId, driverId, [mech]): boolean</text>
+    <text x="8" y="277" class="txt-meth">+ autoDispatchPendingOrders([mech]): int</text>
+    <text x="8" y="292" class="txt-meth">+ getRouteRepository(): DeliveryRouteRepository</text>
   </g>
   <g class="class-node" id="node-AdminController" data-id="AdminController" data-cx="775" data-cy="1870" transform="translate(570, 1770)">
     <rect x="0" y="0" width="410" height="200" class="class-box" />
@@ -574,6 +575,7 @@
     <text x="8" y="202" class="txt-meth">+ addRestaurant(name, cat, addr, lat, lon): Restaurant</text>
     <text x="8" y="217" class="txt-meth">+ restockMenuItem(itemId, qty): void</text>
     <text x="8" y="232" class="txt-meth">+ triggerAutoDispatchAllPending(mech): int</text>
+    <text x="8" y="247" class="txt-meth">+ getCustomerRepo(): CustomerRepository</text>
   </g>
   <g class="class-node" id="node-SimulatorController" data-id="SimulatorController" data-cx="1200" data-cy="1860" transform="translate(1010, 1770)">
     <rect x="0" y="0" width="380" height="180" class="class-box" />

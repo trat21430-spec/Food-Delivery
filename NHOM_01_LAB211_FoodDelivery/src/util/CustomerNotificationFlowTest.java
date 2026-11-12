@@ -10,11 +10,8 @@ import model.Driver;
 import model.GeoUtils;
 import model.LockMechanism;
 import model.Order;
-import model.OrderStatus;
 import model.Restaurant;
 import model.User;
-
-import java.util.List;
 
 public class CustomerNotificationFlowTest {
     public static void main(String[] args) {
@@ -52,7 +49,7 @@ public class CustomerNotificationFlowTest {
         System.out.println(">>> Nha hang dat: " + rest.getName() + " | Dia chi: " + rest.getAddress() + " | Toa do: (" + rest.getLatitude() + ", " + rest.getLongitude() + ")");
 
         try {
-            Order order = orderCtrl.placeCustomerOrderAndAutoDispatch(cust.getId(), rest.getId(), "M0001", 2, LockMechanism.SYNCHRONIZED);
+            Order order = orderCtrl.placeCustomerOrderAndAutoDispatch(cust.getId(), rest.getId(), "M0001", 2, LockMechanism.OPTIMISTIC);
             System.out.println(">>> [PASS] Don hang tao thanh cong: " + order.getId() + " | Trang thai: " + order.getStatus());
 
             if (order.getDriverId() != null && !order.getDriverId().isEmpty()) {

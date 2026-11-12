@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
@@ -207,7 +208,10 @@ public abstract class CsvRepository<T extends BaseEntity> implements IRepository
             try (FileOutputStream fos = new FileOutputStream(lockFile);
                  FileChannel channel = fos.getChannel();
                  FileLock lock = channel.lock()) {
-                return action.get();
+                if (lock.isValid()) {
+                    return action.get();
+                }
+                throw new IOException("Failed to acquire valid file lock on " + lockFile.getName());
             } catch (Exception e) {
                 throw new RuntimeException("FileLock error on " + this.filePath, e);
             }

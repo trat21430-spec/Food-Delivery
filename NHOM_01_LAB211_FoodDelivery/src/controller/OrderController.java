@@ -7,7 +7,6 @@ import model.OrderItem;
 import model.Order;
 import model.OrderStatus;
 import model.LockMechanism;
-import model.Driver;
 import model.GeoUtils;
 import repository.OrderRepository;
 import repository.MenuItemRepository;
@@ -94,8 +93,16 @@ public class OrderController {
         );
     }
 
+    public Order placeOrderAndDispatch(String customerId, String restaurantId, String menuItemId, int quantity) throws Exception {
+        return this.placeOrderAndDispatch(customerId, restaurantId, menuItemId, quantity, LockMechanism.OPTIMISTIC);
+    }
+
     public Order createAndAutoDispatchOrder(String customerId, String restaurantId, String menuItemId, int quantity, LockMechanism mechanism) throws Exception {
         return this.placeOrderAndDispatch(customerId, restaurantId, menuItemId, quantity, mechanism);
+    }
+
+    public Order createAndAutoDispatchOrder(String customerId, String restaurantId, String menuItemId, int quantity) throws Exception {
+        return this.createAndAutoDispatchOrder(customerId, restaurantId, menuItemId, quantity, LockMechanism.OPTIMISTIC);
     }
 
     /**
@@ -137,15 +144,20 @@ public class OrderController {
         return order;
     }
 
-    /**
-     * Realistic Restaurant Manager flow: Confirms order, triggers automatic driver dispatch.
-     */
+    public Order createCustomerOrder(String customerId, String restaurantId, String menuItemId, int quantity) throws Exception {
+        return this.createCustomerOrder(customerId, restaurantId, menuItemId, quantity, LockMechanism.OPTIMISTIC);
+    }
+
     /**
      * Customer places order, system simulates automated restaurant confirmation and immediate driver dispatch.
      */
     public Order placeCustomerOrderAndAutoDispatch(String customerId, String restaurantId, String menuItemId, int quantity, LockMechanism mechanism) throws Exception {
         Order order = this.createCustomerOrder(customerId, restaurantId, menuItemId, quantity, mechanism);
         return this.confirmOrderByRestaurant(order.getId(), restaurantId, mechanism);
+    }
+
+    public Order placeCustomerOrderAndAutoDispatch(String customerId, String restaurantId, String menuItemId, int quantity) throws Exception {
+        return this.placeCustomerOrderAndAutoDispatch(customerId, restaurantId, menuItemId, quantity, LockMechanism.OPTIMISTIC);
     }
 
     public Order confirmOrderByRestaurant(String orderId, String restaurantId, LockMechanism mechanism) throws Exception {
@@ -169,6 +181,10 @@ public class OrderController {
             this.orderRepository.save(order);
         }
         return this.orderRepository.findById(orderId);
+    }
+
+    public Order confirmOrderByRestaurant(String orderId, String restaurantId) throws Exception {
+        return this.confirmOrderByRestaurant(orderId, restaurantId, LockMechanism.OPTIMISTIC);
     }
 
     /**
@@ -270,6 +286,10 @@ public class OrderController {
         return true;
     }
 
+    public boolean markOrderDelivered(String orderId, String driverId) throws Exception {
+        return this.markOrderDelivered(orderId, driverId, LockMechanism.OPTIMISTIC);
+    }
+
     public boolean hasActiveDelivery(String driverId) {
         if (driverId == null || driverId.isEmpty()) return false;
         List<Order> orders = this.getOrdersByDriver(driverId);
@@ -307,8 +327,16 @@ public class OrderController {
         return this.orderRepository.dispatchPendingOrder(orderId, mechanism, this.driverRepository, this.restaurantRepository);
     }
 
+    public boolean dispatchPending(String orderId) throws Exception {
+        return this.dispatchPending(orderId, LockMechanism.OPTIMISTIC);
+    }
+
     public boolean completeDelivery(String orderId, LockMechanism mechanism) throws Exception {
         return this.markOrderDelivered(orderId, null, mechanism);
+    }
+
+    public boolean completeDelivery(String orderId) throws Exception {
+        return this.completeDelivery(orderId, LockMechanism.OPTIMISTIC);
     }
 
     public boolean cancelPendingOrder(String orderId) throws FoodDeliveryException {
@@ -339,9 +367,17 @@ public class OrderController {
         return this.orderRepository.autoDispatchAllPending(mechanism, this.driverRepository, this.restaurantRepository);
     }
 
+    public List<String> autoDispatchAllPending() {
+        return this.autoDispatchAllPending(LockMechanism.OPTIMISTIC);
+    }
+
     public int autoDispatchPendingOrders(LockMechanism mechanism) {
         List<String> logs = this.autoDispatchAllPending(mechanism);
         return logs.size();
+    }
+
+    public int autoDispatchPendingOrders() {
+        return this.autoDispatchPendingOrders(LockMechanism.OPTIMISTIC);
     }
 
     public List<Order> getPendingOrders() {
@@ -402,5 +438,9 @@ public class OrderController {
             return true;
         }
         return false;
+    }
+
+    public DeliveryRouteRepository getRouteRepository() {
+        return this.routeRepository;
     }
 }

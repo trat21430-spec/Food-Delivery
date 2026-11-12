@@ -49,7 +49,7 @@ public class OrderRepository extends CsvRepository<Order> {
         double restLon = restaurant != null ? restaurant.getLongitude() : 109.2200;
 
         GeoUtils geoUtils = new GeoUtils();
-        double deliveryFee = 15000.0; // default base fee
+        double deliveryFee = geoUtils.calculateDeliveryFee(geoUtils.haversineDistance(restLat, restLon, 13.7750, 109.2250));
 
         // 3. Create Order
         String orderId = "O" + System.currentTimeMillis() + "_" + (100 + (int)(Math.random() * 899));

@@ -70,7 +70,7 @@ public class SystemVerificationTest {
             }
 
             OrderController orderController = new OrderController();
-            model.Order order = orderController.placeOrderAndDispatch("C0001", "R001", "M00001", 1, LockMechanism.SYNCHRONIZED);
+            model.Order order = orderController.placeOrderAndDispatch("C0001", "R001", "M00001", 1, LockMechanism.OPTIMISTIC);
             if (order != null && order.getId() != null) {
                 System.out.println(">>> [PASS] Order placed successfully! ID: " + order.getId()
                         + ", Driver: " + order.getDriverId() + ", Status: " + order.getStatus());
@@ -181,7 +181,7 @@ public class SystemVerificationTest {
         System.out.println("\n--- [TEST 6] Testing Automatic Driver Dispatch for Pending Orders ---");
         try {
             OrderController orderController = new OrderController();
-            List<String> logs = orderController.autoDispatchAllPending(LockMechanism.SYNCHRONIZED);
+            List<String> logs = orderController.autoDispatchAllPending(LockMechanism.OPTIMISTIC);
             System.out.println(">>> [PASS] Auto-dispatch executed successfully! Processed " + logs.size() + " orders.");
         } catch (Exception e) {
             System.err.println(">>> [FAIL] Exception in auto-dispatch test: " + e.getMessage());
@@ -237,7 +237,7 @@ public class SystemVerificationTest {
                 initialStock = 50;
             }
 
-            model.Order custOrder = orderCtrl.createCustomerOrder("C0001", testRest.getId(), testItem.getId(), 2, LockMechanism.SYNCHRONIZED);
+            model.Order custOrder = orderCtrl.createCustomerOrder("C0001", testRest.getId(), testItem.getId(), 2, LockMechanism.OPTIMISTIC);
             if (custOrder == null || custOrder.getStatus() != model.OrderStatus.PENDING) {
                 System.err.println(">>> [FAIL] Customer order status is not PENDING");
                 return;
@@ -250,7 +250,7 @@ public class SystemVerificationTest {
             System.out.println(">>> [PASS] Step 4: Customer placed order (ID: " + custOrder.getId() + ") -> Status: PENDING, Stock: " + stockAfterOrder.getStockQty());
 
             // 5. Restaurant manager confirms order -> Auto-dispatch assigns driver
-            model.Order confirmedOrder = orderCtrl.confirmOrderByRestaurant(custOrder.getId(), testRest.getId(), LockMechanism.SYNCHRONIZED);
+            model.Order confirmedOrder = orderCtrl.confirmOrderByRestaurant(custOrder.getId(), testRest.getId(), LockMechanism.OPTIMISTIC);
             if (confirmedOrder == null || confirmedOrder.getStatus() != model.OrderStatus.CONFIRMED) {
                 System.err.println(">>> [FAIL] Confirmed order status is not CONFIRMED");
                 return;
@@ -268,7 +268,7 @@ public class SystemVerificationTest {
                 System.out.println(">>> [PASS] Step 6: Driver confirmed picked up -> Status: DISPATCHED");
 
                 // 7. Driver completes delivery -> DELIVERED, freed to AVAILABLE
-                orderCtrl.setAutoDispatchEnabled(false); boolean delivered = orderCtrl.markOrderDelivered(confirmedOrder.getId(), assignedDrvId, LockMechanism.SYNCHRONIZED); orderCtrl.setAutoDispatchEnabled(true);
+                orderCtrl.setAutoDispatchEnabled(false); boolean delivered = orderCtrl.markOrderDelivered(confirmedOrder.getId(), assignedDrvId, LockMechanism.OPTIMISTIC); orderCtrl.setAutoDispatchEnabled(true);
                 if (!delivered) {
                     System.err.println(">>> [FAIL] Driver delivery failed");
                     return;
@@ -283,7 +283,7 @@ public class SystemVerificationTest {
 
             // 8. Test Restaurant Reject and Stock Restore
             int stockBeforeRejectOrder = itemRepo.findById(testItem.getId()).getStockQty();
-            model.Order orderToReject = orderCtrl.createCustomerOrder("C0001", testRest.getId(), testItem.getId(), 3, LockMechanism.SYNCHRONIZED);
+            model.Order orderToReject = orderCtrl.createCustomerOrder("C0001", testRest.getId(), testItem.getId(), 3, LockMechanism.OPTIMISTIC);
             orderCtrl.rejectOrderByRestaurant(orderToReject.getId(), testRest.getId(), "Het nguyen lieu");
             model.Order rejected = orderCtrl.getOrderById(orderToReject.getId());
             int stockAfterReject = itemRepo.findById(testItem.getId()).getStockQty();
@@ -295,7 +295,7 @@ public class SystemVerificationTest {
 
             // 9. Test Customer Cancel and Stock Restore
             int stockBeforeCancelOrder = itemRepo.findById(testItem.getId()).getStockQty();
-            model.Order orderToCancel = orderCtrl.createCustomerOrder("C0001", testRest.getId(), testItem.getId(), 1, LockMechanism.SYNCHRONIZED);
+            model.Order orderToCancel = orderCtrl.createCustomerOrder("C0001", testRest.getId(), testItem.getId(), 1, LockMechanism.OPTIMISTIC);
             orderCtrl.cancelOrderByCustomer(orderToCancel.getId(), "C0001");
             model.Order cancelled = orderCtrl.getOrderById(orderToCancel.getId());
             int stockAfterCancel = itemRepo.findById(testItem.getId()).getStockQty();

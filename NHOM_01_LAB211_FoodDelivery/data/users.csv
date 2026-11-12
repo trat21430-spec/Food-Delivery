@@ -7,3 +7,15 @@ U0005,restaurant1,123,,Banh Xeo Tom Nhay Gia Vy 101,RESTAURANT,R001,,true
 U0006,restaurant2,123,,Bun Cha Ca Ngoc Lien 102,RESTAURANT,R002,,true
 U0007,driver1,123,,Tai Xe Nguyen Van A (Quy Nhon),DRIVER,,D0001,true
 U0008,driver2,123,,Tai Xe Tran Minh B (Quy Nhon),DRIVER,,D0002,true
+U_CUST_9,test_cust_1794485635385,pass123,0987515208,Khach Hang Test,CUSTOMER,C2001,,true
+U_DRV_10,test_driver_1794485635803,pass123,0975913574,Tai Xe Test,DRIVER,,D0501,true
+U_DRV_11,app_driver_1794485636133,pass123,0989598366,Driver Candidate,DRIVER,,D0502,true
+U_DRV_12,driver_dangky1,123456,0912345678,Le Van Cuong,DRIVER,,D0503,true
+U_13,,,,,CUSTOMER,,,true
+U_CUST_14,thanhtung,123456,0998245325,truong thanh tung,CUSTOMER,C2002,,true
+U_CUST_15,test_cust_1794491372960,pass123,0982360722,Khach Hang Test,CUSTOMER,C2003,,true
+U_DRV_16,test_driver_1794491373042,pass123,0978711957,Tai Xe Test,DRIVER,,D0504,true
+U_DRV_17,app_driver_1794491373083,pass123,0986811660,Driver Candidate,DRIVER,,D0505,true
+U_CUST_18,test_cust_1794492471023,pass123,0986288456,Khach Hang Test,CUSTOMER,C2004,,true
+U_DRV_19,test_driver_1794492471054,pass123,0977895219,Tai Xe Test,DRIVER,,D0506,true
+U_DRV_20,app_driver_1794492471081,pass123,0989902330,Driver Candidate,DRIVER,,D0507,true

@@ -1,24 +1,24 @@
 id,restaurantId,name,priceVnd,stockQty,version
-M00001,R001,Banh xeo tom nhay (Sot me),116000,60,1
-M00002,R001,Bun cha ca (Sot me),99000,97,1
-M00003,R001,Cha ram tom dat (Dac biet),80000,84,1
-M00004,R001,Banh hoi long heo (Dac biet),105000,45,1
-M00005,R001,Muc mot nang (Chay toi),38000,99,1
-M00006,R001,Ca ngu dai duong (Sot me),44000,102,1
-M00007,R001,Ga chi Son Trieu (Thuong hang),113000,54,1
-M00008,R001,Cua Huynh De (Sot me),39000,149,1
-M00009,R001,Lau hai san (Xao cay),118000,55,1
-M00010,R001,Banh mi cha ca (Chien gion),25000,138,1
-M00011,R002,Banh xeo tom nhay (Sot me),50000,40,1
-M00012,R002,Bun cha ca (Xao cay),95000,89,1
-M00013,R002,Cha ram tom dat (Dac biet),54000,142,1
-M00014,R002,Banh hoi long heo (Dac biet),46000,40,1
-M00015,R002,Muc mot nang (Chay toi),109000,103,1
-M00016,R002,Ca ngu dai duong (Nuong ngoi),65000,110,1
-M00017,R002,Ga chi Son Trieu (Xao cay),31000,108,1
-M00018,R002,Cua Huynh De (Dac biet),67000,38,1
-M00019,R002,Lau hai san (Phomai),37000,71,1
-M00020,R002,Banh mi cha ca (Chay toi),98000,33,1
+M00001,R001,Banh xeo tom nhay (Sot me),116000,24,30
+M00002,R001,Bun cha ca (Sot me),99000,0,21
+M00003,R001,Cha ram tom dat (Dac biet),80000,0,14
+M00004,R001,Banh hoi long heo (Dac biet),105000,0,6
+M00005,R001,Muc mot nang (Chay toi),38000,0,21
+M00006,R001,Ca ngu dai duong (Sot me),44000,0,21
+M00007,R001,Ga chi Son Trieu (Thuong hang),113000,0,7
+M00008,R001,Cua Huynh De (Sot me),39000,0,20
+M00009,R001,Lau hai san (Xao cay),118000,0,7
+M00010,R001,Banh mi cha ca (Chien gion),25000,0,23
+M00011,R002,Banh xeo tom nhay (Sot me),50000,0,6
+M00012,R002,Bun cha ca (Xao cay),95000,0,13
+M00013,R002,Cha ram tom dat (Dac biet),54000,0,20
+M00014,R002,Banh hoi long heo (Dac biet),46000,0,7
+M00015,R002,Muc mot nang (Chay toi),109000,0,17
+M00016,R002,Ca ngu dai duong (Nuong ngoi),65000,0,18
+M00017,R002,Ga chi Son Trieu (Xao cay),31000,0,18
+M00018,R002,Cua Huynh De (Dac biet),67000,0,5
+M00019,R002,Lau hai san (Phomai),37000,0,5
+M00020,R002,Banh mi cha ca (Chay toi),98000,0,5
 M00021,R003,Banh xeo tom nhay (Dac biet),110000,45,1
 M00022,R003,Bun cha ca (Chien gion),37000,79,1
 M00023,R003,Cha ram tom dat (Chay toi),84000,93,1
@@ -88,7 +88,7 @@ M00086,R009,Ca ngu dai duong (Phomai),93000,107,1
 M00087,R009,Ga chi Son Trieu (Hap sa),71000,40,1
 M00088,R009,Cua Huynh De (Truyen thong),39000,117,1
 M00089,R009,Lau hai san (Chay toi),119000,118,1
-M00090,R009,Banh mi cha ca (Nuong ngoi),57000,36,1
+M00090,R009,Banh mi cha ca (Nuong ngoi),57000,32,1
 M00091,R010,Banh xeo tom nhay (Hap sa),109000,59,1
 M00092,R010,Bun cha ca (Phomai),98000,68,1
 M00093,R010,Cha ram tom dat (Xao cay),100000,51,1

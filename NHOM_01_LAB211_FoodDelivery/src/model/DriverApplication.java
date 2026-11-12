@@ -1,7 +1,5 @@
 package model;
 
-import java.time.LocalDateTime;
-
 public class DriverApplication extends BaseEntity {
     private String username;
     private String password;

@@ -69,6 +69,10 @@ public class MainView implements IView {
         }
     }
 
+    public MainController getMainController() {
+        return this.mainController;
+    }
+
     public MainView() {
         this.customerController = new CustomerController();
         this.restaurantController = new RestaurantController();
@@ -483,7 +487,7 @@ public class MainView implements IView {
         try { Thread.sleep(400); } catch (Exception ignored) {}
 
         try {
-            Order order = this.orderController.placeCustomerOrderAndAutoDispatch(customerId, rest.getId(), chosenItem.getId(), qty, LockMechanism.SYNCHRONIZED);
+            Order order = this.orderController.placeCustomerOrderAndAutoDispatch(customerId, rest.getId(), chosenItem.getId(), qty, LockMechanism.OPTIMISTIC);
 
             Customer cust = this.customerController.getCustomerById(customerId);
             double cLat = (cust != null && cust.getLatitude() != 0.0) ? cust.getLatitude() : 13.775;
@@ -583,7 +587,7 @@ public class MainView implements IView {
                 }
             } else if (opt.equals("2")) {
                 System.out.println("\nDang quet radar tim tai xe ranh cho cac don hang dang cho...");
-                List<String> logs = this.orderController.autoDispatchAllPending(LockMechanism.SYNCHRONIZED);
+                List<String> logs = this.orderController.autoDispatchAllPending(LockMechanism.OPTIMISTIC);
                 if (logs.isEmpty()) {
                     System.out.println(">>> Khong co don hang nao can dieu phoi hoac chua co them tai xe ranh.");
                 } else {
@@ -696,7 +700,7 @@ public class MainView implements IView {
             String retryAns = this.readLine();
             if (retryAns.equalsIgnoreCase("y")) {
                 try {
-                    boolean ok = this.orderController.dispatchPending(order.getId(), LockMechanism.SYNCHRONIZED);
+                    boolean ok = this.orderController.dispatchPending(order.getId(), LockMechanism.OPTIMISTIC);
                     if (ok) {
                         Order updated = this.orderController.getOrderById(order.getId());
                         System.out.println(">>> [TIN VUI!] Da tim thay tai xe: " + updated.getDriverId() + " cho don hang!");
@@ -725,7 +729,7 @@ public class MainView implements IView {
 
             System.out.println(">>> [2/2] Tai xe dang di chuyen theo tuyen duong toi uu den dia chi cua ban...");
             Thread.sleep(800);
-            boolean delivered = this.orderController.markOrderDelivered(order.getId(), order.getDriverId(), LockMechanism.SYNCHRONIZED);
+            boolean delivered = this.orderController.markOrderDelivered(order.getId(), order.getDriverId(), LockMechanism.OPTIMISTIC);
             if (delivered) {
                 System.out.println("\n>>> [GIAO HANG THANH CONG! (DELIVERED)]");
                 System.out.println(">>> Don hang " + order.getId() + " da duoc ban giao tan tay khach hang!");
@@ -946,7 +950,7 @@ public class MainView implements IView {
         String orderId = this.readLine();
 
         try {
-            boolean ok = this.orderController.markOrderDelivered(orderId, driverId, LockMechanism.SYNCHRONIZED);
+            boolean ok = this.orderController.markOrderDelivered(orderId, driverId, LockMechanism.OPTIMISTIC);
             if (ok) {
                 System.out.println(">>> [CHUC MUNG!] Don hang " + orderId + " da duoc xac nhan DELIVERED.");
                 System.out.println(">>> Tai khoan tai xe cua ban da duoc tu dong giai phong ve trang thai AVAILABLE.");
@@ -1083,7 +1087,7 @@ public class MainView implements IView {
         String orderId = this.readLine();
 
         try {
-            Order confirmed = this.orderController.confirmOrderByRestaurant(orderId, restaurantId, LockMechanism.SYNCHRONIZED);
+            Order confirmed = this.orderController.confirmOrderByRestaurant(orderId, restaurantId, LockMechanism.OPTIMISTIC);
             System.out.println("\n>>> [XAC NHAN DON HANG THANH CONG]");
             System.out.println(">>> Ma don hang: " + confirmed.getId() + " | Trang thai: " + confirmed.getStatus());
             if (confirmed.getDriverId() != null && !confirmed.getDriverId().isEmpty()) {
@@ -1175,7 +1179,7 @@ public class MainView implements IView {
         System.out.println("6. Xem toan bo don hang tren he thong (View All Orders)");
         System.out.println("7. Tu dong dieu phoi tat ca don hang dang cho (Auto-Dispatch All Pending)");
         System.out.println("8. Hien thi Ban do mang luoi ASCII Grid Map");
-        System.out.println("9. Chay Concurrency Simulator Benchmark (Compare 4 Lock Mechanisms)");
+        System.out.println("9. Chay Concurrency Simulator Benchmark (Optimistic Locking Mechanism)");
         System.out.println("10. Sinh lai toan bo du lieu mau CSV (>= 18,000 Rows)");
         System.out.println("11. Tong quan toan he thong & Bao cao nghien cuu Big Question");
         System.out.println("0. Dang xuat (Logout)");
@@ -1287,7 +1291,7 @@ public class MainView implements IView {
         System.out.println("3. Xem toan bo don hang gan day (View Recent Orders)");
         System.out.println("4. Xem trang thai doi ngu tai xe (View Driver Status)");
         System.out.println("5. Hien thi Ban do mang luoi ASCII Grid Map");
-        System.out.println("6. Chay Concurrency Simulator Benchmark (Compare 4 Lock Mechanisms)");
+        System.out.println("6. Chay Concurrency Simulator Benchmark (Optimistic Locking Mechanism)");
         System.out.println("0. Dang xuat (Logout)");
         System.out.println("=======================================================");
         System.out.print("Nhap lua chon cua ban [0-6]: ");
@@ -1342,9 +1346,11 @@ public class MainView implements IView {
 
     private void handleRunSimulatorBenchmark() {
         System.out.println("\n=======================================================");
-        System.out.println("  RUNNING RESEARCH CONCURRENCY SIMULATOR BENCHMARK     ");
+        System.out.println("  CONCURRENCY SIMULATOR - OPTIMISTIC LOCKING BENCHMARK ");
         System.out.println("=======================================================");
-        System.out.print("Enter number of concurrent orders to simulate per mechanism (e.g. 500 or 1000): ");
+        System.out.println("Kien truc dong bo: OPTIMISTIC LOCKING (Chuan Shopee/Grab/Tiki/Amazon)");
+        System.out.println("Mo hinh kiem thu : 50 luong dong thoi (25 Customer + 25 Dispatch)");
+        System.out.print("Nhap so luong don hang mo phong tuong tranh (e.g. 500 hoac 1000, mac dinh 500): ");
         String countStr = this.readLine();
         int ordersCount = 500;
         try {
@@ -1354,21 +1360,11 @@ public class MainView implements IView {
         } catch (NumberFormatException ignored) {}
 
         List<SimulationRun> runs = new ArrayList<>();
-        LockMechanism[] mechanisms = new LockMechanism[] {
-            LockMechanism.NO_LOCK,
-            LockMechanism.SYNCHRONIZED,
-            LockMechanism.OPTIMISTIC,
-            LockMechanism.FILE_LOCK
-        };
-
-        for (int i = 0; i < mechanisms.length; i++) {
-            LockMechanism mech = mechanisms[i];
-            System.out.println("\nExecuting simulation with mechanism: " + mech.name() + "...");
-            SimulationRun run = this.simulatorController.runSimulation(ordersCount, mech);
-            if (run != null) {
-                runs.add(run);
-                this.reportView.renderSimulationSummary(run);
-            }
+        System.out.println("\nDang khoi chay mo phong tuong tranh voi co che: OPTIMISTIC...");
+        SimulationRun run = this.simulatorController.runSimulation(ordersCount, LockMechanism.OPTIMISTIC);
+        if (run != null) {
+            runs.add(run);
+            this.reportView.renderSimulationSummary(run);
         }
 
         this.simulatorView.renderComparisonTable(runs);
@@ -1393,19 +1389,8 @@ public class MainView implements IView {
             return;
         }
 
-        System.out.println("Chon co che dong bo hoa cho qua trinh tu dong dieu phoi:");
-        System.out.println("1. SYNCHRONIZED (Khuyen nghi - An toan tuyet doi, 0% loi)");
-        System.out.println("2. OPTIMISTIC (Version-based validation)");
-        System.out.println("3. FILE_LOCK (FileChannel physical locks)");
-        System.out.println("4. NO_LOCK (Khong khoa - Kiem thu rui ro Race Condition)");
-        System.out.print("Lua chon [1-4, mac dinh 1]: ");
-        String mChoice = this.readLine();
-        LockMechanism mech = LockMechanism.SYNCHRONIZED;
-        if (mChoice.equals("2")) mech = LockMechanism.OPTIMISTIC;
-        else if (mChoice.equals("3")) mech = LockMechanism.FILE_LOCK;
-        else if (mChoice.equals("4")) mech = LockMechanism.NO_LOCK;
-
-        System.out.println("\nDang kich hoat quy trinh tu dong quet vi tri nha hang va tai xe gan nhat...");
+        LockMechanism mech = LockMechanism.OPTIMISTIC;
+        System.out.println("\nDang kich hoat quy trinh tu dong quet vi tri nha hang va tai xe gan nhat (Chuan hoa OPTIMISTIC LOCKING)...");
         List<String> logs = this.orderController.autoDispatchAllPending(mech);
         for (int i = 0; i < logs.size(); i++) {
             System.out.println("  -> " + logs.get(i));

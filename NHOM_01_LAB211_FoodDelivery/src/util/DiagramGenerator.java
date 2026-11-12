@@ -286,20 +286,21 @@ public class DiagramGenerator {
                         "- routeRepository: DeliveryRouteRepository"
                 },
                 new String[]{
-                        "+ placeOrderAndDispatch(custId, restId, itemId, qty, mech): Order",
-                        "+ createCustomerOrder(custId, restId, itemId, qty, mech): Order",
-                        "+ confirmOrderByRestaurant(orderId, restId, mech): Order",
+                        "+ placeOrderAndDispatch(custId, restId, itemId, qty, [mech]): Order",
+                        "+ createCustomerOrder(custId, restId, itemId, qty, [mech]): Order",
+                        "+ confirmOrderByRestaurant(orderId, restId, [mech]): Order",
                         "+ rejectOrderByRestaurant(orderId, restId, reason): boolean",
                         "+ cancelOrderByCustomer(orderId, custId): boolean",
                         "+ markOrderPickedUp(orderId, driverId): boolean",
-                        "+ markOrderDelivered(orderId, driverId, mech): boolean",
-                        "+ autoDispatchPendingOrders(mech): int"
+                        "+ markOrderDelivered(orderId, driverId, [mech]): boolean",
+                        "+ autoDispatchPendingOrders([mech]): int",
+                        "+ getRouteRepository(): DeliveryRouteRepository"
                 },
                 "pkg_ctrl", 60, 1770, 480, 250));
 
         list.add(new UmlClass("AdminController", "AdminController", "System Administration",
                 new String[]{"- restaurantRepo: RestaurantRepository", "- menuItemRepo: MenuItemRepository", "- customerRepo: CustomerRepository", "- driverRepo: DriverRepository", "- driverAppRepo: DriverAppRepository", "- userRepo: UserRepository"},
-                new String[]{"+ getPendingDriverApplications(): List<DriverApp>", "+ approveDriverApplication(id): User", "+ rejectDriverApplication(id, reason): boolean", "+ addRestaurant(name, cat, addr, lat, lon): Restaurant", "+ restockMenuItem(itemId, qty): void", "+ triggerAutoDispatchAllPending(mech): int"},
+                new String[]{"+ getPendingDriverApplications(): List<DriverApp>", "+ approveDriverApplication(id): User", "+ rejectDriverApplication(id, reason): boolean", "+ addRestaurant(name, cat, addr, lat, lon): Restaurant", "+ restockMenuItem(itemId, qty): void", "+ triggerAutoDispatchAllPending(mech): int", "+ getCustomerRepo(): CustomerRepository"},
                 "pkg_ctrl", 570, 1770, 410, 200));
 
         list.add(new UmlClass("SimulatorController", "SimulatorController", "Concurrency Benchmark Simulator",
@@ -1006,18 +1007,6 @@ public class DiagramGenerator {
         for (int i = 0; i < pkgKeys.length; i++) {
             List<UmlClass> subClasses = filterClassesByPkg(classes, pkgKeys[i]);
             List<UmlEdge> subEdges = filterEdgesByClasses(edges, subClasses);
-
-            // Compute bounding box
-            int minX = 99999, minY = 99999, maxX = 0, maxY = 0;
-            for (UmlClass c : subClasses) {
-                if (c.x < minX) minX = c.x;
-                if (c.y < minY) minY = c.y;
-                if (c.right() > maxX) maxX = c.right();
-                if (c.bottom() > maxY) maxY = c.bottom();
-            }
-            int pad = 50;
-            int width = (maxX - minX) + pad * 2;
-            int height = (maxY - minY) + pad * 2;
 
             // Generate Draw.io
             StringBuilder xml = new StringBuilder();
