@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiến trúc Diagram theo 7 Phân hệ - Food Delivery Simulation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-border: #334155;
+      --navy: #1b365d;
+      --cyan: #0284c7;
+      --cyan-light: #38bdf8;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* SIDEBAR */
+    aside {
+      width: 320px;
+      background: #090d16;
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .brand-box {
+      padding: 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--cyan-light);
+      margin-top: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .nav-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: #cbd5e1;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .nav-tab:hover {
+      background: rgba(51, 65, 85, 0.4);
+      border-color: var(--card-border);
+    }
+    .nav-tab.active {
+      background: var(--card);
+      border-color: var(--cyan);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .tab-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: rgba(2, 132, 199, 0.2);
+      color: var(--cyan-light);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-tab.active .tab-badge {
+      background: var(--cyan);
+      color: #fff;
+    }
+    .tab-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .tab-owner {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* MAIN VIEWPORT */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: var(--bg);
+      padding: 28px 36px;
+    }
+    .sub-panel {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    .sub-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-header {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .header-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .panel-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .panel-subtitle {
+      font-size: 14px;
+      color: var(--cyan-light);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .owner-chip {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #e2e8f0;
+      margin-bottom: 14px;
+    }
+    .panel-desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .panel-body-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+    }
+
+    .table-compact {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .table-compact th {
+      text-align: left;
+      padding: 8px 10px;
+      background: rgba(15, 23, 42, 0.6);
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+      font-weight: 600;
+    }
+    .table-compact td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+      color: #e2e8f0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+    }
+    .badge-controller { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .badge-model { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-repository { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-exception { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-view { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .badge-util { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="brand-box">
+      <div class="brand-title">🍔 7 PHÂN HỆ HỆ THỐNG</div>
+      <div class="brand-sub">LAB211 Food Delivery</div>
+    </div>
+    <div class="nav-list">
+      
+        <button class="nav-tab active" onclick="switchSubsystem('SUB1', this)">
+            <span class="tab-badge">1</span>
+            <div class="tab-info">
+                <div class="tab-title">Xác thực & Quản lý Truy cập</div>
+                <div class="tab-owner">Đỗ Tấn Vũ</div>
+            </div>
+        </button>
+        
+        <button class="nav-tab " onclick="switchSubsystem('SUB2', this)">
+            <span class="tab-badge">2</span>
+            <div class="tab-info">
+                <div class="tab-title">Khách hàng & Đặt hàng Quy Nhơn</div>
+                <div class="tab-owner">Võ Thảo Nguyên</div>
+            </div>
+        </button>
+        
+        <button class="nav-tab " onclick="switchSubsystem('SUB3', this)">
+            <span class="tab-badge">3</span>
+            <div class="tab-info">
+                <div class="tab-title">Quản lý Nhà hàng & Thực đơn</div>
+                <div class="tab-owner">Huỳnh Nguyễn Quốc Huy</div>
+            </div>
+        </button>
+        
+        <button class="nav-tab " onclick="switchSubsystem('SUB4', this)">
+            <span class="tab-badge">4</span>
+            <div class="tab-info">
+                <div class="tab-title">Vận hành Tài xế & Giao nhận Đơn</div>
+                <div class="tab-owner">Đào Cao Duy</div>
+            </div>
+        </button>
+        
+        <button class="nav-tab " onclick="switchSubsystem('SUB5', this)">
+            <span class="tab-badge">5</span>
+            <div class="tab-info">
+                <div class="tab-title">Điều phối Trung tâm & Grid Tọa độ Quy Nhơn</div>
+                <div class="tab-owner">Hồ Anh Nhật</div>
+            </div>
+        </button>
+        
+        <button class="nav-tab " onclick="switchSubsystem('SUB6', this)">
+            <span class="tab-badge">6</span>
+            <div class="tab-info">
+                <div class="tab-title">Quản trị Hệ thống Toàn diện & Big Data</div>
+                <div class="tab-owner">Đỗ Tấn Vũ</div>
+            </div>
+        </button>
+        
+        <button class="nav-tab " onclick="switchSubsystem('SUB7', this)">
+            <span class="tab-badge">7</span>
+            <div class="tab-info">
+                <div class="tab-title">Mô phỏng Concurrency & Kiểm định Tương tranh</div>
+                <div class="tab-owner">Trương Thanh Trà</div>
+            </div>
+        </button>
+        
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    
+        <div id="panel-SUB1" class="sub-panel active">
+            <div class="panel-header" style="border-left: 5px solid #38BDF8;">
+                <div class="header-badge" style="background: #1E3A8A; color: #fff;">PHÂN HỆ 1 • UC01 – UC05</div>
+                <h1 class="panel-title">Phân hệ 1: Xác thực & Quản lý Truy cập</h1>
+                <p class="panel-subtitle">Authentication & Access Management</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Đỗ Tấn Vũ (QE170159) (Admin & Security Dev)
+                </div>
+                <p class="panel-desc">Quản lý toàn bộ vòng đời tài khoản người dùng, cơ chế bảo mật tiêu chuẩn ngân hàng PBKDF2 chống tấn công Rainbow table và phân quyền RBAC.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC01 – UC05)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC01</code></td><td>Đăng ký tài khoản Khách hàng mới</td></tr><tr><td><code>UC02</code></td><td>Đăng nhập Hệ thống (PBKDF2 with Salt)</td></tr><tr><td><code>UC03</code></td><td>Đăng xuất khỏi Phiên làm việc</td></tr><tr><td><code>UC04</code></td><td>Xem danh sách Tài khoản mẫu Demo</td></tr><tr><td><code>UC05</code></td><td>Nộp hồ sơ đăng ký Làm Tài xế (Chờ duyệt)</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (9 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>AuthController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Điều phối xác thực, login/logout, check session</td></tr><tr><td><code>UserRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Lưu trữ và đọc/ghi users.csv</td></tr><tr><td><code>AccountRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Bảo mật PBKDF2WithHmacSHA256, 65.536 iterations</td></tr><tr><td><code>User</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể người dùng cơ bản</td></tr><tr><td><code>UserRole</code></td><td><span class='badge badge-model'>model</span></td><td>Enum: CUSTOMER, RESTAURANT, DRIVER, ADMIN</td></tr><tr><td><code>UserAccount</code></td><td><span class='badge badge-model'>model</span></td><td>Tài khoản kèm salt và hash</td></tr><tr><td><code>AuthSession</code></td><td><span class='badge badge-model'>model</span></td><td>Phiên đăng nhập kèm token và thời hạn</td></tr><tr><td><code>AccountRole</code></td><td><span class='badge badge-model'>model</span></td><td>Enum phân quyền truy cập hệ thống</td></tr><tr><td><code>InvalidInputException</code></td><td><span class='badge badge-exception'>exception</span></td><td>Ngoại lệ khi thông tin đăng nhập/đăng ký sai</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/users.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="panel-SUB2" class="sub-panel ">
+            <div class="panel-header" style="border-left: 5px solid #0284C7;">
+                <div class="header-badge" style="background: #0369A1; color: #fff;">PHÂN HỆ 2 • UC06 – UC15</div>
+                <h1 class="panel-title">Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn</h1>
+                <p class="panel-subtitle">Customer Portal & Food Ordering</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Võ Thảo Nguyên (QE200064) (Customer Portal Dev)
+                </div>
+                <p class="panel-desc">Cổng trải nghiệm khách hàng tại Quy Nhơn: duyệt menu, tính cước khoảng cách Haversine chuẩn xác, đặt đơn với kiểm tra tồn kho và cơ chế hoàn stock khi hủy đơn.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC06 – UC15)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC06</code></td><td>Xem danh sách Nhà hàng & Thực đơn</td></tr><tr><td><code>UC07</code></td><td>Đặt món & Khởi tạo Đơn hàng</td></tr><tr><td><code>UC08</code></td><td>Trừ tồn kho Món ăn tức thời</td></tr><tr><td><code>UC09</code></td><td>Tính phí ship theo Haversine GPS Quy Nhơn</td></tr><tr><td><code>UC10</code></td><td>Xác thực GPS Cửa hàng & Khách hàng</td></tr><tr><td><code>UC11</code></td><td>Xem lịch sử & Chi tiết đơn hàng</td></tr><tr><td><code>UC12</code></td><td>Hủy đơn hàng (Khi đang PENDING)</td></tr><tr><td><code>UC13</code></td><td>Hoàn trả số lượng Tồn kho (Rollback Stock)</td></tr><tr><td><code>UC14</code></td><td>Xem thông tin Tài khoản cá nhân</td></tr><tr><td><code>UC15</code></td><td>Kiểm tra Hộp thư Thông báo tài xế & ETA</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (11 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>CustomerController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Xử lý nghiệp vụ khách hàng xem menu, đặt và hủy đơn</td></tr><tr><td><code>CustomerRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý dữ liệu customers.csv</td></tr><tr><td><code>OrderRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý dữ liệu orders.csv</td></tr><tr><td><code>OrderItemRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý dữ liệu chi tiết món order_items.csv</td></tr><tr><td><code>Customer</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể khách hàng kèm tọa độ GPS</td></tr><tr><td><code>Order</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể đơn hàng kèm trạng thái, cước phí, version</td></tr><tr><td><code>OrderItem</code></td><td><span class='badge badge-model'>model</span></td><td>Chi tiết từng món trong đơn</td></tr><tr><td><code>OrderStatus</code></td><td><span class='badge badge-model'>model</span></td><td>Enum trạng thái: PENDING, ACCEPTED, ASSIGNED...</td></tr><tr><td><code>OrderView</code></td><td><span class='badge badge-view'>view</span></td><td>Giao diện Console hiển thị giỏ hàng và đơn hàng</td></tr><tr><td><code>OversellException</code></td><td><span class='badge badge-exception'>exception</span></td><td>Ngoại lệ chặn bán quá tồn kho</td></tr><tr><td><code>EntityNotFoundException</code></td><td><span class='badge badge-exception'>exception</span></td><td>Ngoại lệ khi không tìm thấy món/nhà hàng</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/customers.csv, data/orders.csv, data/order_items.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="panel-SUB3" class="sub-panel ">
+            <div class="panel-header" style="border-left: 5px solid #F59E0B;">
+                <div class="header-badge" style="background: #B45309; color: #fff;">PHÂN HỆ 3 • UC16 – UC22</div>
+                <h1 class="panel-title">Phân hệ 3: Quản lý Nhà hàng & Thực đơn</h1>
+                <p class="panel-subtitle">Restaurant Portal & Menu Management</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Huỳnh Nguyễn Quốc Huy (QE200031) (Restaurant Portal Dev)
+                </div>
+                <p class="panel-desc">Cổng quản lý nhà hàng: quản lý thực đơn, điều chỉnh giá bán, kiểm soát kho hàng chống Oversell và duyệt đơn kích hoạt trung tâm điều phối.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC16 – UC22)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC16</code></td><td>Xem thực đơn & Tình trạng tồn kho</td></tr><tr><td><code>UC17</code></td><td>Cập nhật đơn giá & Bổ sung tồn kho</td></tr><tr><td><code>UC18</code></td><td>Xem danh sách Đơn hàng chờ quán</td></tr><tr><td><code>UC19</code></td><td>Xác nhận đơn (Accept Order) & Bắt đầu nấu</td></tr><tr><td><code>UC20</code></td><td>Kích hoạt tự động Điều phối Tài xế</td></tr><tr><td><code>UC21</code></td><td>Từ chối đơn (Reject Order) & Hủy</td></tr><tr><td><code>UC22</code></td><td>Thống kê doanh thu Bán của cửa hàng</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (7 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>RestaurantController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Duyệt đơn, cập nhật menu và số lượng tồn kho</td></tr><tr><td><code>RestaurantRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý file restaurants.csv</td></tr><tr><td><code>MenuItemRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý món ăn menu_items.csv, deduct/restoreStock</td></tr><tr><td><code>Restaurant</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể nhà hàng kèm GPS Quy Nhơn</td></tr><tr><td><code>MenuItem</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể món ăn kèm đơn giá và số lượng tồn kho</td></tr><tr><td><code>RestaurantView</code></td><td><span class='badge badge-view'>view</span></td><td>Giao diện Console cho chủ quán ăn</td></tr><tr><td><code>OrderController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Phương thức confirmOrderByRestaurant và rejectOrderByRestaurant</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/restaurants.csv, data/menu_items.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="panel-SUB4" class="sub-panel ">
+            <div class="panel-header" style="border-left: 5px solid #10B981;">
+                <div class="header-badge" style="background: #047857; color: #fff;">PHÂN HỆ 4 • UC23 – UC28</div>
+                <h1 class="panel-title">Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn</h1>
+                <p class="panel-subtitle">Driver Delivery & Lifecycle</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Đào Cao Duy (QE190089) (Driver Portal Dev)
+                </div>
+                <p class="panel-desc">Cổng tác nghiệp tài xế: quản lý ca trực, nhận đơn được điều phối, xác nhận nhận món tại quán, giao hàng tận tay khách và tự động chuyển về AVAILABLE.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC23 – UC28)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC23</code></td><td>Xem hồ sơ & Thông tin cá nhân tài xế</td></tr><tr><td><code>UC24</code></td><td>Chuyển trạng thái AVAILABLE / OFFLINE</td></tr><tr><td><code>UC25</code></td><td>Xem các đơn hàng được phân công</td></tr><tr><td><code>UC26</code></td><td>Xác nhận lấy hàng (Khoản PICKED_UP)</td></tr><tr><td><code>UC27</code></td><td>Xác nhận hoàn tất Giao hàng (DELIVERED)</td></tr><tr><td><code>UC28</code></td><td>Tự động chuyển về Sẵn sàng (AVAILABLE)</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (6 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>DriverController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Quản lý trạng thái tài xế, nhận đơn, giao hàng</td></tr><tr><td><code>DriverRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý drivers.csv, markBusy, markAvailable</td></tr><tr><td><code>Driver</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể tài xế kèm trạng thái, tọa độ GPS di chuyển</td></tr><tr><td><code>DriverStatus</code></td><td><span class='badge badge-model'>model</span></td><td>Enum: AVAILABLE, BUSY, OFFLINE</td></tr><tr><td><code>DriverView</code></td><td><span class='badge badge-view'>view</span></td><td>Giao diện Console dành riêng cho tài xế</td></tr><tr><td><code>OrderController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Phương thức markOrderPickedUp và markOrderDelivered</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/drivers.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="panel-SUB5" class="sub-panel ">
+            <div class="panel-header" style="border-left: 5px solid #60A5FA;">
+                <div class="header-badge" style="background: #1D4ED8; color: #fff;">PHÂN HỆ 5 • UC29 – UC35</div>
+                <h1 class="panel-title">Phân hệ 5: Điều phối Trung tâm & Grid Tọa độ Quy Nhơn</h1>
+                <p class="panel-subtitle">Central Dispatching & Network Grid</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Hồ Anh Nhật (QE200301) (Leader / Central Dispatching)
+                </div>
+                <p class="panel-desc">Bộ não trung tâm của hệ thống: thuật toán gán đơn tự động cho tài xế gần nhất, tính toán thời gian ETA, ngăn chặn Double Assignment và vẽ bản đồ ASCII Grid 16x50.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC29 – UC35)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC29</code></td><td>Xem danh sách đơn Chờ điều phối (ACCEPTED)</td></tr><tr><td><code>UC30</code></td><td>Tự động điều phối Tất cả đơn hàng mới</td></tr><tr><td><code>UC31</code></td><td>Tìm kiếm tài xế Gần nhất (Haversine Distance)</td></tr><tr><td><code>UC32</code></td><td>Tính toán ETA Lấy món & Giao hàng</td></tr><tr><td><code>UC33</code></td><td>Gán một đơn & Khóa tài xế (ASSIGNED)</td></tr><tr><td><code>UC34</code></td><td>Giám sát trạng thái Toàn đội ngũ tài xế</td></tr><tr><td><code>UC35</code></td><td>Hiển thị Bản đồ ASCII Grid Map Quy Nhơn (16x50)</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (8 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>MainController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Facade MVC Orchestrator điều phối toàn bộ các phân hệ</td></tr><tr><td><code>AppController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Bộ điều khiển khởi động ứng dụng</td></tr><tr><td><code>DeliveryRouteRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Lưu trữ lịch sử hành trình delivery_routes.csv</td></tr><tr><td><code>DeliveryRoute</code></td><td><span class='badge badge-model'>model</span></td><td>Thực thể lộ trình giao hàng kèm cự ly và thời gian</td></tr><tr><td><code>GeoUtils</code></td><td><span class='badge badge-model'>model</span></td><td>Tính toán khoảng cách Haversine và cước phí chuẩn xác</td></tr><tr><td><code>MapView</code></td><td><span class='badge badge-view'>view</span></td><td>Vẽ bản đồ ASCII Grid 16x50 hiển thị vị trí quán, khách, xế</td></tr><tr><td><code>DoubleAssignmentException</code></td><td><span class='badge badge-exception'>exception</span></td><td>Ngoại lệ ngăn chặn 2 đơn gán trùng 1 tài xế</td></tr><tr><td><code>DriverOverloadException</code></td><td><span class='badge badge-exception'>exception</span></td><td>Ngoại lệ ngăn chặn tài xế bận bị ép nhận thêm đơn</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/delivery_routes.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="panel-SUB6" class="sub-panel ">
+            <div class="panel-header" style="border-left: 5px solid #818CF8;">
+                <div class="header-badge" style="background: #4338CA; color: #fff;">PHÂN HỆ 6 • UC36 – UC44</div>
+                <h1 class="panel-title">Phân hệ 6: Quản trị Hệ thống Toàn diện & Big Data</h1>
+                <p class="panel-subtitle">System Administration & Big Data</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Đỗ Tấn Vũ (QE170159) (System Administrator)
+                </div>
+                <p class="panel-desc">Cổng quản trị tối cao: duyệt đơn đăng ký đối tác tài xế, quản trị danh mục toàn hệ thống và sinh bộ dữ liệu lớn 18.000 dòng CSV để kiểm thử tải cực hạn.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC36 – UC44)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC36</code></td><td>Phê duyệt hồ sơ & Tự động cấp mã tài xế</td></tr><tr><td><code>UC37</code></td><td>Từ chối hồ sơ Đăng ký tài xế</td></tr><tr><td><code>UC38</code></td><td>Quản trị Danh bạ Toàn bộ Khách hàng</td></tr><tr><td><code>UC39</code></td><td>Quản lý Nhà hàng, Thực đơn & Khớp kho</td></tr><tr><td><code>UC40</code></td><td>Quản trị Đội xe & Khóa/Mở tài xế</td></tr><tr><td><code>UC41</code></td><td>Quản trị Mạng lưới & Phân quyền Hệ thống</td></tr><tr><td><code>UC42</code></td><td>Giám sát toàn bộ Đơn hàng & Lộ trình</td></tr><tr><td><code>UC43</code></td><td>Sinh dữ liệu mẫu 18.000 dòng CSV (Test Bench)</td></tr><tr><td><code>UC44</code></td><td>Báo cáo Tổng quan & Nghiên cứu Big Question</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (6 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>AdminController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Quản trị danh bạ, phê duyệt hồ sơ lái xe, sinh dữ liệu</td></tr><tr><td><code>DriverApplicationRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Quản lý driver_applications.csv</td></tr><tr><td><code>DriverApplication</code></td><td><span class='badge badge-model'>model</span></td><td>Hồ sơ đăng ký tài xế mới</td></tr><tr><td><code>DriverApplicationStatus</code></td><td><span class='badge badge-model'>model</span></td><td>Enum: PENDING, APPROVED, REJECTED</td></tr><tr><td><code>DataGenerator</code></td><td><span class='badge badge-util'>util</span></td><td>Sinh bộ dữ liệu lớn hơn 18.000 dòng CSV chuẩn</td></tr><tr><td><code>AdminView</code></td><td><span class='badge badge-view'>view</span></td><td>Giao diện quản trị tối cao của Admin</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/driver_applications.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="panel-SUB7" class="sub-panel ">
+            <div class="panel-header" style="border-left: 5px solid #FB7185;">
+                <div class="header-badge" style="background: #BE123C; color: #fff;">PHÂN HỆ 7 • UC45 – UC51</div>
+                <h1 class="panel-title">Phân hệ 7: Mô phỏng Concurrency & Kiểm định Tương tranh</h1>
+                <p class="panel-subtitle">Concurrency Stress Simulator & Core Engine</p>
+                <div class="owner-chip">
+                    👤 <strong>Phụ trách chính:</strong> Trương Thanh Trà (QE200100) (Technical Lead / Core Engine (20% ★))
+                </div>
+                <p class="panel-desc">Trọng tâm kỹ thuật quan trọng nhất (20%): Mô phỏng tải cực hạn 700 đơn hàng đồng thời, kiểm định 3 Race Conditions và giải quyết câu hỏi khoa học Big Question với giải pháp Optimistic Locking.</p>
+            </div>
+
+            <div class="panel-body-grid">
+                <div class="card">
+                    <h3 class="card-title">📑 Danh sách Use Cases (UC45 – UC51)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Mã UC</th><th>Tên Chức năng Nghiệp vụ</th></tr></thead>
+                        <tbody><tr><td><code>UC45</code></td><td>Cấu hình tham số Kiểm thử (threads, orders, mechanism)</td></tr><tr><td><code>UC46</code></td><td>Khởi chạy mô phỏng Đa luồng đồng thời</td></tr><tr><td><code>UC47</code></td><td>Mô phỏng Đặt hàng (Customer Thread)</td></tr><tr><td><code>UC48</code></td><td>Mô phỏng Điều phối (Dispatch Thread)</td></tr><tr><td><code>UC49</code></td><td>Tự động phát hiện Lỗi Race Conditions (Oversell, Double Assign)</td></tr><tr><td><code>UC50</code></td><td>Đo đạc và So chuẩn 4 Cơ chế Khóa (Benchmark)</td></tr><tr><td><code>UC51</code></td><td>Xuất bảng so sánh Hiệu năng & Kết luận Big Question</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">🏗️ Kiến trúc Lớp Java (12 Classes)</h3>
+                    <table class="table-compact">
+                        <thead><tr><th>Tên Class</th><th>Package</th><th>Nhiệm vụ</th></tr></thead>
+                        <tbody><tr><td><code>SimulatorController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Điều phối bài kiểm tra tương tranh, quản lý threads</td></tr><tr><td><code>CustomerThread</code></td><td><span class='badge badge-controller'>controller</span></td><td>Luồng giả lập khách hàng đặt món và hủy đơn liên tục</td></tr><tr><td><code>DispatchThread</code></td><td><span class='badge badge-controller'>controller</span></td><td>Luồng giả lập điều phối quét đơn tự động</td></tr><tr><td><code>CustomerSimTask</code></td><td><span class='badge badge-controller'>controller</span></td><td>Tác vụ runnable cho khách hàng</td></tr><tr><td><code>DispatchSimTask</code></td><td><span class='badge badge-controller'>controller</span></td><td>Tác vụ runnable cho điều phối</td></tr><tr><td><code>SimulationRunRepository</code></td><td><span class='badge badge-repository'>repository</span></td><td>Lưu trữ kết quả simulation_runs.csv</td></tr><tr><td><code>SimulationRun</code></td><td><span class='badge badge-model'>model</span></td><td>Kết quả thực nghiệm: throughput, drop rate, conflicts</td></tr><tr><td><code>LockMechanism</code></td><td><span class='badge badge-model'>model</span></td><td>Enum: NO_LOCK, REENTRANT_LOCK, READ_WRITE_LOCK, OPTIMISTIC_LOCK</td></tr><tr><td><code>OrderController</code></td><td><span class='badge badge-controller'>controller</span></td><td>Quản trị xung đột tương tranh và cơ chế version checking</td></tr><tr><td><code>OptimisticLockException</code></td><td><span class='badge badge-exception'>exception</span></td><td>Ngoại lệ khi phiên bản dữ liệu bị xung đột</td></tr><tr><td><code>SimulatorView</code></td><td><span class='badge badge-view'>view</span></td><td>Giao diện cấu hình và theo dõi tiến độ benchmark</td></tr><tr><td><code>ReportView</code></td><td><span class='badge badge-view'>view</span></td><td>Xuất bảng báo cáo so sánh kết quả 4 cơ chế khóa</td></tr></tbody>
+                    </table>
+                    <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
+                        📁 <strong>File CSV lưu trữ:</strong> <code>data/simulation_runs.csv</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+  </main>
+
+  <script>
+    function switchSubsystem(subId, btn) {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const target = document.getElementById('panel-' + subId);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

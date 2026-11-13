@@ -82,6 +82,8 @@ $$\text{Phát biểu bài toán} \iff \text{51 Use Cases} \iff \text{60 Classes 
 * 🖼️ **Hình vẽ Use Case Diagram toàn hệ thống:** [`Usecase/Full_UseCase_Diagram.jpg`](Usecase/Full_UseCase_Diagram.jpg) | [`Usecase/Full_UseCase_Diagram.drawio`](Usecase/Full_UseCase_Diagram.drawio)
 * 🌐 **Trình duyệt Web xem Use Case (Pan-Zoom & Tra cứu):** [`Usecase/use_case_view.html`](Usecase/use_case_view.html)
 * 🖼️ **Hình vẽ Class Diagram (60 Classes, đi dây xa lộ rõ ràng):** [`diagram/Full_Class_Diagram.jpg`](diagram/Full_Class_Diagram.jpg) | [`ClassDiagram/Full_Class_Diagram.drawio`](ClassDiagram/Full_Class_Diagram.drawio)
+* 🧩 **Diagram theo 7 Phân hệ chức năng (Subsystems Architecture):** [`diagram/subsystems/Subsystems_Architecture.drawio`](diagram/subsystems/Subsystems_Architecture.drawio) | [`docs/subsystems/subsystems_diagram.md`](docs/subsystems/subsystems_diagram.md)
+* 🌐 **Trình duyệt Web tra cứu 7 Phân hệ (Interactive Subsystem View):** [`docs/subsystems/subsystems_view.html`](docs/subsystems/subsystems_view.html) *(Xem theo từng thành viên phụ trách, use case, class và CSV)*
 * 📄 **Đặc tả 60 Class & 112 Quan hệ:** [`ClassDiagram/class_diagram.md`](ClassDiagram/class_diagram.md)
 * 🌐 **Trình duyệt Web xem Class Diagram (Pan-Zoom theo Layer):** [`ClassDiagram/class_diagram_view.html`](ClassDiagram/class_diagram_view.html)
 

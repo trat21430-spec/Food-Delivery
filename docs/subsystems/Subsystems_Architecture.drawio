@@ -1,0 +1,256 @@
+<mxfile host="app.diagrams.net" modified="2026-11-14T00:00:00.000Z" agent="Antigravity" version="21.0.0" type="device">
+  <diagram id="SUB1" name="Phan_He_1_SUB1">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB1" value="&lt;b&gt;Phân hệ 1: Xác thực & Quản lý Truy cập&lt;/b&gt;&lt;br/&gt;Authentication & Access Management&lt;br/&gt;&lt;i&gt;Phụ trách: Đỗ Tấn Vũ (QE170159)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_0" value="&lt;b&gt;AuthController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Điều phối xác thực, login/logout, check session&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_1" value="&lt;b&gt;UserRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Lưu trữ và đọc/ghi users.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_2" value="&lt;b&gt;AccountRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Bảo mật PBKDF2WithHmacSHA256, 65.536 iterations&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_3" value="&lt;b&gt;User&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể người dùng cơ bản&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_4" value="&lt;b&gt;UserRole&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Enum: CUSTOMER, RESTAURANT, DRIVER, ADMIN&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_5" value="&lt;b&gt;UserAccount&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Tài khoản kèm salt và hash&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_6" value="&lt;b&gt;AuthSession&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Phiên đăng nhập kèm token và thời hạn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_7" value="&lt;b&gt;AccountRole&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Enum phân quyền truy cập hệ thống&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB1_8" value="&lt;b&gt;InvalidInputException&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;exception&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Ngoại lệ khi thông tin đăng nhập/đăng ký sai&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SUB2" name="Phan_He_2_SUB2">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB2" value="&lt;b&gt;Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn&lt;/b&gt;&lt;br/&gt;Customer Portal & Food Ordering&lt;br/&gt;&lt;i&gt;Phụ trách: Võ Thảo Nguyên (QE200064)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369A1;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_0" value="&lt;b&gt;CustomerController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Xử lý nghiệp vụ khách hàng xem menu, đặt và hủy đơn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_1" value="&lt;b&gt;CustomerRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý dữ liệu customers.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_2" value="&lt;b&gt;OrderRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý dữ liệu orders.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_3" value="&lt;b&gt;OrderItemRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý dữ liệu chi tiết món order_items.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_4" value="&lt;b&gt;Customer&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể khách hàng kèm tọa độ GPS&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_5" value="&lt;b&gt;Order&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể đơn hàng kèm trạng thái, cước phí, version&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_6" value="&lt;b&gt;OrderItem&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Chi tiết từng món trong đơn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_7" value="&lt;b&gt;OrderStatus&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Enum trạng thái: PENDING, ACCEPTED, ASSIGNED...&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_8" value="&lt;b&gt;OrderView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Giao diện Console hiển thị giỏ hàng và đơn hàng&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_9" value="&lt;b&gt;OversellException&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;exception&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Ngoại lệ chặn bán quá tồn kho&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="530" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB2_10" value="&lt;b&gt;EntityNotFoundException&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;exception&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Ngoại lệ khi không tìm thấy món/nhà hàng&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="530" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SUB3" name="Phan_He_3_SUB3">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB3" value="&lt;b&gt;Phân hệ 3: Quản lý Nhà hàng & Thực đơn&lt;/b&gt;&lt;br/&gt;Restaurant Portal & Menu Management&lt;br/&gt;&lt;i&gt;Phụ trách: Huỳnh Nguyễn Quốc Huy (QE200031)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B45309;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_0" value="&lt;b&gt;RestaurantController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Duyệt đơn, cập nhật menu và số lượng tồn kho&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_1" value="&lt;b&gt;RestaurantRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý file restaurants.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_2" value="&lt;b&gt;MenuItemRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý món ăn menu_items.csv, deduct/restoreStock&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_3" value="&lt;b&gt;Restaurant&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể nhà hàng kèm GPS Quy Nhơn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_4" value="&lt;b&gt;MenuItem&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể món ăn kèm đơn giá và số lượng tồn kho&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_5" value="&lt;b&gt;RestaurantView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Giao diện Console cho chủ quán ăn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB3_6" value="&lt;b&gt;OrderController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Phương thức confirmOrderByRestaurant và rejectOrderByRestaurant&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SUB4" name="Phan_He_4_SUB4">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB4" value="&lt;b&gt;Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn&lt;/b&gt;&lt;br/&gt;Driver Delivery & Lifecycle&lt;br/&gt;&lt;i&gt;Phụ trách: Đào Cao Duy (QE190089)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#047857;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB4_0" value="&lt;b&gt;DriverController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý trạng thái tài xế, nhận đơn, giao hàng&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB4_1" value="&lt;b&gt;DriverRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý drivers.csv, markBusy, markAvailable&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB4_2" value="&lt;b&gt;Driver&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể tài xế kèm trạng thái, tọa độ GPS di chuyển&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB4_3" value="&lt;b&gt;DriverStatus&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Enum: AVAILABLE, BUSY, OFFLINE&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB4_4" value="&lt;b&gt;DriverView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Giao diện Console dành riêng cho tài xế&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB4_5" value="&lt;b&gt;OrderController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Phương thức markOrderPickedUp và markOrderDelivered&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SUB5" name="Phan_He_5_SUB5">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB5" value="&lt;b&gt;Phân hệ 5: Điều phối Trung tâm & Grid Tọa độ Quy Nhơn&lt;/b&gt;&lt;br/&gt;Central Dispatching & Network Grid&lt;br/&gt;&lt;i&gt;Phụ trách: Hồ Anh Nhật (QE200301)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1D4ED8;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_0" value="&lt;b&gt;MainController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Facade MVC Orchestrator điều phối toàn bộ các phân hệ&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_1" value="&lt;b&gt;AppController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Bộ điều khiển khởi động ứng dụng&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_2" value="&lt;b&gt;DeliveryRouteRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Lưu trữ lịch sử hành trình delivery_routes.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_3" value="&lt;b&gt;DeliveryRoute&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Thực thể lộ trình giao hàng kèm cự ly và thời gian&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_4" value="&lt;b&gt;GeoUtils&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Tính toán khoảng cách Haversine và cước phí chuẩn xác&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_5" value="&lt;b&gt;MapView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Vẽ bản đồ ASCII Grid 16x50 hiển thị vị trí quán, khách, xế&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_6" value="&lt;b&gt;DoubleAssignmentException&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;exception&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Ngoại lệ ngăn chặn 2 đơn gán trùng 1 tài xế&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB5_7" value="&lt;b&gt;DriverOverloadException&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;exception&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Ngoại lệ ngăn chặn tài xế bận bị ép nhận thêm đơn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SUB6" name="Phan_He_6_SUB6">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB6" value="&lt;b&gt;Phân hệ 6: Quản trị Hệ thống Toàn diện & Big Data&lt;/b&gt;&lt;br/&gt;System Administration & Big Data&lt;br/&gt;&lt;i&gt;Phụ trách: Đỗ Tấn Vũ (QE170159)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4338CA;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB6_0" value="&lt;b&gt;AdminController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản trị danh bạ, phê duyệt hồ sơ lái xe, sinh dữ liệu&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB6_1" value="&lt;b&gt;DriverApplicationRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản lý driver_applications.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB6_2" value="&lt;b&gt;DriverApplication&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Hồ sơ đăng ký tài xế mới&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB6_3" value="&lt;b&gt;DriverApplicationStatus&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Enum: PENDING, APPROVED, REJECTED&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB6_4" value="&lt;b&gt;DataGenerator&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;util&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Sinh bộ dữ liệu lớn hơn 18.000 dòng CSV chuẩn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB6_5" value="&lt;b&gt;AdminView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Giao diện quản trị tối cao của Admin&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SUB7" name="Phan_He_7_SUB7">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="hdr_SUB7" value="&lt;b&gt;Phân hệ 7: Mô phỏng Concurrency & Kiểm định Tương tranh&lt;/b&gt;&lt;br/&gt;Concurrency Stress Simulator & Core Engine&lt;br/&gt;&lt;i&gt;Phụ trách: Trương Thanh Trà (QE200100)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BE123C;fontColor=#ffffff;strokeColor=#334155;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="800" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_0" value="&lt;b&gt;SimulatorController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Điều phối bài kiểm tra tương tranh, quản lý threads&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_1" value="&lt;b&gt;CustomerThread&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Luồng giả lập khách hàng đặt món và hủy đơn liên tục&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_2" value="&lt;b&gt;DispatchThread&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Luồng giả lập điều phối quét đơn tự động&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_3" value="&lt;b&gt;CustomerSimTask&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Tác vụ runnable cho khách hàng&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_4" value="&lt;b&gt;DispatchSimTask&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Tác vụ runnable cho điều phối&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_5" value="&lt;b&gt;SimulationRunRepository&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;repository&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Lưu trữ kết quả simulation_runs.csv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_6" value="&lt;b&gt;SimulationRun&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Kết quả thực nghiệm: throughput, drop rate, conflicts&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_7" value="&lt;b&gt;LockMechanism&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;model&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Enum: NO_LOCK, REENTRANT_LOCK, READ_WRITE_LOCK, OPTIMISTIC_LOCK&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_8" value="&lt;b&gt;OrderController&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;controller&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Quản trị xung đột tương tranh và cơ chế version checking&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="400" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_9" value="&lt;b&gt;OptimisticLockException&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;exception&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Ngoại lệ khi phiên bản dữ liệu bị xung đột&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="530" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_10" value="&lt;b&gt;SimulatorView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Giao diện cấu hình và theo dõi tiến độ benchmark&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="530" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="c_SUB7_11" value="&lt;b&gt;ReportView&lt;/b&gt;&lt;br/&gt;&lt;font color=&quot;#38bdf8&quot;&gt;&amp;lt;&amp;lt;view&amp;gt;&amp;gt;&lt;/font&gt;&lt;br/&gt;&lt;font color=&quot;#94a3b8&quot; style=&quot;font-size:10px;&quot;&gt;Xuất bảng báo cáo so sánh kết quả 4 cơ chế khóa&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;fontColor=#ffffff;strokeColor=#0284c7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="530" width="260" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
