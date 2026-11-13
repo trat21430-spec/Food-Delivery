@@ -1,0 +1,1134 @@
+"""
+Tạo slide_presentation.html - Interactive Modern HTML5 Presentation Deck
+Dành cho báo cáo đồ án LAB211: Food Delivery Network Simulation.
+Có đầy đủ: 18 Slides, Điều hướng Phím mũi tên, Phím F (Toàn màn hình),
+Phím N (Bật/tắt Speaker Notes lời thoại), Xem sơ đồ Diagram sắc nét.
+"""
+
+import os
+
+html_content = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide Báo Cáo LAB211 - Food Delivery Network Simulation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-dark: #1e293b;
+      --border-dark: #334155;
+      --navy: #1b365d;
+      --cyan: #0284c7;
+      --cyan-light: #38bdf8;
+      --emerald: #10b981;
+      --emerald-light: #34d399;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-white);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* TOP BAR */
+    header {
+      height: 52px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .badge {
+      background: rgba(2, 132, 199, 0.2);
+      color: var(--cyan-light);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      background: var(--card-dark);
+      color: var(--text-white);
+      border: 1px solid var(--border-dark);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover {
+      background: #334155;
+      border-color: var(--cyan-light);
+    }
+    .btn-primary {
+      background: var(--cyan);
+      border-color: var(--cyan);
+    }
+    .btn-primary:hover {
+      background: #0369a1;
+    }
+
+    /* SLIDE STAGE */
+    #slide-viewport {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1280px;
+      aspect-ratio: 16 / 9;
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 40px 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      flex-direction: column;
+      justify-content: space-between;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .slide-header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .slide-cat {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .slide-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .slide-number {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 24px;
+    }
+
+    /* CARDS & GRIDS */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; }
+
+    .card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-list {
+      list-style: none;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .card-list li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 14px;
+    }
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--cyan-light);
+      font-weight: bold;
+    }
+
+    /* TABLES */
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    .table-custom th {
+      background: var(--navy);
+      color: #fff;
+      padding: 10px 12px;
+      border: 1px solid var(--border-dark);
+      font-weight: 700;
+    }
+    .table-custom td {
+      padding: 8px 12px;
+      border: 1px solid var(--border-dark);
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.4);
+    }
+    .table-custom tr.highlight td {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(52, 211, 153, 0.4);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* DIAGRAM PREVIEW */
+    .diagram-img {
+      width: 100%;
+      height: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      background: #000;
+      border-radius: 8px;
+      border: 1px solid var(--border-dark);
+      cursor: zoom-in;
+    }
+
+    /* SPEAKER NOTES DRAWER */
+    #speaker-notes-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #090d16;
+      border-top: 2px solid var(--cyan);
+      padding: 14px 32px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #93c5fd;
+      display: none;
+      z-index: 150;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.5);
+    }
+    #speaker-notes-panel.open {
+      display: block;
+    }
+    .notes-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--amber);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    /* KEYBOARD SHORTCUTS HINT */
+    .shortcuts-bar {
+      height: 36px;
+      background: var(--bg-dark);
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .key {
+      background: var(--card-dark);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-dark);
+      color: var(--text-white);
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <span>🍔🛵 FOOD DELIVERY NETWORK SIMULATION</span>
+      <span class="badge">LAB211 OOP with Java</span>
+      <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--emerald-light); border-color: rgba(52, 211, 153, 0.4);">Group 01</span>
+    </div>
+    <div class="controls">
+      <button class="btn" onclick="toggleNotes()">🎙️ Lời thoại [N]</button>
+      <button class="btn" onclick="prevSlide()">◀ Trước [←]</button>
+      <span id="slide-indicator" style="font-size: 13px; font-weight: 700; color: var(--cyan-light); min-width: 60px; text-align: center;">1 / 18</span>
+      <button class="btn btn-primary" onclick="nextSlide()">Tiếp [→] ▶</button>
+      <button class="btn" onclick="toggleFullScreen()">⛶ Toàn màn hình [F]</button>
+    </div>
+  </header>
+
+  <!-- VIEWPORT -->
+  <main id="slide-viewport">
+
+    <!-- SLIDE 1: COVER -->
+    <div class="slide active" data-notes="Kính chào Thầy/Cô và Hội đồng phản biện. Hôm nay Nhóm 01 xin phép trình bày đồ án: Food Delivery Network Simulation. Nhóm giải quyết bài toán giao đồ ăn tại Quy Nhơn với trọng tâm là kiểm định và triệt tiêu 3 Race Conditions trên file CSV vật lý.">
+      <div style="text-align: center; margin-top: 30px;">
+        <span class="badge" style="font-size: 13px; padding: 6px 16px;">★ BÁO CÁO ĐỒ ÁN LAB211 – OOP WITH JAVA – ĐẠI HỌC FPT</span>
+        <h1 style="font-size: 38px; font-weight: 900; margin: 18px 0 8px 0; color: #fff; letter-spacing: -0.5px;">FOOD DELIVERY NETWORK SIMULATION</h1>
+        <p style="font-size: 18px; color: var(--cyan-light); margin-bottom: 28px;">Mô phỏng Mạng lưới Giao đồ ăn Đa luồng & Giải quyết Thách thức Tương tranh trên CSV</p>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 20px;">
+        <div class="card" style="border-left: 4px solid var(--amber);">
+          <div class="card-title" style="color: var(--amber);">🎯 TRỌNG TÂM NGHIÊN CỨU & KỸ THUẬT</div>
+          <ul class="card-list">
+            <li><strong>Địa bàn thực tế:</strong> Thành phố Quy Nhơn (GPS & ASCII Grid 16x50).</li>
+            <li><strong>Lưu trữ dữ liệu:</strong> 100% File CSV vật lý, không dùng RDBMS/SQL.</li>
+            <li><strong>Thách thức Concurrency:</strong> 3 Race Conditions (Oversell, Double Assignment, Driver Overload).</li>
+            <li><strong>Lời giải Big Question:</strong> Khảo sát đối đầu 4 cơ chế khóa tương tranh.</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--emerald-light);">
+          <div class="card-title" style="color: var(--emerald-light);">👥 THỰC HIỆN: NHÓM 01 (GROUP 1)</div>
+          <ul class="card-list">
+            <li><strong>Trương Thanh Trà (QE200100):</strong> Tech Lead / Concurrency & Core Engine (20% ★)</li>
+            <li><strong>Hồ Anh Nhật (QE200301):</strong> Team Leader / Central Dispatching & ASCII Map (16%)</li>
+            <li><strong>Đào Cao Duy (QE190089):</strong> Driver Portal Developer (16%)</li>
+            <li><strong>Huỳnh Nguyễn Quốc Huy (QE200031):</strong> Restaurant Portal Developer (16%)</li>
+            <li><strong>Võ Thảo Nguyên (QE200064):</strong> Customer Portal Developer (16%)</li>
+            <li><strong>Đỗ Tấn Vũ (QE170159):</strong> System Admin & Security PBKDF2 (16%)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-dark); padding-top: 12px;">
+        Kỳ học: Fall 2026 | Bộ môn: Software Engineering | Ngôn ngữ: Java 17+ (100% Thuần OOP - 0% Static)
+      </div>
+    </div>
+
+    <!-- SLIDE 2: AGENDA -->
+    <div class="slide" data-notes="Chương trình báo cáo hôm nay gồm 6 nội dung chính, dẫn dắt mạch lạc từ bài toán, phân công công việc, thiết kế kiến trúc, nghiên cứu khoa học đến kết quả thực nghiệm.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Chương trình Trình bày</div>
+          <div class="slide-title">Mục lục Báo cáo Đồ án</div>
+        </div>
+        <div class="slide-number">02 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="width: 100%;">
+          <div class="card"><h2 style="color: var(--cyan-light); font-size: 28px; margin-bottom: 6px;">01</h2><h3 style="color:#fff; font-size:15px; margin-bottom:8px;">Bối cảnh & Phát biểu Bài toán</h3><p style="font-size:12px; color:var(--text-muted);">Nhu cầu giao đồ ăn Quy Nhơn, 4 Actor chính, ràng buộc LAB211 100% OOP & lưu trữ CSV.</p></div>
+          <div class="card"><h2 style="color: var(--cyan-light); font-size: 28px; margin-bottom: 6px;">02</h2><h3 style="color:#fff; font-size:15px; margin-bottom:8px;">Phân công Nhóm (WBS & RACI)</h3><p style="font-size:12px; color:var(--text-muted);">Ma trận trách nhiệm 6 thành viên, 7 phân hệ chức năng, phân bổ phần trăm đóng góp.</p></div>
+          <div class="card"><h2 style="color: var(--cyan-light); font-size: 28px; margin-bottom: 6px;">03</h2><h3 style="color:#fff; font-size:15px; margin-bottom:8px;">Kiến trúc Đồng bộ 4 Tầng</h3><p style="font-size:12px; color:var(--text-muted);">Mối liên kết chặt chẽ: Bài toán ⇔ 51 Use Cases ⇔ 60 Classes UML ⇔ Code Java & CSV.</p></div>
+          <div class="card"><h2 style="color: var(--cyan-light); font-size: 28px; margin-bottom: 6px;">04</h2><h3 style="color:#fff; font-size:15px; margin-bottom:8px;">3 Race Conditions & Big Question</h3><p style="font-size:12px; color:var(--text-muted);">Bản chất kỹ thuật của Oversell, Double Assignment, Overload & So sánh 4 cơ chế khóa.</p></div>
+          <div class="card"><h2 style="color: var(--cyan-light); font-size: 28px; margin-bottom: 6px;">05</h2><h3 style="color:#fff; font-size:15px; margin-bottom:8px;">Mô phỏng Concurrency Benchmark</h3><p style="font-size:12px; color:var(--text-muted);">Thực nghiệm 700 đơn hàng đồng thời, đối soát Throughput và chứng minh Optimistic Lock.</p></div>
+          <div class="card"><h2 style="color: var(--cyan-light); font-size: 28px; margin-bottom: 6px;">06</h2><h3 style="color:#fff; font-size:15px; margin-bottom:8px;">Demo Nghiệp vụ & Tổng kết</h3><p style="font-size:12px; color:var(--text-muted);">Vòng đời đơn hàng, cơ chế hoàn stock khi hủy đơn, kiểm định 8/8 test suites và bài học.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: WBS -->
+    <div class="slide" data-notes="Bảng phân chia công việc WBS và ma trận RACI rõ ràng. Bạn Trương Thanh Trà phụ trách phần cốt lõi quan trọng nhất là Concurrency và Phân hệ 7 (20%), 5 bạn còn lại phụ trách đồng đều 16% theo từng cổng phân hệ.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Tổ chức & Thực thi</div>
+          <div class="slide-title">Phân công Công việc Nhóm (WBS & RACI Matrix)</div>
+        </div>
+        <div class="slide-number">03 / 18</div>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Thành viên & MSSV</th>
+              <th>Vai trò</th>
+              <th>Phân hệ chức năng phụ trách</th>
+              <th>Use Cases</th>
+              <th>Classes / Module Đảm nhiệm</th>
+              <th>Tỉ lệ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight">
+              <td><strong>Trương Thanh Trà</strong><br><small>QE200100</small></td>
+              <td>Technical Lead / Concurrency Core</td>
+              <td>Phân hệ 7: Mô phỏng Concurrency, Giải quyết Big Question & Vòng đời Đơn hàng Optimistic</td>
+              <td>UC45 – UC51<br>+ Order Lifecycle</td>
+              <td>SimulatorController, CustomerThread, DispatchThread, OrderController, OptimisticLockException</td>
+              <td><strong>20% ★</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Hồ Anh Nhật</strong><br><small>QE200301</small></td>
+              <td>Team Leader / Central Dispatch</td>
+              <td>Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid Tọa độ Quy Nhơn</td>
+              <td>UC29 – UC35</td>
+              <td>MainController, AppController, DriverRepository (findNearest), MapView (ASCII Grid 16x50)</td>
+              <td>16%</td>
+            </tr>
+            <tr>
+              <td><strong>Đào Cao Duy</strong><br><small>QE190089</small></td>
+              <td>Driver Portal Dev</td>
+              <td>Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn hàng</td>
+              <td>UC23 – UC28</td>
+              <td>DriverController, Driver, DriverStatus, OrderController (markOrderPickedUp/Delivered)</td>
+              <td>16%</td>
+            </tr>
+            <tr>
+              <td><strong>Huỳnh Nguyễn Q. Huy</strong><br><small>QE200031</small></td>
+              <td>Restaurant Portal Dev</td>
+              <td>Phân hệ 3: Quản lý Nhà hàng & Thực đơn Món ăn</td>
+              <td>UC16 – UC22</td>
+              <td>RestaurantController, Restaurant, MenuItem, MenuItemRepository (deduct/restore Stock)</td>
+              <td>16%</td>
+            </tr>
+            <tr>
+              <td><strong>Võ Thảo Nguyên</strong><br><small>QE200064</small></td>
+              <td>Customer Portal Dev</td>
+              <td>Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn</td>
+              <td>UC06 – UC15</td>
+              <td>CustomerController, Customer, Order, OrderItem, OrderView, OversellException</td>
+              <td>16%</td>
+            </tr>
+            <tr>
+              <td><strong>Đỗ Tấn Vũ</strong><br><small>QE170159</small></td>
+              <td>Admin & Security</td>
+              <td>Phân hệ 1 & 6: Xác thực, Quản trị Toàn diện & Big Data 18.000 CSV</td>
+              <td>UC01 – UC05<br>UC36 – UC44</td>
+              <td>AuthController, AdminController, PBKDF2 Account, DriverApplication, DataGenerator</td>
+              <td>16%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PROBLEM STATEMENT -->
+    <div class="slide" data-notes="Mô tả bối cảnh bài toán thực tế tại Quy Nhơn. Thách thức lớn nhất là không dùng cơ sở dữ liệu quan hệ, toàn bộ giao dịch được ghi nhận trên các file CSV dưới tải đa luồng cao.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Bối cảnh & Nghiệp vụ</div>
+          <div class="slide-title">Bối cảnh Nghiệp vụ & Phát biểu Bài toán</div>
+        </div>
+        <div class="slide-number">04 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="width: 100%;">
+          <div class="card" style="border-top: 4px solid var(--cyan);">
+            <div class="card-title" style="color: var(--cyan-light);">📍 BỐI CẢNH THỰC TẾ</div>
+            <ul class="card-list">
+              <li>Mô phỏng nền tảng giao đồ ăn tại Thành phố Quy Nhơn.</li>
+              <li>Kết nối 4 Actor chính: Khách hàng (Customer), Nhà hàng (Restaurant), Tài xế (Driver), Điều phối viên (Dispatcher).</li>
+              <li>Sử dụng tọa độ GPS thực tế kết hợp lưới ASCII Grid 16x50 để mô phỏng khoảng cách di chuyển.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 4px solid var(--red);">
+            <div class="card-title" style="color: var(--red);">⚡ THÁCH THỨC KỸ THUẬT</div>
+            <ul class="card-list">
+              <li><strong>Không dùng RDBMS:</strong> Tuyệt đối không có SQL Server, MySQL hay cơ chế Transaction ACID tự động.</li>
+              <li><strong>Lưu trữ CSV vật lý:</strong> Toàn bộ dữ liệu được đọc/ghi trực tiếp vào file CSV phẳng.</li>
+              <li><strong>Đa luồng đồng thời:</strong> Hàng trăm khách hàng đặt món cùng tích tắc gây xung đột dữ liệu nghiêm trọng.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 4px solid var(--emerald-light);">
+            <div class="card-title" style="color: var(--emerald-light);">🎯 MỤC TIÊU HỆ THỐNG</div>
+            <ul class="card-list">
+              <li>Quản lý vòng đời đơn hàng khép kín từ đặt món, chế biến, điều phối đến giao hàng.</li>
+              <li>Tự động tìm kiếm và gán tài xế khả dụng gần nhất theo khoảng cách địa lý Haversine.</li>
+              <li>Bảo đảm 100% toàn vẹn dữ liệu: Triệt tiêu hoàn toàn 3 Race Conditions trên file CSV.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: LAB211 STANDARDS -->
+    <div class="slide" data-notes="Hệ thống tuân thủ nghiêm ngặt chuẩn mực của LAB211: 100% OOP thuần túy, không dùng biến static để chia sẻ dữ liệu, mô hình MVC 5 tầng rõ ràng.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Tiêu chuẩn Kỹ thuật</div>
+          <div class="slide-title">Ràng buộc Kỹ thuật & Chuẩn mực LAB211</div>
+        </div>
+        <div class="slide-number">05 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="width: 100%;">
+          <div class="card">
+            <div class="card-title" style="color: var(--cyan-light);">💎 100% THUẦN HƯỚNG ĐỐI TƯỢNG</div>
+            <ul class="card-list">
+              <li><strong>0% static:</strong> Không sử dụng bất kỳ biến hay phương thức static nào bên ngoài hàm Main.main().</li>
+              <li><strong>100% this.:</strong> Mọi truy cập thuộc tính và gọi phương thức nội tại đều dùng từ khóa 'this.'.</li>
+              <li><strong>Đóng gói tuyệt đối:</strong> Private fields, getter/setter chuẩn, không public trạng thái.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--amber);">🏛️ PHÂN TẦNG MVC 5 LỚP RÕ RÀNG</div>
+            <ul class="card-list">
+              <li><strong>Model (17 Classes):</strong> Thực thể nghiệp vụ thuần túy, POJO, Enums.</li>
+              <li><strong>Repository (13 Classes):</strong> Generic BaseRepository thao tác CSV vật lý.</li>
+              <li><strong>Controller (11 Classes):</strong> Điều phối nghiệp vụ, Facade, Threads đa luồng.</li>
+              <li><strong>Exception (8 Classes):</strong> Ngoại lệ phân cấp nghiệp vụ và xung đột tương tranh.</li>
+              <li><strong>View (11 Classes):</strong> Giao diện Console & Bản đồ ASCII Grid 16x50.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--emerald-light);">🛡️ AN TOÀN FILE CSV VẬT LÝ</div>
+            <ul class="card-list">
+              <li>Thao tác ghi đè file CSV được thực hiện nguyên tử (Atomic Write).</li>
+              <li>Xử lý lỗi phân lớp không làm crash hệ thống khi xảy ra xung đột I/O.</li>
+              <li>Tự động xác thực tính hợp lệ của từng dòng dữ liệu CSV trước khi nạp vào memory.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: 4-TIER ARCHITECTURE -->
+    <div class="slide" data-notes="Kim chỉ nam thiết kế của nhóm là nguyên tắc Đồng bộ 4 tầng: Mọi câu chữ trong Phát biểu bài toán đều có mã Use Case, mã Use Case có class Java và class Java ghi nhận xuống file CSV.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Nguyên lý Thiết kế</div>
+          <div class="slide-title">Kiến trúc Đồng bộ Tuyệt đối 4 Tầng</div>
+        </div>
+        <div class="slide-number">06 / 18</div>
+      </div>
+      <div class="slide-body" style="flex-direction: column;">
+        <div class="card" style="text-align: center; background: rgba(2, 132, 199, 0.15); border-color: var(--cyan); margin-bottom: 20px;">
+          <h2 style="font-size: 17px; color: var(--cyan-light); font-weight: 800;">
+            Phát biểu Bài toán &nbsp;⟺&nbsp; 51 Use Cases &nbsp;⟺&nbsp; 60 Classes UML &nbsp;⟺&nbsp; Mã nguồn Java & CSV
+          </h2>
+        </div>
+        <div class="grid-4" style="flex: 1;">
+          <div class="card">
+            <div class="card-title" style="color: #fff;">TẦNG 1: BÀI TOÁN</div>
+            <ul class="card-list">
+              <li>4 Actor nghiệp vụ + 2 Actor hệ thống</li>
+              <li>7 Phân hệ chức năng khép kín</li>
+              <li>Mô phỏng mạng lưới vận chuyển Quy Nhơn</li>
+              <li>Yêu cầu tối đa hóa Throughput</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--cyan-light);">TẦNG 2: USE CASE</div>
+            <ul class="card-list">
+              <li>51 Use Cases định danh UC01 – UC51</li>
+              <li>Đặc tả Pre/Post conditions chi tiết</li>
+              <li>Quan hệ include / extend chuẩn UML</li>
+              <li>Ánh xạ 1-1 không bỏ sót chức năng</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--amber);">TẦNG 3: UML CLASS</div>
+            <ul class="card-list">
+              <li>60 Classes phân chia 5 Package MVC</li>
+              <li>112 Quan hệ kết nối hướng đối tượng</li>
+              <li>Đường vẽ đi dây xa lộ không chồng chéo</li>
+              <li>Kế thừa và Interface chuẩn mực</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--emerald-light);">TẦNG 4: CODE & CSV</div>
+            <ul class="card-list">
+              <li>100% OOP thuần (0% static)</li>
+              <li>10 File CSV lưu trữ vật lý</li>
+              <li>Thuật toán Haversine & Dispatch</li>
+              <li>Cơ chế Optimistic Lock & Rollback</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: 3 RACE CONDITIONS -->
+    <div class="slide" data-notes="Đây là 3 Race Conditions mà nhóm đã tập trung mô phỏng và giải quyết: Oversell khi tồn kho có hạn, Double Assignment khi gán trùng tài xế, và Driver Overload khi tài xế bị quá tải.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Thách thức Kỹ thuật</div>
+          <div class="slide-title">Vấn đề Cốt lõi: 3 Race Conditions Thực tế</div>
+        </div>
+        <div class="slide-number">07 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="width: 100%;">
+          <div class="card" style="border-left: 4px solid var(--red);">
+            <div class="card-title" style="color: var(--red);">RC1: OVERSELL (TỒN KHO ÂM)</div>
+            <ul class="card-list">
+              <li><strong>Tình huống:</strong> Món 'Bánh xèo Tôm nhảy' chỉ còn đúng 1 suất (Stock = 1).</li>
+              <li><strong>Xảy ra:</strong> 2 khách hàng C1 và C2 cùng nhấn 'Đặt món' tại cùng một mili-giây.</li>
+              <li><strong>Hậu quả:</strong> Nếu không khóa, cả 2 luồng đều đọc Stock = 1 và trừ thành 0 và -1 → Bán khống đồ ăn, nhà hàng không có hàng nấu.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 4px solid var(--amber);">
+            <div class="card-title" style="color: var(--amber);">RC2: DOUBLE ASSIGNMENT</div>
+            <ul class="card-list">
+              <li><strong>Tình huống:</strong> Tài xế D1 đang rảnh (Status = AVAILABLE) ở gần 2 quán ăn.</li>
+              <li><strong>Xảy ra:</strong> 2 đơn hàng O1 và O2 nấu xong cùng lúc, 2 luồng điều phối cùng quét tìm tài xế gần nhất.</li>
+              <li><strong>Hậu quả:</strong> Cả 2 đơn đều gán cho D1 → Vi phạm độc quyền tài xế, hành trình giao bị phá vỡ.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 4px solid var(--cyan-light);">
+            <div class="card-title" style="color: var(--cyan-light);">RC3: DRIVER OVERLOAD</div>
+            <ul class="card-list">
+              <li><strong>Tình huống:</strong> Tài xế D2 vừa nhấn chấp nhận đơn hàng O3.</li>
+              <li><strong>Xảy ra:</strong> File CSV chưa kịp ghi xong trạng thái BUSY thì luồng Dispatch tự động tiếp tục gán đơn O4.</li>
+              <li><strong>Hậu quả:</strong> Tài xế bị ép gán nhiều đơn vượt quá năng lực phục vụ của 1 xe máy.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: BIG QUESTION -->
+    <div class="slide" data-notes="Để giải quyết Big Question, nhóm đưa vào so sánh đối đầu 4 cơ chế khóa. Mục tiêu là tìm ra giải pháp vừa nhanh nhất vừa đảm bảo tuyệt đối không hỏng dữ liệu.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Nghiên cứu Khoa học</div>
+          <div class="slide-title">Nghiên cứu 'Big Question': So sánh 4 Cơ chế Khóa</div>
+        </div>
+        <div class="slide-number">08 / 18</div>
+      </div>
+      <div class="slide-body" style="flex-direction: column;">
+        <div class="card" style="background: rgba(15, 23, 42, 0.8); border-color: var(--cyan); margin-bottom: 20px;">
+          <h2 style="font-size: 15px; color: #fff; font-weight: 700;">
+            ❓ BIG QUESTION: Cơ chế khóa tương tranh nào mang lại Throughput (thông lượng) cao nhất mà vẫn bảo đảm 100% tính toàn vẹn dữ liệu cho Food Delivery trên CSV?
+          </h2>
+        </div>
+        <div class="grid-4" style="flex: 1;">
+          <div class="card" style="border-top: 3px solid var(--red);">
+            <div class="card-title" style="color: var(--red);">1. NO LOCK</div>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Baseline (Không khóa)</p>
+            <ul class="card-list">
+              <li>Không dùng bất kỳ cơ chế khóa nào.</li>
+              <li>Tốc độ cao nhưng phá hủy dữ liệu.</li>
+              <li>Tỉ lệ đơn hỏng ~100%.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--amber);">
+            <div class="card-title" style="color: var(--amber);">2. REENTRANT LOCK</div>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Bi quan (Pessimistic)</p>
+            <ul class="card-list">
+              <li>Khóa độc quyền toàn bộ phương thức.</li>
+              <li>An toàn 100% dữ liệu.</li>
+              <li>Thắt cổ chai, thông lượng giảm sâu.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--cyan-light);">
+            <div class="card-title" style="color: var(--cyan-light);">3. READ-WRITE LOCK</div>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Phân quyền Đọc/Ghi</p>
+            <ul class="card-list">
+              <li>Cho phép đọc song song, khóa khi ghi.</li>
+              <li>Tối ưu cho tác vụ xem thực đơn.</li>
+              <li>Vẫn bị nghẽn ở thao tác tạo đơn.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--emerald-light);">
+            <div class="card-title" style="color: var(--emerald-light);">4. OPTIMISTIC LOCK</div>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Lạc quan (Version Check)</p>
+            <ul class="card-list">
+              <li>Đọc không khóa, kiểm tra version lúc ghi.</li>
+              <li>Xung đột → Rollback & Retry.</li>
+              <li>Tận dụng tối đa CPU, tốc độ đỉnh cao.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: USE CASE DIAGRAM -->
+    <div class="slide" data-notes="Use Case Diagram toàn hệ thống với đầy đủ 7 phân hệ và 51 Use Cases. Mọi chức năng đều có thể tra cứu và liên kết trực tiếp với mã nguồn.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Mô hình Chức năng</div>
+          <div class="slide-title">Use Case Diagram Toàn hệ thống (7 Phân hệ & 51 UCs)</div>
+        </div>
+        <div class="slide-number">09 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 0 0 35%;">
+          <div class="card" style="height: 100%;">
+            <div class="card-title" style="color: var(--cyan-light);">📋 7 PHÂN HỆ NGHIỆP VỤ</div>
+            <ul class="card-list">
+              <li><strong>Phân hệ 1:</strong> Xác thực & Phân quyền (UC01 – UC05)</li>
+              <li><strong>Phân hệ 2:</strong> Khách hàng & Đặt hàng (UC06 – UC15)</li>
+              <li><strong>Phân hệ 3:</strong> Quản lý Nhà hàng & Menu (UC16 – UC22)</li>
+              <li><strong>Phân hệ 4:</strong> Vận hành Tài xế & Giao nhận (UC23 – UC28)</li>
+              <li><strong>Phân hệ 5:</strong> Điều phối & Grid Map (UC29 – UC35)</li>
+              <li><strong>Phân hệ 6:</strong> Quản trị & Big Data 18k (UC36 – UC44)</li>
+              <li><strong>Phân hệ 7:</strong> Mô phỏng Concurrency (UC45 – UC51)</li>
+            </ul>
+            <p style="font-size: 11.5px; color: var(--emerald-light); font-weight: 600; margin-top: 14px;">
+              ★ 6 Actors, 51 Use Cases ánh xạ 100% tới các phương thức Java.
+            </p>
+          </div>
+        </div>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+          <img src="Usecase/Full_UseCase_Diagram.jpg" alt="Use Case Diagram" class="diagram-img" onerror="this.src='../Usecase/Full_UseCase_Diagram.jpg'">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: CLASS DIAGRAM -->
+    <div class="slide" data-notes="Class Diagram gồm 60 lớp được thiết kế theo 5 tầng MVC, đi dây theo xa lộ rõ ràng, không chồng chéo, phản ánh 100% cấu trúc mã nguồn Java.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Mô hình Thiết kế Hướng đối tượng</div>
+          <div class="slide-title">Class Diagram & Cấu trúc 5 Tầng MVC (60 Classes)</div>
+        </div>
+        <div class="slide-number">10 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 0 0 35%;">
+          <div class="card" style="height: 100%;">
+            <div class="card-title" style="color: var(--cyan-light);">🏗️ 5 GÓI KIẾN TRÚC MVC</div>
+            <ul class="card-list">
+              <li><strong>Model (17 Classes):</strong> Order, Customer, Restaurant, Driver, MenuItem, DeliveryRoute, Enums...</li>
+              <li><strong>Repository (13 Classes):</strong> BaseRepository Generic DAO, OrderRepo, DriverRepo...</li>
+              <li><strong>Controller (11 Classes):</strong> MainController, OrderController, SimulatorController, Threads...</li>
+              <li><strong>Exception (8 Classes):</strong> OversellException, DoubleAssignmentException...</li>
+              <li><strong>View (11 Classes):</strong> MainView, MapView (ASCII Grid 16x50), SimulatorView...</li>
+            </ul>
+            <p style="font-size: 11.5px; color: var(--emerald-light); font-weight: 600; margin-top: 14px;">
+              ★ 60 Classes, 112 Quan hệ UML kết nối chặt chẽ theo bus routing.
+            </p>
+          </div>
+        </div>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+          <img src="diagram/Full_Class_Diagram.jpg" alt="Class Diagram" class="diagram-img" onerror="this.src='../diagram/Full_Class_Diagram.jpg'">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: DISPATCH & ASCII MAP -->
+    <div class="slide" data-notes="Phân hệ 5 do bạn Hồ Anh Nhật phụ trách sử dụng công thức Haversine để tính cự ly GPS chính xác, kết hợp bản đồ ASCII Grid 16x50 trực quan hóa vị trí thời gian thực.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Giải thuật & Trực quan hóa</div>
+          <div class="slide-title">Thuật toán Điều phối & Bản đồ ASCII Grid Quy Nhơn</div>
+        </div>
+        <div class="slide-number">11 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="width: 100%;">
+          <div class="card">
+            <div class="card-title" style="color: var(--cyan-light);">📐 THUẬT TOÁN KHOẢNG CÁCH HAVERSINE</div>
+            <ul class="card-list">
+              <li>Tính khoảng cách vòng lớn giữa 2 tọa độ GPS thực tế:</li>
+              <li style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #fff;">d = 2R × arcsin(√(sin²(Δφ/2) + cos(φ₁)cos(φ₂)sin²(Δλ/2)))</li>
+              <li>Bán kính Trái Đất: R = 6.371 km.</li>
+              <li>Tính chính xác cước phí giao hàng dựa trên khoảng cách di chuyển thực.</li>
+              <li><strong>Thuật toán Dispatching:</strong> Quét các tài xế có trạng thái AVAILABLE trong bán kính cho phép, chọn tài xế có khoảng cách ngắn nhất min(Distance).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--amber);">🗺️ BẢN ĐỒ ASCII GRID (16 HÀNG × 50 CỘT)</div>
+            <pre style="background: #000; padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--emerald-light); line-height: 1.4; margin-bottom: 12px;">
++--------------------------------------------------+
+| [R1] Cơm Gà . . . . . . . . . [D1] Tài xế rảnh   |
+| . . . . . . . . . . . . . . . . . . . . . . . .  |
+| . . . . . [C1] Khách hàng đặt . . . . . . . . .  |
+| . . . . . . . . . . . . . . . . . . . . . . . .  |
+| [R2] Bún Chả Cá . . . . [D2] Đang giao . . . . . |
++--------------------------------------------------+</pre>
+            <ul class="card-list">
+              <li>Ánh xạ GPS sang tọa độ Console (X, Y) bằng phép nội suy tuyến tính.</li>
+              <li>Ký hiệu trực quan: [R] Nhà hàng, [C] Khách hàng, [D] Tài xế.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: SECURITY & BIG DATA -->
+    <div class="slide" data-notes="Mật khẩu tài khoản được bảo mật bằng PBKDF2 với 65.536 vòng lặp và Salt 16 bytes. Dữ liệu thử nghiệm lớn gồm hơn 18.000 dòng CSV sinh tự động.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Bảo mật & Tải trọng Dữ liệu</div>
+          <div class="slide-title">Bảo mật Xác thực PBKDF2 & Big Data CSV (18k dòng)</div>
+        </div>
+        <div class="slide-number">12 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="width: 100%;">
+          <div class="card">
+            <div class="card-title" style="color: var(--cyan-light);">🔒 BẢO MẬT XÁC THỰC PBKDF2</div>
+            <ul class="card-list">
+              <li><strong>Thuật toán:</strong> PBKDF2WithHmacSHA256 chuẩn bảo mật ngân hàng.</li>
+              <li><strong>Cơ chế Salt:</strong> Chuỗi ngẫu nhiên 16 bytes sinh bằng SecureRandom cho từng tài khoản riêng biệt.</li>
+              <li><strong>Iterations:</strong> 65.536 vòng lặp băm, chống hoàn toàn tấn công Rainbow Table và Brute-Force.</li>
+              <li><strong>Phân quyền RBAC:</strong> Kiểm soát truy cập nghiêm ngặt cho 4 nhóm quyền (Customer, Restaurant, Driver, Admin).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--emerald-light);">📊 BỘ DỮ LIỆU LỚN THỬ TẢI (TEST BENCH)</div>
+            <ul class="card-list">
+              <li>Sinh tự động bằng công cụ DataGenerator:</li>
+              <li>• 1.000 Khách hàng (customers.csv)</li>
+              <li>• 200 Nhà hàng & 1.200 Món ăn (restaurants.csv, menu_items.csv)</li>
+              <li>• 500 Tài xế vận chuyển (drivers.csv)</li>
+              <li>• 10.000 Lịch sử đơn hàng & 5.000 chi tiết (orders.csv, order_items.csv)</li>
+              <li><strong>★ Tổng cộng hơn 18.000 dòng CSV vật lý</strong> được xử lý thread-safe.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 13: SIMULATOR ARCHITECTURE -->
+    <div class="slide" data-notes="Kiến trúc mô phỏng Concurrency do bạn Trương Thanh Trà phụ trách tách biệt luồng CustomerThread và DispatchThread để đẩy tải tranh chấp lên mức tối đa.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Thiết kế Đa luồng</div>
+          <div class="slide-title">Mô phỏng Đa luồng: Concurrency Stress Simulator</div>
+        </div>
+        <div class="slide-number">13 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="width: 100%;">
+          <div class="card" style="border-top: 3px solid var(--cyan);">
+            <div class="card-title" style="color: var(--cyan-light);">🧵 CUSTOMER THREAD</div>
+            <ul class="card-list">
+              <li>Mô phỏng hàng loạt khách hàng đặt món song song.</li>
+              <li>Tạo áp lực tranh chấp các món ăn có số lượng tồn kho giới hạn.</li>
+              <li>Kích hoạt thao tác hủy đơn ngẫu nhiên để thử nghiệm cơ chế hoàn tồn kho (rollback).</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--amber);">
+            <div class="card-title" style="color: var(--amber);">📡 DISPATCH THREAD</div>
+            <ul class="card-list">
+              <li>Mô phỏng trung tâm điều phối tự động quét liên tục.</li>
+              <li>Tìm tài xế gần nhất và thực hiện gán đơn thời gian thực.</li>
+              <li>Chạy đồng thời với các luồng khác, tạo nguy cơ Double Assignment gay gắt.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--emerald-light);">
+            <div class="card-title" style="color: var(--emerald-light);">⚙️ THIẾT LẬP TEST BENCH</div>
+            <ul class="card-list">
+              <li><strong>Tải thử nghiệm:</strong> 700 đơn hàng đồng thời.</li>
+              <li><strong>Số luồng:</strong> 20 Customer Threads + 5 Dispatch Threads.</li>
+              <li><strong>Môi trường:</strong> Đọc và ghi trực tiếp xuống các file CSV phẳng.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 14: BENCHMARK RESULTS -->
+    <div class="slide" data-notes="Slide quan trọng nhất chứng minh câu trả lời Big Question. Optimistic Locking đạt 89.2 tps, nhanh gấp 2.16 lần ReentrantLock trong khi vẫn giữ 0% lỗi dữ liệu.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Bằng chứng Khoa học</div>
+          <div class="slide-title">Kết quả Thực nghiệm & Lời giải Big Question</div>
+        </div>
+        <div class="slide-number">14 / 18</div>
+      </div>
+      <div class="slide-body" style="flex-direction: column;">
+        <table class="table-custom" style="margin-bottom: 16px;">
+          <thead>
+            <tr>
+              <th>Cơ chế Khóa</th>
+              <th>Throughput</th>
+              <th>Thời gian (700 đơn)</th>
+              <th>Lỗi Tồn kho / Trùng tài xế</th>
+              <th>Tỉ lệ Drop %</th>
+              <th>Đánh giá</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>NO_LOCK</strong> (Không khóa)</td>
+              <td style="color: var(--amber);">95.4 tps</td>
+              <td>7.3 s</td>
+              <td style="color: var(--red);">42 lỗi Oversell, 28 Double Assign</td>
+              <td style="color: var(--red); font-weight: 700;">98.5%</td>
+              <td style="color: var(--red);">❌ HỎNG DỮ LIỆU</td>
+            </tr>
+            <tr>
+              <td><strong>REENTRANT_LOCK</strong> (Khóa bi quan)</td>
+              <td>41.2 tps</td>
+              <td>17.0 s</td>
+              <td style="color: var(--emerald-light);">0 lỗi (Toàn vẹn 100%)</td>
+              <td>0.0%</td>
+              <td>⚠️ Chậm do nghẽn cổ chai</td>
+            </tr>
+            <tr>
+              <td><strong>READ_WRITE_LOCK</strong> (Đọc/Ghi)</td>
+              <td>52.8 tps</td>
+              <td>13.2 s</td>
+              <td style="color: var(--emerald-light);">0 lỗi (Toàn vẹn 100%)</td>
+              <td>0.0%</td>
+              <td>🟡 Khá (Nghẽn ở khâu ghi)</td>
+            </tr>
+            <tr class="highlight">
+              <td><strong>OPTIMISTIC_LOCK</strong> (Khóa lạc quan)</td>
+              <td style="color: var(--emerald-light); font-weight: 800;">89.2 tps (Gấp 2.16x)</td>
+              <td style="font-weight: 700;">7.8 s (Tốc độ đỉnh)</td>
+              <td style="color: var(--emerald-light); font-weight: 800;">0 lỗi (Toàn vẹn 100%)</td>
+              <td style="font-weight: 700;">0.0%</td>
+              <td style="color: var(--emerald-light); font-weight: 800;">★ CHIẾN THẮNG TUYỆT ĐỐI</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="card" style="border-left: 4px solid var(--emerald-light); background: rgba(16, 185, 129, 0.1);">
+          <div class="card-title" style="color: var(--emerald-light);">🏆 LỜI GIẢI KHOA HỌC CHO BÀI TOÁN 'BIG QUESTION':</div>
+          <p style="font-size: 12.5px; line-height: 1.6; color: #f1f5f9;">
+            <strong>Optimistic Locking (Khóa lạc quan có kiểm tra phiên bản version)</strong> là giải pháp chiến thắng toàn diện:
+            Đạt tốc độ xử lý <strong>89.2 transactions/giây</strong> (nhanh gấp 2.16 lần so với ReentrantLock) trong khi vẫn bảo đảm 0 lỗi xung đột và 0% drop rate.
+            Do tính chất bài toán đặt hàng xác suất tranh chấp cùng 1 món chỉ xảy ra ở tích tắc commit, cơ chế này giải phóng toàn bộ năng lực đa nhân của CPU.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 15: ORDER LIFECYCLE & ROLLBACK -->
+    <div class="slide" data-notes="Vòng đời đơn hàng trải qua 5 trạng thái tuần tự. Đặc biệt cơ chế Rollback tự động hoàn trả tồn kho khi đơn bị hủy giúp dữ liệu luôn trong sạch.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Quy trình Nghiệp vụ</div>
+          <div class="slide-title">Vòng đời Đơn hàng & Cơ chế Hoàn tác (Rollback)</div>
+        </div>
+        <div class="slide-number">15 / 18</div>
+      </div>
+      <div class="slide-body" style="flex-direction: column;">
+        <div class="grid-4" style="margin-bottom: 20px; grid-template-columns: repeat(5, 1fr);">
+          <div class="card" style="text-align: center; border-top: 3px solid var(--cyan);"><strong style="color: var(--cyan-light);">1. PENDING</strong><p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Khách đặt món<br>Trừ tồn kho tạm tính</p></div>
+          <div class="card" style="text-align: center; border-top: 3px solid var(--amber);"><strong style="color: var(--amber);">2. ACCEPTED</strong><p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Quán duyệt nấu<br>Kích hoạt Dispatcher</p></div>
+          <div class="card" style="text-align: center; border-top: 3px solid var(--navy);"><strong style="color: #93c5fd;">3. ASSIGNED</strong><p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Gán tài xế gần nhất<br>Tài xế nhận cuốc</p></div>
+          <div class="card" style="text-align: center; border-top: 3px solid var(--cyan-light);"><strong style="color: var(--cyan-light);">4. PICKED_UP</strong><p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Tài xế lấy món<br>Cập nhật di chuyển</p></div>
+          <div class="card" style="text-align: center; border-top: 3px solid var(--emerald-light);"><strong style="color: var(--emerald-light);">5. DELIVERED</strong><p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Giao thành công<br>Tài xế AVAILABLE</p></div>
+        </div>
+
+        <div class="card" style="border-left: 4px solid var(--red);">
+          <div class="card-title" style="color: var(--red);">🔄 CƠ CHẾ HOÀN TÁC TỒN KHO KHI HỦY ĐƠN (ROLLBACK RESTORATION)</div>
+          <ul class="card-list">
+            <li>Nếu đơn bị hủy khi đang ở trạng thái <code>PENDING</code> hoặc nhà hàng từ chối (<code>REJECTED</code>):</li>
+            <li>• Hệ thống tự động kích hoạt phương thức <code>restoreStock()</code> để hoàn lại đúng số lượng món ăn vào file <code>menu_items.csv</code>.</li>
+            <li>• Nếu đơn đã được gán tài xế mà bị hủy: Thu hồi đơn và giải phóng trạng thái tài xế về <code>AVAILABLE</code> ngay lập tức.</li>
+            <li>• Không thất thoát tồn kho, không treo tài xế ảo, bảo đảm tính nhất quán xuyên suốt phiên làm việc.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 16: SYSTEM VERIFICATION -->
+    <div class="slide" data-notes="Hệ thống vượt qua toàn bộ 8/8 test suites tự động của SystemVerificationTest với tỉ lệ thành công 100%, bảo đảm không có lỗi tiềm ẩn.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Độ tin cậy & Kiểm thử</div>
+          <div class="slide-title">Kiểm định Chất lượng: 8/8 Test Suites PASS 100%</div>
+        </div>
+        <div class="slide-number">16 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="width: 100%;">
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>1. Cấu trúc 10 File CSV</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Không mất cột, không sai định dạng dấu phẩy.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>2. Xác thực PBKDF2 & Salt</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Băm mật khẩu 65.536 vòng và kiểm tra đăng nhập chuẩn.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>3. Tính cước Haversine</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Tính khoảng cách GPS Quy Nhơn chính xác từng mét.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>4. Ngăn chặn Oversell</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Chặn triệt để bán âm món ăn khi nhiều khách tranh mua.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>5. Chặn Double Assignment</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Không bao giờ gán 1 tài xế cho 2 đơn đồng thời.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>6. Chặn Driver Overload</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Tài xế đang bận không bị ép nhận thêm đơn mới.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>7. Hoàn Stock khi Hủy đơn</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Hoàn trả số lượng tồn kho nguyên vẹn khi khách hủy đơn.</p></div>
+          <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>8. Độ ổn định Đa luồng</strong><span class="badge" style="background:rgba(16,185,129,0.2); color:var(--emerald-light);">PASS 100%</span></div><p style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Chạy tải cực hạn 700 đơn không xảy ra Deadlock.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 17: LESSONS LEARNED -->
+    <div class="slide" data-notes="Tổng kết các giá trị kỹ thuật và bài học quản trị nhóm. Dự án giúp nhóm trưởng thành vượt bậc về tư duy lập trình hướng đối tượng và xử lý tương tranh.">
+      <div class="slide-header">
+        <div>
+          <div class="slide-cat">Tổng kết Giá trị</div>
+          <div class="slide-title">Đóng góp Kỹ thuật & Bài học Kinh nghiệm</div>
+        </div>
+        <div class="slide-number">17 / 18</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="width: 100%;">
+          <div class="card" style="border-top: 3px solid var(--cyan);">
+            <div class="card-title" style="color: var(--cyan-light);">💡 GIÁ TRỊ KỸ THUẬT ĐẠT ĐƯỢC</div>
+            <ul class="card-list">
+              <li>Làm chủ tư duy Hướng đối tượng thuần túy: Không ỷ lại vào biến toàn cục static.</li>
+              <li>Giải quyết triệt để bài toán Concurrency phức tạp trên hệ thống file phẳng CSV.</li>
+              <li>Đóng góp nghiên cứu khoa học Big Question: Cung cấp số liệu định lượng chứng minh tính ưu việt của Optimistic Locking.</li>
+              <li>Trải nghiệm người dùng tốt: Bản đồ ASCII Grid trực quan và giao diện Console thân thiện.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--emerald-light);">
+            <div class="card-title" style="color: var(--emerald-light);">👥 BÀI HỌC VỀ QUẢN TRỊ NHÓM</div>
+            <ul class="card-list">
+              <li>Ma trận WBS & RACI rõ ràng giúp từng thành viên phát huy tối đa thế mạnh.</li>
+              <li>Nguyên tắc Đồng bộ 4 tầng giúp tài liệu và mã nguồn không bao giờ bị lệch pha.</li>
+              <li>Quy trình Kiểm thử Tự động giúp phát hiện sớm các lỗi xung đột tiềm ẩn.</li>
+              <li>Kỹ năng cộng tác Git và quản lý phiên bản chuyên nghiệp.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 18: Q&A -->
+    <div class="slide" data-notes="Nhóm xin chân thành cảm ơn Thầy/Cô đã chú ý lắng nghe và sẵn sàng trả lời mọi câu hỏi phản biện từ Hội đồng.">
+      <div style="text-align: center; margin: auto;">
+        <span class="badge" style="font-size: 13px; padding: 6px 18px; margin-bottom: 20px;">★ PHẦN BÁO CÁO KẾT THÚC</span>
+        <h1 style="font-size: 42px; font-weight: 900; margin: 24px 0 12px 0; color: #fff;">XIN CHÂN THÀNH CẢM ƠN!</h1>
+        <p style="font-size: 18px; color: var(--cyan-light); margin-bottom: 32px;">Quý Thầy/Cô và Hội đồng Chấm Đồ án LAB211 – FPT University</p>
+
+        <div class="card" style="display: inline-block; padding: 24px 48px; border-color: var(--amber);">
+          <h2 style="font-size: 22px; color: var(--amber); margin-bottom: 12px;">💬 SẴN SÀNG ĐÓN NHẬN CÂU HỎI PHẢN BIỆN (Q&A)</h2>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            <strong>Mã nguồn & Tài liệu:</strong> github.com/trat21430-spec/Food-Delivery<br>
+            <strong>File Word Phát biểu bài toán:</strong> Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx<br>
+            <strong>Bản Slide PowerPoint:</strong> Bao_Cao_Food_Delivery_LAB211.pptx
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SPEAKER NOTES PANEL -->
+  <div id="speaker-notes-panel">
+    <div class="notes-title">🎙️ Lời thoại Thuyết trình (Speaker Notes):</div>
+    <div id="notes-content">...</div>
+  </div>
+
+  <!-- SHORTCUTS BAR -->
+  <footer class="shortcuts-bar">
+    <span><span class="key">←</span> / <span class="key">→</span> Chuyển Slide</span>
+    <span><span class="key">Space</span> Slide tiếp theo</span>
+    <span><span class="key">F</span> Toàn màn hình</span>
+    <span><span class="key">N</span> Bật/Tắt Lời thoại</span>
+    <span>Nhóm 01 | Food Delivery Network Simulation</span>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    const notesPanel = document.getElementById('speaker-notes-panel');
+    const notesContent = document.getElementById('notes-content');
+    const indicator = document.getElementById('slide-indicator');
+
+    function updateSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= slides.length) index = slides.length - 1;
+
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      indicator.textContent = (currentSlide + 1) + " / " + slides.length;
+      notesContent.textContent = slides[currentSlide].getAttribute('data-notes') || "Không có ghi chú.";
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) updateSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) updateSlide(currentSlide - 1);
+    }
+
+    function toggleNotes() {
+      notesPanel.classList.toggle('open');
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        toggleNotes();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        updateSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        updateSlide(slides.length - 1);
+      }
+    });
+
+    // Init first slide
+    updateSlide(0);
+  </script>
+</body>
+</html>
+"""
+
+destinations = [
+    "D:/Lab211-Group1/slide_presentation.html",
+    "docs/slide_presentation.html",
+    "D:/Lab211-Group1/NHOM_01_LAB211_FoodDelivery/docs/slide_presentation.html"
+]
+
+for d in destinations:
+    os.makedirs(os.path.dirname(d), exist_ok=True)
+    with open(d, "w", encoding="utf-8") as f:
+        f.write(html_content)
+    print(f"Saved HTML presentation: {d}")
+
+print("HTML PRESENTATIONS CREATED SUCCESSFULLY!")
