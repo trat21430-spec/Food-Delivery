@@ -805,7 +805,7 @@ public class MainView implements IView {
         System.out.println("2. Chuyen trang thai Truc tuyen / Ngoai tuyen (Toggle AVAILABLE / OFFLINE)");
         System.out.println("3. Xem don hang duoc phan cong cho toi (View Assigned Orders)");
         System.out.println("4. Xac nhan da lay hang tai quan (Confirm Picked Up -> DISPATCHED)");
-        System.out.println("5. Xac nhan da giao hang thanh cong (Confirm Delivered -> DELIVERED & AVAILABLE)");
+        System.out.println("5. Xac nhan da giao hang thanh cong (Confirm Delivered -> chon trang thai tiep theo)");
         System.out.println("0. Dang xuat (Logout)");
         System.out.println("=======================================================");
         System.out.print("Nhap lua chon cua ban [0-5]: ");
@@ -947,14 +947,45 @@ public class MainView implements IView {
 
         this.orderView.renderOrders(delivering);
         System.out.print("Nhap Ma don hang da giao xong cho khach: ");
-        String orderId = this.readLine();
+        String enteredOrderId = this.readLine();
+        Order selectedOrder = null;
+        for (int i = 0; i < delivering.size(); i++) {
+            if (delivering.get(i).getId().equalsIgnoreCase(enteredOrderId)) {
+                selectedOrder = delivering.get(i);
+                break;
+            }
+        }
+        if (selectedOrder == null) {
+            System.out.println(">>> [LOI] Ma don khong hop le hoac khong thuoc don dang giao cua ban.");
+            return;
+        }
+
+        String orderId = selectedOrder.getId();
+        boolean continueAvailable;
+        while (true) {
+            System.out.print("Ban muon nghi sau don nay? (y = co, n = tiep tuc nhan don): ");
+            String answer = this.readLine();
+            if (answer.equalsIgnoreCase("y")) {
+                continueAvailable = false;
+                break;
+            }
+            if (answer.equalsIgnoreCase("n")) {
+                continueAvailable = true;
+                break;
+            }
+            System.out.println("Vui long nhap y hoac n.");
+        }
 
         try {
-            boolean ok = this.orderController.markOrderDelivered(orderId, driverId, LockMechanism.OPTIMISTIC);
+            boolean ok = this.orderController.markOrderDelivered(
+                    orderId, driverId, LockMechanism.OPTIMISTIC, continueAvailable);
             if (ok) {
                 System.out.println(">>> [CHUC MUNG!] Don hang " + orderId + " da duoc xac nhan DELIVERED.");
-                System.out.println(">>> Tai khoan tai xe cua ban da duoc tu dong giai phong ve trang thai AVAILABLE.");
-                System.out.println(">>> San sang tiep nhan cac don hang tiep theo tren he thong!");
+                if (continueAvailable) {
+                    System.out.println(">>> Trang thai tai xe: AVAILABLE, ban co the tiep tuc nhan don.");
+                } else {
+                    System.out.println(">>> Trang thai tai xe: OFFLINE, ban se khong nhan them don.");
+                }
             }
         } catch (Exception e) {
             System.out.println(">>> [THAT BAI] " + e.getMessage());

@@ -260,9 +260,14 @@ public class OrderController {
     }
 
     /**
-     * Driver confirms successful delivery -> status DELIVERED, driver marked AVAILABLE, triggers auto-dispatch.
+     * Driver confirms successful delivery, chooses availability, and triggers auto-dispatch.
      */
     public boolean markOrderDelivered(String orderId, String driverId, LockMechanism mechanism) throws Exception {
+        return this.markOrderDelivered(orderId, driverId, mechanism, true);
+    }
+
+    public boolean markOrderDelivered(String orderId, String driverId, LockMechanism mechanism,
+                                      boolean continueAvailable) throws Exception {
         Order order = this.orderRepository.findById(orderId);
         if (order == null) {
             throw new InvalidInputException("Khong tim thay don hang: " + orderId);
@@ -278,7 +283,11 @@ public class OrderController {
         this.orderRepository.save(order);
 
         if (driverId != null && !driverId.isEmpty()) {
-            this.driverRepository.markAvailable(driverId);
+            if (continueAvailable) {
+                this.driverRepository.markAvailable(driverId);
+            } else {
+                this.driverRepository.markOffline(driverId);
+            }
             if (this.autoDispatchEnabled) {
                 this.orderRepository.autoDispatchAllPending(mechanism, this.driverRepository, this.restaurantRepository);
             }

@@ -103,9 +103,17 @@ public class DriverRepository extends CsvRepository<Driver> {
     }
 
     public boolean markAvailable(String driverId) {
+        return this.updateDriverStatus(driverId, DriverStatus.AVAILABLE);
+    }
+
+    public boolean markOffline(String driverId) {
+        return this.updateDriverStatus(driverId, DriverStatus.OFFLINE);
+    }
+
+    private boolean updateDriverStatus(String driverId, DriverStatus status) {
         Driver driver = this.findById(driverId);
         if (driver != null) {
-            driver.setStatus(DriverStatus.AVAILABLE);
+            driver.setStatus(status);
             driver.setActiveOrderCount(0);
             driver.setCurrentOrderId("");
             driver.incrementVersion();
