@@ -31,6 +31,17 @@
 | 🧑‍💻 Member | Võ Thảo Nguyên | `QE200064` |
 | 🧑‍💻 Member | Đỗ Tấn Vũ | `QE170159` |
 
+### 📋 Bảng phân chia công việc theo 7 Phân hệ chức năng của Hệ thống (WBS & RACI Matrix)
+
+| STT | Thành viên & MSSV | Vai trò chính | Phân hệ chức năng phụ trách | Use Cases phụ trách | Các Class / Module đảm nhiệm | Tỉ lệ đóng góp |
+|:---:|:---|:---|:---|:---:|:---|:---:|
+| 1 | **Hồ Anh Nhật**<br>`QE200301` | 👑 Leader / System Architect | **Phân hệ 7:** Mô phỏng Concurrency & Kiểm định Tương tranh (Giải quyết Big Question) | `UC45` – `UC51`<br>(7 UCs) | `SimulatorController`, `CustomerThread`, `DispatchThread`, `CustomerSimTask`, `DispatchSimTask`, `SimulationRun`, `LockMechanism`, `SimulationRunRepository`, `SimulatorView`, `ReportView`, `OptimisticLockException` | 17% |
+| 2 | **Trương Thanh Trà**<br>`QE200100` | 🧑‍💻 Lead Backend / Dispatcher | **Phân hệ 5:** Điều phối Trung tâm & Bản đồ Grid Tọa độ Quy Nhơn | `UC29` – `UC35`<br>(7 UCs) | `MainController`, `AppController`, `DriverRepository` (`findNearestAvailable`), `DeliveryRouteRepository`, `MapView` (ASCII Grid 16x50), `DeliveryRoute`, `GeoUtils`, `DoubleAssignmentException`, `DriverOverloadException` | 17% |
+| 3 | **Đào Cao Duy**<br>`QE190089` | 🧑‍💻 Customer Portal Dev | **Phân hệ 2:** Khách hàng & Đặt hàng Quy Nhơn | `UC06` – `UC15`<br>(10 UCs) | `CustomerController`, `Customer`, `CustomerRepository`, `Order`, `OrderItem`, `OrderStatus`, `OrderItemRepository`, `OrderView`, `OversellException`, `EntityNotFoundException` | 17% |
+| 4 | **Huỳnh Nguyễn Quốc Huy**<br>`QE200031` | 🧑‍💻 Restaurant Portal Dev | **Phân hệ 3:** Quản lý Nhà hàng & Thực đơn Món ăn | `UC16` – `UC22`<br>(7 UCs) | `RestaurantController`, `Restaurant`, `RestaurantRepository`, `MenuItem`, `MenuItemRepository` (`deductStock`, `restoreStock`), các phương thức duyệt/từ chối đơn trong `OrderController` | 16% |
+| 5 | **Võ Thảo Nguyên**<br>`QE200064` | 🧑‍💻 Driver Portal Dev | **Phân hệ 4:** Vận hành Tài xế & Giao nhận Đơn hàng | `UC23` – `UC28`<br>(6 UCs) | `DriverController`, `Driver`, `DriverStatus`, các phương thức nhận/giao cuốc trong `OrderController` (`markOrderPickedUp`, `markOrderDelivered`), `DriverRepository` (`markBusy`, `markAvailable`) | 16% |
+| 6 | **Đỗ Tấn Vũ**<br>`QE170159` | 🧑‍💻 System Admin & Security | **Phân hệ 1 & 6:** Xác thực, Quản trị Toàn diện & Dữ liệu Lớn | `UC01` – `UC05`<br>`UC36` – `UC44`<br>(14 UCs) | `AuthController`, `AdminController`, `User`, `UserRole`, `UserAccount`, `AuthSession`, `AccountRole`, `UserRepository`, `AccountRepository` (PBKDF2), `DriverApplicationRepository`, `DriverApplication`, `DataGenerator` (18.000 dòng CSV), `InvalidInputException` | 17% |
+
 ---
 
 ## 📚 Mục lục
