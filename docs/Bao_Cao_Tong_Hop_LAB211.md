@@ -9,12 +9,28 @@
 
 ## MỤC LỤC BÁO CÁO TỔNG HỢP
 
-1. [BẢNG TỔNG HỢP MA TRẬN ĐỐI SOÁT HỆ THỐNG TOÀN DIỆN](#bảng-tổng-hợp-ma-trận-đối-soát-hệ-thống-toàn-diện)
-2. [PHẦN 1: MÔ TẢ BÀI TOÁN & CÂU HỎI NGHIÊN CỨU LỚN (BIG QUESTION)](#phần-1-mô-tả-bài-toán--câu-hỏi-nghiên-cứu-lớn-big-question)
-3. [PHẦN 2: SƠ ĐỒ USE CASE & ĐẶC TẢ CHI TIẾT TỪNG ACTOR VÀ 51 USE CASES](#phần-2-sơ-đồ-use-case--đặc-tả-chi-tiết-từng-actor-và-51-use-cases)
-4. [PHẦN 3: SƠ ĐỒ LỚP (CLASS DIAGRAM) & ĐẶC TẢ CHI TIẾT 60 CLASS THEO KIẾN TRÚC MVC](#phần-3-sơ-đồ-lớp-class-diagram--đặc-tả-chi-tiết-60-class-theo-kiến-trúc-mvc)
-5. [PHẦN 4: KỊCH BẢN DEMO CÁC CHỨC NĂNG (CHỤP HÌNH TỪNG BƯỚC 1 ĐẾN 8)](#phần-4-kịch-bản-demo-các-chức-năng-chụp-hình-từng-bước-1-đến-8)
-6. [PHẦN 5: ĐỐI CHIẾU ĐỘC LẬP GIỮA BÁO CÁO, MÃ NGUỒN, CHỨC NĂNG THỰC TẾ & KẾT QUẢ DEMO](#phần-5-đối-chiếu-độc-lập-giữa-báo-cáo-mã-nguồn-chức-năng-thực-tế--kết-quả-demo)
+1. [THÔNG TIN NHÓM VÀ BẢNG PHÂN CHIA CÔNG VIỆC CHÍNH THỨC (WBS)](#thông-tin-nhóm-và-bảng-phân-chia-công-việc-chính-thức-wbs)
+2. [BẢNG TỔNG HỢP MA TRẬN ĐỐI SOÁT HỆ THỐNG TOÀN DIỆN](#bảng-tổng-hợp-ma-trận-đối-soát-hệ-thống-toàn-diện)
+3. [PHẦN 1: MÔ TẢ BÀI TOÁN & CÂU HỎI NGHIÊN CỨU LỚN (BIG QUESTION)](#phần-1-mô-tả-bài-toán--câu-hỏi-nghiên-cứu-lớn-big-question)
+4. [PHẦN 2: SƠ ĐỒ USE CASE & ĐẶC TẢ CHI TIẾT TỪNG ACTOR VÀ 51 USE CASES](#phần-2-sơ-đồ-use-case--đặc-tả-chi-tiết-từng-actor-và-51-use-cases)
+5. [PHẦN 3: SƠ ĐỒ LỚP (CLASS DIAGRAM) & ĐẶC TẢ CHI TIẾT 60 CLASS THEO KIẾN TRÚC MVC](#phần-3-sơ-đồ-lớp-class-diagram--đặc-tả-chi-tiết-60-class-theo-kiến-trúc-mvc)
+6. [PHẦN 4: KỊCH BẢN DEMO CÁC CHỨC NĂNG (CHỤP HÌNH TỪNG BƯỚC 1 ĐẾN 8)](#phần-4-kịch-bản-demo-các-chức-năng-chụp-hình-từng-bước-1-đến-8)
+7. [PHẦN 5: ĐỐI CHIẾU ĐỘC LẬP GIỮA BÁO CÁO, MÃ NGUỒN, CHỨC NĂNG THỰC TẾ & KẾT QUẢ DEMO](#phần-5-đối-chiếu-độc-lập-giữa-báo-cáo-mã-nguồn-chức-năng-thực-tế--kết-quả-demo)
+
+---
+
+## THÔNG TIN NHÓM VÀ BẢNG PHÂN CHIA CÔNG VIỆC CHÍNH THỨC (WBS)
+
+Dự án được thực hiện bởi **Nhóm 01** với 6 thành viên, phân bổ cân bằng và chuyên sâu theo 7 phân hệ chức năng:
+
+| STT | Họ và Tên & MSSV | Vai Trò Chính | Phân Hệ Chức Năng Đảm Nhiệm | Use Cases Phụ Trách | Các Lớp / Module Đảm Nhiệm | Đóng Góp |
+| :---: | :--- | :--- | :--- | :---: | :--- | :---: |
+| **1** | **Trương Thanh Trà**<br/>`QE200100` | **Technical Lead**<br/>(Concurrency Core) | **Phân hệ 7 & Bộ lõi Đơn hàng:**<br/>• Mô phỏng Concurrency & Giải quyết Big Question<br/>• Vòng đời Đơn hàng & Optimistic Locking | **UC45 – UC51**<br/>+ Điều phối đa luồng | `SimulatorController`, `CustomerSimTask`, `DispatchSimTask`, `OrderController`, `SimulationRun`, `OptimisticLockException` | **20%**<br/>(Trọng tâm) |
+| **2** | **Hồ Anh Nhật**<br/>`QE200301` | **Team Leader**<br/>(Central Dispatcher) | **Phân hệ 5:** Điều phối Trung tâm & Bản đồ Grid Quy Nhơn<br/>(Facade MVC Master Orchestrator) | **UC29 – UC35**<br/>(7 UCs) | `MainController`, `AppController`, `DriverRepository`, `DeliveryRouteRepository`, `MapView` (ASCII Grid 16x50) | **16%** |
+| **3** | **Đào Cao Duy**<br/>`QE190089` | **Driver Portal Dev** | **Phân hệ 4:** Vận hành Tài xế Đối tác & Chuyến đi<br/>(Quản lý trạng thái, nhận cuốc và giao đơn) | **UC23 – UC28**<br/>(6 UCs) | `DriverController`, `Driver`, `DriverStatus`, `DriverRepository` (`markBusy`, `markAvailable`), nhận/giao cuốc | **16%** |
+| **4** | **Huỳnh Nguyễn Quốc Huy**<br/>`QE200031` | **Restaurant Portal Dev** | **Phân hệ 3:** Quản lý Nhà hàng & Thực đơn Món ăn<br/>(Quản lý menu, cập nhật tồn kho, duyệt/từ chối đơn) | **UC16 – UC22**<br/>(7 UCs) | `RestaurantController`, `Restaurant`, `RestaurantRepository`, `MenuItem`, `MenuItemRepository` (`deductStock`, `restoreStock`) | **16%** |
+| **5** | **Võ Thảo Nguyên**<br/>`QE200064` | **Customer Portal Dev** | **Phân hệ 2:** Cổng Khách hàng & Đặt hàng Quy Nhơn<br/>(Xem menu, đặt món, tính phí Haversine, hủy đơn) | **UC06 – UC15**<br/>(10 UCs) | `CustomerController`, `Customer`, `CustomerRepository`, `Order`, `OrderItem`, `OrderItemRepository`, `OrderView` | **16%** |
+| **6** | **Đỗ Tấn Vũ**<br/>`QE170159` | **Admin & Security Dev** | **Phân hệ 1 & 6:** Xác thực, Quản trị Hệ thống & Dữ liệu Lớn<br/>(Bảo mật PBKDF2, duyệt tài xế, sinh 18k CSV) | **UC01 – UC05**<br/>**UC36 – UC44** | `AuthController`, `AdminController`, `UserRepository`, `AccountRepository` (PBKDF2), `DataGenerator` (18k CSV) | **16%** |
 
 ---
 

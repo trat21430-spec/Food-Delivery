@@ -10,16 +10,32 @@
 
 ## TABLE OF CONTENTS
 
-1. [EXECUTIVE MASTER SYNTHESIS & TRACEABILITY MATRIX](#1-executive-master-synthesis--traceability-matrix)
-2. [PROBLEM STATEMENT & THE BIG RESEARCH QUESTION](#2-problem-statement--the-big-research-question)
-3. [USE CASE ARCHITECTURE & 51 USE CASE SPECIFICATIONS](#3-use-case-architecture--51-use-case-specifications)
-4. [CLASS DIAGRAM & 60-CLASS LAYERED MVC ARCHITECTURE](#4-class-diagram--60-class-layered-mvc-architecture)
-5. [STEP-BY-STEP FUNCTIONAL DEMO & SCREENSHOTS (STEPS 1 TO 8)](#5-step-by-step-functional-demo--screenshots-steps-1-to-8)
-6. [INDEPENDENT 4-TIER VERIFICATION & AUDIT MATRIX](#6-independent-4-tier-verification--audit-matrix)
+1. [TEAM INFORMATION & WORK BREAKDOWN STRUCTURE (WBS)](#1-team-information--work-breakdown-structure-wbs)
+2. [EXECUTIVE MASTER SYNTHESIS & TRACEABILITY MATRIX](#2-executive-master-synthesis--traceability-matrix)
+3. [PROBLEM STATEMENT & THE BIG RESEARCH QUESTION](#3-problem-statement--the-big-research-question)
+4. [USE CASE ARCHITECTURE & 51 USE CASE SPECIFICATIONS](#4-use-case-architecture--51-use-case-specifications)
+5. [CLASS DIAGRAM & 60-CLASS LAYERED MVC ARCHITECTURE](#5-class-diagram--60-class-layered-mvc-architecture)
+6. [STEP-BY-STEP FUNCTIONAL DEMO & SCREENSHOTS (STEPS 1 TO 8)](#6-step-by-step-functional-demo--screenshots-steps-1-to-8)
+7. [INDEPENDENT 4-TIER VERIFICATION & AUDIT MATRIX](#7-independent-4-tier-verification--audit-matrix)
 
 ---
 
-## 1. EXECUTIVE MASTER SYNTHESIS & TRACEABILITY MATRIX
+## 1. TEAM INFORMATION & WORK BREAKDOWN STRUCTURE (WBS)
+
+The project was engineered collaboratively by **Group 01** with 6 members, partitioned evenly and specialized across the 7 functional subsystems:
+
+| No. | Member Name & Student ID | Primary Engineering Role | Assigned Subsystem & Domain | Assigned Use Cases | Key Modules & Java Source Units | Contribution (%) |
+| :---: | :--- | :--- | :--- | :---: | :--- | :---: |
+| **1** | **Truong Thanh Tra**<br/>`QE200100` | **Technical Lead**<br/>(Concurrency Core) | **Subsystem 7 & Core Ordering Engine:**<br/>• Concurrency Stress Simulation & Big Question Solver<br/>• Order Lifecycle Management & Optimistic Locking | **UC45 – UC51**<br/>+ Multi-thread Engine | `SimulatorController`, `CustomerSimTask`, `DispatchSimTask`, `OrderController`, `SimulationRun`, `OptimisticLockException` | **20%**<br/>(Core Focus) |
+| **2** | **Ho Anh Nhat**<br/>`QE200301` | **Team Leader**<br/>(Central Dispatcher) | **Subsystem 5:** Central Dispatch & Quy Nhon Grid Radar<br/>(Master Facade MVC Orchestrator) | **UC29 – UC35**<br/>(7 UCs) | `MainController`, `AppController`, `DriverRepository`, `DeliveryRouteRepository`, `MapView` (ASCII Grid 16x50) | **16%** |
+| **3** | **Dao Cao Duy**<br/>`QE190089` | **Driver Portal Dev** | **Subsystem 4:** Courier Fleet Operations & Trip Lifecycle<br/>(Duty management, ticket pickup & delivery) | **UC23 – UC28**<br/>(6 UCs) | `DriverController`, `Driver`, `DriverStatus`, `DriverRepository` (`markBusy`, `markAvailable`), pickup/deliver flow | **16%** |
+| **4** | **Huynh Nguyen Quoc Huy**<br/>`QE200031` | **Restaurant Portal Dev** | **Subsystem 3:** Kitchen Partner & Menu Operations<br/>(Menu management, live inventory, order accept/reject) | **UC16 – UC22**<br/>(7 UCs) | `RestaurantController`, `Restaurant`, `RestaurantRepository`, `MenuItem`, `MenuItemRepository` (`deductStock`, `restoreStock`) | **16%** |
+| **5** | **Vo Thao Nguyen**<br/>`QE200064` | **Customer Portal Dev** | **Subsystem 2:** Consumer Experience & Quy Nhon Ordering<br/>(Browse ward menus, Haversine fee, order placement) | **UC06 – UC15**<br/>(10 UCs) | `CustomerController`, `Customer`, `CustomerRepository`, `Order`, `OrderItem`, `OrderItemRepository`, `OrderView` | **16%** |
+| **6** | **Do Tan Vu**<br/>`QE170159` | **Admin & Security Dev** | **Subsystem 1 & 6:** Security, Governance & Big Data<br/>(PBKDF2 cryptography, driver vetting, 18k CSV synthesis) | **UC01 – UC05**<br/>**UC36 – UC44** | `AuthController`, `AdminController`, `UserRepository`, `AccountRepository` (PBKDF2), `DataGenerator` (18k CSV) | **16%** |
+
+---
+
+## 2. EXECUTIVE MASTER SYNTHESIS & TRACEABILITY MATRIX
 
 | Subsystem | Use Cases | Primary Actors | Controller Layer (Class / Method) | Repository & Model Layer | Physical CSV File | Demo Step | Verification Result |
 | :--- | :---: | :--- | :--- | :--- | :--- | :---: | :---: |
@@ -33,7 +49,7 @@
 
 ---
 
-## 2. PROBLEM STATEMENT & THE BIG RESEARCH QUESTION
+## 3. PROBLEM STATEMENT & THE BIG RESEARCH QUESTION
 
 ### 2.1. Real-World Business Context in Quy Nhon City
 In the coastal tourist urban center of Quy Nhon City (Binh Dinh Province, Vietnam), the on-demand food delivery ecosystem coordinates 4 critical stakeholders:
@@ -67,7 +83,7 @@ When hundreds of concurrent requests interact with physical CSV files without a 
 
 ---
 
-## 3. USE CASE ARCHITECTURE & 51 USE CASE SPECIFICATIONS
+## 4. USE CASE ARCHITECTURE & 51 USE CASE SPECIFICATIONS
 
 ### 3.1. Master Use Case Diagram
 
@@ -209,7 +225,7 @@ flowchart TB
 
 ---
 
-## 4. CLASS DIAGRAM & 60-CLASS LAYERED MVC ARCHITECTURE
+## 5. CLASS DIAGRAM & 60-CLASS LAYERED MVC ARCHITECTURE
 
 ### 4.1. Structural MVC Architecture Diagram
 
@@ -339,7 +355,7 @@ flowchart TD
 
 ---
 
-## 5. STEP-BY-STEP FUNCTIONAL DEMO & SCREENSHOTS (STEPS 1 TO 8)
+## 6. STEP-BY-STEP FUNCTIONAL DEMO & SCREENSHOTS (STEPS 1 TO 8)
 
 All 8 high-resolution terminal execution captures are stored in [docs/demo_screenshots/](file:///D:/Lab211-Group1/docs/demo_screenshots/):
 
@@ -407,7 +423,7 @@ All 8 high-resolution terminal execution captures are stored in [docs/demo_scree
 
 ---
 
-## 6. INDEPENDENT 4-TIER VERIFICATION & AUDIT MATRIX
+## 7. INDEPENDENT 4-TIER VERIFICATION & AUDIT MATRIX
 
 | Audit Dimension | Business Specification Requirement | Java Class & Method Implementation | Persisted CSV Target | Empirical Test Verification | Compliance Status |
 | :--- | :--- | :--- | :--- | :--- | :---: |
