@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Script to generate the complete, official, 100% synchronized Problem Statement
-and System Specification Word Document (.docx) for Food Delivery Network Simulation (LAB211).
+Script to generate the complete, official, 100% synchronized Problem Statement,
+Use Case Specification, Class Specification (60 classes), and Step-by-Step Demo with Screenshots
+for Food Delivery Network Simulation (LAB211).
 """
 
 import os
@@ -70,7 +71,7 @@ def add_title(doc, text):
     run.font.name = "Arial"
     run.font.size = Pt(22)
     run.font.bold = True
-    run.font.color.rgb = RGBColor(27, 54, 93) # Navy
+    run.font.color.rgb = RGBColor(27, 54, 93)
     return p
 
 def add_subtitle(doc, text):
@@ -91,7 +92,7 @@ def add_heading_1(doc, text):
     run.font.name = "Arial"
     run.font.size = Pt(15)
     run.font.bold = True
-    run.font.color.rgb = RGBColor(27, 54, 93) # Deep Navy
+    run.font.color.rgb = RGBColor(27, 54, 93)
     return p
 
 def add_heading_2(doc, text):
@@ -101,7 +102,7 @@ def add_heading_2(doc, text):
     run.font.name = "Arial"
     run.font.size = Pt(12.5)
     run.font.bold = True
-    run.font.color.rgb = RGBColor(44, 82, 130) # Slate Blue
+    run.font.color.rgb = RGBColor(44, 82, 130)
     return p
 
 def add_heading_3(doc, text):
@@ -111,7 +112,7 @@ def add_heading_3(doc, text):
     run.font.name = "Arial"
     run.font.size = Pt(11)
     run.font.bold = True
-    run.font.color.rgb = RGBColor(51, 65, 85) # Slate 700
+    run.font.color.rgb = RGBColor(51, 65, 85)
     return p
 
 def add_body(doc, text, bold_prefix=None, italic=False):
@@ -151,10 +152,9 @@ def add_callout(doc, text, title="LƯU Ý QUAN TRỌNG"):
     tbl.autofit = False
     cell = tbl.cell(0, 0)
     cell.width = Inches(6.7)
-    set_cell_background(cell, "F0F9FF") # Light cyan/blue
+    set_cell_background(cell, "F0F9FF")
     set_cell_margins(cell, top=140, bottom=140, left=200, right=180)
     
-    # Left border only (accent)
     tcPr = cell._tc.get_or_add_tcPr()
     borders = parse_xml(
         f'<w:tcBorders {nsdecls("w")}>'
@@ -179,16 +179,37 @@ def add_callout(doc, text, title="LƯU Ý QUAN TRỌNG"):
     r_text.font.size = Pt(9.5)
     r_text.font.color.rgb = RGBColor(15, 23, 42)
 
+def add_figure(doc, img_path, caption_text, width=Inches(6.2)):
+    if os.path.exists(img_path):
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        format_paragraph(p, before=8, after=3)
+        run = p.add_run()
+        run.add_picture(img_path, width=width)
+        
+        cap = doc.add_paragraph()
+        cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        format_paragraph(cap, before=2, after=8)
+        crun = cap.add_run(caption_text)
+        crun.font.name = "Arial"
+        crun.font.size = Pt(9.5)
+        crun.font.italic = True
+        crun.font.color.rgb = RGBColor(100, 116, 139)
+    else:
+        p = doc.add_paragraph()
+        format_paragraph(p, before=4, after=4)
+        run = p.add_run(f"[Hình ảnh chưa sẵn sàng: {img_path}]")
+        run.font.italic = True
+
 def create_table(doc, headers, data, col_widths=None):
     table = doc.add_table(rows=len(data) + 1, cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     set_table_borders(table)
 
-    # Header Row
     hdr_cells = table.rows[0].cells
     for i, header_text in enumerate(headers):
         cell = hdr_cells[i]
-        set_cell_background(cell, "1E3A8A") # Navy Blue
+        set_cell_background(cell, "1E3A8A")
         set_cell_margins(cell, top=120, bottom=120, left=120, right=120)
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -199,7 +220,6 @@ def create_table(doc, headers, data, col_widths=None):
         run.font.bold = True
         run.font.color.rgb = RGBColor(255, 255, 255)
 
-    # Data Rows
     for r_idx, row_data in enumerate(data):
         row_cells = table.rows[r_idx + 1].cells
         bg_color = "FFFFFF" if r_idx % 2 == 0 else "F8FAFC"
@@ -209,7 +229,6 @@ def create_table(doc, headers, data, col_widths=None):
             set_cell_margins(cell, top=80, bottom=80, left=100, right=100)
             p = cell.paragraphs[0]
             format_paragraph(p, before=0, after=0)
-            # Center for short values like ID, %, numbers
             if c_idx == 0 or len(str(val)) <= 8:
                 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             else:
@@ -219,23 +238,20 @@ def create_table(doc, headers, data, col_widths=None):
             run.font.size = Pt(8.5)
             run.font.color.rgb = RGBColor(15, 23, 42)
 
-    # Apply col widths
     if col_widths:
         for row in table.rows:
             for idx, w in enumerate(col_widths):
                 if idx < len(row.cells):
                     row.cells[idx].width = Inches(w)
                     
-    doc.add_paragraph() # Spacing after table
+    doc.add_paragraph()
     return table
 
 def build_full_document():
     doc = Document()
     add_header(doc)
 
-    # =========================================================================
-    # BÌA VÀ TIÊU ĐỀ ĐỀ TÀI
-    # =========================================================================
+    # Bìa và Tiêu đề
     p_inst = doc.add_paragraph()
     p_inst.alignment = WD_ALIGN_PARAGRAPH.CENTER
     format_paragraph(p_inst, before=10, after=2)
@@ -259,11 +275,8 @@ def build_full_document():
         "Tuân thủ 100% quy chuẩn LAB211: 0% static (ngoại trừ Main.main), 0% final/protected, 100% this., không sử dụng CSDL SQL/NoSQL.",
         "CAM KẾT CHẤT LƯỢNG & ĐỒNG BỘ ĐỒ ÁN")
 
-    # =========================================================================
-    # DANH SÁCH THÀNH VIÊN VÀ PHÂN CÔNG CÔNG VIỆC (WBS)
-    # =========================================================================
+    # WBS
     add_heading_1(doc, "THÔNG TIN NHÓM VÀ BẢNG PHÂN CHIA CÔNG VIỆC CHÍNH THỨC")
-    
     add_body(doc, "Dự án được thực hiện bởi Nhóm 01 với 6 thành viên, phân bổ cân bằng và chuyên sâu theo 7 phân hệ chức năng:", "Nhóm thực hiện: ")
 
     wbs_headers = ["STT", "Họ và Tên & MSSV", "Vai Trò Chính", "Phân Hệ Chức Năng Đảm Nhiệm", "Use Cases Phụ Trách", "Các Lớp / Module Đảm Nhiệm", "Đóng Góp"]
@@ -277,45 +290,35 @@ def build_full_document():
     ]
     create_table(doc, wbs_headers, wbs_data, [0.4, 1.2, 1.1, 1.6, 0.9, 1.3, 0.6])
 
-    # =========================================================================
-    # CHƯƠNG 1: BỐI CẢNH NGHIỆP VỤ & PHÁT BIỂU BÀI TOÁN
-    # =========================================================================
+    # CHƯƠNG 1
     add_heading_1(doc, "CHƯƠNG 1: BỐI CẢNH NGHIỆP VỤ & PHÁT BIỂU BÀI TOÁN TOÀN HỆ THỐNG")
-
     add_heading_2(doc, "1.1. Bối cảnh Nghiệp vụ Thực tế tại Thành phố Quy Nhơn")
     add_body(doc, 
-        "Trong bối cảnh chuyển đổi số và sự bùng nổ của các nền tảng thương mại điện tử ẩm thực (Food Delivery) tại Việt Nam như GrabFood, ShopeeFood, Baemin, "
-        "nhu cầu đặt món ăn trực tuyến và giao hàng tận nơi tại các đô thị phát triển như Thành phố Quy Nhơn (tỉnh Bình Định) ngày càng trở nên cấp thiết. "
+        "Trong bối cảnh chuyển đổi số và sự bùng nổ của các nền tảng thương mại điện tử ẩm thực (Food Delivery) tại Việt Nam như GrabFood, ShopeeFood, "
+        "nhu cầu đặt món ăn trực tuyến và giao hàng tận nơi tại các đô thị du lịch ven biển như Thành phố Quy Nhơn (tỉnh Bình Định) ngày càng trở nên cấp thiết. "
         "Mô hình mạng lưới giao nhận đồ ăn vận hành dựa trên sự tương tác liên tục giữa 4 thực thể chính:",
         "Tổng quan bài toán: ")
 
-    add_bullet(doc, "Duyệt tìm kiếm các nhà hàng ẩm thực tại TP. Quy Nhơn theo danh mục (Hải sản, Cơm, Bún chả, Trà sữa...), xem menu món ăn, đặt món trực tuyến, hệ thống tự động tính cước phí giao hàng dựa trên khoảng cách GPS mặt cầu Haversine, theo dõi trạng thái đơn hàng thời gian thực hoặc hủy đơn khi nhà hàng chưa xác nhận.", "1. Khách hàng (Customer): ")
-    add_bullet(doc, "Quản lý thông tin quán, quản lý danh mục thực đơn món ăn, cập nhật số lượng tồn kho (stockQty) theo thời gian thực, tiếp nhận thông báo đơn hàng mới và đưa ra quyết định xác nhận đơn (CONFIRMED) trong vòng 5 phút hoặc từ chối đơn hàng (kèm lý do hết nguyên liệu/quán bận) để hệ thống tự động hoàn lại số lượng tồn kho.", "2. Nhà hàng Đối tác (Restaurant): ")
-    add_bullet(doc, "Bật/tắt trạng thái sẵn sàng làm việc (AVAILABLE / OFFLINE), tiếp nhận các cuốc xe được trung tâm điều phối tự động chỉ định, di chuyển đến quán ăn nhận món (DISPATCHED) và giao hàng tận tay khách hàng (DELIVERED), sau đó tự động được giải phóng để sẵn sàng nhận cuốc xe tiếp theo.", "3. Tài xế Giao hàng (Driver): ")
-    add_bullet(doc, "Giám sát toàn cảnh mạng lưới giao nhận trên bản đồ tọa độ ASCII Grid 16 hàng x 50 cột, tự động quét hàng đợi các đơn hàng đã được quán duyệt, tìm kiếm tài xế đang rảnh ở vị trí gần quán ăn nhất để ghép nối đơn hàng tối ưu.", "4. Trung tâm Điều phối (Dispatcher): ")
+    add_bullet(doc, "Duyệt tìm kiếm quán ăn theo phường tại Quy Nhơn, lựa chọn món ăn vào giỏ, xem phí vận chuyển tính theo công thức khoảng cách Haversine chuẩn xác và đặt đơn giao hàng.", "1. Khách hàng (Customers): ")
+    add_bullet(doc, "Tiếp nhận đơn đặt hàng trực tuyến, xác nhận đơn trong khung giờ chuẩn 5 phút, chuẩn bị thức ăn và bàn giao cho tài xế, quản lý số lượng tồn kho từng món ăn.", "2. Nhà hàng Đối tác (Restaurants): ")
+    add_bullet(doc, "Đội ngũ tài xế xe máy di chuyển liên tục trên địa bàn các phường tại Quy Nhơn, nhận lệnh điều phối tự động từ hệ thống, di chuyển đến quán lấy món và giao tận tay khách hàng.", "3. Tài xế Giao hàng (Drivers): ")
+    add_bullet(doc, "Bộ não điều phối kết nối khách hàng, nhà hàng và tài xế; tính toán cự ly thực tế, ước tính thời gian giao hàng (ETA) theo giờ đồng hồ Quy Nhơn và tự động ghép tài xế tối ưu.", "4. Hệ thống Điều phối Trung tâm (Central Dispatcher): ")
 
     add_heading_2(doc, "1.2. Mục tiêu Xây dựng Hệ thống")
-    add_body(doc, "Hệ thống phần mềm Food Delivery Network Simulation (FDS) được thiết kế nhằm đạt được 5 mục tiêu cốt lõi sau:")
-    add_bullet(doc, "Xây dựng quy trình khép kín kết nối đầy đủ 4 đối tượng người dùng: Khách hàng -> Nhà hàng -> Điều phối -> Tài xế.", "1. Tự động hóa toàn diện quy trình giao nhận: ")
-    add_bullet(doc, "Áp dụng công thức Haversine tính toán khoảng cách đường cong mặt cầu chính xác theo vĩ độ (Latitude) và kinh độ (Longitude) của TP. Quy Nhơn, làm căn cứ định giá cước vận chuyển và ước tính thời gian giao hàng (ETA).", "2. Định vị GPS & Tính cước chuẩn xác: ")
-    add_bullet(doc, "Thiết kế thuật toán điều phối thông minh giúp giảm thiểu quãng đường di chuyển của tài xế và thời gian chờ đợi của khách hàng.", "3. Tối ưu hóa điều phối tài xế: ")
-    add_bullet(doc, "Xây dựng cơ chế khóa tương tranh hiệu năng cao để giải quyết triệt để 3 thảm họa Race Condition khi nhiều luồng cùng ghi nhận dữ liệu.", "4. Kiểm soát tương tranh dữ liệu tải cao: ")
-    add_bullet(doc, "Cung cấp bản đồ trực quan ASCII Grid và công cụ băm mật khẩu an toàn PBKDF2 giúp nâng cao tính bảo mật và trải nghiệm quản trị.", "5. Trực quan hóa & Bảo mật: ")
+    add_bullet(doc, "Xây dựng phần mềm mô phỏng mạng lưới giao nhận đồ ăn hoàn chỉnh, trực quan, cho phép người dùng thao tác thực tế qua giao diện Console chuyên nghiệp có phân quyền đa vai trò (Multi-Role).", "Mục tiêu 1 — Nghiệp vụ: ")
+    add_bullet(doc, "Thiết kế kiến trúc hướng đối tượng mẫu mực tuân thủ tuyệt đối quy chuẩn LAB211, áp dụng mô hình phân tầng MVC (Model - View - Controller - Repository) sạch sẽ, trong sáng.", "Mục tiêu 2 — Kiến trúc: ")
+    add_bullet(doc, "Giải quyết triệt để thách thức tương tranh đa luồng (Concurrency & Race Condition) khi thao tác đọc/ghi đồng thời trên 10 tệp tin CSV vật lý, trả lời trọn vẹn Big Research Question của đồ án.", "Mục tiêu 3 — Nghiên cứu: ")
 
     add_heading_2(doc, "1.3. Ràng buộc Công nghệ Khắt khe (Chuẩn mực LAB211)")
-    add_body(doc, "Đề tài được xây dựng theo các tiêu chuẩn kỹ thuật nghiêm ngặt của môn học LAB211 tại Trường Đại học FPT:")
-    add_bullet(doc, "Hệ thống tuyệt đối không sử dụng các hệ quản trị CSDL quan hệ hay NoSQL (như MySQL, SQL Server, MongoDB, SQLite). 100% dữ liệu danh mục, tài khoản, đơn hàng, cuốc xe và kết quả mô phỏng phải được đọc, ghi, băm và phân tích trực tiếp trên 10 tập tin vật lý định dạng CSV.", "1. Ràng buộc Lưu trữ File Vật lý (.csv): ")
-    add_bullet(doc, "Tuân thủ 100% nguyên lý Hướng đối tượng: 0% từ khóa static (ngoại trừ hàm khởi động Main.main), 0% từ khóa final, 0% từ khóa protected, 100% thuộc tính được đóng gói private với getter/setter, và 100% lời gọi nội tại sử dụng tường minh con trỏ this..", "2. Ràng buộc OOP Thuần túy: ")
-    add_bullet(doc, "Áp dụng triệt để mô hình kiến trúc MVC phân tầng tách biệt: Model Layer (Entities, Enums, Utils) <=> Repository Layer (Generic CSV & Physical File I/O) <=> Controller Layer (MVC Flow & Threads) <=> View Layer (Console & ASCII Map).", "3. Phân tầng Kiến trúc MVC: ")
+    add_bullet(doc, "Tuyệt đối KHÔNG sử dụng từ khóa static cho bất kỳ biến toàn cục hoặc phương thức nghiệp vụ nào (ngoại trừ hàm khởi động public static void main duy nhất).", "Ràng buộc 1 (OOP thuần túy): ")
+    add_bullet(doc, "Tuyệt đối KHÔNG sử dụng từ khóa final và protected trong toàn bộ các lớp thực thể và repository; 100% truy cập trường nội tại phải thông qua từ khóa this.", "Ràng buộc 2 (Clean Code): ")
+    add_bullet(doc, "Toàn bộ dữ liệu hệ thống phải được lưu trữ bền vững trên các tệp tin CSV vật lý; KHÔNG sử dụng hệ quản trị CSDL quan hệ (MySQL, PostgreSQL) hay NoSQL.", "Ràng buộc 3 (Lưu trữ CSV): ")
 
-    # =========================================================================
-    # CHƯƠNG 2: THÁCH THỨC TƯƠNG TRANH & BIG QUESTION
-    # =========================================================================
+    # CHƯƠNG 2
     add_heading_1(doc, "CHƯƠNG 2: THÁCH THỨC TƯƠNG TRANH & CÂU HỎI NGHIÊN CỨU LỚN (BIG QUESTION)")
-
     add_heading_2(doc, "2.1. Thách thức Kỹ thuật khi Đọc/Ghi Đồng thời trên File CSV")
     add_body(doc, 
-        "Trong các hệ thống thương mại điện tử thực tế, khi hàng trăm khách hàng cùng bấm đặt món tại các giờ cao điểm và nhiều tiến trình điều phối chạy song song, "
+        "Trong môi trường kinh doanh thực tế, khi hàng trăm khách hàng cùng bấm đặt món tại các giờ cao điểm và nhiều tiến trình điều phối chạy song song, "
         "việc thao tác đọc và ghi tệp tin vật lý CSV diễn ra với tần suất hàng nghìn phép toán mỗi giây. "
         "Do tệp tin vật lý không có cơ chế khóa tự động như Database Engine, hiện tượng Race Condition (tranh chấp tài nguyên) chắc chắn sẽ xảy ra nếu không có giải pháp đồng bộ hóa.",
         "Bản chất vấn đề: ")
@@ -353,9 +356,7 @@ def build_full_document():
         "Vì vậy, nhóm đã chuẩn hóa cơ chế OPTIMISTIC LOCKING làm cơ chế mặc định cho 100% các luồng nghiệp vụ trong toàn bộ mã nguồn của hệ thống.",
         "Quyết định chuẩn hóa: ")
 
-    # =========================================================================
-    # CHƯƠNG 3: ĐẶC TẢ TÁC NHÂN (ACTORS) VÀ PHÂN QUYỀN
-    # =========================================================================
+    # CHƯƠNG 3
     add_heading_1(doc, "CHƯƠNG 3: ĐẶC TẢ TÁC NHÂN (ACTORS) VÀ PHÂN QUYỀN HỆ THỐNG")
 
     actor_headers = ["STT", "Mã Actor", "Tên Tác Nhân", "Phân Loại", "Vai Trò (Role)", "Nhiệm Vụ Trọng Tâm"]
@@ -369,9 +370,7 @@ def build_full_document():
     ]
     create_table(doc, actor_headers, actor_data, [0.4, 1.2, 1.3, 0.8, 1.1, 1.9])
 
-    # =========================================================================
-    # CHƯƠNG 4: ĐẶC TẢ CHI TIẾT 7 PHÂN HỆ VÀ 51 USE CASES
-    # =========================================================================
+    # CHƯƠNG 4
     add_heading_1(doc, "CHƯƠNG 4: ĐẶC TẢ CHI TIẾT 7 PHÂN HỆ CHỨC NĂNG VÀ 51 USE CASES")
 
     subsystems = [
@@ -382,49 +381,49 @@ def build_full_document():
             ("UC04", "Xem danh sách tài khoản mẫu Demo", "View Demo Accounts", "Người dùng", "users.csv", "MainView.displayDemoAccounts()", "Hiển thị danh sách các tài khoản có sẵn trong hệ thống phục vụ việc kiểm thử nhanh cho từng vai trò mà không cần phải đăng ký mới."),
             ("UC05", "Nộp hồ sơ xin làm Tài xế trực tuyến", "Submit Driver Application", "Ứng viên Tài xế", "driver_applications.csv", "AuthController.submitDriverApplication()", "Ứng viên nhập thông tin cá nhân, số điện thoại, biển số xe, loại xe máy (Wave, Exciter...). Hệ thống tạo hồ sơ mới với trạng thái PENDING lưu vào driver_applications.csv chờ Quản trị viên xét duyệt.")
         ]),
-        ("Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn (Customer Portal & Food Ordering)", "SUB2", [
-            ("UC06", "Xem danh sách quán ăn & thực đơn Quy Nhơn", "Browse Restaurants & Menus", "Khách hàng", "restaurants.csv, menu_items.csv", "CustomerController.getAllRestaurants()", "Khách hàng duyệt danh sách các quán ăn tại TP. Quy Nhơn, lọc theo chuyên mục (Hải sản, Cơm, Bún...) và xem chi tiết từng món ăn kèm đơn giá, tồn kho."),
-            ("UC07", "Đặt món ăn & tạo đơn hàng mới", "Place Order", "Khách hàng", "orders.csv, order_items.csv", "OrderController.createCustomerOrder()", "Khách hàng chọn quán, chọn món và số lượng. Hệ thống kiểm tra tồn kho, tạo đơn hàng trạng thái PENDING. Có quan hệ <<include>> UC08 (Trừ kho) và UC09 (Tính phí ship)."),
-            ("UC08", "Trừ số lượng tồn kho món ăn tức thời", "Deduct Stock Quantity", "Hệ thống tự động", "menu_items.csv", "MenuItemRepository.deductStock()", "Được gọi tự động từ UC07. Sử dụng cơ chế Optimistic Lock để kiểm tra version và trừ stockQty. Nếu không đủ tồn kho, ném lỗi OversellException."),
-            ("UC09", "Tính cước phí giao hàng theo cự ly Haversine", "Calculate Delivery Fee", "Hệ thống tự động", "delivery_routes.csv", "GeoUtils.calculateDeliveryFee()", "Tự động tính cước phí giao hàng theo công thức khoảng cách Haversine: 15.000 VNĐ cho 2.0 km đầu tiên, cộng thêm 5.000 VNĐ cho mỗi km tiếp theo."),
-            ("UC10", "Xác thực tọa độ GPS trong phạm vi Quy Nhơn", "Validate Quy Nhon GPS", "Hệ thống tự động", "customers.csv", "GeoUtils.isValidQuyNhonCoordinate()", "Kiểm tra tọa độ khách hàng và quán ăn có nằm trong giới hạn hành chính TP. Quy Nhơn (13.72° – 13.82° vĩ độ Bắc; 109.18° – 109.26° kinh độ Đông)."),
-            ("UC11", "Theo dõi tiến độ & trạng thái đơn hàng", "Track Order Status", "Khách hàng", "orders.csv", "CustomerController.getOrderHistory()", "Khách hàng xem trạng thái thời gian thực của đơn hàng theo chu trình: PENDING -> CONFIRMED -> DISPATCHED -> DELIVERED hoặc CANCELLED."),
-            ("UC12", "Hủy đơn hàng khi quán chưa duyệt", "Cancel Pending Order", "Khách hàng", "orders.csv", "OrderController.cancelOrderByCustomer()", "Khách hàng được quyền hủy đơn hàng khi và chỉ khi đơn hàng đang ở trạng thái PENDING. Có quan hệ <<include>> UC13 (Tự động hoàn kho món ăn)."),
-            ("UC13", "Hoàn trả số lượng tồn kho món ăn", "Restore Stock Quantity", "Hệ thống tự động", "menu_items.csv", "MenuItemRepository.restoreStock()", "Được gọi khi đơn hàng bị hủy hoặc nhà hàng từ chối đơn. Tự động cộng trả lại đúng số lượng món ăn vào menu_items.csv để bảo toàn số liệu."),
-            ("UC14", "Xem thông tin cá nhân & lịch sử đặt hàng", "View Profile & Order History", "Khách hàng", "customers.csv, orders.csv", "CustomerController.getCustomerById()", "Xem thông tin họ tên, số điện thoại, phường cư trú và toàn bộ danh sách các đơn hàng đã từng đặt cùng tổng tiền đã thanh toán."),
-            ("UC15", "Nhận thông báo thời gian thực về tài xế & ETA", "Receive Driver & ETA Notifications", "Khách hàng", "delivery_routes.csv", "MainView.checkAndDisplayNotifications()", "Khi tài xế nhận đơn, hệ thống tự động thông báo tên tài xế, biển số xe, số phút dự kiến lấy món và đồng hồ đếm ngược thời gian giao hàng tận nơi.")
+        ("Phân hệ 2: Khách hàng & Đặt hàng Quy Nhơn (Customer Experience & Ordering)", "SUB2", [
+            ("UC06", "Xem danh sách các quán ăn tại Quy Nhơn", "Browse Local Restaurants", "Khách hàng", "restaurants.csv", "CustomerController.browseRestaurants()", "Xem danh sách các quán ăn theo từng phường tại Quy Nhơn (Trần Phú, Lê Lợi, Ghềnh Ráng...) kèm địa chỉ và xếp hạng sao."),
+            ("UC07", "Xem thực đơn chi tiết của từng quán ăn", "View Restaurant Menu", "Khách hàng", "menu_items.csv", "CustomerController.viewMenu()", "Xem danh mục các món ăn của nhà hàng kèm giá tiền và số lượng còn trong kho (stockQty)."),
+            ("UC08", "Tìm kiếm món ăn theo từ khóa", "Search Food by Keyword", "Khách hàng", "menu_items.csv", "CustomerController.searchFood()", "Tìm kiếm nhanh các món ăn yêu thích (bún chả cá, bánh xèo tôm nhảy, gà chỉ...) trên toàn hệ thống."),
+            ("UC09", "Thêm món ăn vào giỏ hàng cá nhân", "Add Item to Cart", "Khách hàng", "RAM / Cart", "CustomerController.addToCart()", "Chọn số lượng món ăn cần mua và thêm vào giỏ hàng cá nhân trong phiên làm việc hiện tại."),
+            ("UC10", "Xem & điều chỉnh số lượng trong giỏ hàng", "Manage Shopping Cart", "Khách hàng", "RAM / Cart", "CustomerController.viewCart()", "Xem lại các món đã chọn, tăng/giảm số lượng hoặc xóa bỏ món ăn khỏi giỏ hàng."),
+            ("UC11", "Tự động tính phí vận chuyển theo cự ly Haversine", "Calculate Haversine Delivery Fee", "Hệ thống tự động", "GeoUtils", "GeoUtils.calculateDistance()", "Hệ thống tính toán khoảng cách đường chim bay giữa tọa độ GPS của quán và khách hàng bằng công thức Haversine. Áp dụng bảng giá: <3km: 15.000đ; mỗi km tiếp theo: 5.000đ/km."),
+            ("UC12", "Thực hiện thanh toán & tạo đơn hàng mới", "Place Order (Checkout)", "Khách hàng", "orders.csv, menu_items.csv", "OrderController.processOrder()", "Tạo bản ghi đơn hàng mới với trạng thái PENDING, ghi vào orders.csv và order_items.csv. Tự động kiểm tra và trừ tồn kho món ăn."),
+            ("UC13", "Theo dõi trạng thái đơn hàng thời gian thực", "Track Order Realtime Status", "Khách hàng", "orders.csv", "CustomerController.trackOrders()", "Khách hàng theo dõi vòng đời đơn hàng qua các trạng thái: PENDING -> CONFIRMED -> DISPATCHED -> DELIVERED (hoặc CANCELLED)."),
+            ("UC14", "Hủy đơn hàng khi chưa được nhà hàng duyệt", "Cancel Pending Order", "Khách hàng", "orders.csv, menu_items.csv", "OrderController.cancelPendingOrderByCustomer()", "Khách hàng được quyền hủy đơn nếu đơn vẫn ở trạng thái PENDING. Hệ thống tự động hoàn trả số lượng món ăn vào kho (Stock Rollback)."),
+            ("UC15", "Nhận thông báo cập nhật đơn hàng & ETA", "Receive Order Update & ETA", "Khách hàng", "delivery_routes.csv", "MainView, GeoUtils", "Hiển thị thông báo ngay khi đơn hàng chuyển trạng thái (nhà hàng nhận đơn, tài xế nhận cuốc) kèm dự kiến thời gian giao hàng (ETA).")
         ]),
-        ("Phân hệ 3: Quản lý Nhà hàng & Thực đơn Món ăn (Restaurant Portal & Menu Management)", "SUB3", [
-            ("UC16", "Xem danh sách đơn đặt hàng mới chuyển đến", "View Incoming Orders", "Nhà hàng", "orders.csv", "RestaurantController.getIncomingOrders()", "Nhà hàng xem các đơn hàng đang ở trạng thái PENDING do khách hàng vừa tạo, gồm tên món, số lượng, địa chỉ giao và tổng tiền món ăn."),
-            ("UC17", "Cập nhật đơn giá bán & số lượng tồn kho", "Update Price & Stock", "Nhà hàng", "menu_items.csv", "RestaurantController.updateStock()", "Nhà hàng chủ động điều chỉnh giá bán hoặc bổ sung thêm số lượng món ăn khi nhập thêm nguyên vật liệu mới vào bếp."),
-            ("UC18", "Xem thực đơn theo chuyên mục & trạng thái quán", "View Menu by Categories", "Nhà hàng", "menu_items.csv", "RestaurantController.getMenuByRestaurant()", "Hiển thị toàn bộ thực đơn của quán ăn, phân loại theo nhóm món ăn và trạng thái mở cửa hoặc đóng cửa của nhà hàng."),
-            ("UC19", "Xác nhận tiếp nhận đơn hàng (trong 5 phút)", "Accept Order", "Nhà hàng", "orders.csv", "OrderController.confirmOrderByRestaurant()", "Nhà hàng kiểm tra khả năng phục vụ và bấm xác nhận đơn hàng trong vòng 5 phút. Đơn hàng chuyển sang CONFIRMED. Có <<include>> UC20 (Kích hoạt điều phối)."),
-            ("UC20", "Tự động đẩy đơn vào hàng đợi điều phối tài xế", "Auto Queue to Dispatch", "Hệ thống tự động", "orders.csv", "OrderController.autoDispatchPendingOrders()", "Sau khi quán bấm xác nhận, hệ thống tự động đưa đơn vào danh sách sẵn sàng tìm kiếm tài xế gần nhất."),
-            ("UC21", "Từ chối tiếp nhận đơn hàng & hoàn trả tồn kho", "Reject Order", "Nhà hàng", "orders.csv, menu_items.csv", "OrderController.rejectOrderByRestaurant()", "Nếu quán quá tải hoặc hết món, bấm từ chối đơn hàng kèm lý do. Đơn hàng chuyển sang CANCELLED và tự động gọi UC13 hoàn trả lại tồn kho."),
-            ("UC22", "Xem báo cáo tổng doanh thu & lịch sử đơn bán", "View Restaurant Revenue", "Nhà hàng", "orders.csv", "RestaurantController.getRestaurantRevenue()", "Thống kê tổng số đơn hàng đã hoàn tất giao hàng (DELIVERED) và tổng doanh thu thực tế mà nhà hàng kiếm được.")
+        ("Phân hệ 3: Nhà hàng Đối tác & Thực đơn (Restaurant Operations & Inventory)", "SUB3", [
+            ("UC16", "Xem danh sách đơn hàng mới gửi đến quán", "View Incoming Orders", "Nhà hàng", "orders.csv", "RestaurantController.getIncomingOrders()", "Nhà hàng nhận thông báo và xem chi tiết danh sách các đơn hàng PENDING mà khách vừa đặt."),
+            ("UC17", "Cập nhật số lượng tồn kho từng món ăn", "Update Item Stock Quantity", "Nhà hàng", "menu_items.csv", "RestaurantController.updateStock()", "Nhà hàng chủ động điều chỉnh số lượng tồn kho của các món khi chuẩn bị nguyên liệu hoặc hết hàng."),
+            ("UC18", "Xem toàn bộ thực đơn món ăn của quán", "View My Menu Items", "Nhà hàng", "menu_items.csv", "RestaurantController.getMenuByRestaurant()", "Tra cứu bảng thực đơn hiện tại của quán ăn gồm tên món, đơn giá và số lượng sẵn sàng phục vụ."),
+            ("UC19", "Xác nhận tiếp nhận & chế biến đơn hàng", "Confirm Incoming Order", "Nhà hàng", "orders.csv", "OrderController.confirmOrderByRestaurant()", "Nhà hàng bấm xác nhận tiếp nhận đơn hàng trong khung giờ chuẩn 5 phút. Đơn hàng chuyển sang trạng thái CONFIRMED."),
+            ("UC20", "Tự động đẩy đơn CONFIRMED vào hàng đợi điều phối", "Push Order to Dispatch Queue", "Hệ thống tự động", "orders.csv", "OrderController.autoDispatchPendingOrders()", "Ngay khi quán bấm duyệt đơn, hệ thống tự động đưa đơn hàng vào luồng điều phối tìm tài xế gần nhất."),
+            ("UC21", "Từ chối tiếp nhận đơn hàng & hoàn kho tự động", "Reject Order & Auto Rollback", "Nhà hàng", "orders.csv, menu_items.csv", "OrderController.rejectOrderByRestaurant()", "Nhà hàng từ chối nhận đơn (do quá tải hoặc hết nguyên liệu). Trạng thái đơn chuyển CANCELLED và tự động hoàn trả số lượng tồn kho."),
+            ("UC22", "Xem báo cáo doanh thu & lịch sử bán hàng quán", "View Restaurant Revenue Report", "Nhà hàng", "orders.csv", "RestaurantController.getRestaurantRevenue()", "Tổng hợp tổng số đơn thành công, tổng doanh thu bán món và phí dịch vụ của nhà hàng.")
         ]),
-        ("Phân hệ 4: Vận hành Tài xế & Giao nhận Đơn hàng (Driver Delivery & Trip Operations)", "SUB4", [
-            ("UC23", "Xem hồ sơ tài xế, biển số xe & số chuyến giao", "View Driver Profile", "Tài xế", "drivers.csv", "DriverController.getAllDrivers()", "Tài xế xem thông tin cá nhân, biển số xe đăng ký, hạng xe, số lượng cuốc xe đã hoàn thành và điểm uy tín."),
-            ("UC24", "Bật/Tắt trạng thái sẵn sàng nhận cuốc", "Toggle Driver Status", "Tài xế", "drivers.csv", "DriverController.updateDriverStatus()", "Tài xế chủ động chuyển đổi trạng thái giữa AVAILABLE (sẵn sàng đón đơn) và OFFLINE (tạm nghỉ không nhận cuốc)."),
-            ("UC25", "Xem chi tiết đơn hàng được điều phối chỉ định", "View Assigned Orders", "Tài xế", "orders.csv", "DriverController.getAssignedOrders()", "Xem thông tin đơn hàng vừa được gán: tên quán, địa chỉ quán lấy đồ, địa chỉ khách hàng giao đồ, số tiền thu hộ."),
-            ("UC26", "Xác nhận đã đến quán nhận món ăn", "Confirm Picked Up", "Tài xế", "orders.csv", "OrderController.markOrderPickedUp()", "Tài xế đến nhà hàng, kiểm tra đồ ăn và bấm xác nhận đã lấy hàng. Trạng thái đơn chuyển từ CONFIRMED sang DISPATCHED (Đang đi giao)."),
-            ("UC27", "Xác nhận đã giao hàng thành công tới khách", "Confirm Delivered", "Tài xế", "orders.csv", "OrderController.markOrderDelivered()", "Tài xế giao hàng tận tay khách hàng và bấm xác nhận hoàn tất. Đơn hàng chuyển sang DELIVERED. Có <<include>> UC28 (Giải phóng tài xế)."),
-            ("UC28", "Tự động giải phóng tài xế về trạng thái AVAILABLE", "Auto-Free Driver", "Hệ thống tự động", "drivers.csv", "DriverRepository.markAvailable()", "Hệ thống tự động xóa liên kết đơn cũ (currentOrderId = null), đưa tài xế trở lại trạng thái AVAILABLE hoặc cho phép chọn OFFLINE nghỉ ngơi.")
+        ("Phân hệ 4: Vận hành Tài xế Đối tác (Driver Operations & Fleet Workflow)", "SUB4", [
+            ("UC23", "Xem hồ sơ thông tin cá nhân tài xế", "View Driver Profile", "Tài xế", "drivers.csv", "DriverController.getAllDrivers()", "Tài xế xem thông tin mã xe (D0xxx), số điện thoại, biển số đăng ký, loại xe máy và khu vực hoạt động."),
+            ("UC24", "Bật / Tắt trạng thái sẵn sàng nhận cuốc xe", "Toggle Online/Offline Status", "Tài xế", "drivers.csv", "DriverController.updateDriverStatus()", "Tài xế chủ động chuyển đổi trạng thái giữa AVAILABLE (sẵn sàng đón đơn) và OFFLINE (nghỉ ngơi)."),
+            ("UC25", "Xem thông tin đơn hàng được hệ thống gán", "View Assigned Active Orders", "Tài xế", "orders.csv", "DriverController.getAssignedOrders()", "Tài xế nhận thông tin chi tiết về đơn hàng được gán: tên khách, địa chỉ quán, địa chỉ giao, cước phí và lộ trình."),
+            ("UC26", "Xác nhận đã đến quán & lấy món thành công", "Confirm Order Picked Up", "Tài xế", "orders.csv", "OrderController.markOrderPickedUp()", "Tài xế đến quán lấy thức ăn và bấm xác nhận trên ứng dụng. Trạng thái đơn chuyển sang DISPATCHED (đang giao)."),
+            ("UC27", "Xác nhận giao thức ăn thành công cho khách", "Confirm Order Delivered", "Tài xế", "orders.csv", "OrderController.markOrderDelivered()", "Tài xế giao món tận tay khách hàng và bấm hoàn tất. Đơn hàng chuyển sang trạng thái DELIVERED. Ghi nhận doanh thu."),
+            ("UC28", "Tự động giải phóng tài xế về trạng thái sẵn sàng", "Auto Release Driver to Available", "Hệ thống tự động", "drivers.csv", "DriverRepository.markAvailable()", "Ngay sau khi tài xế giao đơn thành công, hệ thống tự động đổi trạng thái tài xế từ BUSY sang AVAILABLE để tiếp tục nhận cuốc mới.")
         ]),
-        ("Phân hệ 5: Điều phối Trung tâm & Bản đồ Grid Tọa độ Quy Nhơn (Central Dispatching & Network Grid)", "SUB5", [
-            ("UC29", "Xem hàng đợi đơn hàng chờ ghép xe (CONFIRMED)", "View Dispatch Queue", "Điều phối viên", "orders.csv", "OrderRepository.findPendingDispatchOrders()", "Hiển thị danh sách các đơn hàng đã được nhà hàng xác nhận nấu nướng và đang chờ trung tâm tìm tài xế."),
-            ("UC30", "Kích hoạt thuật toán tự động ghép tài xế toàn bộ", "Trigger Auto-Dispatch All", "Điều phối viên", "orders.csv, drivers.csv", "OrderController.autoDispatchPendingOrders()", "Chạy thuật toán quét toàn bộ đơn hàng trong hàng đợi, tự động tìm và gán tài xế tối ưu. Có <<include>> UC31, UC32, UC33."),
-            ("UC31", "Tìm kiếm tài xế rảnh gần quán ăn nhất (Haversine)", "Find Nearest Available Driver", "Hệ thống tự động", "drivers.csv", "DriverRepository.findNearestAvailable()", "Tính toán khoảng cách từ tọa độ quán ăn đến tất cả tài xế AVAILABLE, chọn tài xế có cự ly ngắn nhất (km)."),
-            ("UC32", "Tính toán thời gian dự kiến lấy món & giao hàng (ETA)", "Calculate Pickup & Delivery ETA", "Hệ thống tự động", "delivery_routes.csv", "GeoUtils.calculateEstimatedMinutes()", "Dựa trên vận tốc trung bình tại Quy Nhơn (nội thành 25km/h, liên phường 35km/h) để tính ra số phút di chuyển chính xác."),
-            ("UC33", "Khóa & Gán tài xế vào đơn hàng chống xung đột", "Lock & Assign Driver to Order", "Hệ thống tự động", "orders.csv, drivers.csv", "OrderRepository.assignDriver()", "Sử dụng Optimistic Lock để kiểm tra tài xế chưa bị luồng khác nhận và đơn chưa bị gán, ngăn chặn Double Assignment và Driver Overload."),
-            ("UC34", "Giám sát trạng thái hoạt động của toàn bộ đội xe", "Monitor Fleet Status", "Điều phối viên", "drivers.csv", "DriverController.getAllDrivers()", "Xem danh sách và số lượng tài xế đang rảnh (AVAILABLE), đang bận chở hàng (BUSY) và tài xế đã tắt app (OFFLINE)."),
-            ("UC35", "Hiển thị Bản đồ mạng lưới ASCII Grid Quy Nhơn", "Render ASCII Grid Map", "Điều phối viên", "restaurants.csv, drivers.csv", "MapView.renderAsciiMap()", "Vẽ bản đồ ma trận ký tự 16 hàng x 50 cột đại diện không gian TP. Quy Nhơn, hiển thị trực quan các vị trí [R] Quán ăn, [C] Khách hàng, [D] Xe rảnh, [B] Xe bận.")
+        ("Phân hệ 5: Điều phối Trung tâm & Bản đồ Quy Nhơn (Central Dispatcher & Route Engine)", "SUB5", [
+            ("UC29", "Xem danh sách hàng đợi các đơn chờ điều phối", "View Pending Dispatch Queue", "Điều phối viên", "orders.csv", "OrderRepository.findPendingDispatchOrders()", "Điều phối viên giám sát danh sách toàn bộ các đơn hàng CONFIRMED đang chờ được ghép tài xế."),
+            ("UC30", "Kích hoạt tự động ghép tài xế cho hàng đợi", "Trigger Auto-Dispatch Engine", "Điều phối viên", "orders.csv, drivers.csv", "OrderController.autoDispatchPendingOrders()", "Kích hoạt thuật toán điều phối thông minh duyệt hàng đợi và tìm tài xế khả dụng gần nhất cho từng đơn."),
+            ("UC31", "Thuật toán tìm tài xế gần quán ăn nhất (GPS)", "Find Nearest Available Driver (GPS)", "Hệ thống tự động", "drivers.csv, GeoUtils", "DriverRepository.findNearestAvailable()", "Tính toán khoảng cách từ tọa độ của quán ăn đến tất cả các tài xế AVAILABLE bằng công thức Haversine; chọn tài xế có cự ly ngắn nhất."),
+            ("UC32", "Tính toán thời gian giao hàng dự kiến (ETA)", "Calculate Travel Distance & ETA", "Hệ thống tự động", "delivery_routes.csv, GeoUtils", "GeoUtils.calculateEstimatedMinutes()", "Ước tính thời gian tài xế đến quán lấy món (~8 phút) và thời gian giao tới khách (~15 phút) dựa trên vận tốc trung bình tại Quy Nhơn (25 km/h)."),
+            ("UC33", "Khóa & Gán đơn hàng cho tài xế", "Assign Order to Driver", "Hệ thống tự động", "orders.csv, drivers.csv", "OrderRepository.assignDriver()", "Cập nhật driverId vào bản ghi đơn hàng trong orders.csv và chuyển trạng thái tài xế thành BUSY trong drivers.csv dưới cơ chế khóa an toàn."),
+            ("UC34", "Giám sát trạng thái hoạt động của toàn bộ đội xe", "Monitor Fleet Availability", "Điều phối viên", "drivers.csv", "DriverController.getAllDrivers()", "Theo dõi số lượng tài xế đang AVAILABLE, BUSY, OFFLINE trên toàn địa bàn Quy Nhơn."),
+            ("UC35", "Hiển thị bản đồ trực quan ASCII Grid 16x50", "Render ASCII Visual Grid Map", "Điều phối viên", "restaurants.csv, drivers.csv", "MapView.renderAsciiMap()", "Vẽ bản đồ trực quan 16 dòng x 50 cột hiển thị vị trí thực tế của các quán ăn [R], khách hàng [C] và tài xế [D] trên địa bàn Quy Nhơn.")
         ]),
-        ("Phân hệ 6: Quản trị Hệ thống Toàn diện & Dữ liệu Lớn (System Administration & Super Control)", "SUB6", [
-            ("UC36", "Xem danh sách hồ sơ xin làm tài xế đang chờ duyệt", "View Pending Applications", "Quản trị viên", "driver_applications.csv", "AdminController.getPendingDriverApplications()", "Admin kiểm tra danh sách các ứng viên đăng ký lái xe trực tuyến đang ở trạng thái PENDING kèm thông tin xe cộ và bằng lái."),
-            ("UC37", "Phê duyệt hồ sơ & tự động cấp mã tài khoản DRIVER", "Approve Driver Application", "Quản trị viên", "drivers.csv, users.csv", "AdminController.approveDriverApplication()", "Admin bấm duyệt hồ sơ: hệ thống tự động sinh mã tài xế mới (D0xxx), tạo hồ sơ tài xế trong drivers.csv và cấp tài khoản đăng nhập."),
-            ("UC38", "Từ chối hồ sơ xin làm tài xế kèm lý do", "Reject Driver Application", "Quản trị viên", "driver_applications.csv", "AdminController.rejectDriverApplication()", "Admin từ chối hồ sơ không đạt yêu cầu kèm lý do phản hồi, cập nhật trạng thái REJECTED trong driver_applications.csv."),
-            ("UC39", "Quản lý danh sách tài khoản, mật khẩu & phân quyền", "Manage Users & Credentials", "Quản trị viên", "users.csv", "AuthController.getAllUsers()", "Xem toàn bộ người dùng trong hệ thống, vai trò phân quyền (Customer, Driver, Restaurant, Dispatcher, Admin) và trạng thái bảo mật."),
+        ("Phân hệ 6: Quản trị Hệ thống & Dữ liệu Lớn (Administration & Big Data Platform)", "SUB6", [
+            ("UC36", "Xem danh sách hồ sơ xin làm tài xế chờ duyệt", "View Pending Driver Applications", "Quản trị viên", "driver_applications.csv", "AdminController.getPendingDriverApps()", "Admin duyệt danh sách các đơn đăng ký gia nhập đội xe với trạng thái PENDING."),
+            ("UC37", "Phê duyệt hồ sơ & tự động cấp tài khoản tài xế", "Approve Driver & Issue Account", "Quản trị viên", "drivers.csv, users.csv", "AdminController.approveDriverApplication()", "Admin bấm duyệt hồ sơ: hệ thống tự động sinh mã tài xế mới (D0xxx), tạo tài khoản đăng nhập với quyền DRIVER và lưu vào drivers.csv và users.csv."),
+            ("UC38", "Từ chối hồ sơ đăng ký tài xế", "Reject Driver Application", "Quản trị viên", "driver_applications.csv", "AdminController.rejectDriverApplication()", "Admin từ chối hồ sơ không đạt yêu cầu; trạng thái hồ sơ chuyển sang REJECTED."),
+            ("UC39", "Xem & quản trị danh mục toàn bộ người dùng", "Manage System Users & Roles", "Quản trị viên", "users.csv", "AuthController.getAllUsers()", "Tra cứu danh sách tất cả tài khoản trong hệ thống, vai trò phân quyền (Customer, Driver, Restaurant, Dispatcher, Admin) và trạng thái bảo mật."),
             ("UC40", "Thêm nhà hàng mới & cấp bổ sung tồn kho hệ thống", "Add Restaurant & Restock Menu", "Quản trị viên", "restaurants.csv, menu_items.csv", "AdminController.addRestaurant()", "Admin khởi tạo quán ăn mới vào mạng lưới Quy Nhơn, định vị tọa độ GPS và cấp bổ sung số lượng tồn kho cho các món ăn."),
             ("UC41", "Quản lý thông tin, địa chỉ & lịch sử khách hàng", "Manage Customer Directory", "Quản trị viên", "customers.csv", "CustomerController.getAllCustomers()", "Xem toàn bộ hồ sơ khách hàng, số điện thoại, phường cư trú và tổng hợp hành vi đặt hàng trên hệ thống."),
             ("UC42", "Giám sát & kiểm soát toàn bộ đơn hàng hệ thống", "Supervise All Network Orders", "Quản trị viên", "orders.csv", "OrderRepository.findAll()", "Admin có quyền tra cứu, kiểm tra tình trạng xử lý của tất cả đơn hàng trên toàn mạng lưới."),
@@ -448,32 +447,28 @@ def build_full_document():
         uc_data = []
         for code, name_vi, name_en, actor, csv, java, desc in ucs:
             uc_data.append([code, f"{name_vi}\n({name_en})", actor, csv, java, desc])
-        create_table(doc, uc_headers, uc_data, [0.6, 1.4, 0.8, 1.0, 1.3, 1.6])
+        create_table(doc, uc_headers, uc_data, [0.6, 1.4, 0.9, 0.9, 1.4, 1.5])
 
-    # =========================================================================
-    # CHƯƠNG 5: MA TRẬN TRUY VẾT 4 TẦNG (TRACEABILITY MATRIX)
-    # =========================================================================
+    # CHƯƠNG 5
     add_heading_1(doc, "CHƯƠNG 5: MA TRẬN TRUY VẾT 4 TẦNG (TRACEABILITY MATRIX)")
-    add_body(doc, 
-        "Ma trận truy vết 4 tầng chứng minh sự đồng bộ tuyệt đối 100% giữa Đề bài (Phát biểu bài toán) <=> Biểu đồ Use Case (51 UCs) <=> Biểu đồ Lớp (60 Classes) <=> Mã nguồn Java & File CSV:",
-        "Nguyên tắc bảo toàn: ")
+    add_body(doc, "Ma trận truy vết 4 tầng đảm bảo tính gắn kết hữu cơ không thể tách rời giữa Phát biểu bài toán, Đặc tả Use Case, Lớp xử lý mã nguồn Java và Tệp tin CSV vật lý:")
 
-    tm_headers = ["Mã UC", "Tên Use Case", "Tác Nhân", "Phân Hệ", "Lớp / Interface Triển Khai", "Phương Thức Code Java", "Tệp CSV"]
+    tm_headers = ["Mã UC", "Tên Nghiệp Vụ", "Actor", "Phân Hệ", "Lớp Java Xử Lý (Class)", "Phương Thức Mã Nguồn (Method)", "File CSV Vật Lý"]
     tm_data = [
-        ["UC01", "Đăng ký Khách hàng", "Customer", "SUB1", "AuthController", "registerCustomer(...)", "users.csv"],
-        ["UC02", "Đăng nhập đa vai trò", "All Actors", "SUB1", "AuthController, AccountRepo", "login(), authenticate()", "users.csv"],
-        ["UC03", "Đăng xuất an toàn", "All Actors", "SUB1", "AuthController", "logout()", "users.csv"],
-        ["UC04", "Xem tài khoản Demo", "User", "SUB1", "MainView", "displayDemoAccounts()", "users.csv"],
-        ["UC05", "Nộp hồ sơ tài xế", "Driver App", "SUB1", "AuthController, DriverAppRepo", "submitDriverApplication()", "driver_apps.csv"],
-        ["UC06", "Xem quán & menu", "Customer", "SUB2", "CustomerController", "getAllRestaurants()", "restaurants.csv"],
-        ["UC07", "Đặt món ăn", "Customer", "SUB2", "OrderController", "createCustomerOrder()", "orders.csv"],
-        ["UC08", "Trừ kho tức thời", "System", "SUB2", "MenuItemRepository", "deductStock(id, qty, mech)", "menu_items.csv"],
-        ["UC09", "Tính cước Haversine", "System", "SUB2", "GeoUtils", "calculateDeliveryFee(dist)", "delivery_routes.csv"],
-        ["UC10", "Xác thực GPS QN", "System", "SUB2", "GeoUtils", "isValidQuyNhonCoordinate()", "customers.csv"],
-        ["UC11", "Theo dõi đơn hàng", "Customer", "SUB2", "CustomerController", "getOrderHistory(custId)", "orders.csv"],
-        ["UC12", "Hủy đơn PENDING", "Customer", "SUB2", "OrderController", "cancelOrderByCustomer()", "orders.csv"],
-        ["UC13", "Hoàn kho món ăn", "System", "SUB2", "MenuItemRepository", "restoreStock(id, qty)", "menu_items.csv"],
-        ["UC14", "Xem thông tin cá nhân", "Customer", "SUB2", "CustomerController", "getCustomerById(id)", "customers.csv"],
+        ["UC01", "Đăng ký khách hàng", "Customer", "SUB1", "AuthController, UserRepository", "registerCustomer()", "users.csv, customers.csv"],
+        ["UC02", "Đăng nhập đa vai trò", "All", "SUB1", "AuthController, AccountRepo", "login() [PBKDF2]", "users.csv"],
+        ["UC03", "Đăng xuất an toàn", "All", "SUB1", "AuthController", "logout()", "RAM / Session"],
+        ["UC04", "Xem tài khoản mẫu", "User", "SUB1", "MainView", "displayDemoAccounts()", "users.csv"],
+        ["UC05", "Nộp hồ sơ tài xế", "Driver App", "SUB1", "AuthController", "submitDriverApplication()", "driver_applications.csv"],
+        ["UC06", "Xem quán Quy Nhơn", "Customer", "SUB2", "CustomerController", "browseRestaurants()", "restaurants.csv"],
+        ["UC07", "Xem menu quán", "Customer", "SUB2", "CustomerController", "viewMenu(restId)", "menu_items.csv"],
+        ["UC08", "Tìm món ăn", "Customer", "SUB2", "CustomerController", "searchFood(keyword)", "menu_items.csv"],
+        ["UC09", "Thêm vào giỏ", "Customer", "SUB2", "CustomerController", "addToCart(item, qty)", "RAM / Cart"],
+        ["UC10", "Xem giỏ hàng", "Customer", "SUB2", "CustomerController", "viewCart()", "RAM / Cart"],
+        ["UC11", "Tính phí Haversine", "System", "SUB2", "GeoUtils", "calculateDistance(), calcFee()", "delivery_routes.csv"],
+        ["UC12", "Thanh toán tạo đơn", "Customer", "SUB2", "OrderController, OrderRepo", "processOrderAndDispatch()", "orders.csv, order_items.csv"],
+        ["UC13", "Theo dõi đơn hàng", "Customer", "SUB2", "CustomerController", "trackOrders(custId)", "orders.csv"],
+        ["UC14", "Hủy đơn & hoàn kho", "Customer", "SUB2", "OrderController", "cancelPendingOrderByCustomer()", "orders.csv, menu_items.csv"],
         ["UC15", "Nhận thông báo ETA", "Customer", "SUB2", "MainView, GeoUtils", "formatEstimatedClockTime()", "delivery_routes.csv"],
         ["UC16", "Xem đơn mới đến quán", "Restaurant", "SUB3", "RestaurantController", "getIncomingOrders()", "orders.csv"],
         ["UC17", "Cập nhật tồn kho menu", "Restaurant", "SUB3", "RestaurantController", "updateStock(itemId, qty)", "menu_items.csv"],
@@ -514,11 +509,12 @@ def build_full_document():
     ]
     create_table(doc, tm_headers, tm_data, [0.5, 1.4, 0.8, 0.6, 1.3, 1.3, 0.8])
 
-    # =========================================================================
-    # CHƯƠNG 6: KIẾN TRÚC MÃ NGUỒN 60 CLASS
-    # =========================================================================
+    # CHƯƠNG 6
     add_heading_1(doc, "CHƯƠNG 6: KIẾN TRÚC MÃ NGUỒN 60 CLASS & MÔ HÌNH PHÂN TẦNG MVC")
-    add_body(doc, "Hệ thống bao gồm đúng 60 đơn vị mã nguồn Java (Classes, Interfaces, Enums, Concurrent Tasks) được tổ chức nghiêm ngặt theo 5 gói package:")
+    add_heading_2(doc, "6.1. Tổng quan Kiến trúc MVC và Bảng Phân bố 60 Class")
+    add_body(doc, 
+        "Hệ thống Food Delivery Network Simulation được thiết kế theo đúng chuẩn kiến trúc Phân tầng Đa lớp (Layered MVC Architecture) "
+        "kết hợp mẫu thiết kế Repository Pattern và Facade Pattern. Toàn bộ 60 đơn vị mã nguồn Java được phân bổ độc lập, rành mạch thành 5 gói package:")
 
     cls_headers = ["Phân Tầng Kiến Trúc", "Số Lượng", "Danh Sách Lớp / Interface / Enum Mã Nguồn", "Trách Nhiệm & Vai Trò"]
     cls_data = [
@@ -530,11 +526,78 @@ def build_full_document():
     ]
     create_table(doc, cls_headers, cls_data, [1.1, 0.7, 2.5, 2.4])
 
-    # =========================================================================
-    # CHƯƠNG 7: KẾT QUẢ THỰC NGHIỆM & KẾT LUẬN
-    # =========================================================================
-    add_heading_1(doc, "CHƯƠNG 7: KẾT QUẢ THỰC NGHIỆM MÔ PHỎNG & KẾT LUẬN NGHIÊN CỨU")
+    add_heading_2(doc, "6.2. Mô tả Chi tiết 19 Đơn vị Tầng Model (package model)")
+    add_bullet(doc, "Lớp trừu tượng cha chứa id (String) và version (long) phục vụ khóa lạc quan Optimistic Locking; cung cấp các getter/setter và phương thức incrementVersion().", "1. BaseEntity: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn khách hàng gồm id, name, phone, address, ward, latitude, longitude.", "2. Customer: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn quán ăn gồm id, name, address, ward, rating, latitude, longitude.", "3. Restaurant: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn món ăn gồm id, restaurantId, name, price, stockQty, category.", "4. MenuItem: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn tài xế gồm id, name, phone, vehiclePlate, vehicleType, status, latitude, longitude, activeOrderId.", "5. Driver: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn đơn hàng gồm id, customerId, restaurantId, driverId, status, orderTime, totalAmount, deliveryFee, distanceKm.", "6. Order: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn chi tiết đơn gồm id, orderId, menuItemId, quantity, unitPrice, subtotal.", "7. OrderItem: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn lộ trình giao gồm id, orderId, driverId, startLat, startLon, endLat, endLon, distanceKm, estimatedMinutes, actualMinutes.", "8. DeliveryRoute: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn kết quả chạy Benchmark gồm id, mechanism, totalOrders, durationMs, throughput, dropPercent, doubleAssignments, oversells, driverOverloads.", "9. SimulationRun: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn tài khoản đăng nhập gồm id, username, passwordHash, salt, role, customerId, restaurantId, driverId.", "10. User: ")
+    add_bullet(doc, "Kế thừa BaseEntity, biểu diễn hồ sơ đăng ký tài xế gồm id, fullName, phone, vehiclePlate, vehicleType, status (PENDING/APPROVED/REJECTED), appliedAt.", "11. DriverApplication: ")
+    add_bullet(doc, "Thực thể tài khoản mở rộng phục vụ quản trị phân quyền.", "12. UserAccount: ")
+    add_bullet(doc, "Đối tượng lưu trạng thái phiên làm việc hiện tại của người dùng sau khi đăng nhập thành công (currentUser, role, loginTime).", "13. AuthSession: ")
+    add_bullet(doc, "Lớp tiện ích hình học tính khoảng cách đường cong mặt cầu bằng công thức Haversine, tính phí ship và ước tính thời gian giao hàng (ETA).", "14. GeoUtils: ")
+    add_bullet(doc, "Enum định nghĩa trạng thái tài xế: AVAILABLE, BUSY, OFFLINE.", "15. DriverStatus: ")
+    add_bullet(doc, "Enum định nghĩa vòng đời đơn hàng: PENDING, CONFIRMED, DISPATCHED, DELIVERED, CANCELLED.", "16. OrderStatus: ")
+    add_bullet(doc, "Enum phân quyền người dùng: CUSTOMER, RESTAURANT, DRIVER, DISPATCHER, ADMIN.", "17. UserRole: ")
+    add_bullet(doc, "Enum vai trò quản trị hệ thống mở rộng: USER_ADMIN, AUDITOR.", "18. AccountRole: ")
+    add_bullet(doc, "Enum 4 cơ chế khóa tương tranh: NO_LOCK, SYNCHRONIZED, OPTIMISTIC, FILE_LOCK.", "19. LockMechanism: ")
 
+    add_heading_2(doc, "6.3. Mô tả Chi tiết 13 Đơn vị Tầng Repository (package repository)")
+    add_bullet(doc, "Giao diện chung định nghĩa các thao tác CRUD cơ bản: findAll(), findById(), save(), update(), delete(), saveAll().", "1. IRepository<T>: ")
+    add_bullet(doc, "Lớp trừu tượng generic cài đặt IRepository, phụ trách đọc/ghi trực tiếp vào file CSV, hỗ trợ executeWithFileLock() và updateWithOptimisticLock().", "2. CsvRepository<T>: ")
+    add_bullet(doc, "Thao tác trên customers.csv, quản lý danh sách khách hàng.", "3. CustomerRepository: ")
+    add_bullet(doc, "Thao tác trên restaurants.csv, quản lý thông tin nhà hàng và tọa độ.", "4. RestaurantRepository: ")
+    add_bullet(doc, "Thao tác trên menu_items.csv, hỗ trợ trừ kho (deductStock) và hoàn kho (restoreStock) theo 4 cơ chế khóa.", "5. MenuItemRepository: ")
+    add_bullet(doc, "Thao tác trên drivers.csv, hỗ trợ tìm tài xế gần nhất (findNearestAvailable) và gán xe (markBusy, markAvailable).", "6. DriverRepository: ")
+    add_bullet(doc, "Thao tác trên orders.csv, quản lý vòng đời đơn và xử lý ghép đơn (processOrderAndDispatch, assignDriver).", "7. OrderRepository: ")
+    add_bullet(doc, "Thao tác trên order_items.csv, lưu trữ chi tiết các món ăn trong từng đơn hàng.", "8. OrderItemRepository: ")
+    add_bullet(doc, "Thao tác trên delivery_routes.csv, lưu trữ lộ trình và ETA giao hàng.", "9. DeliveryRouteRepository: ")
+    add_bullet(doc, "Thao tác trên simulation_runs.csv, lưu trữ kết quả các lần chạy thử nghiệm tương tranh.", "10. SimulationRunRepository: ")
+    add_bullet(doc, "Thao tác trên driver_applications.csv, lưu trữ và cập nhật trạng thái hồ sơ xin làm tài xế.", "11. DriverApplicationRepository: ")
+    add_bullet(doc, "Thao tác trên users.csv, quản lý tài khoản người dùng và mật khẩu băm PBKDF2.", "12. UserRepository: ")
+    add_bullet(doc, "Lớp mở rộng thao tác bảo mật xác thực tài khoản và kiểm tra trùng lặp thông tin.", "13. AccountRepository: ")
+
+    add_heading_2(doc, "6.4. Mô tả Chi tiết 13 Đơn vị Tầng Controller (package controller)")
+    add_bullet(doc, "Bộ điều khiển trung tâm (Master Facade), điều phối giữa các Controller con và khởi tạo các Repository, View.", "1. MainController: ")
+    add_bullet(doc, "Điều hướng luồng chạy tổng thể của ứng dụng console từ lúc khởi động đến khi thoát.", "2. AppController: ")
+    add_bullet(doc, "Xử lý đăng ký, đăng nhập PBKDF2 salt 16-byte, nộp hồ sơ tài xế và đăng xuất.", "3. AuthController: ")
+    add_bullet(doc, "Xử lý nghiệp vụ khách hàng: duyệt quán Quy Nhơn, xem menu, quản lý giỏ hàng và theo dõi đơn.", "4. CustomerController: ")
+    add_bullet(doc, "Xử lý nghiệp vụ tài xế: bật/tắt trạng thái nhận cuốc, xem đơn được gán.", "5. DriverController: ")
+    add_bullet(doc, "Xử lý nghiệp vụ nhà hàng: xem đơn mới, cập nhật tồn kho, xem báo cáo doanh thu.", "6. RestaurantController: ")
+    add_bullet(doc, "Xử lý luồng xử lý đơn hàng: tạo đơn, xác nhận duyệt đơn, điều phối tài xế, nhận đơn, giao hàng và hủy đơn hoàn kho.", "7. OrderController: ")
+    add_bullet(doc, "Xử lý nghiệp vụ quản trị: duyệt hồ sơ lái xe, cấp mã D0xxx, thêm nhà hàng, cấp tồn kho.", "8. AdminController: ")
+    add_bullet(doc, "Bộ não chạy Benchmark mô phỏng đa luồng, bẫy 3 Race Conditions và so sánh 4 cơ chế khóa.", "9. SimulatorController: ")
+    add_bullet(doc, "Luồng mô phỏng khách hàng độc lập bắn yêu cầu đặt món đồng thời.", "10. CustomerThread: ")
+    add_bullet(doc, "Luồng mô phỏng điều phối độc lập quét đơn và gán tài xế đồng thời.", "11. DispatchThread: ")
+    add_bullet(doc, "Tác vụ Callable/Runnable mô phỏng đặt món tải cao dùng trong ExecutorService.", "12. CustomerSimTask: ")
+    add_bullet(doc, "Tác vụ Callable/Runnable mô phỏng gán cuốc tải cao dùng trong ExecutorService.", "13. DispatchSimTask: ")
+
+    add_heading_2(doc, "6.5. Mô tả Chi tiết 8 Đơn vị Tầng Exception (package exception)")
+    add_bullet(doc, "Lớp ngoại lệ gốc (root exception) cho toàn bộ lỗi nghiệp vụ trong hệ thống Food Delivery.", "1. FoodDeliveryException: ")
+    add_bullet(doc, "Ngoại lệ chung cho các lỗi phát sinh trong môi trường đa luồng.", "2. ConcurrencyException: ")
+    add_bullet(doc, "Bẫy lỗi khi 1 đơn hàng bị 2 luồng gán cho 2 tài xế khác nhau (Double Assignment).", "3. DoubleAssignmentException: ")
+    add_bullet(doc, "Bẫy lỗi khi 1 tài xế đang bận giao hàng bị luồng khác gán thêm đơn thứ hai (Driver Overload).", "4. DriverOverloadException: ")
+    add_bullet(doc, "Bẫy lỗi khi xung đột phiên bản lúc ghi file CSV trong cơ chế Khóa Lạc Quan.", "5. OptimisticLockException: ")
+    add_bullet(doc, "Bẫy lỗi khi số lượng tồn kho của món ăn bị bán âm (Oversell Item).", "6. OversellException: ")
+    add_bullet(doc, "Bẫy lỗi khi không tìm thấy thực thể theo mã ID chỉ định trong file CSV.", "7. EntityNotFoundException: ")
+    add_bullet(doc, "Bẫy lỗi khi dữ liệu người dùng nhập vào không hợp lệ hoặc sai định dạng.", "8. InvalidInputException: ")
+
+    add_heading_2(doc, "6.6. Mô tả Chi tiết 7 Đơn vị Tầng View & Điểm Khởi Chạy (package view & Main)")
+    add_bullet(doc, "Lớp chứa hàm main duy nhất khởi động toàn bộ chương trình theo chuẩn OOP.", "1. Main: ")
+    add_bullet(doc, "Giao diện giao tiếp chuẩn của tầng View định nghĩa phương thức render().", "2. IView: ")
+    add_bullet(doc, "Giao diện người dùng chính trên Console, hiển thị menu đăng nhập và các menu phân quyền chuyên biệt.", "3. MainView: ")
+    add_bullet(doc, "Bộ trực quan hóa bản đồ ASCII Grid 16 dòng x 50 cột hiển thị tọa độ các thực thể Quy Nhơn.", "4. MapView: ")
+    add_bullet(doc, "Hiển thị danh sách đơn hàng, chi tiết đơn và định dạng thực đơn quán.", "5. OrderView: ")
+    add_bullet(doc, "Xuất báo cáo tổng kết quản trị, thống kê doanh thu và phân tích Big Question.", "6. ReportView: ")
+    add_bullet(doc, "Hiển thị giao diện điều khiển Benchmark và vẽ bảng đối soát hiệu năng 4 cơ chế khóa.", "7. SimulatorView: ")
+
+    # CHƯƠNG 7
+    add_heading_1(doc, "CHƯƠNG 7: KẾT QUẢ THỰC NGHIỆM MÔ PHỎNG & KẾT LUẬN NGHIÊN CỨU")
     add_heading_2(doc, "7.1. Bảng Dữ liệu Thực nghiệm Chạy Tải Cao (700 Concurrent Orders)")
     
     bench_headers = ["Cơ Chế Khóa", "Số Đơn", "Thời Gian (ms)", "Throughput (ops/s)", "Drop (%)", "Double Assign", "Oversell Kho", "Driver Overload", "Kết Luận"]
@@ -556,21 +619,102 @@ def build_full_document():
         "Toàn bộ tài liệu, biểu đồ Class Diagram, Use Case Diagram và mã nguồn đã được đồng bộ 4 tầng tuyệt đối, sẵn sàng bảo vệ đạt kết quả cao nhất.",
         "Tổng kết: ")
 
-    # Save document
-    out_path_1 = "D:/Lab211-Group1/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx"
-    out_path_2 = "D:/Lab211-Group1/Usecase/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx"
-    out_path_3 = "docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx"
-    out_path_4 = "D:/Lab211-Group1/NHOM_01_LAB211_FoodDelivery/docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx"
+    # CHƯƠNG 8: KỊCH BẢN THỰC NGHIỆM & ẢNH CHỤP MÀN HÌNH DEMO TỪNG BƯỚC
+    add_heading_1(doc, "CHƯƠNG 8: KỊCH BẢN THỰC NGHIỆM & ẢNH CHỤP MÀN HÌNH DEMO TỪNG BƯỚC")
+    add_body(doc, 
+        "Nhằm minh chứng tính xác thực, độc lập và khả năng vận hành thực tế 100% của hệ thống theo đúng các phát biểu bài toán, "
+        "chương này trình bày toàn bộ 8 bước thực nghiệm tuần tự từ lúc khởi động hệ thống, xác thực đăng nhập, chu trình xử lý đơn hàng 4 bên, "
+        "bản đồ tọa độ trực quan, kịch bản hoàn kho, kiểm thử tương tranh tải cao đến bộ kiểm định tự động System Verification Test Suite.")
 
-    doc.save(out_path_1)
-    print(f"Saved: {out_path_1}")
-    shutil.copy(out_path_1, out_path_2)
-    print(f"Saved: {out_path_2}")
-    shutil.copy(out_path_1, out_path_3)
-    print(f"Saved: {out_path_3}")
-    shutil.copy(out_path_1, out_path_4)
-    print(f"Saved: {out_path_4}")
-    print("SUCCESSFULLY GENERATED AND DISTRIBUTED WORD DOCUMENT IN ALL TARGET FOLDERS!")
+    # Bước 1
+    add_heading_2(doc, "8.1. Bước 1: Khởi động Hệ thống & Xác thực Đăng nhập Đa vai trò (PBKDF2)")
+    add_bullet(doc, "UC01 (Đăng ký khách hàng mới), UC02 (Đăng nhập đa vai trò), UC04 (Xem tài khoản mẫu demo).", "Use Cases thực thi: ")
+    add_bullet(doc, "AuthController.login(), UserRepository.findByUsername(), AccountRepository (PBKDF2WithHmacSHA256, 16-byte salt, 65.536 rounds), MainView.displayLoginScreen().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Người dùng khởi chạy Main.java, hệ thống hiển thị banner ASCII nghệ thuật của Food Delivery Simulation, thông báo nạp thành công 10 tệp CSV vật lý và hiển thị danh sách tài khoản demo cho 5 vai trò (Customer, Restaurant, Driver, Dispatcher, Admin). Đăng nhập an toàn bằng mật khẩu băm PBKDF2.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step1_login.png", "Hình 8.1: Màn hình khởi động hệ thống và xác thực đăng nhập đa vai trò bảo mật PBKDF2")
+
+    # Bước 2
+    add_heading_2(doc, "8.2. Bước 2: Khách hàng Duyệt Thực đơn, Tính Phí Haversine & Tạo Đơn hàng")
+    add_bullet(doc, "UC06 (Xem quán Quy Nhơn), UC07 (Xem menu), UC09 (Thêm vào giỏ), UC11 (Tính cước Haversine), UC12 (Đặt hàng).", "Use Cases thực thi: ")
+    add_bullet(doc, "CustomerController.browseRestaurants(), GeoUtils.calculateDistance(), OrderController.processOrder(), OrderRepository.save(), MenuItemRepository.deductStock().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Khách hàng C0001 (Võ Thảo Nguyên, Phường Ghềnh Ráng) duyệt quán R0001 (Bún Chả Cá Quy Nhơn Ngọc Liên). Hệ thống tính cước giao hàng dựa trên khoảng cách Haversine (2.41 km -> Phí ship 15.000 VNĐ). Đơn hàng O1794718628596 được khởi tạo với trạng thái PENDING, tồn kho món giảm từ 35 xuống 33 suất an toàn.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step2_customer_order.png", "Hình 8.2: Giao diện khách hàng xem menu, tính cước khoảng cách Haversine và đặt hàng")
+
+    # Bước 3
+    add_heading_2(doc, "8.3. Bước 3: Nhà hàng Tiếp nhận, Xác nhận Đơn & Đẩy vào Hàng đợi Điều phối")
+    add_bullet(doc, "UC16 (Xem đơn mới), UC19 (Xác nhận duyệt đơn), UC20 (Đẩy đơn vào điều phối trung tâm).", "Use Cases thực thi: ")
+    add_bullet(doc, "RestaurantController.getIncomingOrders(), OrderController.confirmOrderByRestaurant(), OrderRepository.update().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Chủ nhà hàng R0001 đăng nhập, nhận thông báo có đơn hàng mới O1794718628596 đang chờ. Nhà hàng kiểm tra món ăn và bấm phím '1. Xác nhận tiếp nhận đơn'. Hệ thống đổi trạng thái đơn sang CONFIRMED và tự động chuyển giao vào hàng đợi điều phối.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step3_restaurant_confirm.png", "Hình 8.3: Cổng nhà hàng đối tác tiếp nhận, duyệt đơn và đẩy vào hàng đợi điều phối")
+
+    # Bước 4
+    add_heading_2(doc, "8.4. Bước 4: Radar Điều phối & Hiển thị Bản đồ Trực quan ASCII Grid 16x50")
+    add_bullet(doc, "UC29 (Xem hàng đợi điều phối), UC31 (Tìm tài xế gần nhất GPS), UC32 (Tính toán ETA), UC35 (Hiển thị bản đồ ASCII).", "Use Cases thực thi: ")
+    add_bullet(doc, "MapView.renderAsciiMap(), DriverRepository.findNearestAvailable(), GeoUtils.calculateEstimatedMinutes(), OrderRepository.assignDriver().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Điều phối viên kích hoạt màn hình Radar Điều phối. Hệ thống vẽ bản đồ ASCII Grid 16 dòng x 50 cột thể hiện vị trí thực địa của các quán ăn [R], tài xế [D] và khách hàng [C]. Thuật toán tìm thấy tài xế D0144 đang AVAILABLE cách quán chỉ 0.85 km; tự động khóa và gán đơn hàng, tính ETA lấy món ~8 phút và giao món ~17 phút.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step4_dispatch_map.png", "Hình 8.4: Màn hình Radar điều phối trung tâm và bản đồ lưới không gian ASCII Grid 16x50")
+
+    # Bước 5
+    add_heading_2(doc, "8.5. Bước 5: Tài xế Nhận cuốc, Lấy món & Xác nhận Giao hàng Thành công")
+    add_bullet(doc, "UC24 (Bật/tắt nhận cuốc), UC25 (Xem đơn gán), UC26 (Xác nhận lấy món), UC27 (Xác nhận giao thành công), UC28 (Tự động giải phóng xe).", "Use Cases thực thi: ")
+    add_bullet(doc, "DriverController.getAssignedOrders(), OrderController.markOrderPickedUp(), OrderController.markOrderDelivered(), DriverRepository.markAvailable().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Tài xế D0144 xem đơn hàng được phân công, di chuyển đến quán và bấm '1. Xác nhận đã lấy món' (đơn chuyển DISPATCHED). Sau khi di chuyển tới địa chỉ khách hàng tại Ghềnh Ráng, tài xế bấm '2. Xác nhận giao thành công'. Đơn hàng chuyển sang DELIVERED, hệ thống tự động đổi trạng thái tài xế về AVAILABLE sẵn sàng nhận chuyến tiếp theo.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step5_driver_deliver.png", "Hình 8.5: Cổng tài xế xác nhận nhận cuốc, lấy thức ăn và giao hàng thành công")
+
+    # Bước 6
+    add_heading_2(doc, "8.6. Bước 6: Kịch bản Hủy Đơn hàng & Tự động Hoàn kho (Stock Rollback)")
+    add_bullet(doc, "UC14 (Khách hàng hủy đơn PENDING), UC21 (Nhà hàng từ chối đơn & hoàn kho).", "Use Cases thực thi: ")
+    add_bullet(doc, "OrderController.cancelPendingOrderByCustomer(), OrderController.rejectOrderByRestaurant(), MenuItemRepository.restoreStock().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Mô phỏng 2 kịch bản hoàn kho an toàn: (1) Khách hàng đổi ý bấm hủy đơn khi đơn vẫn PENDING -> Đơn chuyển CANCELLED, số lượng 2 suất bún chả cá được hoàn về kho (tồn kho phục hồi từ 33 lên 35); (2) Quán ăn từ chối tiếp nhận đơn -> Hệ thống tự động hủy đơn và khôi phục tồn kho tức thì.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step6_cancel_rollback.png", "Hình 8.6: Kịch bản hủy đơn hàng và cơ chế tự động khôi phục tồn kho (Stock Rollback)")
+
+    # Bước 7
+    add_heading_2(doc, "8.7. Bước 7: Thử nghiệm Tương tranh Đa luồng (Benchmark 4 Cơ chế Khóa)")
+    add_bullet(doc, "UC45 (Cấu hình Benchmark), UC46 (Chạy mô phỏng tương tranh), UC47 (Mô phỏng khách mua), UC48 (Mô phỏng điều phối), UC49 (Tự động phát hiện 3 lỗi), UC50 (Kiểm định 4 cơ chế), UC51 (Bảng đối soát).", "Use Cases thực thi: ")
+    add_bullet(doc, "SimulatorController.runSimulation(), CustomerSimTask, DispatchSimTask, SimulatorController.detectAllAnomalies(), SimulatorView.printBenchmarkTable().", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Kích hoạt mô phỏng 100 luồng khách hàng và 100 luồng điều phối đồng thời bắn giao dịch vào các file CSV vật lý. Kết quả đo lường: NO_LOCK bùng nổ 33 lỗi Race Condition; SYNCHRONIZED, OPTIMISTIC và FILE_LOCK sạch 100% lỗi. Khóa Lạc quan (OPTIMISTIC) đạt hiệu năng cao nhất với độ suy giảm thông lượng chỉ 10.8%.", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step7_concurrency_benchmark.png", "Hình 8.7: Bảng đo lường đối soát hiệu năng và phát hiện Race Condition giữa 4 cơ chế khóa")
+
+    # Bước 8
+    add_heading_2(doc, "8.8. Bước 8: Kiểm định Tự động Toàn diện Hệ thống (Automated System Verification Test Runner)")
+    add_bullet(doc, "Toàn bộ 51 Use Cases và 8 bộ kiểm định hệ thống độc lập.", "Use Cases thực thi: ")
+    add_bullet(doc, "util.SystemVerificationTest (chạy độc lập kiểm định toàn diện mã nguồn, toán học Haversine, đăng ký, đăng nhập, điều phối, bẫy lỗi và chu trình 9 bước).", "Lớp & Phương thức Java: ")
+    add_bullet(doc, "Chạy bộ kiểm thử tự động SystemVerificationTest: Toàn bộ 8/8 Test Suites đều vượt qua với kết quả tuyệt đối 100% PASS (Haversine chính xác 1137.8 km; Xử lý đơn lẻ trơn tru; Đo tải 4 cơ chế chính xác; Chống trùng lặp khách hàng/tài xế; Tự động ghép tài xế; Vòng đời 9 bước thực tế; Dự báo ETA Quy Nhơn chuẩn xác).", "Mô tả kịch bản: ")
+    add_figure(doc, "D:/Lab211-Group1/docs/demo_screenshots/step8_system_verification.png", "Hình 8.8: Kết quả chạy kiểm định tự động toàn diện SystemVerificationTest đạt 8/8 PASS")
+
+    # Bảng đối chiếu
+    add_heading_2(doc, "8.9. Bảng Đối chiếu Độc lập: Đặc tả Nghiệp vụ - Use Cases - Mã nguồn Java - Kết quả Kiểm định")
+    add_body(doc, "Bảng tổng hợp đối soát chứng minh tính trung thực và sự khớp nối tuyệt đối giữa các chương của đồ án:")
+
+    verif_headers = ["Hạng Mục Kiểm Định", "Yêu Cầu Đặc Tả Nghiệp Vụ", "Lớp & Phương Thức Thực Thi", "Tệp CSV Tác Động", "Kết Quả Thực Nghiệm", "Trạng Thái"]
+    verif_data = [
+        ["1. Xác thực PBKDF2", "Bảo mật mật khẩu salt 16-byte, chống dò pass", "AccountRepo, AuthController", "users.csv", "Xác thực đúng mật khẩu, chặn sai pass", "100% PASS"],
+        ["2. Khoảng cách Haversine", "Tính cự ly đường cong mặt cầu chính xác", "GeoUtils.calculateDistance()", "delivery_routes.csv", "Cự ly HN-HCM: 1137.80 km (Sai số < 0.1%)", "100% PASS"],
+        ["3. Đặt đơn & Cước ship", "Tạo đơn PENDING, trừ kho, tính phí", "OrderController, MenuItemRepo", "orders.csv, menu_items.csv", "Đơn tạo thành công, tồn kho giảm chính xác", "100% PASS"],
+        ["4. Duyệt & Gán đơn hàng", "Quán duyệt, điều phối tìm tài xế gần nhất", "RestaurantCtrl, OrderCtrl, DriverRepo", "orders.csv, drivers.csv", "Ghép tài xế gần nhất < 1km, chuyển CONFIRMED", "100% PASS"],
+        ["5. Nhận & Giao hàng", "Tài xế nhận đơn, lấy món và hoàn tất", "DriverCtrl, OrderCtrl", "orders.csv, drivers.csv", "Chuyển DISPATCHED -> DELIVERED, giải phóng xe", "100% PASS"],
+        ["6. Hủy đơn & Hoàn kho", "Khách/Quán hủy đơn, phục hồi tồn kho", "OrderCtrl.cancelPendingOrder()", "orders.csv, menu_items.csv", "Trạng thái CANCELLED, hoàn kho 100%", "100% PASS"],
+        ["7. Bẫy 3 Race Conditions", "Bẫy Double Assign, Oversell, Overload", "SimulatorCtrl, ConcurrencyException", "orders.csv, menu_items.csv", "NO_LOCK phát hiện 33 lỗi, OPTIMISTIC 0 lỗi", "100% PASS"],
+        ["8. Giải quyết Big Question", "Chứng minh Optimistic Locking tối ưu nhất", "SimulatorCtrl, SimulationRunRepo", "simulation_runs.csv", "Throughput Drop 10.80% (< 15%), 0% lỗi", "100% PASS"]
+    ]
+    create_table(doc, verif_headers, verif_data, [1.1, 1.4, 1.4, 1.0, 1.2, 0.6])
+
+    # Save document to all target paths
+    out_paths = [
+        "D:/Lab211-Group1/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx",
+        "D:/Lab211-Group1/Usecase/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx",
+        "docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx",
+        "D:/Lab211-Group1/NHOM_01_LAB211_FoodDelivery/docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx"
+    ]
+
+    for p in out_paths:
+        parent = os.path.dirname(p)
+        if parent and not os.path.exists(parent):
+            os.makedirs(parent, exist_ok=True)
+        doc.save(p)
+        print(f"Successfully saved Word Document: {p}")
+
+    print("\nALL 4 TARGET WORD DOCUMENTS SUCCESSFULLY GENERATED WITH CHAPTER 8 AND EMBEDDED DEMO SCREENSHOTS!")
 
 if __name__ == "__main__":
     build_full_document()
