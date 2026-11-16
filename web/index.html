@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Delivery Quy Nhơn - Hệ Thống Điều Phối Thực Tế</title>
+  
+  <!-- PWA Manifest & Meta -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea580c">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Leaflet CSS & JS for Real GPS Radar Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js for Concurrency Benchmark -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ea580c; }
+    .badge-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+    #radar-map { height: 500px; z-index: 10; border-radius: 0.75rem; }
+    .leaflet-popup-content-wrapper { background: #1e293b; color: #f8fafc; border: 1px solid #334155; }
+    .leaflet-popup-tip { background: #1e293b; }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans selection:bg-brand-500 selection:text-white">
+
+  <!-- TOP HEADER & ROLE SWITCHER -->
+  <header class="bg-slate-800/90 backdrop-blur border-b border-slate-700/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & City Tag -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPortal('customer')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+          <i data-lucide="utensils" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-lg tracking-tight text-white">Food<span class="text-brand-500">Delivery</span></span>
+            <span class="text-xs bg-brand-500/20 text-brand-400 font-semibold px-2 py-0.5 rounded-full border border-brand-500/30">TP. Quy Nhơn</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Hệ Thống LAB211 Chuẩn Thực Tế</p>
+        </div>
+      </div>
+
+      <!-- Live Server Status Indicator -->
+      <div class="hidden md:flex items-center space-x-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 badge-pulse" id="backend-dot"></span>
+        <span class="text-slate-300 font-medium" id="backend-status">Backend Online :8080</span>
+      </div>
+
+      <!-- Portal Tabs (Desktop) -->
+      <nav class="hidden lg:flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60 text-xs font-semibold">
+        <button onclick="switchPortal('customer')" id="tab-customer" class="portal-tab px-3 py-1.5 rounded-lg text-white bg-brand-600 shadow">
+          <i data-lucide="shopping-bag" class="w-3.5 h-3.5 inline mr-1"></i> Khách Hàng
+        </button>
+        <button onclick="switchPortal('kitchen')" id="tab-kitchen" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="chef-hat" class="w-3.5 h-3.5 inline mr-1"></i> Bếp Quán
+          <span id="badge-kitchen-orders" class="ml-1 bg-brand-500 text-white px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
+        </button>
+        <button onclick="switchPortal('driver')" id="tab-driver" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="bike" class="w-3.5 h-3.5 inline mr-1"></i> Tài Xế (App)
+          <span id="badge-driver-orders" class="ml-1 bg-emerald-500 text-white px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
+        </button>
+        <button onclick="switchPortal('dispatch')" id="tab-dispatch" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="radar" class="w-3.5 h-3.5 inline mr-1"></i> Radar GPS
+        </button>
+        <button onclick="switchPortal('benchmark')" id="tab-benchmark" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="cpu" class="w-3.5 h-3.5 inline mr-1"></i> Simulator
+        </button>
+      </nav>
+
+      <!-- Account Switcher & Cart Quick Action -->
+      <div class="flex items-center space-x-3">
+        <div class="relative">
+          <button onclick="toggleAccountMenu()" class="flex items-center space-x-2 bg-slate-700/70 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-600 transition">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-400"></i>
+            <span id="current-user-name">Đang tải...</span>
+            <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
+          </button>
+          <!-- Dropdown demo accounts -->
+          <div id="account-dropdown" class="hidden absolute right-0 mt-2 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-2 z-50 text-xs">
+            <div class="px-2 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Đổi Tài Khoản Demo</div>
+            <div class="space-y-1 mt-1 max-h-60 overflow-y-auto" id="demo-account-list"></div>
+          </div>
+        </div>
+
+        <!-- PWA Install Button -->
+        <button id="btn-pwa-install" class="hidden bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Cài Đặt App</span>
+        </button>
+
+        <!-- Cart Icon with Badge -->
+        <button onclick="openCartDrawer()" class="relative p-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-200 transition">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE BOTTOM NAVIGATION (Fixed) -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-slate-800 flex justify-around py-2 z-50 text-[10px] font-medium text-slate-400">
+    <button onclick="switchPortal('customer')" class="mob-tab flex flex-col items-center text-brand-500" id="mob-customer">
+      <i data-lucide="shopping-bag" class="w-5 h-5 mb-0.5"></i> Món Ăn
+    </button>
+    <button onclick="switchPortal('kitchen')" class="mob-tab flex flex-col items-center" id="mob-kitchen">
+      <i data-lucide="chef-hat" class="w-5 h-5 mb-0.5"></i> Bếp Quán
+    </button>
+    <button onclick="switchPortal('driver')" class="mob-tab flex flex-col items-center" id="mob-driver">
+      <i data-lucide="bike" class="w-5 h-5 mb-0.5"></i> Tài Xế
+    </button>
+    <button onclick="switchPortal('dispatch')" class="mob-tab flex flex-col items-center" id="mob-dispatch">
+      <i data-lucide="radar" class="w-5 h-5 mb-0.5"></i> Radar
+    </button>
+    <button onclick="switchPortal('benchmark')" class="mob-tab flex flex-col items-center" id="mob-benchmark">
+      <i data-lucide="cpu" class="w-5 h-5 mb-0.5"></i> Test
+    </button>
+  </nav>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 pb-20 lg:pb-6 overflow-y-auto">
+
+    <!-- ========================================================================= -->
+    <!-- PORTAL 1: CUSTOMER ORDERING (KHÁCH HÀNG ĐẶT MÓN) -->
+    <!-- ========================================================================= -->
+    <div id="portal-customer" class="space-y-6">
+      
+      <!-- Hero Banner & Filter Bar -->
+      <div class="bg-gradient-to-r from-brand-600 via-orange-600 to-amber-600 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="relative z-10 max-w-2xl">
+          <div class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold mb-3">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-200"></i>
+            <span id="cust-delivery-addr">Vị trí nhận: 28 Diên Hồng, P. Ngô Mây, TP. Quy Nhơn</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Hôm nay bạn muốn ăn gì ở Quy Nhơn?</h1>
+          <p class="mt-2 text-sm text-orange-100">Bánh xèo tôm nhảy, bún chả cá, cơm gà xé, nem nướng... Giao nhanh trong 20 phút bằng thuật toán điều phối thông minh!</p>
+        </div>
+        <div class="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
+          <i data-lucide="utensils" class="w-72 h-72"></i>
+        </div>
+      </div>
+
+      <!-- Filters & Restaurant Cards Carousel -->
+      <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <h2 class="text-lg font-bold text-slate-100 flex items-center">
+            <i data-lucide="store" class="w-5 h-5 text-brand-500 mr-2"></i> Danh Sách Quán Ăn Đối Tác
+          </h2>
+          <div class="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
+            <button onclick="filterRestaurantCategory('ALL')" class="category-chip px-3 py-1.5 rounded-full bg-brand-600 text-white font-medium">Tất cả</button>
+            <button onclick="filterRestaurantCategory('Bánh xèo')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Bánh xèo</button>
+            <button onclick="filterRestaurantCategory('Cơm gà')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Cơm gà</button>
+            <button onclick="filterRestaurantCategory('Bún chả cá')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Bún cá</button>
+            <button onclick="filterRestaurantCategory('Đặc sản')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Đặc sản</button>
+          </div>
+        </div>
+
+        <!-- Restaurants Horizontal Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="restaurant-cards-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Selected Restaurant's Menu Items Section -->
+      <div class="mt-8 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-white flex items-center" id="selected-restaurant-title">
+              Thực đơn: Bánh Xèo Tôm Nhảy Gia Vĩ
+            </h3>
+            <p class="text-xs text-slate-400" id="selected-restaurant-desc">Khoảng cách: 0.8 km | Phí giao dự kiến: 15.000đ</p>
+          </div>
+          <span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-lg border border-slate-700" id="menu-items-count">0 món</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="menu-items-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Live Order Tracking Stepper (If customer has active order) -->
+      <div id="customer-active-orders-section" class="mt-8 bg-slate-800/80 rounded-2xl p-5 border border-slate-700/80 hidden">
+        <div class="flex items-center justify-between mb-4 border-b border-slate-700/60 pb-3">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full bg-amber-400 badge-pulse"></span>
+            <h3 class="font-bold text-sm text-white">Đơn Hàng Đang Giao Của Bạn</h3>
+            <span id="active-order-id-badge" class="text-xs bg-slate-700 text-brand-400 px-2 py-0.5 rounded font-mono">#ORD...</span>
+          </div>
+          <button onclick="cancelActiveOrder()" id="btn-cancel-active-order" class="text-xs bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-lg transition font-medium">
+            Hủy đơn hàng (Hoàn kho)
+          </button>
+        </div>
+
+        <!-- Stepper Progress Bar -->
+        <div class="relative py-4">
+          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-slate-700">
+            <div id="stepper-progress-bar" style="width: 25%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-brand-500 transition-all duration-500"></div>
+          </div>
+          <div class="grid grid-cols-4 text-center text-xs font-semibold">
+            <div class="step-node text-brand-400" id="step-node-1">
+              <i data-lucide="file-check" class="w-5 h-5 mx-auto mb-1"></i> 1. Đã đặt
+            </div>
+            <div class="step-node text-slate-500" id="step-node-2">
+              <i data-lucide="chef-hat" class="w-5 h-5 mx-auto mb-1"></i> 2. Bếp nhận
+            </div>
+            <div class="step-node text-slate-500" id="step-node-3">
+              <i data-lucide="bike" class="w-5 h-5 mx-auto mb-1"></i> 3. Đang giao
+            </div>
+            <div class="step-node text-slate-500" id="step-node-4">
+              <i data-lucide="check-circle" class="w-5 h-5 mx-auto mb-1"></i> 4. Đã nhận
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 bg-slate-900/60 p-3 rounded-xl flex items-center justify-between text-xs text-slate-300">
+          <div id="order-stepper-details">Tài xế: Đang tìm tài xế gần nhất...</div>
+          <div class="font-bold text-brand-400" id="order-stepper-total">0 đ</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PORTAL 2: RESTAURANT KITCHEN (BẾP NHÀ HÀNG) -->
+    <!-- ========================================================================= -->
+    <div id="portal-kitchen" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-xl bg-orange-600/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
+            <i data-lucide="flame" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center">
+              Màn Hình Chế Biến: <span id="kitchen-current-rest-name" class="text-brand-400 ml-1.5">Bánh Xèo Tôm Nhảy Gia Vĩ</span>
+            </h2>
+            <p class="text-xs text-slate-400">Tự động nhận chuông báo khi có đơn mới từ khách hàng</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <select id="kitchen-rest-select" onchange="changeKitchenRestaurant(this.value)" class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-brand-500">
+            <!-- Populated with restaurants -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Live KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-slate-800/70 p-4 rounded-xl border border-slate-700">
+          <p class="text-xs text-slate-400">Đơn chờ tiếp nhận</p>
+          <h4 class="text-2xl font-black text-amber-400 mt-1" id="kpi-kitchen-pending">0</h4>
+        </div>
+        <div class="bg-slate-800/70 p-4 rounded-xl border border-slate-700">
+          <p class="text-xs text-slate-400">Đơn đang nấu</p>
+          <h4 class="text-2xl font-black text-brand-400 mt-1" id="kpi-kitchen-cooking">0</h4>
+        </div>
+        <div class="bg-slate-800/70 p-4 rounded-xl border border-slate-700">
+          <p class="text-xs text-slate-400">Doanh thu tạm tính</p>
+          <h4 class="text-2xl font-black text-emerald-400 mt-1" id="kpi-kitchen-rev">0 đ</h4>
+        </div>
+      </div>
+
+      <!-- Live Order Tickets for Kitchen -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-200 flex items-center">
+            <i data-lucide="receipt" class="w-4 h-4 text-brand-500 mr-2"></i> Danh Sách Đơn Cần Nấu
+          </h3>
+          <span class="text-xs text-slate-400">Hạn chót xác nhận: 5 phút / đơn</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="kitchen-tickets-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Stock Management & Quick Restock -->
+      <div class="mt-8 bg-slate-800/60 rounded-xl p-5 border border-slate-700 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
+          <h3 class="text-sm font-bold text-white flex items-center">
+            <i data-lucide="boxes" class="w-4 h-4 text-brand-500 mr-2"></i> Quản Lý Tồn Kho Nguyên Liệu Món Ăn
+          </h3>
+          <button onclick="loadKitchenStock()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded text-slate-200">
+            <i data-lucide="rotate-cw" class="w-3 h-3 inline mr-1"></i> Làm mới kho
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/60 text-slate-400 uppercase font-semibold text-[11px]">
+              <tr>
+                <th class="px-4 py-2.5">Mã Món</th>
+                <th class="px-4 py-2.5">Tên Món Ăn</th>
+                <th class="px-4 py-2.5">Giá Bán</th>
+                <th class="px-4 py-2.5">Tồn Kho Hiện Tại</th>
+                <th class="px-4 py-2.5 text-right">Thao Tác Nhập Hàng</th>
+              </tr>
+            </thead>
+            <tbody id="kitchen-stock-table-body" class="divide-y divide-slate-700/50">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PORTAL 3: DRIVER MOBILE APP (TÀI XẾ NHẬN CUỐC) -->
+    <!-- ========================================================================= -->
+    <div id="portal-driver" class="space-y-6 hidden max-w-xl mx-auto">
+      
+      <!-- Driver Status Card -->
+      <div class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-xl space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+              <i data-lucide="bike" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-white" id="drv-name-display">Tài Xế: Nguyễn Văn Tài</h3>
+              <p class="text-xs text-slate-400" id="drv-sub-display">Biển số: 77L1-8899 | Đánh giá: 4.9 ★</p>
+            </div>
+          </div>
+
+          <!-- Online/Offline Switch -->
+          <div class="flex items-center space-x-2">
+            <button onclick="toggleDriverOnline()" id="btn-driver-status-toggle" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 bg-emerald-600 text-white shadow-lg shadow-emerald-600/30">
+              <span class="w-2 h-2 rounded-full bg-white badge-pulse"></span>
+              <span id="drv-status-text">ĐANG SẴN SÀNG</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-700/60 text-center text-xs">
+          <div class="bg-slate-900/60 p-2 rounded-lg">
+            <span class="text-slate-400 block text-[10px]">Cuốc hôm nay</span>
+            <span class="font-bold text-slate-100 text-sm" id="drv-trips-count">8</span>
+          </div>
+          <div class="bg-slate-900/60 p-2 rounded-lg">
+            <span class="text-slate-400 block text-[10px]">Thu nhập ship</span>
+            <span class="font-bold text-emerald-400 text-sm" id="drv-income-display">160.000 đ</span>
+          </div>
+          <div class="bg-slate-900/60 p-2 rounded-lg">
+            <span class="text-slate-400 block text-[10px]">Tọa độ GPS</span>
+            <span class="font-mono text-slate-300 text-[11px]" id="drv-gps-display">13.78, 109.21</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Delivery Job Card -->
+      <div id="driver-active-trip-card" class="bg-slate-800/90 rounded-2xl p-5 border border-brand-500/40 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+          <span class="text-xs bg-brand-500/20 text-brand-400 px-2.5 py-1 rounded-full font-semibold border border-brand-500/30 flex items-center">
+            <i data-lucide="navigation" class="w-3.5 h-3.5 mr-1"></i> Cuốc Đang Thực Hiện
+          </span>
+          <span class="font-mono text-xs text-slate-300" id="driver-job-order-id">#ORD-9021</span>
+        </div>
+
+        <!-- Waypoint: Pickup Restaurant -->
+        <div class="flex items-start space-x-3 text-xs">
+          <div class="w-6 h-6 rounded-full bg-orange-600/30 text-brand-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <i data-lucide="store" class="w-3.5 h-3.5"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-[11px] text-slate-400 uppercase font-semibold">Điểm lấy món (Quán ăn)</p>
+            <p class="font-bold text-white text-sm" id="driver-job-restaurant-name">Bánh Xèo Tôm Nhảy Gia Vĩ</p>
+            <p class="text-slate-300" id="driver-job-restaurant-addr">14 Diên Hồng, P. Lê Hồng Phong, Quy Nhơn</p>
+          </div>
+        </div>
+
+        <!-- Waypoint: Dropoff Customer -->
+        <div class="flex items-start space-x-3 text-xs border-t border-slate-700/60 pt-3">
+          <div class="w-6 h-6 rounded-full bg-emerald-600/30 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-[11px] text-slate-400 uppercase font-semibold">Điểm giao hàng (Khách)</p>
+            <p class="font-bold text-white text-sm" id="driver-job-customer-name">Trần Quang Đạt</p>
+            <p class="text-slate-300" id="driver-job-customer-addr">28 Diên Hồng, P. Ngô Mây, Quy Nhơn</p>
+          </div>
+        </div>
+
+        <!-- Action Step Buttons -->
+        <div class="pt-2 flex flex-col gap-2" id="driver-trip-actions">
+          <button onclick="driverPickupOrder()" id="btn-driver-pickup" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
+            <i data-lucide="package-check" class="w-4 h-4"></i>
+            <span>BƯỚC 1: XÁC NHẬN ĐÃ LẤY MÓN (DISPATCHED)</span>
+          </button>
+          <button onclick="driverDeliverOrder()" id="btn-driver-deliver" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition hidden">
+            <i data-lucide="check-check" class="w-4 h-4"></i>
+            <span>BƯỚC 2: XÁC NHẬN ĐÃ GIAO TẬN TAY (DELIVERED)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- No Job State Placeholder -->
+      <div id="driver-no-job-card" class="bg-slate-800/40 rounded-2xl p-8 border border-slate-700/50 text-center space-y-3 hidden">
+        <div class="w-16 h-16 rounded-full bg-slate-700/50 text-slate-400 flex items-center justify-center mx-auto">
+          <i data-lucide="coffee" class="w-8 h-8"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">Chưa Có Cuốc Mới</h4>
+        <p class="text-xs text-slate-400 max-w-xs mx-auto">Bạn đang ở chế độ trực tuyến. Hệ thống sẽ tự động ghép cuốc gần nhất khi quán làm xong món.</p>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PORTAL 4: CENTRAL DISPATCHER & GPS RADAR MAP -->
+    <!-- ========================================================================= -->
+    <div id="portal-dispatch" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center">
+            <i data-lucide="radar" class="w-5 h-5 text-brand-500 mr-2"></i> Radar Điều Phối Trung Tâm (TP. Quy Nhơn)
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Giám sát vị trí thời gian thực của Quán Ăn, Tài Xế và Khách Hàng trên bản đồ OpenStreetMap</p>
+        </div>
+        
+        <!-- One Click Auto Dispatch Button -->
+        <button onclick="triggerAutoDispatch()" class="bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-brand-500/30 flex items-center space-x-2 transition">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+          <span>TỰ ĐỘNG ĐIỀU PHỐI (AUTO DISPATCH)</span>
+        </button>
+      </div>
+
+      <!-- Live Radar Map Container -->
+      <div class="bg-slate-800 rounded-2xl p-2 border border-slate-700 shadow-2xl">
+        <div id="radar-map"></div>
+      </div>
+
+      <!-- Unassigned Queue & Metrics Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Live Drivers Status List -->
+        <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+            <h4 class="text-xs font-bold uppercase text-slate-300 flex items-center">
+              <i data-lucide="users" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Đội Ngũ Tài Xế
+            </h4>
+            <span class="text-[11px] text-emerald-400 font-bold" id="radar-online-drivers-count">0 online</span>
+          </div>
+          <div class="space-y-2 max-h-56 overflow-y-auto" id="radar-drivers-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Pending Dispatch Queue (Orders in ACCEPTED) -->
+        <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 space-y-3 lg:col-span-2">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+            <h4 class="text-xs font-bold uppercase text-slate-300 flex items-center">
+              <i data-lucide="clock" class="w-4 h-4 text-amber-400 mr-1.5"></i> Đơn Hàng Đang Chờ Ghép Tài Xế
+            </h4>
+            <span class="text-[11px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-bold" id="radar-pending-orders-count">0 đơn</span>
+          </div>
+          <div class="space-y-2 max-h-56 overflow-y-auto" id="radar-pending-orders-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PORTAL 5: CONCURRENCY BENCHMARK SIMULATOR -->
+    <!-- ========================================================================= -->
+    <div id="portal-benchmark" class="space-y-6 hidden">
+      <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center">
+              <i data-lucide="cpu" class="w-5 h-5 text-brand-500 mr-2"></i> Trình Đo Lường Hiệu Năng Đồng Thời (Benchmark)
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Stress test tải 100 - 700 đơn song song với 4 cơ chế quản lý giao dịch LAB211</p>
+          </div>
+          <button onclick="adminRestockAll()" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Khôi Phục Kho Ban Đầu</span>
+          </button>
+        </div>
+
+        <!-- Simulation Configuration Controls -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Số Lượng Đơn Đặt Song Song</label>
+            <select id="sim-order-count" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+              <option value="100">100 đơn đồng thời (Tải nhẹ)</option>
+              <option value="200" selected>200 đơn đồng thời (Tải vừa)</option>
+              <option value="300">300 đơn đồng thời (Tải cao)</option>
+              <option value="500">500 đơn đồng thời (Cực hạn)</option>
+              <option value="700">700 đơn đồng thời (Stress Test Max)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Chiến Lược Khóa (Concurrency Lock)</label>
+            <select id="sim-lock-strategy" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+              <option value="NO_LOCK">1. NO_LOCK (Không khóa - Bán khống/Âm kho)</option>
+              <option value="SYNCHRONIZED" selected>2. SYNCHRONIZED (Khóa đồng bộ Java)</option>
+              <option value="OPTIMISTIC">3. OPTIMISTIC (Khóa lạc quan Version Check)</option>
+              <option value="FILE_LOCK">4. FILE_LOCK (Khóa File vật lý FileChannel)</option>
+            </select>
+          </div>
+
+          <div class="flex items-end">
+            <button onclick="runBenchmarkSimulation()" id="btn-run-simulation" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-brand-500/20 transition">
+              <i data-lucide="play" class="w-4 h-4"></i>
+              <span id="btn-run-sim-text">CHẠY KIỂM THỬ TẢI</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Chart & Benchmark History -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart Canvas -->
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-3">
+          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center">
+            <i data-lucide="bar-chart-3" class="w-4 h-4 text-brand-500 mr-2"></i> Biểu Đồ Thông Lượng (Throughput - Đơn/Giây)
+          </h4>
+          <div class="h-64">
+            <canvas id="benchmarkChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Benchmark Execution Log Table -->
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-3">
+          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center">
+            <i data-lucide="table" class="w-4 h-4 text-emerald-400 mr-2"></i> Kết Quả Đo Lường Chi Tiết
+          </h4>
+          <div class="overflow-x-auto max-h-64 overflow-y-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/60 text-slate-400 uppercase text-[10px]">
+                <tr>
+                  <th class="p-2">Chiến Lược</th>
+                  <th class="p-2">Tải</th>
+                  <th class="p-2">Thời gian</th>
+                  <th class="p-2">Throughput</th>
+                  <th class="p-2">Lỗi Bán Khống</th>
+                </tr>
+              </thead>
+              <tbody id="benchmark-log-tbody" class="divide-y divide-slate-700/50">
+                <!-- Log rows added by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- CART DRAWER (Khách hàng xem giỏ hàng & Đặt đơn) -->
+  <!-- ========================================================================= -->
+  <div id="cart-drawer-overlay" onclick="closeCartDrawer()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <div id="cart-drawer" class="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <i data-lucide="shopping-cart" class="w-5 h-5 text-brand-500"></i>
+        <h3 class="font-bold text-base text-white">Giỏ Hàng Của Bạn</h3>
+      </div>
+      <button onclick="closeCartDrawer()" class="p-1 rounded-lg hover:bg-slate-800 text-slate-400">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Cart Item List -->
+    <div class="flex-1 p-4 overflow-y-auto space-y-3" id="cart-items-container">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Pricing Summary & Checkout -->
+    <div class="p-5 border-t border-slate-800 bg-slate-800/60 space-y-3">
+      <div class="space-y-1.5 text-xs text-slate-300">
+        <div class="flex justify-between">
+          <span>Tiền món ăn:</span>
+          <span class="font-semibold text-white" id="cart-subtotal">0 đ</span>
+        </div>
+        <div class="flex justify-between">
+          <span id="cart-shipping-desc">Phí giao hàng Quy Nhơn (Haversine):</span>
+          <span class="font-semibold text-white" id="cart-shipping">15.000 đ</span>
+        </div>
+        <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-slate-700">
+          <span>Tổng thanh toán:</span>
+          <span class="text-brand-400 font-extrabold text-base" id="cart-total">0 đ</span>
+        </div>
+      </div>
+
+      <button onclick="submitOrderCheckout()" id="btn-submit-order" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-brand-500/25 transition">
+        <i data-lucide="check" class="w-4 h-4"></i>
+        <span>TIẾN HÀNH ĐẶT MÓN NGAY</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Audio Chimes & Synthesis -->
+  <script>
+    // Web Audio API Synthesizer for notifications
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep(freq = 587.33, type = 'sine', duration = 0.15) {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn("Audio Context blocked or not ready", e);
+      }
+    }
+    function playSuccessChime() {
+      playBeep(523.25, 'triangle', 0.1);
+      setTimeout(() => playBeep(659.25, 'triangle', 0.15), 100);
+      setTimeout(() => playBeep(783.99, 'triangle', 0.25), 200);
+    }
+    function playAlertChime() {
+      playBeep(440, 'sawtooth', 0.15);
+      setTimeout(() => playBeep(880, 'sawtooth', 0.2), 150);
+    }
+  </script>
+
+  <!-- APP STATE & BUSINESS LOGIC -->
+  <script>
+    const STATE = {
+      activePortal: 'customer',
+      currentUser: null,
+      demoAccounts: { customers: [], restaurants: [], drivers: [] },
+      restaurants: [],
+      selectedRestaurantId: 'REST001',
+      menuItems: [],
+      cart: {}, // { [menuItemId]: quantity }
+      orders: [],
+      activeCustomerOrderId: null,
+      drivers: [],
+      map: null,
+      mapMarkers: [],
+      mapRouteLine: null,
+      chartInstance: null,
+      benchmarkLogs: []
+    };
+
+    // Quy Nhon center coordinates
+    const QUY_NHON_CENTER = [13.7829, 109.2197];
+
+    // PWA Install Prompt Handler
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const pwaBtn = document.getElementById('btn-pwa-install');
+      if (pwaBtn) pwaBtn.classList.remove('hidden');
+    });
+
+    document.getElementById('btn-pwa-install')?.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('PWA prompt outcome:', outcome);
+        deferredPrompt = null;
+        document.getElementById('btn-pwa-install').classList.add('hidden');
+      }
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('ServiceWorker registered:', reg.scope))
+        .catch(err => console.warn('ServiceWorker registration failed:', err));
+    }
+
+    // Portal Switcher
+    function switchPortal(portalId) {
+      STATE.activePortal = portalId;
+      
+      // Toggle views
+      ['customer', 'kitchen', 'driver', 'dispatch', 'benchmark'].forEach(p => {
+        const el = document.getElementById(`portal-${p}`);
+        if (el) el.classList.toggle('hidden', p !== portalId);
+        
+        // Desktop tabs
+        const tab = document.getElementById(`tab-${p}`);
+        if (tab) {
+          if (p === portalId) {
+            tab.className = 'portal-tab px-3 py-1.5 rounded-lg text-white bg-brand-600 shadow';
+          } else {
+            tab.className = 'portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white';
+          }
+        }
+
+        // Mobile tabs
+        const mob = document.getElementById(`mob-${p}`);
+        if (mob) {
+          mob.className = `mob-tab flex flex-col items-center ${p === portalId ? 'text-brand-500' : 'text-slate-400'}`;
+        }
+      });
+
+      // Special handling per portal
+      if (portalId === 'dispatch') {
+        setTimeout(initOrRefreshMap, 200);
+      } else if (portalId === 'kitchen') {
+        loadKitchenStock();
+      } else if (portalId === 'benchmark') {
+        setTimeout(initBenchmarkChart, 100);
+      }
+      lucide.createIcons();
+    }
+
+    // Initialize application
+    async function initApp() {
+      try {
+        await checkBackendStatus();
+        await loadDemoAccounts();
+        await loadRestaurants();
+        await loadDrivers();
+        await loadOrders();
+        
+        // Auto select first customer as default
+        if (STATE.demoAccounts.customers.length > 0) {
+          selectUser(STATE.demoAccounts.customers[0], 'CUSTOMER');
+        }
+
+        // Start real-time polling every 3 seconds
+        setInterval(pollLiveData, 3000);
+      } catch (err) {
+        console.error("Init Error:", err);
+      }
+    }
+
+    async function checkBackendStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        document.getElementById('backend-status').innerText = `Backend Online :${data.port}`;
+        document.getElementById('backend-dot').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 badge-pulse';
+      } catch (e) {
+        document.getElementById('backend-status').innerText = 'Offline (Mất kết nối)';
+        document.getElementById('backend-dot').className = 'w-2.5 h-2.5 rounded-full bg-red-500';
+      }
+    }
+
+    async function loadDemoAccounts() {
+      try {
+        const res = await fetch('/api/auth/demo-accounts');
+        const list = await res.json();
+        
+        STATE.demoAccounts = {
+          customers: list.filter(a => a.role === 'CUSTOMER').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username })),
+          drivers: list.filter(a => a.role === 'DRIVER').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username })),
+          restaurants: list.filter(a => a.role === 'RESTAURANT').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username }))
+        };
+
+        try {
+          const custRes = await fetch('/api/customers');
+          const custList = await custRes.json();
+          if (custList && custList.length > 0) {
+            STATE.demoAccounts.customers.forEach(c => {
+              const matched = custList.find(cust => cust.id === c.id);
+              if (matched) {
+                c.address = matched.address;
+                c.phone = matched.phone;
+              } else {
+                c.address = "28 Diên Hồng, P. Ngô Mây, TP. Quy Nhơn";
+              }
+            });
+          }
+        } catch (e) {}
+
+        renderAccountDropdown();
+      } catch (err) {
+        console.error("loadDemoAccounts error", err);
+      }
+    }
+
+    function renderAccountDropdown() {
+      const container = document.getElementById('demo-account-list');
+      container.innerHTML = '';
+
+      // Customers
+      const custHead = document.createElement('div');
+      custHead.className = 'text-[10px] text-brand-400 font-bold px-2 pt-1';
+      custHead.innerText = 'Khách Hàng (Customer)';
+      container.appendChild(custHead);
+
+      STATE.demoAccounts.customers.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'px-2 py-1.5 hover:bg-slate-700/80 rounded cursor-pointer text-slate-200 flex justify-between items-center';
+        item.onclick = () => { selectUser(c, 'CUSTOMER'); toggleAccountMenu(); };
+        item.innerHTML = `<span>${c.name}</span><span class="text-[10px] text-slate-400">${c.id}</span>`;
+        container.appendChild(item);
+      });
+
+      // Drivers
+      const drvHead = document.createElement('div');
+      drvHead.className = 'text-[10px] text-emerald-400 font-bold px-2 pt-2 border-t border-slate-700/60 mt-1';
+      drvHead.innerText = 'Tài Xế (Driver)';
+      container.appendChild(drvHead);
+
+      STATE.demoAccounts.drivers.forEach(d => {
+        const item = document.createElement('div');
+        item.className = 'px-2 py-1.5 hover:bg-slate-700/80 rounded cursor-pointer text-slate-200 flex justify-between items-center';
+        item.onclick = () => { selectUser(d, 'DRIVER'); switchPortal('driver'); toggleAccountMenu(); };
+        item.innerHTML = `<span>${d.name}</span><span class="text-[10px] text-slate-400">${d.id}</span>`;
+        container.appendChild(item);
+      });
+
+      // Kitchen
+      const restHead = document.createElement('div');
+      restHead.className = 'text-[10px] text-amber-400 font-bold px-2 pt-2 border-t border-slate-700/60 mt-1';
+      restHead.innerText = 'Bếp Nhà Hàng (Kitchen)';
+      container.appendChild(restHead);
+
+      STATE.demoAccounts.restaurants.forEach(r => {
+        const item = document.createElement('div');
+        item.className = 'px-2 py-1.5 hover:bg-slate-700/80 rounded cursor-pointer text-slate-200 flex justify-between items-center';
+        item.onclick = () => { selectUser(r, 'RESTAURANT'); switchPortal('kitchen'); toggleAccountMenu(); };
+        item.innerHTML = `<span>${r.name}</span><span class="text-[10px] text-slate-400">${r.id}</span>`;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleAccountMenu() {
+      document.getElementById('account-dropdown').classList.toggle('hidden');
+    }
+
+    function selectUser(userObj, role) {
+      STATE.currentUser = { ...userObj, role };
+      document.getElementById('current-user-name').innerText = `${userObj.name} (${role})`;
+      
+      if (role === 'CUSTOMER') {
+        document.getElementById('cust-delivery-addr').innerText = `Vị trí nhận: ${userObj.address || '28 Diên Hồng, P. Ngô Mây, Quy Nhơn'}`;
+        renderCustomerActiveOrder();
+      } else if (role === 'DRIVER') {
+        document.getElementById('drv-name-display').innerText = `Tài Xế: ${userObj.name}`;
+        document.getElementById('drv-sub-display').innerText = `Mã: ${userObj.id} | Biển số: ${userObj.vehicleNumber || '77L1-8899'} | Đánh giá: 4.9 ★`;
+        renderDriverActiveTrip();
+      } else if (role === 'RESTAURANT') {
+        changeKitchenRestaurant(userObj.id);
+      }
+    }
+
+    // Load Restaurants & Menus
+    async function loadRestaurants() {
+      const res = await fetch('/api/restaurants');
+      STATE.restaurants = await res.json();
+      renderRestaurantCards();
+      populateKitchenRestSelect();
+      if (STATE.restaurants.length > 0) {
+        selectRestaurant(STATE.restaurants[0].id);
+      }
+    }
+
+    function renderRestaurantCards(filterCat = 'ALL') {
+      const container = document.getElementById('restaurant-cards-container');
+      container.innerHTML = '';
+
+      STATE.restaurants.forEach(r => {
+        const isSelected = r.id === STATE.selectedRestaurantId;
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-xl border transition cursor-pointer ${
+          isSelected ? 'bg-slate-800 border-brand-500 shadow-lg shadow-brand-500/10' : 'bg-slate-800/60 border-slate-700 hover:border-slate-600'
+        }`;
+        card.onclick = () => selectRestaurant(r.id);
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="font-bold text-white text-sm flex items-center">
+                ${r.name}
+              </h4>
+              <p class="text-xs text-slate-400 mt-0.5">${r.address}</p>
+            </div>
+            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-bold">★ ${r.rating || '4.8'}</span>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+            <span><i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1 text-slate-500"></i>${r.phone}</span>
+            <span class="text-brand-400 font-semibold">Chọn xem thực đơn →</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    async function selectRestaurant(restaurantId) {
+      STATE.selectedRestaurantId = restaurantId;
+      const rest = STATE.restaurants.find(r => r.id === restaurantId);
+      if (rest) {
+        document.getElementById('selected-restaurant-title').innerText = `Thực đơn: ${rest.name}`;
+        document.getElementById('selected-restaurant-desc').innerText = `Địa chỉ: ${rest.address} | Phí ship Quy Nhơn từ 15.000đ`;
+      }
+      renderRestaurantCards();
+
+      // Fetch Menu
+      const res = await fetch(`/api/menu?restaurantId=${restaurantId}`);
+      STATE.menuItems = await res.json();
+      renderMenuItems();
+    }
+
+    function renderMenuItems() {
+      const container = document.getElementById('menu-items-container');
+      container.innerHTML = '';
+      document.getElementById('menu-items-count').innerText = `${STATE.menuItems.length} món`;
+
+      STATE.menuItems.forEach(item => {
+        const inCart = STATE.cart[item.id] || 0;
+        const card = document.createElement('div');
+        card.className = 'bg-slate-800/80 rounded-xl p-4 border border-slate-700/80 flex flex-col justify-between hover:border-slate-600 transition';
+
+        const isOutOfStock = item.stockQty <= 0;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded">${item.category || 'Món chính'}</span>
+              <span class="text-[11px] font-semibold ${isOutOfStock ? 'text-red-400' : 'text-emerald-400'}">
+                ${isOutOfStock ? 'Hết hàng' : `Còn ${item.stockQty} phần`}
+              </span>
+            </div>
+            <h5 class="font-bold text-white text-sm mt-2">${item.name}</h5>
+            <p class="text-brand-400 font-extrabold text-sm mt-1">${formatCurrency(item.price)}</p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between">
+            ${isOutOfStock ? `
+              <button disabled class="w-full bg-slate-700 text-slate-500 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed">
+                Tạm hết hàng
+              </button>
+            ` : inCart === 0 ? `
+              <button onclick="addToCart('${item.id}')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Thêm Vào Giỏ</span>
+              </button>
+            ` : `
+              <div class="w-full flex items-center justify-between bg-slate-900 rounded-lg p-1 border border-slate-700">
+                <button onclick="changeCartQty('${item.id}', -1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded font-bold flex items-center justify-center text-xs">-</button>
+                <span class="font-bold text-xs text-white">${inCart}</span>
+                <button onclick="changeCartQty('${item.id}', 1)" class="w-7 h-7 bg-brand-600 hover:bg-brand-500 text-white rounded font-bold flex items-center justify-center text-xs">+</button>
+              </div>
+            `}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    // CART LOGIC
+    function addToCart(menuItemId) {
+      STATE.cart[menuItemId] = (STATE.cart[menuItemId] || 0) + 1;
+      playBeep(600, 'sine', 0.1);
+      updateCartUI();
+      renderMenuItems();
+    }
+
+    function changeCartQty(menuItemId, delta) {
+      const current = STATE.cart[menuItemId] || 0;
+      const next = current + delta;
+      if (next <= 0) {
+        delete STATE.cart[menuItemId];
+      } else {
+        STATE.cart[menuItemId] = next;
+      }
+      playBeep(next > current ? 600 : 450, 'sine', 0.1);
+      updateCartUI();
+      renderMenuItems();
+      renderCartDrawer();
+    }
+
+    function updateCartUI() {
+      const totalQty = Object.values(STATE.cart).reduce((a, b) => a + b, 0);
+      const badge = document.getElementById('cart-badge');
+      if (totalQty > 0) {
+        badge.innerText = totalQty;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function openCartDrawer() {
+      renderCartDrawer();
+      document.getElementById('cart-drawer-overlay').classList.remove('hidden');
+      document.getElementById('cart-drawer').classList.remove('translate-x-full');
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cart-drawer').classList.add('translate-x-full');
+      document.getElementById('cart-drawer-overlay').classList.add('hidden');
+    }
+
+    function renderCartDrawer() {
+      const container = document.getElementById('cart-items-container');
+      container.innerHTML = '';
+
+      const itemIds = Object.keys(STATE.cart);
+      if (itemIds.length === 0) {
+        container.innerHTML = `
+          <div class="h-64 flex flex-col items-center justify-center text-slate-500 text-xs">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mb-2 stroke-1"></i>
+            <p>Giỏ hàng của bạn đang trống</p>
+          </div>
+        `;
+        document.getElementById('cart-subtotal').innerText = '0 đ';
+        document.getElementById('cart-total').innerText = '0 đ';
+        lucide.createIcons();
+        return;
+      }
+
+      let subtotal = 0;
+      itemIds.forEach(id => {
+        const item = STATE.menuItems.find(m => m.id === id);
+        const qty = STATE.cart[id];
+        if (item) {
+          const itemTotal = item.price * qty;
+          subtotal += itemTotal;
+
+          const row = document.createElement('div');
+          row.className = 'bg-slate-800/80 p-3 rounded-xl border border-slate-700 flex items-center justify-between text-xs';
+          row.innerHTML = `
+            <div class="flex-1 pr-2">
+              <h6 class="font-bold text-white">${item.name}</h6>
+              <p class="text-slate-400">${formatCurrency(item.price)} x ${qty}</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeCartQty('${id}', -1)" class="w-6 h-6 bg-slate-700 text-white rounded flex items-center justify-center">-</button>
+              <span class="font-bold text-white">${qty}</span>
+              <button onclick="changeCartQty('${id}', 1)" class="w-6 h-6 bg-brand-600 text-white rounded flex items-center justify-center">+</button>
+              <span class="font-bold text-brand-400 ml-2">${formatCurrency(itemTotal)}</span>
+            </div>
+          `;
+          container.appendChild(row);
+        }
+      });
+
+      const shippingFee = 15000; // Flat 15k Quy Nhon inner city
+      const total = subtotal + shippingFee;
+
+      document.getElementById('cart-subtotal').innerText = formatCurrency(subtotal);
+      document.getElementById('cart-shipping').innerText = formatCurrency(shippingFee);
+      document.getElementById('cart-total').innerText = formatCurrency(total);
+      lucide.createIcons();
+    }
+
+    async function submitOrderCheckout() {
+      const itemIds = Object.keys(STATE.cart);
+      if (itemIds.length === 0) return alert('Giỏ hàng trống!');
+
+      const customerId = STATE.currentUser ? STATE.currentUser.id : 'CUST001';
+      const itemsPayload = itemIds.map(id => ({ menuItemId: id, quantity: STATE.cart[id] }));
+
+      const body = {
+        customerId: customerId,
+        restaurantId: STATE.selectedRestaurantId,
+        items: itemsPayload
+      };
+
+      try {
+        const res = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          STATE.cart = {};
+          updateCartUI();
+          closeCartDrawer();
+          STATE.activeCustomerOrderId = data.orderId;
+          await loadOrders();
+          await selectRestaurant(STATE.selectedRestaurantId);
+          alert(`🎉 Đặt hàng thành công! Mã đơn: ${data.orderId}`);
+        } else {
+          alert(`❌ Đặt hàng thất bại: ${data.error || 'Lỗi không xác định'}`);
+        }
+      } catch (err) {
+        alert('Lỗi kết nối khi gửi đơn hàng');
+      }
+    }
+
+    // ORDERS & TRACKING
+    async function loadOrders() {
+      const res = await fetch('/api/orders');
+      STATE.orders = await res.json();
+      renderCustomerActiveOrder();
+      renderKitchenTickets();
+      renderDriverActiveTrip();
+      renderRadarPendingOrders();
+    }
+
+    function renderCustomerActiveOrder() {
+      const container = document.getElementById('customer-active-orders-section');
+      
+      // Find active order for current user
+      const customerId = STATE.currentUser ? STATE.currentUser.id : 'CUST001';
+      const activeOrder = STATE.orders.find(o => 
+        o.customerId === customerId && 
+        (o.status === 'CREATED' || o.status === 'ACCEPTED' || o.status === 'DISPATCHED')
+      );
+
+      if (!activeOrder) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      STATE.activeCustomerOrderId = activeOrder.id;
+      document.getElementById('active-order-id-badge').innerText = `#${activeOrder.id}`;
+      document.getElementById('order-stepper-total').innerText = formatCurrency(activeOrder.totalAmount);
+
+      const progressBar = document.getElementById('stepper-progress-bar');
+      const nodes = [1, 2, 3, 4].map(n => document.getElementById(`step-node-${n}`));
+
+      // Reset styles
+      nodes.forEach(node => node.className = 'step-node text-slate-500');
+
+      let detailsText = '';
+      if (activeOrder.status === 'CREATED') {
+        progressBar.style.width = '25%';
+        nodes[0].className = 'step-node text-brand-400 font-bold';
+        detailsText = 'Đang chờ bếp nhà hàng kiểm tra và nhận món...';
+      } else if (activeOrder.status === 'ACCEPTED') {
+        progressBar.style.width = '50%';
+        nodes[0].className = 'step-node text-emerald-400';
+        nodes[1].className = 'step-node text-brand-400 font-bold';
+        detailsText = 'Bếp đang nấu món. Đang tự động ghép tài xế gần nhất...';
+      } else if (activeOrder.status === 'DISPATCHED') {
+        progressBar.style.width = '75%';
+        nodes[0].className = 'step-node text-emerald-400';
+        nodes[1].className = 'step-node text-emerald-400';
+        nodes[2].className = 'step-node text-brand-400 font-bold';
+        detailsText = `Tài xế (${activeOrder.driverId}) đã lấy món và đang di chuyển đến bạn!`;
+      }
+
+      document.getElementById('order-stepper-details').innerText = detailsText;
+    }
+
+    async function cancelActiveOrder() {
+      if (!STATE.activeCustomerOrderId) return;
+      if (!confirm('Bạn có chắc chắn muốn hủy đơn hàng này không? Số lượng kho sẽ được hoàn trả tự động.')) return;
+
+      try {
+        const res = await fetch('/api/orders/cancel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId: STATE.activeCustomerOrderId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playBeep(300, 'sawtooth', 0.2);
+          alert('Đã hủy đơn hàng thành công và hoàn trả kho!');
+          await loadOrders();
+          await selectRestaurant(STATE.selectedRestaurantId);
+        } else {
+          alert(data.error || 'Không thể hủy đơn này!');
+        }
+      } catch (e) {
+        alert('Lỗi hủy đơn');
+      }
+    }
+
+    // KITCHEN PORTAL LOGIC
+    function populateKitchenRestSelect() {
+      const select = document.getElementById('kitchen-rest-select');
+      select.innerHTML = '';
+      STATE.restaurants.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.innerText = r.name;
+        select.appendChild(opt);
+      });
+    }
+
+    function changeKitchenRestaurant(restId) {
+      document.getElementById('kitchen-rest-select').value = restId;
+      const rest = STATE.restaurants.find(r => r.id === restId);
+      if (rest) {
+        document.getElementById('kitchen-current-rest-name').innerText = rest.name;
+      }
+      renderKitchenTickets();
+      loadKitchenStock();
+    }
+
+    function renderKitchenTickets() {
+      const restId = document.getElementById('kitchen-rest-select').value || 'REST001';
+      const container = document.getElementById('kitchen-tickets-container');
+      container.innerHTML = '';
+
+      const relevantOrders = STATE.orders.filter(o => o.restaurantId === restId && (o.status === 'CREATED' || o.status === 'ACCEPTED'));
+
+      // KPIs
+      const pendingCount = relevantOrders.filter(o => o.status === 'CREATED').length;
+      const cookingCount = relevantOrders.filter(o => o.status === 'ACCEPTED').length;
+      document.getElementById('kpi-kitchen-pending').innerText = pendingCount;
+      document.getElementById('kpi-kitchen-cooking').innerText = cookingCount;
+
+      const completedToday = STATE.orders.filter(o => o.restaurantId === restId && o.status === 'DELIVERED');
+      const totalRev = completedToday.reduce((a, b) => a + b.subtotal, 0);
+      document.getElementById('kpi-kitchen-rev').innerText = formatCurrency(totalRev);
+
+      // Badge in header
+      const badge = document.getElementById('badge-kitchen-orders');
+      if (pendingCount > 0) {
+        badge.innerText = pendingCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      if (relevantOrders.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-2 bg-slate-800/40 border border-slate-700/60 rounded-xl p-8 text-center text-xs text-slate-400">
+            <i data-lucide="check-circle" class="w-8 h-8 mx-auto mb-2 text-emerald-400"></i>
+            Tất cả đơn đã được chế biến và giao cho tài xế!
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      relevantOrders.forEach(o => {
+        const isCreated = o.status === 'CREATED';
+        const card = document.createElement('div');
+        card.className = 'bg-slate-800 p-4 rounded-xl border border-slate-700 shadow-lg space-y-3';
+        
+        let itemsHtml = (o.items || []).map(i => `
+          <li class="flex justify-between text-xs text-slate-300">
+            <span>• ${i.menuItemId}</span>
+            <span class="font-bold text-white">x${i.quantity}</span>
+          </li>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+            <div>
+              <span class="font-mono font-bold text-white text-xs">#${o.id}</span>
+              <span class="text-[11px] text-slate-400 ml-2">Khách: ${o.customerId}</span>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded font-bold ${isCreated ? 'bg-amber-500/20 text-amber-300' : 'bg-brand-500/20 text-brand-300'}">
+              ${isCreated ? '⏳ CHỜ BẾP NHẬN' : '🔥 ĐANG NẤU'}
+            </span>
+          </div>
+
+          <ul class="space-y-1 bg-slate-900/60 p-2.5 rounded-lg">${itemsHtml}</ul>
+
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-xs text-slate-400">Tạm tính: <strong class="text-white">${formatCurrency(o.subtotal)}</strong></span>
+            
+            ${isCreated ? `
+              <div class="flex items-center space-x-2">
+                <button onclick="kitchenRejectOrder('${o.id}')" class="px-3 py-1.5 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 rounded-lg text-xs font-semibold">
+                  Từ chối
+                </button>
+                <button onclick="kitchenConfirmOrder('${o.id}')" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow">
+                  ✅ Nhận đơn & Nấu
+                </button>
+              </div>
+            ` : `
+              <span class="text-xs text-brand-400 font-semibold flex items-center">
+                <i data-lucide="loader" class="w-3.5 h-3.5 animate-spin mr-1"></i> Chờ tài xế đến lấy món
+              </span>
+            `}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    async function kitchenConfirmOrder(orderId) {
+      try {
+        const res = await fetch('/api/orders/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          await loadOrders();
+        } else {
+          alert(data.error);
+        }
+      } catch (e) {
+        alert('Lỗi xác nhận đơn');
+      }
+    }
+
+    async function kitchenRejectOrder(orderId) {
+      if (!confirm('Từ chối đơn hàng này? Số lượng tồn kho sẽ được hoàn trả.')) return;
+      try {
+        const res = await fetch('/api/orders/reject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          await loadOrders();
+          loadKitchenStock();
+        }
+      } catch (e) {
+        alert('Lỗi từ chối đơn');
+      }
+    }
+
+    async function loadKitchenStock() {
+      const restId = document.getElementById('kitchen-rest-select')?.value || 'REST001';
+      const res = await fetch(`/api/menu?restaurantId=${restId}`);
+      const items = await res.json();
+
+      const tbody = document.getElementById('kitchen-stock-table-body');
+      tbody.innerHTML = '';
+
+      items.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-700/30';
+        tr.innerHTML = `
+          <td class="px-4 py-2.5 font-mono text-slate-400">${item.id}</td>
+          <td class="px-4 py-2.5 font-semibold text-white">${item.name}</td>
+          <td class="px-4 py-2.5 text-slate-300">${formatCurrency(item.price)}</td>
+          <td class="px-4 py-2.5">
+            <span class="font-bold text-xs ${item.stockQty <= 5 ? 'text-red-400' : 'text-emerald-400'}">
+              ${item.stockQty} phần
+            </span>
+          </td>
+          <td class="px-4 py-2.5 text-right space-x-1.5">
+            <button onclick="adjustStock('${item.id}', 10)" class="px-2 py-1 bg-slate-700 hover:bg-slate-600 rounded text-slate-200 text-xs font-semibold">+10</button>
+            <button onclick="adjustStock('${item.id}', 50)" class="px-2 py-1 bg-brand-600 hover:bg-brand-500 rounded text-white text-xs font-semibold">+50</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function adjustStock(menuItemId, delta) {
+      try {
+        const res = await fetch('/api/menu/stock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ menuItemId, delta })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playBeep(700, 'triangle', 0.1);
+          loadKitchenStock();
+          if (STATE.selectedRestaurantId) {
+            selectRestaurant(STATE.selectedRestaurantId);
+          }
+        }
+      } catch (e) {
+        alert('Lỗi cập nhật kho');
+      }
+    }
+
+    // DRIVER PORTAL LOGIC
+    async function loadDrivers() {
+      const res = await fetch('/api/drivers');
+      STATE.drivers = await res.json();
+      renderRadarDriversList();
+    }
+
+    function renderDriverActiveTrip() {
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
+      const activeTrip = STATE.orders.find(o => o.driverId === drvId && (o.status === 'ACCEPTED' || o.status === 'DISPATCHED'));
+
+      const tripCard = document.getElementById('driver-active-trip-card');
+      const noJobCard = document.getElementById('driver-no-job-card');
+
+      if (!activeTrip) {
+        tripCard.classList.add('hidden');
+        noJobCard.classList.remove('hidden');
+        return;
+      }
+
+      tripCard.classList.remove('hidden');
+      noJobCard.classList.add('hidden');
+
+      document.getElementById('driver-job-order-id').innerText = `#${activeTrip.id}`;
+
+      // Restaurant & Customer names
+      const rest = STATE.restaurants.find(r => r.id === activeTrip.restaurantId);
+      document.getElementById('driver-job-restaurant-name').innerText = rest ? rest.name : activeTrip.restaurantId;
+      document.getElementById('driver-job-restaurant-addr').innerText = rest ? rest.address : 'Quy Nhơn';
+      document.getElementById('driver-job-customer-name').innerText = activeTrip.customerId;
+
+      const btnPickup = document.getElementById('btn-driver-pickup');
+      const btnDeliver = document.getElementById('btn-driver-deliver');
+
+      if (activeTrip.status === 'ACCEPTED') {
+        btnPickup.classList.remove('hidden');
+        btnDeliver.classList.add('hidden');
+      } else {
+        btnPickup.classList.add('hidden');
+        btnDeliver.classList.remove('hidden');
+      }
+    }
+
+    async function toggleDriverOnline() {
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
+      const drv = STATE.drivers.find(d => d.id === drvId);
+      const nextStatus = drv ? !drv.isAvailable : true;
+
+      try {
+        const res = await fetch('/api/drivers/status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ driverId: drvId, isAvailable: nextStatus })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playBeep(nextStatus ? 750 : 350, 'sine', 0.15);
+          await loadDrivers();
+          const btn = document.getElementById('btn-driver-status-toggle');
+          const txt = document.getElementById('drv-status-text');
+          if (nextStatus) {
+            btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 bg-emerald-600 text-white shadow-lg shadow-emerald-600/30';
+            txt.innerText = 'ĐANG SẴN SÀNG';
+          } else {
+            btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 bg-slate-700 text-slate-300';
+            txt.innerText = 'OFFLINE (TẠM NGHỈ)';
+          }
+        }
+      } catch (e) {
+        alert('Lỗi cập nhật trạng thái tài xế');
+      }
+    }
+
+    async function driverPickupOrder() {
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
+      const activeTrip = STATE.orders.find(o => o.driverId === drvId && o.status === 'ACCEPTED');
+      if (!activeTrip) return;
+
+      try {
+        const res = await fetch('/api/orders/pickup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId: activeTrip.id, driverId: drvId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          await loadOrders();
+        }
+      } catch (e) {
+        alert('Lỗi xác nhận lấy hàng');
+      }
+    }
+
+    async function driverDeliverOrder() {
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
+      const activeTrip = STATE.orders.find(o => o.driverId === drvId && o.status === 'DISPATCHED');
+      if (!activeTrip) return;
+
+      try {
+        const res = await fetch('/api/orders/deliver', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId: activeTrip.id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          alert('🎉 Chúc mừng! Bạn đã hoàn thành cuốc giao hàng thành công!');
+          await loadOrders();
+        }
+      } catch (e) {
+        alert('Lỗi xác nhận giao hàng');
+      }
+    }
+
+    // DISPATCHER & GPS RADAR MAP
+    function initOrRefreshMap() {
+      if (!STATE.map) {
+        STATE.map = L.map('radar-map').setView(QUY_NHON_CENTER, 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors',
+          maxZoom: 18
+        }).addTo(STATE.map);
+      } else {
+        STATE.map.invalidateSize();
+      }
+
+      // Clear existing markers
+      STATE.mapMarkers.forEach(m => STATE.map.removeLayer(m));
+      STATE.mapMarkers = [];
+
+      // Add Restaurants (Orange Pin)
+      STATE.restaurants.forEach(r => {
+        if (r.latitude && r.longitude) {
+          const marker = L.circleMarker([r.latitude, r.longitude], {
+            radius: 8,
+            fillColor: '#ea580c',
+            color: '#fff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.9
+          }).addTo(STATE.map);
+          marker.bindPopup(`<b>🏢 ${r.name}</b><br>${r.address}`);
+          STATE.mapMarkers.push(marker);
+        }
+      });
+
+      // Add Drivers (Green Pin for Available, Gray for Offline, Orange for Busy)
+      STATE.drivers.forEach(d => {
+        if (d.currentLatitude && d.currentLongitude) {
+          const color = d.isAvailable ? '#10b981' : '#64748b';
+          const marker = L.circleMarker([d.currentLatitude, d.currentLongitude], {
+            radius: 7,
+            fillColor: color,
+            color: '#fff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.9
+          }).addTo(STATE.map);
+          marker.bindPopup(`<b>🛵 Tài xế: ${d.name}</b><br>Trạng thái: ${d.isAvailable ? 'Sẵn sàng' : 'Bận/Offline'}`);
+          STATE.mapMarkers.push(marker);
+        }
+      });
+    }
+
+    function renderRadarDriversList() {
+      const container = document.getElementById('radar-drivers-list');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const onlineCount = STATE.drivers.filter(d => d.isAvailable).length;
+      document.getElementById('radar-online-drivers-count').innerText = `${onlineCount} / ${STATE.drivers.length} online`;
+
+      STATE.drivers.forEach(d => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs';
+        item.innerHTML = `
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full ${d.isAvailable ? 'bg-emerald-400' : 'bg-slate-500'}"></span>
+            <span class="font-semibold text-white">${d.name}</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono">${d.currentLatitude?.toFixed(2)}, ${d.currentLongitude?.toFixed(2)}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderRadarPendingOrders() {
+      const container = document.getElementById('radar-pending-orders-list');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const pendingOrders = STATE.orders.filter(o => o.status === 'ACCEPTED' && (!o.driverId || o.driverId === ''));
+      document.getElementById('radar-pending-orders-count').innerText = `${pendingOrders.length} đơn`;
+
+      if (pendingOrders.length === 0) {
+        container.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-500">
+            Không có đơn nào chờ ghép tài xế. Mọi đơn đã được điều phối!
+          </div>
+        `;
+        return;
+      }
+
+      pendingOrders.forEach(o => {
+        const rest = STATE.restaurants.find(r => r.id === o.restaurantId);
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-2.5 rounded-lg bg-slate-900/80 border border-amber-500/30 text-xs';
+        item.innerHTML = `
+          <div>
+            <span class="font-mono font-bold text-amber-400">#${o.id}</span>
+            <span class="text-white ml-2">${rest ? rest.name : o.restaurantId} → ${o.customerId}</span>
+          </div>
+          <span class="font-bold text-brand-400">${formatCurrency(o.totalAmount)}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    async function triggerAutoDispatch() {
+      try {
+        const res = await fetch('/api/dispatch/auto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          alert(`⚡ Điều phối hoàn tất! Đã ghép thành công ${data.assignedCount} cuốc xe cho tài xế gần nhất.`);
+          await loadOrders();
+          await loadDrivers();
+          initOrRefreshMap();
+        } else {
+          alert('Không thể điều phối: ' + (data.error || 'Lỗi'));
+        }
+      } catch (e) {
+        alert('Lỗi điều phối');
+      }
+    }
+
+    // CONCURRENCY BENCHMARK SIMULATOR LOGIC
+    function initBenchmarkChart() {
+      const ctx = document.getElementById('benchmarkChart')?.getContext('2d');
+      if (!ctx || STATE.chartInstance) return;
+
+      STATE.chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['NO_LOCK', 'SYNCHRONIZED', 'OPTIMISTIC', 'FILE_LOCK'],
+          datasets: [{
+            label: 'Throughput (Đơn / giây)',
+            data: [0, 0, 0, 0],
+            backgroundColor: ['#ef4444', '#10b981', '#3b82f6', '#f59e0b']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#cbd5e1' } }
+          },
+          scales: {
+            y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+            x: { ticks: { color: '#cbd5e1' }, grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    async function runBenchmarkSimulation() {
+      const orderCount = parseInt(document.getElementById('sim-order-count').value, 10);
+      const strategy = document.getElementById('sim-lock-strategy').value;
+
+      const btn = document.getElementById('btn-run-simulation');
+      const btnText = document.getElementById('btn-run-sim-text');
+      btn.disabled = true;
+      btnText.innerText = 'ĐANG CHẠY BENCHMARK...';
+
+      try {
+        const res = await fetch('/api/simulate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderCount, strategy })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          
+          // Update Chart
+          const strategyIndex = ['NO_LOCK', 'SYNCHRONIZED', 'OPTIMISTIC', 'FILE_LOCK'].indexOf(strategy);
+          if (strategyIndex >= 0 && STATE.chartInstance) {
+            STATE.chartInstance.data.datasets[0].data[strategyIndex] = Math.round(data.throughput);
+            STATE.chartInstance.update();
+          }
+
+          // Add to Log Table
+          const tbody = document.getElementById('benchmark-log-tbody');
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-700/30';
+          tr.innerHTML = `
+            <td class="p-2 font-mono font-bold ${data.anomalyCount > 0 ? 'text-red-400' : 'text-emerald-400'}">${strategy}</td>
+            <td class="p-2">${orderCount} đơn</td>
+            <td class="p-2">${data.timeMs} ms</td>
+            <td class="p-2 font-bold text-white">${data.throughput.toFixed(1)} ops/s</td>
+            <td class="p-2 ${data.anomalyCount > 0 ? 'text-red-400 font-extrabold' : 'text-emerald-400'}">${data.anomalyCount} lỗi</td>
+          `;
+          tbody.prepend(tr);
+        } else {
+          alert(data.error || 'Lỗi benchmark');
+        }
+      } catch (e) {
+        alert('Lỗi kết nối khi chạy benchmark');
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = 'CHẠY KIỂM THỬ TẢI';
+      }
+    }
+
+    async function adminRestockAll() {
+      if (!confirm('Khôi phục toàn bộ tồn kho của tất cả nhà hàng về 50 phần?')) return;
+      try {
+        const res = await fetch('/api/admin/restock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          alert('Đã phục hồi kho hàng thành công!');
+          if (STATE.selectedRestaurantId) {
+            selectRestaurant(STATE.selectedRestaurantId);
+          }
+          loadKitchenStock();
+        }
+      } catch (e) {
+        alert('Lỗi phục hồi kho');
+      }
+    }
+
+    // Helper: Poll Live Data in background
+    async function pollLiveData() {
+      try {
+        await loadOrders();
+        await loadDrivers();
+      } catch (e) {
+        // silent poll catch
+      }
+    }
+
+    function formatCurrency(amount) {
+      if (!amount) amount = 0;
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+
+    function filterRestaurantCategory(cat) {
+      document.querySelectorAll('.category-chip').forEach(c => {
+        if (c.innerText.toLowerCase().includes(cat.toLowerCase()) || (cat === 'ALL' && c.innerText === 'Tất cả')) {
+          c.className = 'category-chip px-3 py-1.5 rounded-full bg-brand-600 text-white font-medium';
+        } else {
+          c.className = 'category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300';
+        }
+      });
+      renderRestaurantCards(cat);
+    }
+
+    // Run on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

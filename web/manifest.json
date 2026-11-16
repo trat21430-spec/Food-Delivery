@@ -1,0 +1,47 @@
+{
+  "name": "Food Delivery Quy Nhơn - FDS System",
+  "short_name": "FoodDeliveryQN",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#ea580c",
+  "description": "Ứng dụng đặt món trực tuyến và điều phối giao hàng thời gian thực tại TP Quy Nhơn",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Đặt món",
+      "url": "/#customer",
+      "description": "Mở cổng khách hàng đặt món"
+    },
+    {
+      "name": "Tài xế giao hàng",
+      "url": "/#driver",
+      "description": "Cổng nhận cuốc cho tài xế"
+    },
+    {
+      "name": "Bếp nhà hàng",
+      "url": "/#kitchen",
+      "description": "Quản lý đơn chế biến món"
+    },
+    {
+      "name": "Radar Điều phối",
+      "url": "/#dispatch",
+      "description": "Bản đồ radar GPS TP Quy Nhơn"
+    }
+  ]
+}
