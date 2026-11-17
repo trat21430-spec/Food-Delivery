@@ -36,7 +36,7 @@
     "primereact": "10.8.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-geocode": "^0.2.2",
+    "react-geocode": "^2.0.1",
     "react-international-phone": "^4.3.0",
     "subscriptions-transport-ws": "^0.11.0",
     "tailwind-merge": "^2.5.2",
