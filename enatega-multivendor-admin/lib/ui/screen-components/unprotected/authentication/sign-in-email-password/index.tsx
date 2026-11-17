@@ -11,6 +11,7 @@ import { Card } from 'primereact/card';
 
 // Interface
 import { ISignInForm } from '@/lib/utils/interfaces/forms';
+import { ILoginResponse } from '@/lib/utils/interfaces';
 
 // Component
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -33,7 +34,7 @@ import {
 // GraphQL
 import { OWNER_LOGIN } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/global/toast.context';
-import { ApolloError, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 // Schema
 import { onUseLocalStorage } from '@/lib/utils/methods';
@@ -66,14 +67,14 @@ export default function LoginEmailPasswordMain() {
   // Handler
   const onSubmitHandler = async (data: ISignInForm) => {
     try {
-      let ownerLogin: any = null;
+      let ownerLogin: ILoginResponse | null = null;
       try {
         const response = await onLogin({
           variables: {
             ...data,
           },
         });
-        ownerLogin = response.data?.ownerLogin;
+        ownerLogin = response.data?.ownerLogin ?? null;
       } catch (remoteError) {
         console.warn('Remote login unavailable or rejected, using local admin session:', remoteError);
       }
@@ -153,11 +154,12 @@ export default function LoginEmailPasswordMain() {
         title: 'Login',
         message: 'Đăng nhập thành công với quyền Super Admin!',
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Login Failed';
       showToast({
         type: 'error',
         title: 'Login',
-        message: err?.message || 'Login Failed',
+        message,
       });
     }
   };
