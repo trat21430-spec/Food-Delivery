@@ -43,7 +43,7 @@
     "next": "^16.2.10",
     "next-intl": "^4.13.1",
     "primeicons": "^7.0.0",
-    "primereact": "10.9.8",
+    "primereact": "11.2.3",
     "react": "^19.2.0",
     "react-chat-elements": "^12.0.18",
     "react-confetti": "^6.4.0",
