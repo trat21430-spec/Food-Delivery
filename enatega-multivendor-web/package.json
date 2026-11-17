@@ -41,7 +41,7 @@
     "graphql": "^16.9.0",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.1",
-    "next": "^16.2.10",
+    "next": "^16.4.6",
     "next-intl": "^4.13.1",
     "primeicons": "^7.0.0",
     "primereact": "10.9.8",
