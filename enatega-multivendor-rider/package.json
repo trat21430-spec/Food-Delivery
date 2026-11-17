@@ -64,7 +64,7 @@
     "graphql": "^16.10.0",
     "i18next": "^24.2.2",
     "lightningcss": "^1.29.1",
-    "lint-staged": "^15.3.0",
+    "lint-staged": "^17.6.0",
     "lodash": "^4.17.21",
     "moti": "^0.30.0",
     "nativewind": "4.1.23",
