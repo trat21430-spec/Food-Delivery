@@ -161,6 +161,7 @@ public class FoodDeliveryWebServer {
         this.server.createContext("/api/orders/reject", new OrderRejectHandler(this));
         this.server.createContext("/api/orders/pickup", new OrderPickupHandler(this));
         this.server.createContext("/api/orders/deliver", new OrderDeliverHandler(this));
+        this.server.createContext("/api/orders/review", new OrderReviewHandler(this));
         this.server.createContext("/api/orders/cancel", new OrderCancelHandler(this));
         this.server.createContext("/api/dispatch/auto", new AutoDispatchHandler(this));
         this.server.createContext("/api/simulate", new SimulateHandler(this));
@@ -747,6 +748,12 @@ public class FoodDeliveryWebServer {
                             sb.append("\"totalAmount\":").append(o.getTotalAmount()).append(",");
                             sb.append("\"createdAtEpochMs\":").append(o.getCreatedAtEpochMs()).append(",");
                             sb.append("\"assignCount\":").append(o.getAssignCount()).append(",");
+                            sb.append("\"preparationTimeMinutes\":").append(o.getPreparationTimeMinutes()).append(",");
+                            sb.append("\"tippingVnd\":").append(o.getTippingVnd()).append(",");
+                            sb.append("\"specialInstructions\":\"").append(escapeJson(o.getSpecialInstructions() != null ? o.getSpecialInstructions() : "")).append("\",");
+                            sb.append("\"deliveryInstructions\":\"").append(escapeJson(o.getDeliveryInstructions() != null ? o.getDeliveryInstructions() : "")).append("\",");
+                            sb.append("\"rating\":").append(o.getRating()).append(",");
+                            sb.append("\"reviewComment\":\"").append(escapeJson(o.getReviewComment() != null ? o.getReviewComment() : "")).append("\",");
 
                             // Items array
                             List<OrderItem> oiList = orderItemsMap.get(o.getId());
@@ -851,6 +858,24 @@ public class FoodDeliveryWebServer {
                         order = oc.createCustomerOrder(custId, restId, menuItemId, qty, mech);
                     }
 
+                    long tippingVal = 0L;
+                    if (params.containsKey("tipping")) {
+                        try { tippingVal = Long.parseLong(params.get("tipping").replaceAll("[^0-9]", "")); } catch (Exception ignored) {}
+                    } else if (params.containsKey("tippingVnd")) {
+                        try { tippingVal = Long.parseLong(params.get("tippingVnd").replaceAll("[^0-9]", "")); } catch (Exception ignored) {}
+                    }
+                    if (order != null) {
+                        order.setTippingVnd(tippingVal);
+                        if (tippingVal > 0) {
+                            order.setFinalAmountVnd(order.getFinalAmountVnd() + tippingVal);
+                        }
+                        String sInst = params.get("specialInstructions");
+                        if (sInst != null) order.setSpecialInstructions(sInst);
+                        String dInst = params.get("deliveryInstructions");
+                        if (dInst != null) order.setDeliveryInstructions(dInst);
+                        oc.getOrderRepository().save(order);
+                    }
+
                     this.serverRef.broadcastEvent("order_created", "{\"orderId\":\"" + escapeJson(order.getId()) + "\",\"customerId\":\"" + escapeJson(order.getCustomerId()) + "\",\"restaurantId\":\"" + escapeJson(order.getRestaurantId()) + "\",\"totalAmount\":" + order.getTotalAmount() + ",\"status\":\"" + order.getStatus().name() + "\"}");
 
                     StringBuilder sb = new StringBuilder();
@@ -913,6 +938,16 @@ public class FoodDeliveryWebServer {
                     }
                 }
                 Order updated = oc.confirmOrderByRestaurant(orderId, restId);
+                int prepTime = 15;
+                if (params.containsKey("preparationTimeMinutes")) {
+                    try { prepTime = Integer.parseInt(params.get("preparationTimeMinutes").replaceAll("[^0-9]", "")); } catch (Exception ignored) {}
+                } else if (params.containsKey("preparationTime")) {
+                    try { prepTime = Integer.parseInt(params.get("preparationTime").replaceAll("[^0-9]", "")); } catch (Exception ignored) {}
+                }
+                if (updated != null) {
+                    updated.setPreparationTimeMinutes(prepTime);
+                    oc.getOrderRepository().save(updated);
+                }
                 String driverId = (updated != null && updated.getDriverId() != null) ? updated.getDriverId() : "";
                 this.serverRef.broadcastEvent("order_confirmed", "{\"orderId\":\"" + escapeJson(orderId) + "\",\"restaurantId\":\"" + escapeJson(restId) + "\",\"driverId\":\"" + escapeJson(driverId) + "\",\"status\":\"" + updated.getStatus().name() + "\"}");
 
@@ -2151,6 +2186,54 @@ public class FoodDeliveryWebServer {
         } catch (Exception e) {
             System.err.println("Failed to start web server on port " + port + ": " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Enatega Review & Rating Handler (/api/orders/review).
+     * Allows customers to review their order with 1-5 star rating and comment.
+     */
+    class OrderReviewHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public OrderReviewHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendErrorResponse(exchange, 405, "Method Not Allowed");
+                return;
+            }
+            try {
+                String body = readBody(exchange);
+                Map<String, String> params = parseJsonSimple(body);
+                String orderId = params.get("orderId");
+                int rating = 5;
+                if (params.containsKey("rating")) {
+                    try { rating = Integer.parseInt(params.get("rating").replaceAll("[^0-9]", "")); } catch (Exception ignored) {}
+                }
+                String comment = params.get("comment");
+                if (comment == null) comment = params.get("description");
+                if (comment == null) comment = "";
+
+                OrderController oc = this.serverRef.getMainController().getOrderController();
+                Order order = oc.getOrderById(orderId);
+                if (order != null) {
+                    order.setRating(rating);
+                    order.setReviewComment(comment);
+                    oc.getOrderRepository().save(order);
+                    sendResponse(exchange, 200, "{\"success\":true,\"message\":\"Cảm ơn bạn đã đánh giá món ăn!\",\"orderId\":\"" + escapeJson(orderId) + "\",\"rating\":" + rating + "}");
+                } else {
+                    sendErrorResponse(exchange, 404, "Không tìm thấy đơn hàng");
+                }
+            } catch (Exception e) {
+                sendErrorResponse(exchange, 500, e.getMessage());
+            }
         }
     }
 }

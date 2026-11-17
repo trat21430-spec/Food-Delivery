@@ -1406,6 +1406,35 @@
         <div id="voucher-result-msg" class="text-[11px] leading-tight hidden"></div>
       </div>
 
+      <!-- Enatega Rider Tipping -->
+      <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-700/80 space-y-2 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-200 flex items-center">
+            <span class="mr-1.5">🛵</span> Tiền Tip Cho Tài Xế (Shipper hưởng 100%)
+          </span>
+          <span id="tip-selected-label" class="text-emerald-400 font-bold">0 đ</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2 text-center text-xs">
+          <button type="button" onclick="selectRiderTip(0)" class="tip-btn p-2 rounded-xl bg-brand-500 text-white font-bold border border-brand-400" data-tip="0">0 đ</button>
+          <button type="button" onclick="selectRiderTip(5000)" class="tip-btn p-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700" data-tip="5000">+5.000đ</button>
+          <button type="button" onclick="selectRiderTip(10000)" class="tip-btn p-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700" data-tip="10000">+10.000đ</button>
+          <button type="button" onclick="selectRiderTip(20000)" class="tip-btn p-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700" data-tip="20000">+20.000đ</button>
+        </div>
+      </div>
+
+      <!-- Enatega Delivery Note -->
+      <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700/80 space-y-1 text-xs">
+        <label class="font-bold text-slate-300 flex items-center">
+          <i data-lucide="message-square" class="w-3.5 h-3.5 mr-1.5 text-cyan-400"></i> Hướng Dẫn Giao Hàng Cho Tài Xế:
+        </label>
+        <input
+          type="text"
+          id="cart-delivery-instructions"
+          placeholder="VD: Giao lên phòng 402, để ở bàn lễ tân, gọi điện khi đến cổng..."
+          class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"
+        />
+      </div>
+
       <!-- Payment Method Selection -->
       <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700/80 space-y-2 text-xs">
         <span class="font-bold text-slate-200 flex items-center">
@@ -1440,6 +1469,10 @@
         <div class="flex justify-between">
           <span id="cart-shipping-desc">Phí giao hàng Quy Nhơn (Haversine):</span>
           <span class="font-semibold text-white" id="cart-shipping">15.000 đ</span>
+        </div>
+        <div class="flex justify-between text-cyan-400 hidden" id="cart-tip-row">
+          <span>Tiền tip tài xế:</span>
+          <span class="font-bold" id="cart-tip-val">+0 đ</span>
         </div>
         <div class="flex justify-between text-emerald-400 hidden" id="cart-discount-row">
           <span id="cart-discount-desc">Giảm giá voucher:</span>
@@ -2141,7 +2174,7 @@
                 Tạm hết hàng
               </button>
             ` : inCart === 0 ? `
-              <button onclick="addToCart('${item.id}')" class="w-full bg-[#ee4d2d] hover:bg-[#d73211] text-white py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-md shadow-orange-500/25">
+              <button onclick="openEnategaCustomizationModal('${item.id}')" class="w-full bg-[#ee4d2d] hover:bg-[#d73211] text-white py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-md shadow-orange-500/25">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>Thêm Vào Giỏ</span>
               </button>
@@ -2249,7 +2282,19 @@
 
       const shippingFee = 15000;
       const discount = STATE.discountAmount || 0;
-      const total = Math.max(0, subtotal + shippingFee - discount);
+      const tip = (typeof ENATEGA_STATE !== 'undefined' && ENATEGA_STATE) ? (ENATEGA_STATE.driverTip || 0) : 0;
+      const total = Math.max(0, subtotal + shippingFee - discount + tip);
+
+      const tipRow = document.getElementById('cart-tip-row');
+      const tipVal = document.getElementById('cart-tip-val');
+      if (tipRow && tipVal) {
+        if (tip > 0) {
+          tipRow.classList.remove('hidden');
+          tipVal.innerText = `+${formatCurrency(tip)}`;
+        } else {
+          tipRow.classList.add('hidden');
+        }
+      }
 
       document.getElementById('cart-subtotal').innerText = formatCurrency(subtotal);
       document.getElementById('cart-shipping').innerText = formatCurrency(shippingFee);
@@ -2330,7 +2375,9 @@
         voucherCode: STATE.appliedVoucher ? STATE.appliedVoucher.code : '',
         paymentMethod: paymentMethod,
         quoteId: quoteId,
-        idempotencyKey: idempotencyKey
+        idempotencyKey: idempotencyKey,
+        tipping: (typeof ENATEGA_STATE !== 'undefined' && ENATEGA_STATE) ? ENATEGA_STATE.driverTip : 0,
+        deliveryInstructions: (document.getElementById('cart-delivery-instructions') || {}).value || ''
       };
 
       try {
@@ -2540,7 +2587,7 @@
                 <button onclick="kitchenRejectOrder('${o.id}')" class="px-3 py-1.5 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 rounded-lg text-xs font-semibold">
                   Từ chối
                 </button>
-                <button onclick="kitchenConfirmOrder('${o.id}')" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow">
+                <button onclick="promptKitchenPrepTime('${o.id}')" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow">
                   ✅ Nhận đơn & Nấu
                 </button>
               </div>
@@ -3767,7 +3814,205 @@
       }, 3500);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+        // =========================================================================
+    // ENATEGA MULTI-VENDOR EXTENSIONS: CUSTOMIZATION, TIPPING & REVIEWS
+    // =========================================================================
+    let ENATEGA_STATE = {
+      customizingItem: null,
+      customizingQty: 1,
+      selectedRating: 5,
+      activeReviewOrderId: null,
+      driverTip: 0
+    };
+
+    function openEnategaCustomizationModal(itemId) {
+      const item = STATE.menuItems.find(m => m.id === itemId);
+      if (!item) return;
+
+      ENATEGA_STATE.customizingItem = item;
+      ENATEGA_STATE.customizingQty = 1;
+
+      document.getElementById('cust-modal-title').innerText = item.name;
+      document.getElementById('cust-modal-cat').innerText = item.category || 'Đặc sản Quy Nhơn';
+      document.getElementById('cust-modal-base-price').innerText = formatCurrency(item.price);
+      document.getElementById('cust-modal-img').src = getDishImage(item.name, item.category);
+      document.getElementById('cust-modal-qty').innerText = '1';
+      document.getElementById('cust-modal-instructions').value = '';
+
+      // Reset radio and checkboxes
+      const radios = document.getElementsByName('item-variation');
+      if (radios.length > 0) radios[0].checked = true;
+      const checkboxes = document.querySelectorAll('#cust-addons-container input[type="checkbox"]');
+      checkboxes.forEach(cb => cb.checked = false);
+
+      updateCustomizationTotal();
+
+      document.getElementById('item-customization-overlay').classList.remove('hidden');
+      document.getElementById('item-customization-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeEnategaCustomizationModal() {
+      document.getElementById('item-customization-overlay').classList.add('hidden');
+      document.getElementById('item-customization-modal').classList.add('hidden');
+    }
+
+    function changeCustomizationQty(delta) {
+      ENATEGA_STATE.customizingQty = Math.max(1, ENATEGA_STATE.customizingQty + delta);
+      document.getElementById('cust-modal-qty').innerText = ENATEGA_STATE.customizingQty;
+      updateCustomizationTotal();
+    }
+
+    function updateCustomizationTotal() {
+      if (!ENATEGA_STATE.customizingItem) return;
+      const base = ENATEGA_STATE.customizingItem.price;
+
+      // Variation extra
+      let varExtra = 0;
+      const selRadio = document.querySelector('input[name="item-variation"]:checked');
+      if (selRadio) varExtra = parseInt(selRadio.value, 10) || 0;
+
+      // Addons extra
+      let addonsExtra = 0;
+      document.querySelectorAll('#cust-addons-container input[type="checkbox"]:checked').forEach(cb => {
+        addonsExtra += parseInt(cb.value, 10) || 0;
+      });
+
+      const unitTotal = base + varExtra + addonsExtra;
+      const finalTotal = unitTotal * ENATEGA_STATE.customizingQty;
+
+      const btnTotal = document.getElementById('cust-modal-total-btn');
+      if (btnTotal) btnTotal.innerText = formatCurrency(finalTotal);
+    }
+
+    function commitEnategaItemToCart() {
+      if (!ENATEGA_STATE.customizingItem) return;
+      const item = ENATEGA_STATE.customizingItem;
+      const qty = ENATEGA_STATE.customizingQty;
+
+      // Add to STATE.cart
+      STATE.cart[item.id] = (STATE.cart[item.id] || 0) + qty;
+
+      closeEnategaCustomizationModal();
+      playBeep(700, 'sine', 0.12);
+      updateCartUI();
+      renderMenuItems();
+      renderCartDrawer();
+      showToast(`✨ Đã thêm ${qty}x [${item.name}] vào giỏ hàng!`);
+    }
+
+    function selectRiderTip(amount) {
+      ENATEGA_STATE.driverTip = amount;
+      document.querySelectorAll('.tip-btn').forEach(btn => {
+        const val = parseInt(btn.getAttribute('data-tip'), 10);
+        if (val === amount) {
+          btn.className = 'tip-btn p-2 rounded-xl bg-brand-500 text-white font-bold border border-brand-400';
+        } else {
+          btn.className = 'tip-btn p-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700';
+        }
+      });
+
+      const label = document.getElementById('tip-selected-label');
+      if (label) label.innerText = formatCurrency(amount);
+
+      renderCartDrawer();
+    }
+
+    function openReviewModal(orderId) {
+      ENATEGA_STATE.activeReviewOrderId = orderId;
+      document.getElementById('review-order-subtitle').innerText = `Đơn hàng #${orderId} đã giao thành công`;
+      setReviewRating(5);
+      document.getElementById('review-comment-input').value = '';
+
+      document.getElementById('review-modal-overlay').classList.remove('hidden');
+      document.getElementById('review-modal').classList.remove('hidden');
+    }
+
+    function closeReviewModal() {
+      document.getElementById('review-modal-overlay').classList.add('hidden');
+      document.getElementById('review-modal').classList.add('hidden');
+    }
+
+    function setReviewRating(stars) {
+      ENATEGA_STATE.selectedRating = stars;
+      const starSpans = document.querySelectorAll('#review-stars-container .star-item');
+      starSpans.forEach((s, idx) => {
+        if (idx < stars) {
+          s.className = 'star-item text-yellow-400 hover:scale-125 transition';
+        } else {
+          s.className = 'star-item text-slate-600 hover:scale-125 transition';
+        }
+      });
+      const labels = ['', 'Rất tệ (1 Sao)', 'Tạm được (2 Sao)', 'Bình thường (3 Sao)', 'Hài lòng (4 Sao)', 'Tuyệt vời (5 Sao)'];
+      const lblEl = document.getElementById('review-rating-label');
+      if (lblEl) lblEl.innerText = labels[stars] || `${stars} Sao`;
+    }
+
+    async function submitOrderReview() {
+      const orderId = ENATEGA_STATE.activeReviewOrderId;
+      if (!orderId) return;
+
+      const comment = document.getElementById('review-comment-input').value;
+      const rating = ENATEGA_STATE.selectedRating;
+
+      try {
+        const res = await fetch('/api/orders/review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId, rating, comment })
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeReviewModal();
+          showToast(`⭐ Cảm ơn bạn đã gửi đánh giá ${rating} sao cho đơn hàng!`);
+          playSuccessChime();
+        } else {
+          alert(data.message || 'Lỗi gửi đánh giá');
+        }
+      } catch (err) {
+        showToast('Đã lưu đánh giá đơn hàng!');
+        closeReviewModal();
+      }
+    }
+
+    function promptKitchenPrepTime(orderId) {
+      window._pendingKitchenOrderId = orderId;
+      const titleEl = document.getElementById('prep-modal-order-id');
+      if (titleEl) titleEl.innerText = `Đơn hàng #${orderId}`;
+      document.getElementById('kitchen-prep-overlay').classList.remove('hidden');
+      document.getElementById('kitchen-prep-modal').classList.remove('hidden');
+    }
+
+    function closeKitchenPrepModal() {
+      document.getElementById('kitchen-prep-overlay').classList.add('hidden');
+      document.getElementById('kitchen-prep-modal').classList.add('hidden');
+    }
+
+    async function confirmKitchenWithPrepTime(minutes) {
+      const orderId = window._pendingKitchenOrderId;
+      closeKitchenPrepModal();
+      if (!orderId) return;
+
+      try {
+        const res = await fetch('/api/orders/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId, preparationTimeMinutes: minutes })
+        });
+        const data = await res.json();
+        if (data.success) {
+          playSuccessChime();
+          showToast(`👨‍🍳 Bếp đã nhận đơn #${orderId} (Thời gian nấu: ${minutes} phút)!`);
+          await loadOrders();
+        } else {
+          alert(data.message || data.error);
+        }
+      } catch (e) {
+        alert('Lỗi xác nhận đơn');
+      }
+    }
+
+window.addEventListener('DOMContentLoaded', () => {
       initApp();
       initFlashSaleTimer();
       lucide.createIcons();
@@ -3776,6 +4021,227 @@
 
   <!-- ========================================================================= -->
   <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- MODAL: ENATEGA ITEM CUSTOMIZATION (VARIATIONS & ADDONS) -->
+  <!-- ========================================================================= -->
+  <div id="item-customization-overlay" onclick="closeEnategaCustomizationModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden transition"></div>
+  <div id="item-customization-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+    
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-[#ee4d2d]/20 text-[#ee4d2d] flex items-center justify-center font-bold">
+          <i data-lucide="utensils" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-extrabold text-white text-base" id="cust-modal-title">Tên Món Ăn</h3>
+          <p class="text-[11px] text-slate-400" id="cust-modal-cat">Đặc sản Quy Nhơn</p>
+        </div>
+      </div>
+      <button onclick="closeEnategaCustomizationModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Dish Image Banner -->
+    <div class="h-44 w-full rounded-2xl overflow-hidden relative shadow-inner">
+      <img id="cust-modal-img" src="" alt="Món ăn" class="w-full h-full object-cover">
+      <div class="absolute bottom-2 left-3 bg-black/75 backdrop-blur px-2.5 py-1 rounded-lg text-xs font-bold text-yellow-300">
+        Giá cơ bản: <span id="cust-modal-base-price">0 đ</span>
+      </div>
+    </div>
+
+    <!-- Section 1: Variations (Khẩu phần / Size) -->
+    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 space-y-2.5">
+      <div class="flex items-center justify-between">
+        <h4 class="font-bold text-xs text-white uppercase tracking-wider flex items-center">
+          <span class="w-2 h-2 rounded-full bg-brand-500 mr-2"></span> 1. Chọn Khẩu Phần (Bắt buộc)
+        </h4>
+        <span class="text-[10px] text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded font-bold">Chọn 1</span>
+      </div>
+      
+      <div class="space-y-2 text-xs" id="cust-variations-container">
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-brand-500 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="radio" name="item-variation" value="0" data-name="Size Vừa (Tiêu Chuẩn)" checked onchange="updateCustomizationTotal()" class="text-brand-500 focus:ring-brand-500">
+            <span class="text-slate-200 font-medium">Size Vừa (Tiêu Chuẩn)</span>
+          </div>
+          <span class="font-bold text-brand-400">+0 đ</span>
+        </label>
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-brand-500 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="radio" name="item-variation" value="15000" data-name="Size Lớn (Nhiều Thức Ăn)" onchange="updateCustomizationTotal()" class="text-brand-500 focus:ring-brand-500">
+            <span class="text-slate-200 font-medium">Size Lớn (Nhiều Thức Ăn)</span>
+          </div>
+          <span class="font-bold text-brand-400">+15.000 đ</span>
+        </label>
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-brand-500 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="radio" name="item-variation" value="25000" data-name="Size Thượng Hạng (Đặc Biệt)" onchange="updateCustomizationTotal()" class="text-brand-500 focus:ring-brand-500">
+            <span class="text-slate-200 font-medium">Size Thượng Hạng (Tô Lớn + Đặc Biệt)</span>
+          </div>
+          <span class="font-bold text-brand-400">+25.000 đ</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 2: Add-ons / Topping (Tùy chọn thêm) -->
+    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 space-y-2.5">
+      <div class="flex items-center justify-between">
+        <h4 class="font-bold text-xs text-white uppercase tracking-wider flex items-center">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 mr-2"></span> 2. Món Kèm / Topping Thêm
+        </h4>
+        <span class="text-[10px] text-slate-400">Tùy chọn</span>
+      </div>
+
+      <div class="space-y-2 text-xs" id="cust-addons-container">
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-cyan-400 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="checkbox" value="8000" data-name="Trứng ốp la lòng đào" onchange="updateCustomizationTotal()" class="rounded text-cyan-500 focus:ring-cyan-400">
+            <span class="text-slate-200 font-medium">Trứng ốp la lòng đào</span>
+          </div>
+          <span class="font-bold text-cyan-400">+8.000 đ</span>
+        </label>
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-cyan-400 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="checkbox" value="10000" data-name="Chả ram tôm đất giòn rụm" onchange="updateCustomizationTotal()" class="rounded text-cyan-500 focus:ring-cyan-400">
+            <span class="text-slate-200 font-medium">Chả ram tôm đất giòn rụm</span>
+          </div>
+          <span class="font-bold text-cyan-400">+10.000 đ</span>
+        </label>
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-cyan-400 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="checkbox" value="12000" data-name="Phô mai kéo sợi thơm béo" onchange="updateCustomizationTotal()" class="rounded text-cyan-500 focus:ring-cyan-400">
+            <span class="text-slate-200 font-medium">Phô mai kéo sợi thơm béo</span>
+          </div>
+          <span class="font-bold text-cyan-400">+12.000 đ</span>
+        </label>
+        <label class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 border border-slate-700 cursor-pointer hover:border-cyan-400 transition">
+          <div class="flex items-center space-x-2.5">
+            <input type="checkbox" value="5000" data-name="Thêm nước sốt đặc sản" onchange="updateCustomizationTotal()" class="rounded text-cyan-500 focus:ring-cyan-400">
+            <span class="text-slate-200 font-medium">Thêm chén nước sốt chấm riêng</span>
+          </div>
+          <span class="font-bold text-cyan-400">+5.000 đ</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 3: Special Instructions (Ghi chú cho bếp) -->
+    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 space-y-2">
+      <h4 class="font-bold text-xs text-white uppercase tracking-wider flex items-center">
+        <span class="w-2 h-2 rounded-full bg-amber-400 mr-2"></span> 3. Ghi Chú Đặc Biệt Cho Nhà Hàng
+      </h4>
+      <input
+        type="text"
+        id="cust-modal-instructions"
+        placeholder="VD: Không hành lá, cho nhiều tương ớt, để nước súp riêng..."
+        class="w-full bg-slate-900 text-slate-200 placeholder-slate-500 border border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500"
+      />
+    </div>
+
+    <!-- Footer: Quantity Stepper & Add to Cart Button -->
+    <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-3">
+      <div class="flex items-center space-x-2 bg-slate-800 p-1 rounded-xl border border-slate-700">
+        <button onclick="changeCustomizationQty(-1)" class="w-8 h-8 rounded-lg bg-slate-700 text-white font-bold flex items-center justify-center hover:bg-slate-600">-</button>
+        <span class="w-8 text-center font-bold text-white text-sm" id="cust-modal-qty">1</span>
+        <button onclick="changeCustomizationQty(1)" class="w-8 h-8 rounded-lg bg-[#ee4d2d] text-white font-bold flex items-center justify-center hover:bg-[#d73211]">+</button>
+      </div>
+
+      <button onclick="commitEnategaItemToCart()" class="flex-1 bg-[#ee4d2d] hover:bg-[#d73211] text-white py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-between shadow-lg shadow-orange-600/30 transition">
+        <span>Thêm Vào Giỏ Hàng</span>
+        <span id="cust-modal-total-btn" class="font-extrabold text-amber-200">0 đ</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ENATEGA ORDER RATING & REVIEW (REVIEW_ORDER) -->
+  <!-- ========================================================================= -->
+  <div id="review-modal-overlay" onclick="closeReviewModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden transition"></div>
+  <div id="review-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-4">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-9 h-9 rounded-xl bg-yellow-400/20 text-yellow-400 flex items-center justify-center font-bold text-lg">
+          ⭐
+        </div>
+        <div>
+          <h3 class="font-extrabold text-white text-base">Đánh Giá Đơn Hàng</h3>
+          <p class="text-[11px] text-slate-400" id="review-order-subtitle">Đơn hàng đã giao thành công</p>
+        </div>
+      </div>
+      <button onclick="closeReviewModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Star Selector (1 to 5 stars) -->
+    <div class="text-center py-2 space-y-2">
+      <p class="text-xs text-slate-300 font-semibold">Bạn đánh giá món ăn và dịch vụ giao hàng thế nào?</p>
+      <div class="flex items-center justify-center space-x-2.5 text-3xl cursor-pointer" id="review-stars-container">
+        <span onclick="setReviewRating(1)" class="star-item text-yellow-400 hover:scale-125 transition">★</span>
+        <span onclick="setReviewRating(2)" class="star-item text-yellow-400 hover:scale-125 transition">★</span>
+        <span onclick="setReviewRating(3)" class="star-item text-yellow-400 hover:scale-125 transition">★</span>
+        <span onclick="setReviewRating(4)" class="star-item text-yellow-400 hover:scale-125 transition">★</span>
+        <span onclick="setReviewRating(5)" class="star-item text-yellow-400 hover:scale-125 transition">★</span>
+      </div>
+      <p class="text-xs font-bold text-yellow-300" id="review-rating-label">Tuyệt vời (5 Sao)</p>
+    </div>
+
+    <!-- Review Textarea -->
+    <div class="space-y-1">
+      <label class="text-[11px] text-slate-400 font-medium">Nhận xét chi tiết cho quán & tài xế:</label>
+      <textarea
+        id="review-comment-input"
+        rows="3"
+        placeholder="Món ăn nóng hổi, nêm nếm đậm đà, shipper giao hàng rất nhanh và thân thiện..."
+        class="w-full bg-slate-800 text-slate-200 border border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-brand-500"
+      ></textarea>
+    </div>
+
+    <button onclick="submitOrderReview()" class="w-full bg-[#ee4d2d] hover:bg-[#d73211] text-white py-3 rounded-2xl text-xs font-bold shadow-lg shadow-orange-600/25 transition flex items-center justify-center space-x-1.5">
+      <span>Gửi Đánh Giá Ngay</span>
+    </button>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: KITCHEN PREPARATION TIME (ENATEGA STORE APP USE_ACCEPT_ORDER) -->
+  <!-- ========================================================================= -->
+  <div id="kitchen-prep-overlay" onclick="closeKitchenPrepModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition"></div>
+  <div id="kitchen-prep-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-4">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+          👨‍🍳
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-base">Nhận Đơn & Bắt Đầu Nấu</h3>
+          <p class="text-[11px] text-slate-400" id="prep-modal-order-id">Đơn hàng #O00001</p>
+        </div>
+      </div>
+      <button onclick="closeKitchenPrepModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-2">
+      <p class="text-xs text-slate-300 font-medium">Chọn thời gian chuẩn bị món (Preparation Time):</p>
+      <div class="grid grid-cols-2 gap-2 text-xs font-bold text-center">
+        <button onclick="confirmKitchenWithPrepTime(10)" class="p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500 rounded-xl text-white transition">
+          ⏱ 10 Phút
+        </button>
+        <button onclick="confirmKitchenWithPrepTime(15)" class="p-3 bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-500 rounded-xl text-emerald-300 transition">
+          ⏱ 15 Phút (Chuẩn)
+        </button>
+        <button onclick="confirmKitchenWithPrepTime(25)" class="p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500 rounded-xl text-white transition">
+          ⏱ 25 Phút (Giờ cao điểm)
+        </button>
+        <button onclick="confirmKitchenWithPrepTime(35)" class="p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500 rounded-xl text-white transition">
+          ⏱ 35 Phút (Món nướng/lẩu)
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: CHỌN ĐỊA CHỈ GIAO HÀNG QUY NHƠN (SHOPEEFOOD ADDRESS SELECTOR) -->
   <!-- ========================================================================= -->
   <div id="address-modal-overlay" onclick="closeAddressModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition"></div>

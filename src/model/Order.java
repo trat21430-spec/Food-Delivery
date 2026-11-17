@@ -24,6 +24,12 @@ public class Order extends BaseEntity {
     private int assignCount;
     private String quoteId;
     private long finalAmountVnd;
+    private int preparationTimeMinutes;
+    private long tippingVnd;
+    private String specialInstructions;
+    private String deliveryInstructions;
+    private int rating;
+    private String reviewComment;
 
     public Order() {
         super();
@@ -41,6 +47,12 @@ public class Order extends BaseEntity {
         this.assignCount = 0;
         this.quoteId = "";
         this.finalAmountVnd = 0L;
+        this.preparationTimeMinutes = 15;
+        this.tippingVnd = 0L;
+        this.specialInstructions = "";
+        this.deliveryInstructions = "";
+        this.rating = 5;
+        this.reviewComment = "";
     }
 
     public Order(String id, String customerId, String restaurantId, String driverId,
@@ -208,5 +220,53 @@ public class Order extends BaseEntity {
             this.finalAmountVnd = (long)(this.totalFoodAmount + this.deliveryFee);
             this.syncStateMachinesFromStatus(this.status);
         }
+    }
+
+    public int getPreparationTimeMinutes() {
+        return this.preparationTimeMinutes;
+    }
+
+    public void setPreparationTimeMinutes(int preparationTimeMinutes) {
+        this.preparationTimeMinutes = preparationTimeMinutes;
+    }
+
+    public long getTippingVnd() {
+        return this.tippingVnd;
+    }
+
+    public void setTippingVnd(long tippingVnd) {
+        this.tippingVnd = tippingVnd;
+    }
+
+    public String getSpecialInstructions() {
+        return this.specialInstructions;
+    }
+
+    public void setSpecialInstructions(String specialInstructions) {
+        this.specialInstructions = specialInstructions;
+    }
+
+    public String getDeliveryInstructions() {
+        return this.deliveryInstructions;
+    }
+
+    public void setDeliveryInstructions(String deliveryInstructions) {
+        this.deliveryInstructions = deliveryInstructions;
+    }
+
+    public int getRating() {
+        return this.rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getReviewComment() {
+        return this.reviewComment;
+    }
+
+    public void setReviewComment(String reviewComment) {
+        this.reviewComment = reviewComment;
     }
 }

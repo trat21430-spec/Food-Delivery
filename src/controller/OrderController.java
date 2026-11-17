@@ -57,6 +57,7 @@ public class OrderController {
     public service.QuoteService getQuoteService() { return this.quoteService; }
     public util.IdempotencyManager getIdempotencyManager() { return this.idempotencyManager; }
     public repository.OrderSnapshotRepository getSnapshotRepository() { return this.snapshotRepository; }
+    public OrderRepository getOrderRepository() { return this.orderRepository; }
 
     public OrderController(OrderRepository orderRepo, MenuItemRepository itemRepo, DriverRepository driverRepo,
                            RestaurantRepository restRepo, OrderItemRepository orderItemRepo) {
