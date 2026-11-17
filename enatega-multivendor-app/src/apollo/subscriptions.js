@@ -1,0 +1,141 @@
+export const subscriptionOrder = `subscription SubscriptionOrder($id:String!){
+    subscriptionOrder(id:$id){
+        _id
+        orderStatus
+        rider{
+            _id
+        }
+        completionTime
+        preparationTime
+        eta {
+          phase source readyAt baseArrivalAt estimatedArrivalAt
+          windowStartAt windowEndAt durationSeconds distanceMeters
+          encodedPolyline calculatedAt lastLocationAt version
+        }
+    }
+  }`
+
+export const subscriptionOrderTracking = `subscription SubscriptionOrderTracking($id:String!){
+  subscriptionOrderTracking(id:$id){
+    orderId
+    status
+    riderLocation {
+      latitude longitude accuracy heading speed recordedAt
+    }
+    eta {
+      phase source readyAt baseArrivalAt estimatedArrivalAt
+      windowStartAt windowEndAt durationSeconds distanceMeters
+      encodedPolyline calculatedAt lastLocationAt version
+    }
+  }
+}`
+
+export const subscriptionRiderLocation = `subscription SubscriptionRiderLocation($riderId:String!){
+    subscriptionRiderLocation(riderId:$riderId) {
+      _id
+      location {coordinates}
+    }
+  }`
+
+export const orderStatusChanged = `subscription OrderStatusChanged($userId:String!){
+    orderStatusChanged(userId:$userId){
+      userId
+      origin
+      order{
+        _id
+      orderId
+      id
+      restaurant{
+        _id
+        name
+        image
+        address
+        location{coordinates}
+      }
+      deliveryAddress{
+        location{coordinates}
+        deliveryAddress
+        id
+      }
+      items{
+        _id
+        id
+        title
+        food
+        description
+        image
+        quantity
+        variation{
+          _id
+          id
+          title
+          price
+          discounted
+        }
+        addons{
+          _id
+          id
+          options{
+            _id
+            id
+            title
+            description
+            price
+          }
+          title
+          description
+          quantityMinimum
+          quantityMaximum
+        }
+      }
+      user{
+        _id
+        name
+        phone
+      }
+      rider{
+        _id
+        name
+        phone
+      }
+      review{
+        _id
+        rating
+      }
+      paymentMethod
+      paidAmount
+      orderAmount
+      orderStatus
+      paymentStatus
+      tipping
+      taxationAmount
+      createdAt
+      completionTime
+      preparationTime
+      orderDate
+      expectedTime
+      isPickedUp
+      deliveryCharges
+      acceptedAt
+      pickedAt
+      deliveredAt
+      cancelledAt
+      assignedAt
+      instructions
+      discountAmount
+      }
+    }
+  }`
+
+export const subscriptionNewMessage = `subscription SubscriptionNewMessage($order:ID!){
+  subscriptionNewMessage(order:$order){
+    id
+    message
+    image
+    user {
+      id
+      name
+    }
+    createdAt
+  }
+}`

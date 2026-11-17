@@ -1,0 +1,463 @@
+import { ApolloProvider } from '@apollo/client'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import 'react-native-get-random-values';
+// import 'expo-dev-client'
+import * as Font from 'expo-font'
+import * as Notifications from 'expo-notifications'
+import * as Updates from 'expo-updates'
+import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { ActivityIndicator, Alert, AppState, BackHandler, InteractionManager, Platform, StatusBar, StyleSheet, View, useColorScheme } from 'react-native'
+import * as NavigationBar from 'expo-navigation-bar'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import FlashMessage from 'react-native-flash-message'
+import 'react-native-gesture-handler'
+import useEnvVars from './environment'
+import setupApolloClient from './src/apollo/index'
+import { MessageComponent } from './src/components/FlashMessage/MessageComponent'
+import ReviewModal from './src/components/Review'
+import { AuthProvider } from './src/context/Auth'
+import { ConfigurationProvider } from './src/context/Configuration'
+import { LocationProvider } from './src/context/Location'
+import { OrdersProvider } from './src/context/Orders'
+import { UserProvider } from './src/context/User'
+import AppContainer from './src/routes'
+import ThemeContext from './src/ui/ThemeContext/ThemeContext'
+import ThemeReducer from './src/ui/ThemeReducer/ThemeReducer'
+import { exitAlert } from './src/utils/androidBackButton'
+import { NOTIFICATION_TYPES } from './src/utils/enums'
+import { theme as Theme } from './src/utils/themeColors'
+import AnimatedSplashScreen from './src/components/Splash/AnimatedSplashScreen'
+import './i18next'
+import TextDefault from './src/components/Text/TextDefault/TextDefault'
+import { ErrorBoundary } from './src/components/ErrorBoundary'
+import SentryInit from './src/components/Sentry/SentryInit'
+import SessionExpiredModal from './src/components/SessionExpiredModal/SessionExpiredModal'
+import navigationService from './src/routes/navigationService'
+import {
+  shouldShowSessionExpiredModal,
+  subscribeToSessionInvalidation,
+  subscribeToSessionExpiredModalDismiss
+} from './src/utils/session'
+import {
+  initializePublicAccessToken,
+  stopPublicAccessTokenRefresh
+} from './src/services/publicAcccessService'
+import LiveActivityService from './src/utils/liveActivityService'
+import { registerLiveActivityForegroundHandler } from './src/utils/liveActivityMessaging'
+import {
+  AppModeProvider,
+  useAppMode
+} from './src/mode/AppModeContext'
+import { APP_MODES } from './src/mode/constants'
+import SingleVendorAppContainer from './src/singlevendor/routes/SingleVendorAppContainer'
+import { prewarmSingleVendor } from './src/singlevendor/utils/prewarmSingleVendor'
+import ModeNotificationRegistration from './src/mode/ModeNotificationRegistration'
+import {
+  inferNotificationMode,
+  savePendingOrderNavigation
+} from './src/mode/orderOrigin'
+import { getGoogleAuthConfigurationErrors } from './src/utils/googleAuthConfig'
+const { getEnvironmentConfig } = require('./environment.config')
+
+Notifications.setNotificationHandler({
+  handleNotification: async (notification) => {
+    return {
+      shouldShowAlert: notification?.request?.content?.data?.type !== NOTIFICATION_TYPES.REVIEW_ORDER,
+      shouldPlaySound: false,
+      shouldSetBadge: false
+    }
+  }
+})
+
+function ModeAwareApp() {
+  const reviewModalRef = useRef()
+  // Keep one Apollo cache per delivery mode. Recreating the client on every
+  // toggle discarded the just-loaded discovery/products cache and forced the
+  // destination mode to fetch everything again.
+  const clientsRef = useRef(new Map())
+  const [appIsReady, setAppIsReady] = useState(false)
+  const [isThemeReady, setIsThemeReady] = useState(false)
+  const [orderId, setOrderId] = useState()
+  const [reviewAppState, setReviewAppState] = useState(AppState.currentState)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [sessionExpiredVisible, setSessionExpiredVisible] = useState(false)
+  const [clarityInitialized, setClarityInitialized] = useState(false)
+  const { mode, isModeReady, switchMode, singleVendorAvailable, isModeToggleEnabled } = useAppMode()
+  const {
+    CLARITY_ENABLED,
+    GRAPHQL_URL,
+    WS_GRAPHQL_URL,
+    PUBLIC_ACCESS_REQUIRED,
+    EXPO_CLIENT_ID,
+    ANDROID_CLIENT_ID_GOOGLE,
+    IOS_CLIENT_ID_GOOGLE
+  } = useEnvVars()
+
+  useEffect(() => {
+    const invalidFields = getGoogleAuthConfigurationErrors({
+      webClientId: EXPO_CLIENT_ID,
+      androidClientId: ANDROID_CLIENT_ID_GOOGLE,
+      iosClientId: IOS_CLIENT_ID_GOOGLE
+    })
+    if (invalidFields.length) {
+      console.warn('[GoogleAuth] Invalid or missing client ID fields:', invalidFields.join(', '))
+    }
+  }, [EXPO_CLIENT_ID, ANDROID_CLIENT_ID_GOOGLE, IOS_CLIENT_ID_GOOGLE])
+  const getClientForMode = useCallback((clientMode, config) => {
+    const clientKey = `${clientMode}:${config.GRAPHQL_URL}:${config.WS_GRAPHQL_URL}:${config.PUBLIC_ACCESS_REQUIRED}`
+    const cachedClient = clientsRef.current.get(clientKey)
+    if (cachedClient) return cachedClient
+
+    const nextClient = setupApolloClient({
+      GRAPHQL_URL: config.GRAPHQL_URL,
+      WS_GRAPHQL_URL: config.WS_GRAPHQL_URL,
+      mode: clientMode,
+      publicAccessRequired: config.PUBLIC_ACCESS_REQUIRED
+    })
+    clientsRef.current.set(clientKey, nextClient)
+    return nextClient
+  }, [])
+
+  const client = useMemo(
+    () => getClientForMode(mode, { GRAPHQL_URL, WS_GRAPHQL_URL, PUBLIC_ACCESS_REQUIRED }),
+    [getClientForMode, GRAPHQL_URL, mode, PUBLIC_ACCESS_REQUIRED, WS_GRAPHQL_URL]
+  )
+
+  // While in multi-vendor, quietly warm the single-vendor client (public token +
+  // Home data) after startup work settles, so the first switch renders from cache.
+  // The client is kept in clientsRef and reused when the mode actually switches.
+  useEffect(() => {
+    if (!appIsReady || mode !== APP_MODES.MULTI || !singleVendorAvailable || !isModeToggleEnabled) return undefined
+
+    let cancelled = false
+    let timer
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      timer = setTimeout(() => {
+        if (cancelled) return
+        const singleConfig = getEnvironmentConfig(Updates.channel, APP_MODES.SINGLE)
+        prewarmSingleVendor(getClientForMode(APP_MODES.SINGLE, singleConfig))
+      }, 2000)
+    })
+
+    return () => {
+      cancelled = true
+      interaction.cancel()
+      if (timer) clearTimeout(timer)
+    }
+  }, [appIsReady, getClientForMode, isModeToggleEnabled, mode, singleVendorAvailable])
+
+  useEffect(() => () => {
+    clientsRef.current.forEach(cachedClient => cachedClient.dispose?.())
+    clientsRef.current.clear()
+  }, [])
+
+  useEffect(() => {
+    LiveActivityService.configure(client, mode)
+    const unsubscribe = registerLiveActivityForegroundHandler()
+    LiveActivityService.cleanAppGroupImages(24).catch(() => {})
+    return unsubscribe
+  }, [client, mode])
+
+  // Fetch/refresh the public (MetricsGeneral) token up front and keep it fresh
+  // via a background timer, instead of refreshing only when a request finds it
+  // expired. Also refresh when the app returns to the foreground, since RN
+  // suspends timers while backgrounded.
+  useEffect(() => {
+    if (!GRAPHQL_URL || !PUBLIC_ACCESS_REQUIRED) return undefined
+
+    initializePublicAccessToken(GRAPHQL_URL)
+
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      if (nextState === 'active') {
+        initializePublicAccessToken(GRAPHQL_URL)
+      }
+    })
+
+    return () => {
+      subscription.remove()
+      stopPublicAccessTokenRefresh(GRAPHQL_URL)
+    }
+  }, [GRAPHQL_URL, PUBLIC_ACCESS_REQUIRED])
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', setReviewAppState)
+    return () => subscription.remove()
+  }, [])
+
+  // Modalize cannot reliably present while the native app is suspended. Keep
+  // the pending order id and open only after the app is active and the modal
+  // has received the new order prop.
+  useEffect(() => {
+    if (!orderId || reviewAppState !== 'active') return undefined
+
+    const frame = requestAnimationFrame(() => reviewModalRef.current?.open())
+    return () => cancelAnimationFrame(frame)
+  }, [orderId, reviewAppState])
+
+  // Screen keep-awake is now scoped to the active order-tracking screen
+  // (see OrderDetail) instead of being on app-wide, which drained battery
+  // on every screen (PERF-011).
+
+  // Use the system theme only as the first-install default. A manually selected
+  // theme is restored from storage before the splash screen is dismissed.
+  const systemTheme = useColorScheme()
+  const [theme, themeSetter] = useReducer(ThemeReducer, systemTheme === 'dark' ? 'Dark' : 'Pink')
+
+  // Match the Android system navigation bar to the bottom tab bar
+  // (currentTheme.cardBackground) for both light and dark themes, so the two
+  // blend seamlessly instead of showing a mismatched bar underneath.
+  useEffect(() => {
+    if (Platform.OS !== 'android') return
+    const navBarColor = Theme[theme].cardBackground
+    NavigationBar.setBackgroundColorAsync(navBarColor).catch(() => {})
+    NavigationBar.setButtonStyleAsync(theme === 'Dark' ? 'light' : 'dark').catch(
+      () => {}
+    )
+  }, [theme])
+
+  // For Fonts, etc
+  useEffect(() => {
+    const loadAppData = async () => {
+      try {
+        const storedTheme = await AsyncStorage.getItem('theme')
+        if (storedTheme === 'Dark' || storedTheme === 'Pink') {
+          themeSetter({ type: storedTheme })
+        }
+      } catch (error) {
+        console.warn('Unable to restore the saved theme:', error?.message)
+      } finally {
+        setIsThemeReady(true)
+      }
+
+      await Font.loadAsync({
+        MuseoSans300: require('./src/assets/font/MuseoSans/MuseoSans300.ttf'),
+        MuseoSans500: require('./src/assets/font/MuseoSans/MuseoSans500.ttf'),
+        MuseoSans700: require('./src/assets/font/MuseoSans/MuseoSans700.ttf')
+      })
+      setAppIsReady(true)
+    }
+
+    loadAppData()
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', exitAlert);
+
+
+    return () => {
+      backHandler.remove()
+    }
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = subscribeToSessionInvalidation(({ reason }) => {
+      if (shouldShowSessionExpiredModal(reason)) {
+        setSessionExpiredVisible(true)
+      }
+    })
+
+    return unsubscribe
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = subscribeToSessionExpiredModalDismiss(() => {
+      setSessionExpiredVisible(false)
+    })
+
+    return unsubscribe
+  }, [])
+
+  useEffect(() => {
+    if (!CLARITY_ENABLED || clarityInitialized) return
+
+    let isMounted = true
+
+    ;(async () => {
+      try {
+        const Clarity = await import('@microsoft/react-native-clarity')
+        if (!isMounted) return
+
+        Clarity.initialize('mcdyi6urgs', {
+          logLevel: Clarity.LogLevel.None
+        })
+        setClarityInitialized(true)
+      } catch (error) {
+        console.warn('Clarity initialization skipped:', error?.message ?? error)
+      }
+    })()
+
+    return () => {
+      isMounted = false
+    }
+  }, [CLARITY_ENABLED, clarityInitialized])
+
+  // For App Update
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    if (__DEV__) return
+    ;(async () => {
+      const { isAvailable } = await Updates.checkForUpdateAsync()
+      if (isAvailable) {
+        try {
+          setIsUpdating(true)
+          const { isNew } = await Updates.fetchUpdateAsync()
+          if (isNew) {
+            await Updates.reloadAsync()
+          }
+        } catch (error) {
+          console.log('error while updating app', JSON.stringify(error))
+        } finally {
+          setIsUpdating(false)
+        }
+      }
+    })()
+  }, [])
+
+  // For Push Notification
+  useEffect(() => {
+    const notifSub  = Notifications.addNotificationReceivedListener((notification) => {
+      if (notification?.request?.content?.data?.type === NOTIFICATION_TYPES.REVIEW_ORDER) {
+        const id = notification?.request?.content?.data?._id
+        if (id) {
+          setOrderId(id)
+        }
+      }
+    })
+
+    const responseSub = Notifications.addNotificationResponseReceivedListener(async (response) => {
+      const data = response?.notification?.request?.content?.data
+      if (data?.type === NOTIFICATION_TYPES.REVIEW_ORDER) {
+        const id = data?._id
+        if (id) {
+          setOrderId(id)
+        }
+        return
+      }
+
+      if (data?.type === 'order') {
+        const targetMode = await inferNotificationMode(data)
+        const notificationOrderId = data?._id || data?.orderId
+        if (targetMode && targetMode !== mode && notificationOrderId) {
+          Alert.alert(
+            'Switch delivery mode?',
+            'This order belongs to your other delivery service.',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              {
+                text: 'Switch and track',
+                onPress: async () => {
+                  await savePendingOrderNavigation(
+                    notificationOrderId,
+                    targetMode
+                  )
+                  const switched = await switchMode(targetMode)
+                  if (!switched) {
+                    Alert.alert(
+                      'Unable to switch',
+                      'Finish the payment or order request in progress, then try again.'
+                    )
+                  }
+                }
+              }
+            ]
+          )
+        }
+      }
+    })
+    return () => {
+      notifSub.remove()
+      responseSub.remove()
+    }
+  }, [mode, switchMode])
+
+  // set modal close
+  const onOverlayPress = () => {
+    reviewModalRef?.current?.close()
+  }
+
+  const handleOrderDelivered = useCallback((order) => {
+    if (order?._id) setOrderId(order._id)
+  }, [])
+
+  const handleSessionExpiredLogin = () => {
+    setSessionExpiredVisible(false)
+    navigationService.navigate('CreateAccount')
+  }
+
+  if (!isModeReady || isUpdating) {
+    return (
+      <View style={[styles.flex, styles.mainContainer, { backgroundColor: Theme[theme].startColor }]}>
+        <TextDefault textColor={Theme[theme].white} bold>
+          Please wait while app is updating
+        </TextDefault>
+        <ActivityIndicator size='large' color={Theme[theme].white} />
+      </View>
+    )
+  }
+
+  return (
+    <ErrorBoundary>
+      <GestureHandlerRootView style={styles.flex}>
+        <AnimatedSplashScreen
+          ready={appIsReady && isModeReady}
+          themeReady={isThemeReady}
+          themeMode={theme}
+        >
+          <ApolloProvider client={client} key={mode}>
+            <ThemeContext.Provider
+              value={{ ThemeValue: theme, dispatch: themeSetter }}
+            >
+              <StatusBar backgroundColor={Theme[theme].menuBar} barStyle={theme === 'Dark' ? 'light-content' : 'dark-content'} />
+              <AuthProvider key={`auth-${mode}`}>
+                <ConfigurationProvider key={`configuration-${mode}`}>
+                  <LocationProvider>
+                    <SentryInit />
+                    <UserProvider>
+                      <ModeNotificationRegistration />
+                      <OrdersProvider onOrderDelivered={handleOrderDelivered}>
+                        {mode === APP_MODES.SINGLE
+                          ? <SingleVendorAppContainer />
+                          : <AppContainer />}
+                        <ReviewModal ref={reviewModalRef} onOverlayPress={onOverlayPress} onClosed={() => setOrderId(undefined)} theme={Theme[theme]} orderId={orderId} />
+                        <SessionExpiredModal
+                          visible={sessionExpiredVisible}
+                          onLogin={handleSessionExpiredLogin}
+                        />
+                      </OrdersProvider>
+                    </UserProvider>
+                  </LocationProvider>
+                </ConfigurationProvider>
+              </AuthProvider>
+              <FlashMessage MessageComponent={MessageComponent} />
+            </ThemeContext.Provider>
+          </ApolloProvider>
+        </AnimatedSplashScreen>
+      </GestureHandlerRootView>
+    </ErrorBoundary>
+  )
+}
+
+export default function App() {
+  return (
+    <AppModeProvider>
+      <ModeAwareApp />
+    </AppModeProvider>
+  )
+}
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  },
+  mainContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
+// async function schedulePushNotification() {
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: "You've got mail! 📬",
+//       body: 'Here is the notification body',
+//       data: { type: NOTIFICATION_TYPES.REVIEW_ORDER, _id: '65e068b2150aab288f2b821f' }
+//     },
+//     trigger: { seconds: 10 }
+//   })
+// }

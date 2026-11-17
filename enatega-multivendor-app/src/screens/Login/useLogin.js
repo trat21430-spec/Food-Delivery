@@ -1,0 +1,252 @@
+import { useState, useContext, useRef, useEffect } from 'react'
+import { Alert } from 'react-native'
+import _ from 'lodash' // Import lodash
+import * as Device from 'expo-device'
+import Constants from 'expo-constants'
+import { useMutation } from '@apollo/client'
+import gql from 'graphql-tag'
+import { login, emailExist } from '../../apollo/mutations'
+import ThemeContext from '../../ui/ThemeContext/ThemeContext'
+import { theme } from '../../utils/themeColors'
+import * as Notifications from 'expo-notifications'
+import { FlashMessage } from '../../ui/FlashMessage/FlashMessage'
+import analytics from '../../utils/analytics'
+import AuthContext from '../../context/Auth'
+import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
+import { useAppMode } from '../../mode/AppModeContext'
+import { getModeHomeRoute } from '../../mode/navigation'
+import { APP_MODES } from '../../mode/constants'
+import {
+  EMAIL_EXIST_SINGLE_VENDOR,
+  LOGIN_SINGLE_VENDOR
+} from '../../singlevendor/apollo/mutations'
+
+const LOGIN = gql`
+  ${login}
+`
+const EMAIL = gql`
+  ${emailExist}
+`
+
+const singleVendorDemoCredentials = {
+  email: Constants.expoConfig?.extra?.singleVendorCustomerDemoEmail ?? '',
+  password: Constants.expoConfig?.extra?.singleVendorCustomerDemoPassword ?? ''
+}
+
+export const useLogin = () => {
+  const { t, i18n } = useTranslation()
+  const Analytics = analytics()
+
+  const navigation = useNavigation()
+  const { mode } = useAppMode()
+  const loginDocument =
+    mode === APP_MODES.SINGLE ? LOGIN_SINGLE_VENDOR : LOGIN
+  const emailExistDocument =
+    mode === APP_MODES.SINGLE ? EMAIL_EXIST_SINGLE_VENDOR : EMAIL
+  const initialEmail =
+    mode === APP_MODES.SINGLE ? singleVendorDemoCredentials.email : ''
+  const [email, setEmail] = useState(initialEmail)
+  const emailRef = useRef(initialEmail)
+  const [password, setPassword] = useState(
+    mode === APP_MODES.SINGLE
+      ? singleVendorDemoCredentials.password
+      : ''
+  )
+  const [showPassword, setShowPassword] = useState(true)
+  const [emailError, setEmailError] = useState(null)
+  const [passwordError, setPasswordError] = useState(null)
+  const [registeredEmail, setRegisteredEmail] = useState(false)
+  const themeContext = useContext(ThemeContext)
+  const currentTheme = { isRTL: i18n.dir() === 'rtl', ...theme[themeContext.ThemeValue] }
+  const { setTokenAsync } = useContext(AuthContext)
+
+  const [EmailEixst, { loading }] = useMutation(emailExistDocument, {
+    onCompleted,
+    onError
+  })
+
+  const [LoginMutation, { loading: loginLoading }] = useMutation(loginDocument, {
+    onCompleted: onLoginCompleted,
+    onError: onLoginError
+  })
+
+  // Update both state and ref
+  const handleSetEmail = (newEmail) => {
+    setEmail(newEmail)
+    emailRef.current = newEmail
+    if (emailError) {
+      setEmailError(null)
+    }
+  }
+
+  // Reset password when registeredEmail becomes true
+  useEffect(() => {
+    if (registeredEmail) {
+      if (
+        mode === APP_MODES.SINGLE &&
+        emailRef.current === singleVendorDemoCredentials.email
+      ) {
+        setPassword(singleVendorDemoCredentials.password)
+      } else if (emailRef.current === 'demo-customer@enatega.com') {
+        setPassword('123123')
+      } else {
+        setPassword('')
+      }
+    }
+  }, [mode, registeredEmail])
+  function validateCredentials() {
+    let result = true
+    setEmailError(null)
+    setPasswordError(null)
+
+    // Use the state value for validation
+    if (!email.trim()) {
+      setEmailError(t('emailErr1'))
+      result = false
+    } else {
+      const emailRegex = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
+      if (emailRegex.test(email) !== true) {
+        setEmailError(t('emailErr2'))
+        result = false
+      }
+    }
+    if (!password && registeredEmail) {
+      setPasswordError(t('passErr1'))
+      result = false
+    }
+    return result
+  }
+
+  function onCompleted({ emailExist }) {
+    if (validateCredentials()) {
+      if (emailExist) {
+        setRegisteredEmail(true)
+      } else {
+        navigation.navigate('Register', { email:emailRef.current })
+      }
+    }
+  }
+
+  function onError(error) {
+    try {
+      FlashMessage({
+        message: error.graphQLErrors[0].message
+      })
+    } catch (e) {
+      FlashMessage({
+        message: t('mailCheckingError')
+      })
+    }
+  }
+
+  async function onLoginCompleted(data) {
+    if (data.login.isActive == false) {
+      FlashMessage({ message: t('accountDeactivated') })
+    } else {
+      try {
+        await Analytics.identify(
+          {
+            userId: data.login.userId
+          },
+          data.login.userId
+        )
+        await Analytics.track(Analytics.events.USER_LOGGED_IN, {
+          userId: data.login.userId,
+          name: data.login.name,
+          email: data.login.email
+        })
+        await setTokenAsync(data.login.token)
+        navigation.reset({
+          index: 0,
+          routes: [
+            getModeHomeRoute(mode)
+          ]
+        })
+      } catch (e) {
+        if (__DEV__) console.log(e)
+      }
+    }
+  }
+
+  function onLoginError(error) {
+    try {
+      FlashMessage({
+        message: error.graphQLErrors[0].message
+      })
+    } catch (e) {
+      FlashMessage({ message: t('errorInLoginError') })
+    }
+  }
+
+  async function loginAction(email, password) {
+    try {
+      if (validateCredentials()) {
+        let notificationToken = null
+          try {
+            if (Device.isDevice) {
+              const {
+                status: existingStatus
+              } = await Notifications.getPermissionsAsync()
+              if (existingStatus === 'granted') {
+                notificationToken = (await Notifications.getExpoPushTokenAsync({
+                  projectId: Constants.expoConfig.extra.eas.projectId
+                })).data
+              }
+            }
+        } catch (error) {
+          FlashMessage({
+            message: t('errorWhileGettingNotificationToken'),
+          })
+        }
+        LoginMutation({
+          variables: {
+            email,
+            password,
+            type: 'default',
+            notificationToken
+          }
+        })
+      }
+    } catch (e) {
+      FlashMessage({
+        message: t('errorWhileLogging')
+      })
+    } finally {
+    }
+  }
+
+  function checkEmailExist() {
+    if (validateCredentials()) {
+      EmailEixst({ variables: { email: emailRef.current } })
+    }
+  }
+
+  function onBackButtonPressAndroid() {
+    navigation.navigate({
+      ...getModeHomeRoute(mode),
+      merge: true
+    })
+    return true
+  }
+
+  return {
+    email,
+    password,
+    setPassword,
+    showPassword,
+    setShowPassword,
+    emailError,
+    passwordError,
+    registeredEmail,
+    currentTheme,
+    loading,
+    loginLoading,
+    loginAction,
+    checkEmailExist,
+    onBackButtonPressAndroid,
+    emailRef,
+    themeContext,
+    handleSetEmail
+  }
+}

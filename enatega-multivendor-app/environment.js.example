@@ -1,0 +1,18 @@
+/*****************************
+* environment.js
+* path: '/environment.js' (root of your project)
+******************************/
+
+This app now reads customer Google settings from Expo env variables.
+
+Copy `.env.example` to `.env` and update values if needed:
+
+```dotenv
+EXPO_PUBLIC_APP_ENV=development
+EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID=
+EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID=
+EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID=
+EXPO_PUBLIC_GOOGLE_IOS_REVERSED_CLIENT_ID=
+EXPO_PUBLIC_GOOGLE_MAPS_API_KEY_ANDROID=
+EXPO_PUBLIC_GOOGLE_MAPS_API_KEY_IOS=
+```

@@ -1,0 +1,1193 @@
+/* eslint-disable indent */
+import React, { useState, useEffect, useContext, useRef, useCallback, useMemo } from 'react'
+import { View, ScrollView, TouchableOpacity, StatusBar, Platform, Alert, TextInput, Dimensions } from 'react-native'
+import { useMutation, useQuery } from '@apollo/client'
+import gql from 'graphql-tag'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { AntDesign, EvilIcons, Feather, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Modalize } from 'react-native-modalize'
+import { getTipping } from '../../apollo/queries'
+import { applyCoupon, placeOrder } from '../../apollo/mutations'
+import { scale } from '../../utils/scaling'
+import { stripeCurrencies, paypalCurrencies } from '../../utils/currencies'
+import { theme } from '../../utils/themeColors'
+import MapView, { Marker, PROVIDER_DEFAULT } from 'react-native-maps'
+import ThemeContext from '../../ui/ThemeContext/ThemeContext'
+import ConfigurationContext from '../../context/Configuration'
+import UserContext from '../../context/User'
+import OrdersContext from '../../context/Orders'
+
+import { FlashMessage } from '../../ui/FlashMessage/FlashMessage'
+import TextDefault from '../../components/Text/TextDefault/TextDefault'
+import { alignment } from '../../utils/alignment'
+import { useRestaurant } from '../../ui/hooks'
+import { LocationContext } from '../../context/Location'
+import { useFocusEffect, StackActions } from '@react-navigation/native'
+import { textStyles } from '../../utils/textStyles'
+import { calculateAmount, calculateDistance } from '../../utils/customFunctions'
+import analytics from '../../utils/analytics'
+import navigationService from '../../routes/navigationService'
+import { useTranslation } from 'react-i18next'
+import styles from './styles'
+import Location from '../../components/Main/Location/Location'
+import { customMapStyle } from '../../utils/customMapStyles'
+import Spinner from '../../components/Spinner/Spinner'
+import RestaurantMarker from '../../assets/SVG/restaurant-marker'
+import CustomerMarker from '../../assets/SVG/customer-marker'
+import { FulfillmentMode } from '../../components/Checkout/FulfillmentMode'
+import { Instructions } from '../../components/Checkout/Instructions'
+import PickUp from '../../components/Pickup'
+import { PaymentModeOption } from '../../components/Checkout/PaymentOption'
+import { isOpen } from '../../utils/customFunctions'
+import { WrongAddressModal } from '../../components/Checkout/WrongAddressModal'
+import { calculateOrderPricing } from '../../utils/orderPricing'
+import { populateCart } from '../../utils/populateCart'
+import LiveActivityService from '../../utils/liveActivityService'
+import { APP_MODES } from '../../mode/constants'
+import { recordOrderOrigin } from '../../mode/orderOrigin'
+import { useModeSensitiveOperation } from '../../mode/AppModeContext'
+
+import useNetworkStatus from '../../utils/useNetworkStatus'
+import ErrorView from '../../components/ErrorView/ErrorView'
+import useMultivendorTheme from '../../ui/designSystem/useMultivendorTheme'
+import { SkeletonBlock } from '../../ui/designSystem'
+
+// Constants
+const PLACEORDER = gql`
+  ${placeOrder}
+`
+const TIPPING = gql`
+  ${getTipping}
+`
+const APPLY_COUPON = gql`
+  ${applyCoupon}
+`
+const { height: HEIGHT } = Dimensions.get('window')
+
+function PaymentMethodIcon({ paymentMethod, color, size }) {
+  if (paymentMethod?.iconFamily === 'material-community') {
+    return (
+      <MaterialCommunityIcons
+        name={paymentMethod.icon}
+        size={size}
+        color={color}
+      />
+    )
+  }
+
+  return <FontAwesome name={paymentMethod?.icon} size={size} color={color} />
+}
+
+function Checkout(props) {
+  const Analytics = analytics()
+
+  const configuration = useContext(ConfigurationContext)
+  const { reFetchOrders } = useContext(OrdersContext)
+  const { isLoggedIn, profile, clearCart, restaurant: cartRestaurant, cart, cartCount, updateCart, isPickup, setIsPickup, instructions, coupon, setCoupon } = useContext(UserContext)
+
+  const themeContext = useContext(ThemeContext)
+  const { location } = useContext(LocationContext)
+  const { t, i18n } = useTranslation()
+  const { tokens } = useMultivendorTheme()
+  const currentTheme = {
+    isRTL: i18n.dir() === 'rtl',
+    ...theme[themeContext.ThemeValue],
+    ...tokens
+  }
+  const voucherModalRef = useRef(null)
+  const tipModalRef = useRef(null)
+  const checkoutMapRef = useRef(null)
+  const [loadingData, setLoadingData] = useState(true)
+  const [minimumOrder, setMinimumOrder] = useState('')
+  const [orderDate, setOrderDate] = useState(new Date())
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [deliveryCharges, setDeliveryCharges] = useState(0)
+  const [voucherCode, setVoucherCode] = useState('')
+  const [tip, setTip] = useState(null)
+  const [tipAmount, setTipAmount] = useState('')
+  const calenderModalRef = useRef(null)
+  const [paymentMode, setPaymentMode] = useState('COD')
+
+  const { loading, data } = useRestaurant(cartRestaurant)
+  const [loadingOrder, setLoadingOrder] = useState(false)
+  useModeSensitiveOperation(loadingOrder)
+  const restaurantCoordinates = data?.restaurant?.location?.coordinates
+  const latOrigin = Number(restaurantCoordinates?.[1])
+  const lonOrigin = Number(restaurantCoordinates?.[0])
+  const hasRestaurantCoordinates =
+    restaurantCoordinates?.[0] != null &&
+    restaurantCoordinates?.[1] != null &&
+    restaurantCoordinates[0] !== '' &&
+    restaurantCoordinates[1] !== '' &&
+    Number.isFinite(latOrigin) &&
+    Number.isFinite(lonOrigin) &&
+    Math.abs(latOrigin) <= 90 &&
+    Math.abs(lonOrigin) <= 180
+  const initialRegion = hasRestaurantCoordinates
+    ? {
+        latitude: latOrigin,
+        longitude: lonOrigin,
+        latitudeDelta: 0.4,
+        longitudeDelta: 0.5
+      }
+    : null
+  const customerLatitude = Number(location?.latitude)
+  const customerLongitude = Number(location?.longitude)
+  const hasCustomerCoordinates =
+    !isPickup &&
+    location?.latitude != null &&
+    location?.longitude != null &&
+    Number.isFinite(customerLatitude) &&
+    Number.isFinite(customerLongitude) &&
+    Math.abs(customerLatitude) <= 90 &&
+    Math.abs(customerLongitude) <= 180
+
+  const fitCheckoutMap = useCallback(() => {
+    if (!hasRestaurantCoordinates) return
+
+    const coordinates = [{ latitude: latOrigin, longitude: lonOrigin }]
+    if (hasCustomerCoordinates) {
+      coordinates.push({
+        latitude: customerLatitude,
+        longitude: customerLongitude
+      })
+    }
+
+    checkoutMapRef.current?.fitToCoordinates(coordinates, {
+      animated: false,
+      edgePadding: { top: 36, right: 36, bottom: 56, left: 36 }
+    })
+  }, [customerLatitude, customerLongitude, hasCustomerCoordinates, hasRestaurantCoordinates, latOrigin, lonOrigin])
+
+  useEffect(() => {
+    fitCheckoutMap()
+  }, [fitCheckoutMap])
+  const [isModalVisible, setisModalVisible] = useState(false)
+  const [orderConfirmedTime, setOrderConfirmedTime] = useState(null)
+  // When demo mode is enabled the order should go through with whatever
+  // location is active, without forcing the user into the address flow.
+  // The `isDemoDefaultLocation` flag only lives on the location built by
+  // LocationProvider, so it is lost the moment the user picks any other
+  // location (current location, map tap, etc.). Gate on demo mode + valid
+  // coordinates instead so place order works in all demo-mode cases.
+  const isDemoDeliveryLocation = !!(
+    configuration?.enableCustomerDemoMode &&
+    location?.latitude &&
+    location?.longitude
+  )
+
+  const restaurant = data?.restaurant
+
+  const onModalOpen = (modalRef) => {
+    const modal = modalRef.current
+    if (modal) {
+      modal.open()
+    }
+  }
+
+  const onModalClose = (modalRef) => {
+    const modal = modalRef.current
+    if (modal) {
+      modal.close()
+    }
+  }
+
+  const handleCartNavigation = async () => {
+    setisModalVisible(false)
+    props?.navigation.navigate('CartAddress')
+  }
+
+  function onCouponCompleted(data) {
+    const couponData = data?.coupon?.coupon
+    if (couponData) {
+      if (couponData.enabled) {
+        setCoupon(couponData)
+        FlashMessage({
+          message: t('coupanApply')
+        })
+        setVoucherCode('')
+        onModalClose(voucherModalRef)
+        setLoadingOrder(false)
+      } else {
+        FlashMessage({
+          message: t('coupanFailed')
+        })
+        setLoadingOrder(false)
+      }
+    } else {
+      // If no coupon data, show the message from the response
+      FlashMessage({
+        message: data?.coupon?.message || t('invalidCoupan')
+      })
+      setLoadingOrder(false)
+    }
+  }
+
+  function onCouponError() {
+    FlashMessage({
+      message: t('invalidCoupan')
+    })
+    setLoadingOrder(false)
+  }
+
+  const [mutateCoupon, { loading: couponLoading }] = useMutation(APPLY_COUPON, {
+    onCompleted: onCouponCompleted,
+    onError: onCouponError
+  })
+
+  const { data: dataTip } = useQuery(TIPPING, {
+    fetchPolicy: 'cache-first',
+    nextFetchPolicy: 'cache-first',
+    notifyOnNetworkStatusChange: true
+  })
+
+  const [mutateOrder, { loading: mutateOrderLoading }] = useMutation(PLACEORDER, {
+    onCompleted,
+    onError
+  })
+
+  const COD_PAYMENT = {
+    payment: 'COD',
+    label: t('cod'),
+    index: 2,
+    icon: 'cash',
+    iconFamily: 'material-community'
+  }
+
+  const paymentMethod = props?.route.params && props?.route.params.paymentMethod ? props?.route.params.paymentMethod : COD_PAYMENT
+
+  const [selectedTip, setSelectedTip] = useState()
+  const pricing = useMemo(() => calculateOrderPricing({
+    cart,
+    discountPercent: coupon?.discount,
+    taxPercent: restaurant?.tax,
+    delivery: isPickup ? 0 : deliveryCharges,
+    tip: isPickup ? 0 : tip || selectedTip
+  }), [cart, coupon?.discount, deliveryCharges, isPickup, restaurant?.tax, selectedTip, tip])
+  const inset = useSafeAreaInsets()
+
+  function onTipping() {
+    if (isNaN(tipAmount)) FlashMessage({ message: t('invalidAmount') })
+    else if (Number(tipAmount) <= 0) {
+      FlashMessage({ message: t('amountMustBe') })
+    } else {
+      setTip(tipAmount)
+      setTipAmount(null)
+      onModalClose(tipModalRef)
+    }
+  }
+
+  useEffect(() => {
+    if (tip) {
+      setSelectedTip(null)
+    }
+    // uncomment it if you want to select the tip by default
+    // else if (dataTip && !selectedTip) {
+    //   setSelectedTip(dataTip.tips.tipVariations[1])
+    // }
+  }, [tip, data])
+
+  useEffect(() => {
+    let isSubscribed = true
+    ;(async () => {
+      if (data && !!data?.restaurant) {
+        const latOrigin = Number(data?.restaurant.location.coordinates[1])
+        const lonOrigin = Number(data?.restaurant.location.coordinates[0])
+        const latDest = Number(location.latitude)
+        const longDest = Number(location.longitude)
+        const distance = calculateDistance(latOrigin, lonOrigin, latDest, longDest)
+
+        let costType = configuration.costType
+        let amount = calculateAmount(costType, configuration.deliveryRate, distance)
+
+        if (isSubscribed) {
+          setDeliveryCharges(amount > 0 ? amount : configuration.deliveryRate)
+        }
+      }
+    })()
+    return () => {
+      isSubscribed = false
+    }
+  }, [data, location])
+
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'android') {
+        StatusBar.setBackgroundColor(currentTheme.menuBar)
+      }
+      StatusBar.setBarStyle(themeContext.ThemeValue === 'Dark' ? 'light-content' : 'dark-content')
+    }, [currentTheme.menuBar, themeContext.ThemeValue])
+  )
+
+  useEffect(() => {
+    props?.navigation.setOptions({
+      headerTitle: t('titleCheckout'),
+      headerRight: null,
+      headerTitleAlign: 'center',
+      headerTitleStyle: {
+        color: currentTheme.colors.textPrimary,
+        ...textStyles.H4,
+        ...textStyles.Bolder
+      },
+
+      headerStyle: {
+        backgroundColor: currentTheme.colors.canvas
+      },
+      headerShadowVisible: false,
+      headerLeft: () => (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => navigationService.goBack()}
+          style={styles(currentTheme).headerBackButton}
+        >
+          <AntDesign
+            name={currentTheme.isRTL ? 'arrowright' : 'arrowleft'}
+            size={scale(22)}
+            color={currentTheme.colors.textPrimary}
+          />
+        </TouchableOpacity>
+      )
+    })
+  }, [props?.navigation, currentTheme, t])
+
+  useEffect(() => {
+    if (!data) return
+    didFocus()
+  }, [data])
+  useEffect(() => {
+    async function Track() {
+      await Analytics.track(Analytics.events.NAVIGATE_TO_CART)
+    }
+    Track()
+  }, [])
+  useEffect(() => {
+    if (cart && cartCount > 0) {
+      if (data && data?.restaurant && (!data?.restaurant?.isAvailable || !isOpen(data?.restaurant))) {
+        showAvailablityMessage()
+      }
+    }
+  }, [data])
+
+  const { isConnected: connect, setIsConnected: setConnect } = useNetworkStatus()
+  if (!connect) return <ErrorView refetchFunctions={[]} />
+  const showAvailablityMessage = () => {
+    Alert.alert(
+      '',
+      `${data?.restaurant.name} closed at the moment`,
+      [
+        {
+          text: 'Go back to restaurants',
+          onPress: () => {
+            props?.navigation.navigate({
+              name: 'Main',
+              merge: true
+            })
+          },
+          style: 'cancel'
+        },
+        {
+          text: 'close',
+          onPress: () => {},
+          style: 'cancel'
+        }
+      ],
+      { cancelable: true }
+    )
+  }
+
+  function onCompleted(data) {
+    const placedOrder = data?.placeOrder
+    void recordOrderOrigin(placedOrder, APP_MODES.MULTI)
+    setOrderConfirmedTime(new Date())
+    reFetchOrders()
+    Analytics.track(Analytics.events.ORDER_PLACED, {
+      userId: data?.placeOrder.user._id,
+      orderId: data?.placeOrder.orderId,
+      name: data?.placeOrder.user.name,
+      email: data?.placeOrder.user.email,
+      restaurantName: data?.placeOrder.restaurant.name,
+      restaurantAddress: data?.placeOrder.restaurant.address,
+      orderPaymentMethod: data?.placeOrder.paymentMethod,
+      orderItems: data?.placeOrder.items,
+      orderAmount: data?.placeOrder.orderAmount,
+      orderPaidAmount: data?.placeOrder.paidAmount,
+      tipping: data?.placeOrder.tipping,
+      orderStatus: data?.placeOrder.orderStatus,
+      orderDate: data?.placeOrder.orderDate
+    })
+    if (paymentMode === 'COD') {
+      if (placedOrder?._id && !placedOrder?.isPickedUp) {
+        LiveActivityService.initiateForOrder({
+          orderId: placedOrder._id.toString(),
+          displayOrderId: placedOrder.orderId.toString()
+        }).catch((error) => {
+          console.warn('Live Activity could not be started', error?.message)
+        })
+      }
+      // Pop the Cart/CartAddress/Checkout screens off the stack (Main is
+      // already mounted underneath, so this doesn't remount it) and push
+      // OrderDetail with its normal animated transition instead of using
+      // navigation.reset, which swaps the whole stack instantly with no
+      // animation and produced a blank/black flash before this screen painted.
+      props.navigation.dispatch(StackActions.popToTop())
+      props.navigation.navigate('OrderDetail', {
+        _id: data?.placeOrder?._id,
+        order: data?.placeOrder
+      })
+      clearCart()
+    } else if (paymentMode === 'PAYPAL') {
+      props?.navigation.replace('Paypal', {
+        _id: data?.placeOrder.orderId,
+        currency: configuration.currency
+      })
+    } else if (paymentMode === 'STRIPE') {
+      props?.navigation.replace('StripeCheckout', {
+        _id: data?.placeOrder.orderId,
+        amount: data?.placeOrder.orderAmount,
+        email: data?.placeOrder.user.email,
+        currency: configuration.currency
+      })
+    }
+  }
+  function onError(error) {
+    setLoadingOrder(false)
+    if (error?.graphQLErrors?.length) {
+      if (error.graphQLErrors[0].message === "Sorry! we can't deliver to your address." || error.graphQLErrors[0].message === 'Delivery zone not found') {
+        setisModalVisible(true)
+      }
+    } else {
+      FlashMessage({
+        message: error.message
+      })
+    }
+    if (error?.networkError) {
+      if (error?.networkError.statusCode === 502) {
+        FlashMessage({
+          message: 'Server is currently unavailable. Please try again later.'
+        })
+      }
+      if (error?.networkError.statusCode === 504) {
+        FlashMessage({
+          message: 'Request timed out. Please try again.'
+        })
+      }
+    }
+  }
+
+  function calculateTip() {
+    return pricing.tipAmount
+  }
+
+  function taxCalculation() {
+    return pricing.taxationAmount.toFixed(2)
+  }
+
+  function calculatePrice(delivery = 0, withDiscount) {
+    const itemTotal = withDiscount ? pricing.discountedSubtotal : pricing.subtotal
+    return (itemTotal + (delivery > 0 ? deliveryCharges : 0)).toFixed(2)
+  }
+
+  function calculateTotal() {
+    return pricing.total.toFixed(2)
+  }
+
+  function validateOrder() {
+    if (!data?.restaurant?.isAvailable || !isOpen(data?.restaurant)) {
+      showAvailablityMessage()
+      return
+    }
+    if (!cart.length) {
+      FlashMessage({
+        message: t('validateItems')
+      })
+      return false
+    }
+    if (calculatePrice(deliveryCharges, true) < minimumOrder) {
+      FlashMessage({
+        message: `The minimum amount of (${configuration.currencySymbol} ${minimumOrder}) for your order has not been reached.`
+        // message: `(${t(minAmount)}) (${configuration.currencySymbol
+        //   } ${minimumOrder}) (${t(forYourOrder)})`
+      })
+      return false
+    }
+    if (!isPickup && !location?._id && !isDemoDeliveryLocation) {
+      props?.navigation.navigate('CartAddress')
+      return false
+    }
+    if (!paymentMode) {
+      FlashMessage({
+        message: t('setPaymentMethod')
+      })
+      return false
+    }
+    if (!profile?.phone?.length) {
+      props?.navigation.navigate('PhoneNumber', { name: profile?.name, screen: 'Checkout' })
+      return false
+    }
+    if (profile?.phone?.length > 0 && !profile?.phoneIsVerified) {
+      FlashMessage({
+        message: t('numberVerificationAlert')
+      })
+      props?.navigation.navigate('PhoneNumber', { name: profile?.name, screen: 'Checkout' })
+      return false
+    }
+    return true
+  }
+
+  function checkPaymentMethod(currency) {
+    if (paymentMode === 'STRIPE') {
+      return stripeCurrencies.find((val) => val.currency === currency)
+    }
+    if (paymentMode === 'PAYPAL') {
+      return paypalCurrencies.find((val) => val.currency === currency)
+    }
+    return true
+  }
+
+  function transformOrder(cartData) {
+    return cartData?.map((food) => {
+      return {
+        food: food?._id,
+        quantity: food?.quantity,
+        variation: food?.variation._id,
+        addons: food?.addons
+          ? food?.addons.map(({ _id, options }) => ({
+              _id,
+              options: options.map(({ _id }) => _id)
+            }))
+          : [],
+        specialInstructions: food?.specialInstructions
+      }
+    })
+  }
+  async function onPayment() {
+    try {
+      if (checkPaymentMethod(configuration.currency)) {
+        const items = transformOrder(cart)
+        const orderVariables = {
+          restaurant: cartRestaurant,
+          orderInput: items,
+          paymentMethod: paymentMode,
+          couponCode: coupon ? coupon.title : null,
+          tipping: +calculateTip(),
+          taxationAmount: +taxCalculation(),
+          orderDate: orderDate,
+          isPickedUp: isPickup,
+          deliveryCharges: isPickup ? 0 : deliveryCharges,
+          instructions
+        }
+
+        if (isPickup) {
+          // For pickup, use the location from context
+          orderVariables.address = {
+            label: 'Current Location',
+            deliveryAddress: 'Pickup',
+            details: 'User will pick up the order',
+            longitude: '' + location.longitude,
+            latitude: '' + location.latitude
+          }
+        } else {
+          // For delivery, use the selected address.
+          // Re-derive the demo flag from `isDemoDeliveryLocation` (demo mode +
+          // valid coords) instead of reading it off the location object. The
+          // `isDemoDefaultLocation`/`demoZoneId` fields only exist on the
+          // location built by LocationProvider and are lost the moment the user
+          // re-selects an address from the header sheet — which made a second
+          // order fail with "can't deliver to your address" until the app was
+          // killed. Falling back to the configured demo zone keeps the bypass
+          // consistent in real time.
+          orderVariables.address = {
+            label: location.label,
+            deliveryAddress: location.deliveryAddress,
+            details: location.details,
+            longitude: '' + location.longitude,
+            latitude: '' + location.latitude,
+            isDemoDefaultLocation:
+              isDemoDeliveryLocation || !!location.isDemoDefaultLocation,
+            demoZoneId:
+              location.demoZoneId || configuration?.customerDemoZoneId || null
+          }
+        }
+
+        await mutateOrder({ variables: orderVariables })
+        setLoadingOrder(false)
+        setIsPickup(false)
+      } else {
+        FlashMessage({
+          message: t('paymentNotSupported')
+        })
+        setLoadingOrder(false)
+      }
+    } catch (error) {
+      console.error('Error placing order:', error)
+    }
+  }
+
+  async function didFocus() {
+    const { restaurant } = data
+    setMinimumOrder(restaurant.minimumOrder)
+    if (props?.navigation.isFocused()) {
+      setLoadingData(false)
+    }
+    try {
+      if (cartCount && cart) {
+        const transformCart = populateCart(restaurant, cart)
+
+        if (props?.navigation.isFocused()) {
+          const updatedItems = transformCart.map((item) => item.cartItem)
+          if (updatedItems.length === 0) await clearCart()
+          await updateCart(updatedItems)
+          if (cart.length !== updatedItems.length) {
+            FlashMessage({
+              message: t('itemNotAvailable')
+            })
+          }
+        }
+      } else {
+        return
+      }
+    } catch (e) {
+      FlashMessage({
+        message: e.message
+      })
+    }
+  }
+
+  function loadginScreen() {
+    return (
+      <View style={[styles(currentTheme).screenBackground, styles(currentTheme).checkoutSkeleton]}>
+        <SkeletonBlock height={scale(132)} borderRadius={scale(16)} />
+        <SkeletonBlock height={scale(48)} borderRadius={scale(24)} />
+        <View style={styles(currentTheme).skeletonSection}>
+          <SkeletonBlock width='58%' height={scale(17)} borderRadius={scale(7)} />
+          <SkeletonBlock width='82%' height={scale(12)} borderRadius={scale(6)} />
+        </View>
+        <View style={styles(currentTheme).skeletonSection}>
+          <SkeletonBlock width='32%' height={scale(20)} borderRadius={scale(7)} />
+          <SkeletonBlock height={scale(44)} borderRadius={scale(10)} />
+        </View>
+        <View style={styles(currentTheme).skeletonPills}>
+          {[0, 1, 2, 3].map((item) => (
+            <SkeletonBlock key={item} width='23%' height={scale(38)} borderRadius={scale(19)} />
+          ))}
+        </View>
+        <View style={styles(currentTheme).skeletonSection}>
+          <SkeletonBlock width='44%' height={scale(20)} borderRadius={scale(7)} />
+          {[0, 1, 2, 3].map((item) => (
+            <View key={item} style={styles(currentTheme).skeletonBillRow}>
+              <SkeletonBlock width='35%' height={scale(12)} borderRadius={scale(6)} />
+              <SkeletonBlock width='18%' height={scale(12)} borderRadius={scale(6)} />
+            </View>
+          ))}
+        </View>
+      </View>
+    )
+  }
+  let deliveryTime = Math.floor((orderDate - Date.now()) / 1000 / 60)
+  if (deliveryTime < 1) deliveryTime += restaurant?.deliveryTime
+  const shouldShowInitialLoader = !restaurant && (loading || loadingData)
+  if (shouldShowInitialLoader) return loadginScreen()
+
+  return (
+    <>
+      <View style={styles(currentTheme).mainContainer}>
+        {!!cart.length && (
+          <>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={styles().flex}
+              contentContainerStyle={styles(currentTheme).checkoutContent}
+            >
+              <View>
+                <View style={styles(currentTheme).mapCard}>
+                  {initialRegion ? (
+                    <View style={styles(currentTheme).mapView}>
+                      <MapView
+                        ref={checkoutMapRef}
+                        style={styles().flex}
+                        scrollEnabled
+                        zoomEnabled
+                        zoomControlEnabled={Platform.OS === 'android'}
+                        rotateEnabled={false}
+                        loadingEnabled
+                        loadingBackgroundColor={currentTheme.themeBackground}
+                        loadingIndicatorColor={currentTheme.main}
+                        initialRegion={initialRegion}
+                        customMapStyle={customMapStyle}
+                        provider={PROVIDER_DEFAULT}
+                        onMapReady={fitCheckoutMap}
+                      >
+                        <Marker
+                          coordinate={{ latitude: latOrigin, longitude: lonOrigin }}
+                          tracksViewChanges={false}
+                        >
+                          <RestaurantMarker />
+                        </Marker>
+                        {hasCustomerCoordinates && (
+                          <Marker
+                            coordinate={{
+                              latitude: customerLatitude,
+                              longitude: customerLongitude
+                            }}
+                            tracksViewChanges={false}
+                          >
+                            <CustomerMarker />
+                          </Marker>
+                        )}
+                      </MapView>
+                      {!!restaurant?.name && (
+                        <View style={styles(currentTheme).mapLabel}>
+                          <MaterialCommunityIcons
+                            name='storefront-outline'
+                            size={scale(16)}
+                            color={currentTheme.colors.accent}
+                          />
+                          <TextDefault
+                            numberOfLines={1}
+                            small
+                            bold
+                            textColor={currentTheme.colors.textPrimary}
+                          >
+                            {restaurant.name}
+                          </TextDefault>
+                        </View>
+                      )}
+                    </View>
+                  ) : (
+                    <View style={[styles(currentTheme).mapView, styles(currentTheme).mapUnavailable]}>
+                      <MaterialCommunityIcons name='map-marker-off-outline' size={scale(28)} color={currentTheme.secondaryText} />
+                      <TextDefault H5 bold center textColor={currentTheme.secondaryText}>
+                        {t('mapPreviewUnavailable')}
+                      </TextDefault>
+                    </View>
+                  )}
+                </View>
+                <FulfillmentMode theme={currentTheme} setIsPickup={setIsPickup} isPickup={isPickup} t={t} />
+                <View style={styles(currentTheme).detailsSection}>
+                  {!isPickup && (
+                    <View style={styles(currentTheme).addressRow}>
+                      <Location locationIcon={currentTheme.newIconColor} locationLabel={currentTheme.newFontcolor} location={currentTheme.newFontcolor} navigation={props?.navigation} addresses={profile?.addresses} forwardIcon={true} screenName={'checkout'} />
+                    </View>
+                  )}
+
+                  <View style={[styles(currentTheme).horizontalLine, styles().width100]} />
+                  <TouchableOpacity
+                    onPress={() => {
+                      onModalOpen(calenderModalRef)
+                    }}
+                    style={styles(currentTheme).deliveryTime}
+                  >
+                    <View style={[styles().iconContainer]}>
+                      <View style={styles().icon}>
+                        <EvilIcons name='calendar' size={scale(20)} />
+                      </View>
+                    </View>
+                    <View style={styles(currentTheme).labelContainer}>
+                      <View style={{ marginHorizontal: scale(5) }}>
+                        {/* <TextDefault textColor={currentTheme.newFontcolor} numberOfLines={1} H5 bolder isRTL>                         
+                          {t(isPickup ? 'pickUp' : 'delivery')} ({deliveryTime} {t('mins')})
+                        </TextDefault> */}
+                        {/* <TextDefault textColor={currentTheme.newFontcolor} numberOfLines={1} H5 bolder isRTL>
+                          {orderConfirmedTime ? `${t(isPickup ? 'pickUp' : 'delivery')} (${deliveryTime} ${t('mins')})` : `${t(isPickup ? 'pickUp' : 'delivery')} (${restaurant?.deliveryTime} ${t('mins')})`}
+                        </TextDefault> */}
+                        <TextDefault textColor={currentTheme.newFontcolor} numberOfLines={1} H5 bolder isRTL>
+                          {t(isPickup ? 'pickUp' : 'delivery')} {deliveryTime} {''}
+                          {t('mins')}
+                        </TextDefault>
+                      </View>
+                    </View>
+                    <View style={[styles().iconContainer, { justifyContent: 'center', alignItems: 'center' }]}>
+                      <View style={[styles().icon, { backgroundColor: null }]}>
+                        <Feather name={currentTheme?.isRTL ? 'chevron-left' : 'chevron-right'} size={20} color={currentTheme.secondaryText} />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles(currentTheme).sectionInset}>
+                  <Instructions theme={currentTheme} title={'Instruction for the restaurant'} message={instructions} />
+                </View>
+
+                {isLoggedIn && profile && (
+                  <>
+                    <View style={styles(currentTheme).paymentSec}>
+                      <TextDefault numberOfLines={1} H5 bolder textColor={currentTheme.colors.textPrimary} isRTL>
+                        {t('titlePayment')}
+                      </TextDefault>
+                      <View>
+                        <PaymentModeOption
+                          title={t('cod')}
+                          icon={'cash'}
+                          iconFamily='material-community'
+                          selected={paymentMode === 'COD'}
+                          theme={currentTheme}
+                          onSelect={() => {
+                            setPaymentMode('COD')
+                          }}
+                        />
+                        {/* <PaymentModeOption
+                          title={t('paypal')}
+                          icon={'credit-card'}
+                          selected={paymentMode === 'PAYPAL'}
+                          theme={currentTheme}
+                          onSelect={() => {
+                            setPaymentMode('PAYPAL')
+                          }}
+                        /> */}
+                        {restaurant?.stripeDetailsSubmitted && (
+                          <PaymentModeOption
+                            title={t('Stripe')}
+                            icon={'credit-card'}
+                            selected={paymentMode === 'STRIPE'}
+                            theme={currentTheme}
+                            onSelect={() => {
+                              setPaymentMode('STRIPE')
+                            }}
+                          />
+                        )}
+                      </View>
+                    </View>
+                  </>
+                )}
+                <View style={styles(currentTheme).voucherSec}>
+                  {!coupon ? (
+                    <TouchableOpacity activeOpacity={0.7} style={styles(currentTheme).voucherSecInner} onPress={() => onModalOpen(voucherModalRef)}>
+                      <MaterialCommunityIcons name='ticket-confirmation-outline' size={24} color={currentTheme.colors.accent} />
+                      <TextDefault H4 bolder textColor={currentTheme.colors.accent} center>
+                        {t('applyVoucher')}
+                      </TextDefault>
+                    </TouchableOpacity>
+                  ) : (
+                    <>
+                      <TextDefault numberOfLines={1} H5 bolder textColor={currentTheme.fontNewColor}>
+                        Voucher
+                      </TextDefault>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between'
+                        }}
+                      >
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            paddingTop: scale(8),
+                            gap: scale(5)
+                          }}
+                        >
+                          <AntDesign name='tags' size={24} color={currentTheme.main} />
+                          <View>
+                            <TextDefault numberOfLines={1} tnormal bold textColor={currentTheme.fontFourthColor}>
+                              {coupon ? coupon.title : null} applied
+                            </TextDefault>
+                            <TextDefault small bold textColor={currentTheme.fontFourthColor}>
+                              -{configuration.currencySymbol}
+                              {parseFloat(calculatePrice(0, false) - calculatePrice(0, true)).toFixed(2)}
+                            </TextDefault>
+                          </View>
+                        </View>
+                        <View style={styles(currentTheme).changeBtn}>
+                          <TouchableOpacity activeOpacity={0.7} onPress={() => setCoupon(null)}>
+                            <TextDefault small bold textColor={currentTheme.darkBgFont} center>
+                              {coupon ? t('remove') : null}
+                            </TextDefault>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </>
+                  )}
+                </View>
+                {!isPickup && (
+                  <View style={styles(currentTheme).tipSec}>
+                    <View style={[styles(currentTheme).tipRow]}>
+                      <TextDefault numberOfLines={1} H5 bolder textColor={currentTheme.fontNewColor}>
+                        {t('AddTip')}
+                      </TextDefault>
+                      <TextDefault numberOfLines={1} normal bolder uppercase textColor={currentTheme.colors.textSecondary}>
+                        {t('optional')}
+                      </TextDefault>
+                    </View>
+                    {dataTip && (
+                      <View style={styles(currentTheme).buttonInline}>
+                        {dataTip.tips.tipVariations.map((label, index) => (
+                          <TouchableOpacity
+                            activeOpacity={0.7}
+                            key={index}
+                            style={[selectedTip === label ? styles(currentTheme).activeLabel : styles(currentTheme).labelButton]}
+                            onPress={() => {
+                              props?.navigation.setParams({ tipAmount: null })
+                              setTip(null)
+                              setSelectedTip((prevState) => (prevState === label ? null : label))
+                            }}
+                          >
+                            <TextDefault textColor={selectedTip === label ? currentTheme.colors.accent : currentTheme.colors.textPrimary} normal bolder center>
+                              {configuration.currencySymbol} {label}
+                            </TextDefault>
+                          </TouchableOpacity>
+                        ))}
+                        <TouchableOpacity activeOpacity={0.7} style={tip ? styles(currentTheme).activeLabel : styles(currentTheme).labelButton} onPress={() => onModalOpen(tipModalRef)}>
+                          <TextDefault textColor={tip ? currentTheme.colors.accent : currentTheme.colors.textPrimary} normal bolder center>
+                            {t('Other')}
+                          </TextDefault>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                )}
+
+                <View style={[styles(currentTheme).priceContainer]}>
+                  <TextDefault numberOfLines={1} H5 bolder textColor={currentTheme.fontNewColor} style={{ ...alignment.MBmedium }} isRTL>
+                    {t('paymentSummary')}
+                  </TextDefault>
+                  <View style={styles(currentTheme).billsec}>
+                    <TextDefault numberOfLines={1} normal bold textColor={currentTheme.fontFourthColor}>
+                      {t('subTotal')}
+                    </TextDefault>
+                    <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                      {configuration.currencySymbol}
+                      {calculatePrice(0, false)}
+                    </TextDefault>
+                  </View>
+                  {!isPickup && (
+                    <>
+                      <View style={styles(currentTheme).billsec}>
+                        <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                          {t('deliveryFee')}
+                        </TextDefault>
+                        <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                          {configuration.currencySymbol}
+                          {deliveryCharges.toFixed(2)}
+                        </TextDefault>
+                      </View>
+                    </>
+                  )}
+
+                  <View style={styles(currentTheme).billsec}>
+                    <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                      {t('taxFee')}
+                    </TextDefault>
+                    <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                      {configuration.currencySymbol}
+                      {taxCalculation()}
+                    </TextDefault>
+                  </View>
+
+                  {!isPickup && (
+                    <>
+                      <View style={styles(currentTheme).billsec}>
+                        <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                          {t('tip')}
+                        </TextDefault>
+                        <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                          {configuration.currencySymbol}
+                          {parseFloat(calculateTip()).toFixed(2)}
+                        </TextDefault>
+                      </View>
+                    </>
+                  )}
+
+                  {coupon && (
+                    <View>
+                      <View style={styles(currentTheme).billsec}>
+                        <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                          {t('voucherDiscount')}
+                        </TextDefault>
+                        <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                          -{configuration.currencySymbol}
+                          {parseFloat(calculatePrice(0, false) - calculatePrice(0, true)).toFixed(2)}
+                        </TextDefault>
+                      </View>
+                    </View>
+                  )}
+                  <View style={styles(currentTheme).summaryDivider} />
+                  <View style={styles(currentTheme).totalRow}>
+                    <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} H4 bolder>
+                      {t('total')}
+                    </TextDefault>
+                    <TextDefault numberOfLines={1} textColor={currentTheme.fontFourthColor} normal bold>
+                      {configuration.currencySymbol}
+                      {calculateTotal()}
+                    </TextDefault>
+                  </View>
+                </View>
+
+                <View style={[styles(currentTheme).termsContainer, styles().pT10, styles().mB10]}>
+                  <TextDefault textColor={currentTheme.fontMainColor} style={alignment.MBsmall} small isRTL>
+                    {t('condition1')}
+                  </TextDefault>
+                  <TextDefault textColor={currentTheme.fontSecondColor} style={alignment.MBsmall} small bold isRTL>
+                    {t('condition2')}
+                  </TextDefault>
+                </View>
+              </View>
+            </ScrollView>
+            {!isModalOpen && (
+              <View
+                style={[
+                  styles(currentTheme).buttonContainer,
+                  {
+                    marginBottom: -inset.bottom,
+                    paddingBottom: inset.bottom + scale(8)
+                  }
+                ]}
+              >
+                <TouchableOpacity
+                  disabled={loadingOrder}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    if (validateOrder()) {
+                      setLoadingOrder(true)
+                      onPayment()
+                    }
+                  }}
+                  style={[styles(currentTheme).button, { opacity: loadingOrder ? 0.5 : 1 }]}
+                >
+                  {!loadingOrder && (
+                    <TextDefault textColor={currentTheme.colors.textOnAccent} style={styles().checkoutBtn} bold H4>
+                      {t('placeOrder')}
+                    </TextDefault>
+                  )}
+                  {loadingOrder && <Spinner backColor={'transparent'} />}
+                </TouchableOpacity>
+              </View>
+            )}
+          </>
+        )}
+
+        {/* Tip Modal */}
+        <Modalize
+          ref={tipModalRef}
+          modalStyle={[styles(currentTheme).modal]}
+          overlayStyle={styles(currentTheme).overlay}
+          handleStyle={styles(currentTheme).handle}
+          modalHeight={550}
+          handlePosition='inside'
+          openAnimationConfig={{
+            timing: { duration: 400 },
+            spring: { speed: 20, bounciness: 10 }
+          }}
+          closeAnimationConfig={{
+            timing: { duration: 400 },
+            spring: { speed: 20, bounciness: 10 }
+          }}
+        >
+          <View style={styles().modalContainer}>
+            <View style={styles(currentTheme).modalHeader}>
+              <View activeOpacity={0.7} style={styles(currentTheme).modalheading}>
+                <PaymentMethodIcon
+                  paymentMethod={paymentMethod}
+                  size={20}
+                  color={currentTheme.newIconColor}
+                />
+                <TextDefault H4 bolder textColor={currentTheme.newFontcolor} center>
+                  {t('AddTip')}
+                </TextDefault>
+              </View>
+              <Feather name='x-circle' size={24} color={currentTheme.newIconColor} onPress={() => onModalClose(tipModalRef)} />
+            </View>
+            <View style={{ gap: 8 }}>
+              <TextDefault uppercase bold textColor={currentTheme.gray500} isRTL>
+                {t('enterAmount')}
+              </TextDefault>
+              <TextInput keyboardType='numeric' placeholder={'e.g. 25'} placeholderTextColor={currentTheme.inputPlaceHolder} value={tipAmount} onChangeText={(text) => setTipAmount(text)} style={styles(currentTheme).modalInput} />
+            </View>
+            <TouchableOpacity disabled={!tipAmount} activeOpacity={0.7} onPress={onTipping} style={[styles(currentTheme).button, { height: scale(40) }]}>
+              <TextDefault textColor={currentTheme.black} style={styles().checkoutBtn} bold H4>
+                {t('apply')}
+              </TextDefault>
+            </TouchableOpacity>
+          </View>
+        </Modalize>
+        {/* Voucher Modal */}
+        <Modalize
+          ref={voucherModalRef}
+          modalStyle={[styles(currentTheme).modal]}
+          overlayStyle={styles(currentTheme).overlay}
+          handleStyle={styles(currentTheme).handle}
+          modalHeight={600}
+          handlePosition='inside'
+          openAnimationConfig={{
+            timing: { duration: 400 },
+            spring: { speed: 20, bounciness: 10 }
+          }}
+          closeAnimationConfig={{
+            timing: { duration: 400 },
+            spring: { speed: 20, bounciness: 10 }
+          }}
+        >
+          <View style={styles().modalContainer}>
+            <View style={styles(currentTheme).modalHeader}>
+              <View activeOpacity={0.7} style={styles(currentTheme).modalheading}>
+                <MaterialCommunityIcons name='ticket-confirmation-outline' size={24} color={currentTheme.newIconColor} />
+                <TextDefault H4 bolder textColor={currentTheme.newFontcolor} center>
+                  {t('applyVoucher')}
+                </TextDefault>
+              </View>
+              <Feather name='x-circle' size={24} color={currentTheme.newIconColor} onPress={() => onModalClose(voucherModalRef)} />
+            </View>
+            <View style={{ gap: 8 }}>
+              <TextDefault uppercase bold textColor={currentTheme.gray500} isRTL>
+                {t('enterCode')}
+              </TextDefault>
+              <TextInput label={t('inputCode')} placeholder={t('inputCode')} placeholderTextColor={currentTheme.inputPlaceHolder} value={voucherCode} onChangeText={(text) => setVoucherCode(text)} style={styles(currentTheme).modalInput} />
+            </View>
+            <TouchableOpacity
+              disabled={!voucherCode || couponLoading}
+              activeOpacity={0.7}
+              onPress={() => {
+                mutateCoupon({ variables: { coupon: voucherCode, restaurantId: data?.restaurant?._id } })
+              }}
+              style={[styles(currentTheme).button, !voucherCode && styles(currentTheme).buttonDisabled, { height: scale(40) }, { opacity: couponLoading ? 0.5 : 1 }]}
+            >
+              {!couponLoading && (
+                <TextDefault textColor={currentTheme.black} style={styles().checkoutBtn} bold H4>
+                  {t('apply')}
+                </TextDefault>
+              )}
+              {couponLoading && <Spinner backColor={'transparent'} />}
+            </TouchableOpacity>
+          </View>
+        </Modalize>
+      </View>
+      <View
+        style={{
+          paddingBottom: inset.bottom,
+          backgroundColor: currentTheme.themeBackground
+        }}
+      />
+      <Modalize
+        ref={calenderModalRef}
+        modalStyle={styles(currentTheme).modal}
+        modalHeight={HEIGHT / 2}
+        overlayStyle={styles(currentTheme).overlay}
+        handleStyle={styles(currentTheme).handle}
+        handlePosition='inside'
+        openAnimationConfig={{
+          timing: { duration: 400 },
+          spring: { speed: 20, bounciness: 10 }
+        }}
+        closeAnimationConfig={{
+          timing: { duration: 400 },
+          spring: { speed: 20, bounciness: 10 }
+        }}
+      >
+        <PickUp minimumTime={restaurant?.deliveryTime} setOrderDate={setOrderDate} isPickedUp={isPickup} setIsPickedUp={setIsPickup} orderDate={orderDate} pickupTextColor={currentTheme.newFontcolor} />
+        <TouchableOpacity
+          onPress={() => {
+            calenderModalRef.current.close()
+          }}
+          style={styles(currentTheme).pickupButton}
+        >
+          <TextDefault textColor={currentTheme.fontMainColor} style={styles().checkoutBtn} bold H4>
+            {t('apply')}
+          </TextDefault>
+        </TouchableOpacity>
+      </Modalize>
+      <WrongAddressModal theme={currentTheme} modalVisible={isModalVisible} setModalVisible={() => setisModalVisible(!isModalVisible)} handleNavigation={handleCartNavigation} />
+    </>
+  )
+}
+
+export default Checkout

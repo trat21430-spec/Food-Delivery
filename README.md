@@ -1,1220 +1,412 @@
-<div align="center">
-
-# 🍔🛵 FOOD DELIVERY NETWORK SIMULATION 🛵🍕
-
-### 📋 Phân tích và mô tả hệ thống
-
-![Java](https://img.shields.io/badge/Java-OOP-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![MVC](https://img.shields.io/badge/Architecture-MVC-4B8BBE?style=for-the-badge)
-![CSV](https://img.shields.io/badge/Storage-CSV-2E8B57?style=for-the-badge&logo=files&logoColor=white)
-![Concurrency](https://img.shields.io/badge/Focus-Concurrency-D9534F?style=for-the-badge)
-![Course](https://img.shields.io/badge/LAB211-FPT%20University-orange?style=for-the-badge)
+<div align="right">
+<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution" style="text-decoration:none">
+  <img src="https://img.shields.io/badge/-0d1117?logo=facebook"  width="40" height="30">
+</a>
+<a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution" style="text-decoration:none">
+  <img src="https://img.shields.io/badge/-0d1117?logo=linkedin"  width="40" height="30">
+</a>
+<a target="_blank" href="https://twitter.com/intent/tweet?&url=https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution&via=TWITTER-HANDLE" style="text-decoration:none">
+  <img src="https://img.shields.io/badge/-0d1117?logo=twitter" width="40" height="30">
+</a>
 
 </div>
 
-> 🏫 **LAB211 – OOP with Java – FPT University**
->
-> 🍱 **Chủ đề:** Food Delivery Network Simulation
->
-> 📖 Tài liệu này mô tả bài toán, actor, chức năng, luồng nghiệp vụ, 3 race condition, Use Case và Class Diagram ở mức thiết kế hệ thống.
-
----
-
-## 👥 Danh sách thành viên nhóm
-
-| Vai trò | Họ và tên | MSSV |
-|:-:|---|:-:|
-| 👑 Leader | Hồ Anh Nhật | `QE200301` |
-| 🧑‍💻 Member | Trương Thanh Trà | `QE200100` |
-| 🧑‍💻 Member | Đào Cao Duy | `QE190089` |
-| 🧑‍💻 Member | Huỳnh Nguyễn Quốc Huy | `QE200031` |
-| 🧑‍💻 Member | Võ Thảo Nguyên | `QE200064` |
-| 🧑‍💻 Member | Đỗ Tấn Vũ | `QE170159` |
-
-### 📋 Bảng phân chia công việc theo 7 Phân hệ chức năng của Hệ thống (WBS & RACI Matrix)
-
-| STT | Thành viên & MSSV | Vai trò chính | Phân hệ chức năng phụ trách | Use Cases phụ trách | Các Class / Module đảm nhiệm | Tỉ lệ đóng góp |
-|:---:|:---|:---|:---|:---:|:---|:---:|
-| 1 | **Trương Thanh Trà**<br>`QE200100` | 🌟 Technical Lead / Concurrency & Core Engine | **Phân hệ 7 & Bộ lõi Đơn hàng:** Mô phỏng Concurrency, Kiểm định Tương tranh (Giải quyết Big Question) & Vòng đời Đơn hàng Optimistic Locking | `UC45` – `UC51`<br>+ Điều phối luồng đặt/hủy đơn | `SimulatorController`, `CustomerThread`, `DispatchThread`, `CustomerSimTask`, `DispatchSimTask`, `OrderController` (quản trị Race Condition), `SimulationRun`, `LockMechanism`, `SimulationRunRepository`, `SimulatorView`, `ReportView`, `OptimisticLockException` | **20%**<br>*(Trọng tâm)* |
-| 2 | **Hồ Anh Nhật**<br>`QE200301` | 👑 Leader / Central Dispatching | **Phân hệ 5:** Điều phối Trung tâm & Bản đồ Grid Tọa độ Quy Nhơn (Facade MVC Orchestrator) | `UC29` – `UC35`<br>(7 UCs) | `MainController`, `AppController`, `DriverRepository` (`findNearestAvailable`), `DeliveryRouteRepository`, `MapView` (ASCII Grid 16x50), `DeliveryRoute`, `GeoUtils`, `DoubleAssignmentException`, `DriverOverloadException` | 16% |
-| 3 | **Đào Cao Duy**<br>`QE190089` | 🧑‍💻 Driver Portal Dev | **Phân hệ 4:** Vận hành Tài xế & Giao nhận Đơn hàng | `UC23` – `UC28`<br>(6 UCs) | `DriverController`, `Driver`, `DriverStatus`, các phương thức nhận/giao cuốc trong `OrderController` (`markOrderPickedUp`, `markOrderDelivered`), `DriverRepository` (`markBusy`, `markAvailable`) | 16% |
-| 4 | **Huỳnh Nguyễn Quốc Huy**<br>`QE200031` | 🧑‍💻 Restaurant Portal Dev | **Phân hệ 3:** Quản lý Nhà hàng & Thực đơn Món ăn | `UC16` – `UC22`<br>(7 UCs) | `RestaurantController`, `Restaurant`, `RestaurantRepository`, `MenuItem`, `MenuItemRepository` (`deductStock`, `restoreStock`), các phương thức duyệt/từ chối đơn trong `OrderController` | 16% |
-| 5 | **Võ Thảo Nguyên**<br>`QE200064` | 🧑‍💻 Customer Portal Dev | **Phân hệ 2:** Khách hàng & Đặt hàng Quy Nhơn | `UC06` – `UC15`<br>(10 UCs) | `CustomerController`, `Customer`, `CustomerRepository`, `Order`, `OrderItem`, `OrderStatus`, `OrderItemRepository`, `OrderView`, `OversellException`, `EntityNotFoundException` | 16% |
-| 6 | **Đỗ Tấn Vũ**<br>`QE170159` | 🧑‍💻 System Admin & Security | **Phân hệ 1 & 6:** Xác thực, Quản trị Toàn diện & Dữ liệu Lớn | `UC01` – `UC05`<br>`UC36` – `UC44`<br>(14 UCs) | `AuthController`, `AdminController`, `User`, `UserRole`, `UserAccount`, `AuthSession`, `AccountRole`, `UserRepository`, `AccountRepository` (PBKDF2), `DriverApplicationRepository`, `DriverApplication`, `DataGenerator` (18.000 dòng CSV), `InvalidInputException` | 16% |
-
----
-
-## 📚 Mục lục
-
-| # | Chủ đề |
-|:-:|---|
-| 0 | 🎯 [Tài liệu Đồng bộ 4 tầng & Phát biểu bài toán chính thức](#-0-tài-liệu-đồng-bộ-4-tầng--phát-biểu-bài-toán-chính-thức) |
-| 1 | 🌐 [Tổng quan hệ thống](#-1-tổng-quan-hệ-thống) |
-| 2 | 🎭 [Actor của hệ thống](#-2-actor-của-hệ-thống) |
-| 3 | 🔄 [Luồng nghiệp vụ chính](#-3-luồng-nghiệp-vụ-chính) |
-| 4 | ⚠️ [Ba Race Condition](#️-4-ba-race-condition) |
-| 5 | 🔐 [Các cơ chế đồng bộ cần so sánh](#-5-các-cơ-chế-đồng-bộ-cần-so-sánh) |
-| 6 | 🗺️ [Use Case Diagram](#️-6-use-case-diagram) |
-| 7 | 🗂️ [Use Case Diagram dạng tổng quát](#️-7-use-case-diagram-dạng-tổng-quát) |
-| 8 | 🧩 [Class Diagram](#-8-class-diagram) |
-| 9 | 🔗 [Quan hệ giữa các Class](#-9-quan-hệ-giữa-các-class) |
-| 10 | 🗄️ [Repository Layer](#️-10-repository-layer) |
-| 11 | 🌍 [GeoUtils](#-11-geoutils) |
-| 12 | ⚙️ [Simulator](#️-12-simulator) |
-| 13 | 🔍 [Post-Verification](#-13-post-verification) |
-| 14 | 🏗️ [Kiến trúc tổng thể](#️-14-kiến-trúc-tổng-thể) |
-| 15 | 📁 [Các file CSV chính](#-15-các-file-csv-chính) |
-| 16 | 🧵 [Mối liên hệ giữa các phần](#-16-mối-liên-hệ-giữa-các-phần) |
-| 17 | 🏁 [Kết luận](#-17-kết-luận) |
-
----
-
-## 🎯 0. Tài liệu Đồng bộ 4 tầng & Phát biểu bài toán chính thức
-
-Hệ thống được thiết kế và thực thi theo nguyên tắc **Đồng bộ tuyệt đối 4 tầng**:  
-$$\text{Phát biểu bài toán} \iff \text{51 Use Cases} \iff \text{60 Classes UML} \iff \text{Mã nguồn Java & CSV}$$
-
-### 📌 Các tài liệu chính thức theo từng thư mục:
-* 📊 **Slide Báo cáo PowerPoint (File PPTX chuẩn 16:9):** [`Bao_Cao_Food_Delivery_LAB211.pptx`](Bao_Cao_Food_Delivery_LAB211.pptx) *(Bản lưu trong docs: [`docs/Bao_Cao_Food_Delivery_LAB211.pptx`](docs/Bao_Cao_Food_Delivery_LAB211.pptx))*
-* 🌐 **Trình chiếu Slide trực tiếp trên Web (HTML5 Deck):** [`slide_presentation.html`](slide_presentation.html) *(Bản lưu trong docs: [`docs/slide_presentation.html`](docs/slide_presentation.html))*
-* 📘 **Bản Phát biểu bài toán toàn bộ hệ thống (File Word DOCX chính thức):** [`Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx`](Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx) *(Bản lưu trong docs: [`docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx`](docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx))*
-* 📄 **Phát biểu bài toán chi tiết & Đặc tả 51 Use Cases:** [`Usecase/use_case_diagram.md`](Usecase/use_case_diagram.md)
-* 🖼️ **Hình vẽ Use Case Diagram toàn hệ thống:** [`Usecase/Full_UseCase_Diagram.jpg`](Usecase/Full_UseCase_Diagram.jpg) | [`Usecase/Full_UseCase_Diagram.drawio`](Usecase/Full_UseCase_Diagram.drawio)
-* 🌐 **Trình duyệt Web xem Use Case (Pan-Zoom & Tra cứu):** [`Usecase/use_case_view.html`](Usecase/use_case_view.html)
-* 🖼️ **Hình vẽ Class Diagram (60 Classes, đi dây xa lộ rõ ràng):** [`diagram/Full_Class_Diagram.jpg`](diagram/Full_Class_Diagram.jpg) | [`ClassDiagram/Full_Class_Diagram.drawio`](ClassDiagram/Full_Class_Diagram.drawio)
-* 🧩 **Diagram theo 7 Phân hệ chức năng (Subsystems Architecture):** [`docs/subsystems/Subsystems_Architecture.drawio`](docs/subsystems/Subsystems_Architecture.drawio) | [`docs/subsystems/subsystems_diagram.md`](docs/subsystems/subsystems_diagram.md)
-* 🌐 **Trình duyệt Web tra cứu 7 Phân hệ (Interactive Subsystem View):** [`docs/subsystems/subsystems_view.html`](docs/subsystems/subsystems_view.html) *(Xem theo từng thành viên phụ trách, use case, class và CSV)*
-* 📄 **Đặc tả 60 Class & 112 Quan hệ:** [`ClassDiagram/class_diagram.md`](ClassDiagram/class_diagram.md)
-* 🌐 **Trình duyệt Web xem Class Diagram (Pan-Zoom theo Layer):** [`ClassDiagram/class_diagram_view.html`](ClassDiagram/class_diagram_view.html)
-
----
-
-## 🌐 1. Tổng quan hệ thống
-
-Food Delivery Network Simulation là hệ thống mô phỏng quy trình giao đồ ăn giữa Customer, Restaurant và Driver, trong đó Dispatcher chịu trách nhiệm điều phối đơn hàng đến tài xế phù hợp.
-
-Điểm đặc biệt của bài toán là nhiều Customer/Driver có thể hoạt động đồng thời. Dữ liệu được lưu trữ vật lý bằng các file CSV thay vì Database. Vì vậy hệ thống phải xử lý các vấn đề concurrency/race condition khi nhiều thread cùng đọc và ghi dữ liệu.
-
-Mục tiêu chính:
-
-- Quản lý Customer.
-- Quản lý Restaurant và MenuItem.
-- Quản lý Driver.
-- Tạo và xử lý Order.
-- Kiểm tra và cập nhật stock.
-- Điều phối Driver gần nhất.
-- Ngăn chặn Double Assignment.
-- Ngăn chặn Oversell.
-- Ngăn chặn Driver Overload.
-- So sánh các cơ chế đồng bộ.
-- Chạy Simulator với nhiều thread.
-- Kiểm tra kết quả trực tiếp từ CSV.
-
----
-
-# 🎭 2. Actor của hệ thống
-
-Hệ thống có 4 actor nghiệp vụ chính:
-
-| Actor | Vai trò |
-|---|---|
-| 🛍️ **Customer** | Khách hàng đặt và quản lý đơn hàng |
-| 🍽️ **Restaurant** | Nhà hàng quản lý menu, stock và xác nhận đơn |
-| 🛵 **Driver** | Tài xế nhận và giao đơn |
-| 📡 **Dispatcher** | Điều phối đơn và gán tài xế phù hợp |
-
----
-
-## 🛍️ 2.1. Customer
-
-Customer là người sử dụng hệ thống để đặt đồ ăn.
-
-### ⚙️ Chức năng
-
-- Xem danh sách Restaurant.
-- Xem Menu.
-- Chọn MenuItem.
-- Nhập số lượng.
-- Đặt Order.
-- Xem trạng thái Order.
-- Xem lịch sử Order.
-- Hủy Order khi Order còn PENDING.
-
-### 📏 Quy tắc
-
-Customer chỉ được hủy Order khi:
-
-```text
-Order.status = PENDING
-```
-
-> [!WARNING]
-> Sau khi Driver đã nhận/được gán cho Order thì Customer **không được hủy**.
-
----
-
-## 🍽️ 2.2. Restaurant
-
-Restaurant chịu trách nhiệm quản lý món ăn và xử lý Order.
-
-### ⚙️ Chức năng
-
-- Xem Menu.
-- Thêm MenuItem.
-- Cập nhật MenuItem.
-- Xóa MenuItem.
-- Cập nhật stock.
-- Xem các Order.
-- Xác nhận Order.
-
-### 📏 Quy tắc
-
-> [!IMPORTANT]
-> Khi Customer đặt món, hệ thống phải kiểm tra stock. Nếu không đủ stock thì Order bị từ chối.
-
----
-
-## 🛵 2.3. Driver
-
-Driver là tài xế giao đồ ăn.
-
-### ⚙️ Chức năng
-
-- Cập nhật trạng thái hoạt động.
-- Chuyển sang AVAILABLE khi sẵn sàng nhận đơn.
-- Xem Order được gán.
-- Accept Order.
-- Giao Order.
-- Hoàn thành Delivery.
-
-### 🔄 Trạng thái
-
-```text
-OFFLINE
-AVAILABLE
-BUSY
-```
-
-Luồng trạng thái thông thường:
-
-```text
-OFFLINE
-   ↓
-AVAILABLE
-   ↓
-BUSY
-   ↓
-AVAILABLE
-```
-
-Một Driver chỉ được xử lý một Order tại một thời điểm.
-
----
-
-## 📡 2.4. Dispatcher
-
-Dispatcher là thành phần/người điều phối việc giao đơn.
-
-### ⚙️ Chức năng
-
-1. Xem các Order đã được Restaurant xác nhận.
-2. Tìm các Driver có trạng thái AVAILABLE.
-3. Loại bỏ Driver BUSY hoặc OFFLINE.
-4. Tính khoảng cách từ Driver đến Restaurant.
-5. Tìm Driver gần nhất.
-6. Assign Driver cho Order.
-7. Cập nhật trạng thái Order.
-8. Cập nhật trạng thái Driver.
-
-### 💡 Ví dụ
-
-Giả sử có:
-
-```text
-Order #1001 = CONFIRMED
-
-Driver 01 = AVAILABLE, distance = 1.2 km
-Driver 02 = AVAILABLE, distance = 3.5 km
-Driver 03 = BUSY,      distance = 0.5 km
-```
-
-Dispatcher phải chọn Driver 01.
-
-Kết quả:
-
-```text
-Order #1001 = ASSIGNED
-Driver 01   = BUSY
-```
-
-Driver 03 không được chọn vì đang BUSY dù khoảng cách gần hơn.
-
-### 🏛️ Quy tắc kiến trúc
-
-Hai logic quan trọng:
-
-```text
-findNearestAvailable()
-assignDriver()
-```
-
-> [!IMPORTANT]
-> `findNearestAvailable()` và `assignDriver()` **phải** được xử lý ở Repository — **không** đặt logic nghiệp vụ này trong View hoặc Controller.
-
----
-
-# 🔄 3. Luồng nghiệp vụ chính
-
-## 🛒 3.1. Luồng Customer đặt Order
-
-```text
-Customer
-   ↓
-Chọn Restaurant
-   ↓
-Xem Menu
-   ↓
-Chọn MenuItem
-   ↓
-Nhập Quantity
-   ↓
-Check Stock
-   ↓
-Stock đủ?
- ┌─┴─────────────┐
-YES              NO
- ↓                ↓
-Deduct Stock    Reject Order
- ↓
-Create Order
- ↓
-Order = PENDING
-```
-
-### 📝 Các bước
-
-1. Customer chọn Restaurant.
-2. Customer xem Menu.
-3. Customer chọn MenuItem.
-4. Customer nhập số lượng.
-5. Hệ thống kiểm tra stock.
-6. Nếu đủ stock, hệ thống trừ stock.
-7. Hệ thống tạo Order.
-8. Order có trạng thái PENDING.
-
----
-
-## ✅ 3.2. Luồng Restaurant xác nhận Order
-
-```text
-Restaurant
-    ↓
-View Pending Orders
-    ↓
-Check Order
-    ↓
-Confirm Order
-    ↓
-Order = CONFIRMED
-    ↓
-Dispatcher xử lý
-```
-
-Nếu Order không được xác nhận trong thời gian quy định, Order không tiếp tục theo luồng xác nhận bình thường.
-
----
-
-## 📍 3.3. Luồng Dispatcher điều phối Driver
-
-```text
-CONFIRMED Order
-       ↓
-Find Available Drivers
-       ↓
-Filter AVAILABLE
-       ↓
-Calculate Distance
-       ↓
-Find Nearest Driver
-       ↓
-Assign Driver
-       ↓
-Driver = BUSY
-       ↓
-Order = ASSIGNED
-```
-
-Khoảng cách giữa các vị trí được tính bằng Haversine.
-
----
-
-## 🚚 3.4. Luồng Driver giao Order
-
-```text
-Driver
-   ↓
-View Assigned Order
-   ↓
-Accept Order
-   ↓
-Driver = BUSY
-   ↓
-Pickup Food
-   ↓
-Deliver Food
-   ↓
-Order = DELIVERED
-   ↓
-Driver = AVAILABLE
-```
-
----
-
-## ❌ 3.5. Luồng Customer hủy Order
-
-```text
-Customer
-   ↓
-Cancel Order
-   ↓
-Check Order Status
-   ↓
-PENDING?
- ┌─┴───────┐
-YES       NO
- ↓         ↓
-Cancel    Reject
-Order     Cancel
-```
-
-Điều kiện:
-
-```text
-Chỉ PENDING mới được Cancel.
-```
-
----
-
-# ⚠️ 4. Ba Race Condition
-
-## 🔀 4.1. Double Assignment
-
-### 📖 Định nghĩa
-
-Hai thread đồng thời gán hai Driver khác nhau cho cùng một Order.
-
-### 💡 Ví dụ
-
-```text
-Order #1001 = PENDING
-
-Thread A                  Thread B
-   ↓                         ↓
-Read Order PENDING       Read Order PENDING
-   ↓                         ↓
-Assign Driver A          Assign Driver B
-   ↓                         ↓
-        Cùng xử lý Order #1001
-```
-
-Kết quả sai:
-
-```text
-Order #1001
- ├── Driver A
- └── Driver B
-```
-
-### 🔎 Nguyên nhân
-
-Hai thread đọc trạng thái cũ trước khi thread còn lại hoàn thành việc cập nhật.
-
-### ✅ Cần đảm bảo
-
-```text
-Check Order
-    +
-Assign Driver
-    +
-Update Order
-```
-
-được xử lý an toàn.
-
----
-
-# 🍱 4.2. Oversell
-
-### 📖 Định nghĩa
-
-Hai hoặc nhiều Customer cùng mua MenuItem trong khi stock không đủ.
-
-### 💡 Ví dụ
-
-```text
-Stock = 1
-
-Customer A                Customer B
-    ↓                         ↓
-Read Stock = 1            Read Stock = 1
-    ↓                         ↓
-Buy 1                     Buy 1
-    ↓                         ↓
-Stock = 0                Stock = 0
-```
-
-Thực tế chỉ có 1 sản phẩm nhưng hai Customer đều mua thành công.
-
-Trong trường hợp cập nhật không an toàn, stock có thể bị âm.
-
-### ✅ Cần đảm bảo
-
-```text
-Check Stock
-    ↓
-Deduct Stock
-    ↓
-Save MenuItem
-```
-
-được đồng bộ.
-
-`MenuItem.version` được dùng để hỗ trợ Optimistic Locking.
-
----
-
-# 🥵 4.3. Driver Overload
-
-### 📖 Định nghĩa
-
-Hai Order đồng thời được gán cho cùng một Driver.
-
-### 💡 Ví dụ
-
-```text
-Order A ─────┐
-             ↓
-          Driver 01
-             ↑
-Order B ─────┘
-```
-
-Hai thread cùng thấy:
-
-```text
-Driver 01 = AVAILABLE
-```
-
-sau đó cùng assign Driver 01.
-
-Kết quả sai:
-
-```text
-Driver 01
- ├── Order A
- └── Order B
-```
-
-### 📏 Quy tắc
-
-Một Driver chỉ được xử lý một Order tại một thời điểm.
-
-```text
-AVAILABLE
-    ↓
-ASSIGN
-    ↓
-BUSY
-    ↓
-COMPLETE
-    ↓
-AVAILABLE
-```
-
----
-
-# 🔐 5. Các cơ chế đồng bộ cần so sánh
-
-Simulator cần so sánh 4 cơ chế:
-
-```text
-1. NO_LOCK
-2. FILE_LOCK
-3. SYNCHRONIZED
-4. OPTIMISTIC
-```
-
-### 🔓 NO_LOCK
-
-Không sử dụng cơ chế đồng bộ.
-
-Mục đích là tạo baseline và cho thấy race condition xảy ra.
-
-Kết quả kỳ vọng:
-
-```text
-Double Assignment > 0
-Oversell > 0
-Driver Overload > 0
-```
-
-### 🔒 FILE_LOCK
-
-Khóa file khi đọc/ghi để hạn chế truy cập đồng thời.
-
-### 🧵 SYNCHRONIZED
-
-Đồng bộ các critical section bằng Java synchronized/per-resource locking.
-
-### 🚀 OPTIMISTIC
-
-Sử dụng trường `version` để phát hiện dữ liệu đã bị thay đổi bởi thread khác.
-
-Các entity quan trọng:
-
-```text
-MenuItem.version
-Driver.version
-Order.version
-```
-
----
-
-# 🗺️ 6. Use Case Diagram
-
-## 🎭 6.1. Actor
-
-```text
-Customer
-Restaurant
-Driver
-Dispatcher
-```
-
-## 🛍️ 6.2. Use Case của Customer
-
-```text
-Customer
- ├── View Menu
- ├── Place Order
- ├── View Order Status
- ├── View Order History
- └── Cancel Order
-```
-
-`Place Order` có:
-
-```text
-Place Order
-   │
-   ├── <<include>> Check Stock
-   └── <<include>> Deduct Stock
-```
-
----
-
-## 🍽️ 6.3. Use Case của Restaurant
-
-```text
-Restaurant
- ├── Manage Menu
- ├── Update Stock
- ├── View Orders
- └── Confirm Order
-```
-
----
-
-## 🛵 6.4. Use Case của Driver
-
-```text
-Driver
- ├── Update Availability
- ├── View Assigned Order
- ├── Accept Order
- └── Deliver Order
-```
-
----
-
-## 📡 6.5. Use Case của Dispatcher
-
-```text
-Dispatcher
- └── Dispatch Order
-          │
-          ├── <<include>> Find Available Driver
-          ├── <<include>> Calculate Distance
-          ├── <<include>> Find Nearest Driver
-          └── <<include>> Assign Driver
-```
-
----
-
-# 🗂️ 7. Use Case Diagram dạng tổng quát
-
-```text
-                         FOOD DELIVERY SYSTEM
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│ Customer                                                    │
-│   │                                                         │
-│   ├──────── (View Menu)                                     │
-│   ├──────── (Place Order)                                   │
-│   │                │                                        │
-│   │                ├── <<include>> Check Stock              │
-│   │                └── <<include>> Deduct Stock             │
-│   ├──────── (View Order Status)                             │
-│   ├──────── (View Order History)                            │
-│   └──────── (Cancel Order)                                  │
-│                                                             │
-│ Restaurant                                                  │
-│   │                                                         │
-│   ├──────── (Manage Menu)                                   │
-│   ├──────── (Update Stock)                                  │
-│   ├──────── (View Orders)                                   │
-│   └──────── (Confirm Order)                                 │
-│                                                             │
-│ Driver                                                      │
-│   │                                                         │
-│   ├──────── (Update Availability)                           │
-│   ├──────── (View Assigned Order)                           │
-│   ├──────── (Accept Order)                                  │
-│   └──────── (Deliver Order)                                 │
-│                                                             │
-│ Dispatcher                                                  │
-│   │                                                         │
-│   └──────── (Dispatch Order)                                │
-│                    │                                        │
-│                    ├── <<include>> Find Available Driver    │
-│                    ├── <<include>> Calculate Distance      │
-│                    ├── <<include>> Find Nearest Driver     │
-│                    └── <<include>> Assign Driver           │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-# 🧩 8. Class Diagram
-
-## 🛍️ 8.1. Customer
-
-```text
-Customer
---------------------------------
-- customerId : String
-- name : String
-- phone : String
-- email : String
-- latitude : double
-- longitude : double
---------------------------------
-+ placeOrder()
-+ viewOrders()
-+ cancelOrder()
-```
-
----
-
-## 🍽️ 8.2. Restaurant
-
-```text
-Restaurant
---------------------------------
-- restaurantId : String
-- name : String
-- address : String
-- latitude : double
-- longitude : double
---------------------------------
-+ addMenuItem()
-+ updateMenuItem()
-+ deleteMenuItem()
-+ updateStock()
-+ confirmOrder()
-```
-
----
-
-## 🍔 8.3. MenuItem
-
-```text
-MenuItem
---------------------------------
-- itemId : String
-- restaurantId : String
-- name : String
-- price : double
-- stock : int
-- version : long
---------------------------------
-+ isAvailable()
-+ deductStock()
-+ increaseStock()
-```
-
----
-
-## 🛵 8.4. Driver
-
-```text
-Driver
---------------------------------
-- driverId : String
-- name : String
-- phone : String
-- latitude : double
-- longitude : double
-- status : DriverStatus
-- version : long
---------------------------------
-+ updateLocation()
-+ setAvailable()
-+ setBusy()
-+ acceptOrder()
-+ completeDelivery()
-```
-
-### 🔄 DriverStatus
-
-```text
-OFFLINE
-AVAILABLE
-BUSY
-```
-
----
-
-## 📦 8.5. Order
-
-```text
-Order
---------------------------------
-- orderId : String
-- customerId : String
-- restaurantId : String
-- driverId : String
-- status : OrderStatus
-- totalAmount : double
-- createdAt : LocalDateTime
-- confirmedAt : LocalDateTime
-- version : long
---------------------------------
-+ addItem()
-+ calculateTotal()
-+ confirm()
-+ cancel()
-+ assignDriver()
-+ markDelivered()
-```
-
-### 📦 OrderStatus
-
-```text
-PENDING
-CONFIRMED
-ASSIGNED
-DELIVERED
-CANCELLED
-REJECTED
-```
-
----
-
-## 🧾 8.6. OrderItem
-
-```text
-OrderItem
---------------------------------
-- orderId : String
-- menuItemId : String
-- quantity : int
-- unitPrice : double
---------------------------------
-+ getSubtotal() : double
-```
-
-Công thức:
-
-```text
-subtotal = quantity × unitPrice
-```
-
----
-
-## 🗺️ 8.7. DeliveryRoute
-
-```text
-DeliveryRoute
---------------------------------
-- routeId : String
-- orderId : String
-- driverId : String
-- distanceKm : double
-- estimatedMinutes : int
---------------------------------
-+ calculateDistance()
-+ estimateTime()
-```
-
----
-
-## 📊 8.8. SimulationRun
-
-```text
-SimulationRun
---------------------------------
-- runId : String
-- mechanism : String
-- totalOrders : int
-- durationMs : long
-- throughput : double
-- doubleAssignments : int
-- oversellErrors : int
-- driverOverloads : int
-- throughputDrop : double
---------------------------------
-+ calculateThroughput()
-+ calculateDrop()
-+ saveResult()
-```
-
----
-
-# 🔗 9. Quan hệ giữa các Class
-
-```text
-Customer 1 ───────── * Order
-
-Restaurant 1 ─────── * MenuItem
-
-Order 1 ───────────── * OrderItem
-
-MenuItem 1 ────────── * OrderItem
-
-Driver 1 ──────────── * Order
-
-Order 1 ───────────── 1 DeliveryRoute
-
-Driver 1 ──────────── * DeliveryRoute
-```
-
-Diễn giải:
-
-- Một Customer có thể có nhiều Order.
-- Một Restaurant có nhiều MenuItem.
-- Một Order có nhiều OrderItem.
-- Một MenuItem có thể xuất hiện trong nhiều OrderItem.
-- Một Driver có thể xử lý nhiều Order theo thời gian, nhưng chỉ một Order tại một thời điểm.
-- Một Order có một DeliveryRoute.
-- Một Driver có nhiều DeliveryRoute theo lịch sử giao hàng.
-
----
-
-# 🗄️ 10. Repository Layer
-
-Kiến trúc MVC:
-
-```text
-View
-  ↓
-Controller
-  ↓
-Repository
-  ↓
-CSV Files
-```
-
-Các Repository đề xuất:
-
-```text
-CustomerRepository
-RestaurantRepository
-MenuItemRepository
-DriverRepository
-OrderRepository
-OrderItemRepository
-DeliveryRouteRepository
-SimulationRunRepository
-```
-
-## 🔥 Critical methods
-
-### 📦 OrderRepository
-
-```text
-+ createOrder()
-+ confirmOrder()
-+ cancelOrder()
-+ assignDriver()
-+ findById()
-```
-
-### 🍔 MenuItemRepository
-
-```text
-+ checkStock()
-+ deductStock()
-+ updateStock()
-```
-
-### 🚕 DriverRepository
-
-```text
-+ findNearestAvailable()
-+ assignDriver()
-+ updateStatus()
-```
-
-Đặc biệt:
-
-```text
-findNearestAvailable()
-assignDriver()
-```
-
-> [!IMPORTANT]
-> Đây là **critical business logic** và phải nằm ở Repository — vi phạm điều này sẽ bị trừ điểm trực tiếp khi chấm bài (grep code review).
-
----
-
-# 🌍 11. GeoUtils
-
-Hệ thống cần tính khoảng cách giữa các vị trí địa lý.
-
-```text
-GeoUtils
---------------------------------
-+ haversine(lat1, lon1, lat2, lon2)
-       : double
---------------------------------
-```
-
-Công thức được sử dụng để tính khoảng cách giữa hai tọa độ GPS.
-
-Ví dụ kiểm thử:
-
-```text
-Hanoi → Ho Chi Minh City
-≈ 1700 km
-```
-
----
-
-# ⚙️ 12. Simulator
-
-Simulator phải mô phỏng concurrency thực tế.
-
-```text
-                    Simulator
-                        │
-             ┌──────────┴──────────┐
-             ↓                     ↓
-      CustomerThread         DispatchThread
-             │                     │
-             └──────────┬──────────┘
-                        ↓
-                 Concurrent Run
-                        ↓
-              Post Verification
-                        ↓
-        ┌───────────────┼───────────────┐
-        ↓               ↓               ↓
- Double Assignment   Oversell     Driver Overload
-```
-
-Simulator phải sử dụng:
-
-```text
-CountDownLatch
-```
-
-để đồng bộ thời điểm bắt đầu/chạy các thread.
-
----
-
-# 🔍 13. Post-Verification
-
-Sau khi Simulator chạy xong, hệ thống phải đọc CSV trực tiếp để kiểm tra:
-
-```text
-detectDoubleAssignments()
-detectOversellItems()
-detectDriverOverload()
-```
-
-Mục tiêu:
-
-```text
-NO_LOCK
-→ xuất hiện race condition
-
-SYNCHRONIZED
-→ 0 race condition
-
-OPTIMISTIC
-→ 0 race condition
-```
-
-Sau đó so sánh throughput giữa các cơ chế.
-
----
-
-# 🏗️ 14. Kiến trúc tổng thể
-
-```text
-                     ACTORS
-        ┌──────────────┼──────────────┐
-        ↓              ↓              ↓
-    Customer       Restaurant       Driver
-        │              │              │
-        └──────────────┼──────────────┘
-                       ↓
-                 Dispatcher
-                       ↓
-                   Controller
-                       ↓
-                  Repository
-                       ↓
-                 Synchronization
-                       ↓
-                    CSV Data
-                       ↑
-                  Simulator
-                       │
-             ┌─────────┼─────────┐
-             ↓         ↓         ↓
-         Customer   Dispatch   Verification
-          Thread     Thread
-```
-
----
-
-# 📁 15. Các file CSV chính
-
-Hệ thống cần các file:
-
-```text
-customers.csv
-restaurants.csv
-menu_items.csv
-drivers.csv
-orders.csv
-order_items.csv
-delivery_routes.csv
-simulation_runs.csv
-```
-
-Các file này tạo thành physical storage của hệ thống.
-
----
-
-# 🧵 16. Mối liên hệ giữa các phần
-
-Toàn bộ bài toán có thể hiểu theo chuỗi:
-
-```text
-Customer
-   ↓
-Place Order
-   ↓
-Check Stock
-   ↓
-Deduct Stock
-   ↓
-Order = PENDING
-   ↓
-Restaurant Confirm
-   ↓
-Order = CONFIRMED
-   ↓
-Dispatcher
-   ↓
-Find AVAILABLE Driver
-   ↓
-Calculate Haversine Distance
-   ↓
-Find Nearest Driver
-   ↓
-Assign Driver
-   ↓
-Driver = BUSY
-   ↓
-Driver Accept
-   ↓
-Deliver
-   ↓
-Order = DELIVERED
-   ↓
-Driver = AVAILABLE
-```
-
-Trong quá trình nhiều thread thực hiện các thao tác trên, hệ thống phải ngăn:
-
-```text
-❌ Double Assignment
-❌ Oversell
-❌ Driver Overload
-```
-
-bằng cách so sánh:
-
-```text
-NO_LOCK
-FILE_LOCK
-SYNCHRONIZED
-OPTIMISTIC
-```
-
----
-
-# 🏁 17. Kết luận
-
-Food Delivery Network Simulation không chỉ là hệ thống đặt đồ ăn thông thường. Trọng tâm của bài là mô phỏng các giao dịch xảy ra đồng thời trên dữ liệu CSV và nghiên cứu cách các cơ chế đồng bộ ảnh hưởng đến tính đúng đắn và throughput.
-
-### 🐞 Ba lỗi cần tập trung
-
-```text
-1. Double Assignment
-2. Oversell
-3. Driver Overload
-```
-
-### 🔐 Bốn cơ chế cần thử nghiệm
-
-```text
-1. NO_LOCK
-2. FILE_LOCK
-3. SYNCHRONIZED
-4. OPTIMISTIC
-```
-
-### 🎭 Bốn Actor nghiệp vụ
-
-```text
-Customer
-Restaurant
-Driver
-Dispatcher
-```
-
-### 🏗️ Kiến trúc
-
-```text
-View → Controller → Repository → CSV
-```
-
-> [!NOTE]
-> Repository chịu trách nhiệm xử lý critical business logic và synchronization; Simulator dùng `CustomerThread` và `DispatchThread` để tạo concurrency, sau đó kiểm tra trực tiếp dữ liệu CSV để xác định race condition.
-
----
+<div align="center">
+  <h2>Enatega Multi Vendor Delivery Management System</h2>
+  <i>A modern and customizable platform for managing online ordering and logistics across industries.</i>
+ <br/>
+<br />
+</div>
 
 <div align="center">
 
-### 🛵💨 Chúc bạn code đúng deadline và giao hàng thành công! 🍔✅
-
-![Made with](https://img.shields.io/badge/Made%20with-☕%20%2B%20Java-brown?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Design%20Phase-yellow?style=flat-square)
+[![Static Badge](https://img.shields.io/badge/License-MIT-red)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution.svg)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/stargazers)
+[![Forks](https://img.shields.io/github/forks/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution.svg)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/network/members)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution)
+[![GitHub contributors](https://img.shields.io/github/contributors/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/graphs/contributors)
+[![Open Pull Requests](https://img.shields.io/github/issues-pr-raw/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution.svg)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/pulls)
+[![Activity](https://img.shields.io/github/last-commit/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution.svg)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/commits/main)
+[![YouTube Channel](https://img.shields.io/badge/Watch_us-Youtube-red)](https://www.youtube.com/@ninjascode509)
+[![Company Website](https://img.shields.io/badge/Visit_us-Website-blue)](https://enatega.com)
+[![Closed Issues](https://img.shields.io/github/issues-closed/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution?color=success)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/issues?q=is%3Aissue+is%3Aclosed)
+[![Closed Pull Requests](https://img.shields.io/badge/Closed%20Pull%20Requests-View%20on%20GitHub-blue.svg)](https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/pulls?q=is%3Apr+is%3Aclosed)
 
 </div>
+
+<div align="center">
+
+[![Static Badge](https://img.shields.io/badge/facebook-blue?logo=facebook&logoColor=Blue&color=%23fbfbfb)](https://www.facebook.com/enatega)
+[![Static Badge](https://img.shields.io/badge/Instagram-blue?logo=instagram&logoColor=D815BE&color=%23fcfcfc)](https://www.instagram.com/enatega.nb/)
+[![Static Badge](https://img.shields.io/badge/Twitter-blue?logo=Twitter&logoColor=blue&color=%23fcfcfc)](https://twitter.com/EnategaA)
+[![Static Badge](https://img.shields.io/badge/LinkedIn-blue?logo=LinkedIn&logoColor=darkblue&color=%23fcfcfc)](https://www.linkedin.com/company/14583783/)
+
+</div>
+
+<div align="center">
+
+  <a href="https://www.youtube.com/watch?v=00voqzkFpHU">
+    <img src="./assets/Multi Service Solution.webp" alt="Demo video" style="border-radius: 6px; width: auto;">
+  </a>
+
+</div>
+
+<br>
+
+The Enatega Multi Vendor Delivery Management System is designed for businesses looking to deploy a complete, ready-to-use platform for running their online ordering and delivery operations. Whether it is food or grocery delivery, parcel logistics, home services, flowers, pharmacy orders, or other delivery-based businesses, Enatega can be adapted to your needs.
+Built with ease of use and intuitiveness in mind, the Enatega system supports multiple vendors and multiple service regions. With separate applications for customers, vendors and delivery agents, along with a powerful admin dashboard, Enatega enables you to launch and operate your own end-to-end ordering and delivery ecosystem without building everything from scratch.
+
+The solution is fully open source, but the backend and API are proprietary and can be licensed as part of a paid package.
+
+
+<!-- Add a horizontal rule for separation -->
+<hr/>
+
+## :fast_forward: Quick Links
+
+- [:book: What is included](#heading-1)
+- [:rocket: Features](#heading-2)
+- [:wrench: Setup](#heading-3)
+- [:gear: Prerequisites](#heading-4)
+- [:computer: Technologies](#heading-5)
+- [:camera: Screenshots](#heading-6)
+- [:triangular_ruler: High Level Architecture](#heading-7)
+- [:page_with_curl: Documentation](#heading-8)
+- [:movie_camera: Demo Videos](#heading-14)
+- [:video_game: Demos](#heading-9)
+- [:busts_in_silhouette: Contributors](#heading-10)
+- [:warning: Disclaimer](#heading-12)
+- [:email: Contact Us](#heading-13)
+- [:computer: Project Setup Guide](#heading-15)
+
+<!-- Add a horizontal rule for separation -->
+<hr/>
+
+## :question: What is included: <a id="heading-1"></a>
+
+Enatega provides a complete set of software components, including:
+
+- Enatega Multi Vendor Customer App
+- Enatega Multi Vendor Rider/Driver App
+- Enatega Multi Vendor Vendor/Store App
+- Customer Ordering Website
+- Admin Web Dashboard
+- API Server
+- Analytics Dashboard using Expo Amplitude
+- Error monitoring and reporting with Sentry
+
+## :fire: Features: <a id="heading-2"></a>
+
+- Authentication using Google, Apple, and Facebook
+- Dynamic home sections for highlighting top vendors and services
+- Push notifications and email alerts for account creation, order updates, and delivery progress
+- Real-time tracking of delivery agents and in-app chat
+- Email and phone number verification
+- Location-based vendor discovery on Maps and Home Screen
+- Multi-language support and customizable themes
+- Ratings and reviews for orders and service experiences
+- Vendor/service details including ratings, schedules, delivery timelines, offerings, location, minimum order or service amount, and more
+- Payment integrations including PayPal and Stripe
+- Order and booking history with the ability to favorite vendors
+- Address management with Google Places suggestions and Maps integration
+- Analytics and error reporting with Amplitude and Sentry
+- Support for item/service variations, notes, pickup and delivery modes, and customizable timing options
+
+
+## :repeat_one: Setup: <a id="heading-3"></a>
+
+As we've mentioned above, the solution includes five separate modules. To setup these modules, follow the steps below:
+
+To run the module, you need to have nodejs installed on your machine. Once nodejs is installed, go to the directory and enter the following commands
+
+The required credentials and keys have been set already. You can setup your own keys and credentials
+
+The version of nodejs should be between 18 to 20 (with 16 as minor version and 0 as patch)
+
+[![Guide Badge](https://img.shields.io/badge/Do_with_guided_tutorial-blue?style=for-the-badge&logo=book-reader)](https://enatega.com/multi-vendor-doc/)
+
+## :information_source: Prerequisites: <a id="heading-4"></a>
+
+App Ids for Mobile App in app.json
+
+- Facebook Scheme
+- Facebook App Id
+- Facebook Display Name
+- iOS Client Id Google
+- Android Id Google
+- Amplitude Api Key
+- server url
+
+Set credentials in API in file helpers/config.js and helpers/credentials.js
+
+- Email User Name
+- Password For Email
+- Mongo User
+- Mongo Password
+- Mongo DB Name
+- Reset Password Link
+- Admin User name
+- Admin Password
+- User Id
+- Name
+
+Set credentials in Admin Dashboard in file src/index.js
+
+- Firebase Api Key
+- Auth Domain
+- Database Url
+- Project Id
+- Storage Buck
+- Messaging Sender Id
+- App Id
+
+NOTE: Email provider has been only been tested for gmail accounts
+
+## :hammer_and_wrench: Technologies: <a id="heading-5"></a>
+
+|                                               Expo                                                |                                                   React-Navigation                                                   |                                                Apollo GraphQL                                                |                                               ReactJS                                                |                                                NodeJS                                                 |                                                 MongoDB                                                 |                                                   Firebase                                                   |
+| :-----------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <a href="https://expo.dev/"><img src="./assets/expoicon.png" alt="Enatega Logos" width="100"></a> | <a href="https://reactnavigation.org/"><img src="./assets/react-navigation.png" alt="Enatega Logos" width="100"></a> | <a href="https://www.apollographql.com/"><img src="./assets/apollo.png" alt="Enatega Logos" width="100"></a> | <a href="https://reactjs.org/"><img src="./assets/react-js.png" alt="Enatega Logos" width="100"></a> | <a href="https://nodejs.org/en/"><img src="./assets/node-js.png" alt="Enatega Logos" width="100"></a> | <a href="https://www.mongodb.com/"><img src="./assets/mongoDB.png" alt="Enatega Logos" width="100"></a> | <a href="https://firebase.google.com/"><img src="./assets/firebase.png" alt="Enatega Logos" width="100"></a> |
+
+|                                                 React Native                                                 |                                                       React Router                                                       |                                                GraphQL                                                |                                                ExpressJS                                                 |                                                   React Strap                                                    |                                                Amplitude                                                |
+| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <a href="https://reactnative.dev/"><img src="./assets/react-native.png" alt="Enatega Logos" width="100"></a> | <a href="https://reactrouter.com/"><img src="./assets/react-router-svgrepo-com.png" alt="Enatega Logos" width="100"></a> | <a href="https://graphql.org/"><img src="./assets/graphQl-1.png" alt="Enatega Logos" width="100"></a> | <a href="https://expressjs.com/"><img src="./assets/express-js.png" alt="Enatega Logos" width="100"></a> | <a href="https://reactstrap.github.io/"><img src="./assets/React-strap.png" alt="Enatega Logos" width="100"></a> | <a href="https://amplitude.com/"><img src="./assets/amplitude.png" alt="Enatega Logos" width="100"></a> |
+
+## :framed_picture: Screenshots: <a id="heading-6"></a>
+
+|          Rider App           |
+| :--------------------------: |
+| ![](./assets/RiderApp.webp) |
+
+|               Store APP               |
+| :----------------------------------------: |
+| ![](./assets/StoreApps.webp) |
+
+|          Customer App           |
+| :-----------------------------: |
+| ![](./assets/CustomerApp.webp) |
+
+|           Customer Web            |
+| :-------------------------------: |
+| ![](./assets/customerWeb.webp) |
+
+|             Dashboard              |
+| :--------------------------------: |
+| ![](./assets/AdminDashboard.webp) |
+
+## :wrench: High Level Architecture: <a id="heading-7"></a>
+
+![](./assets/high-level.webp)
+
+## :book: Documentation <a id="heading-8"></a>
+
+Find the link for the complete documentation of the Enatega Multi Vendor Solution [here](https://enatega.com/multivendor-documentation/).
+
+## :tv: Demo Videos: <a id="heading-14"></a>
+
+|                                               Admin Dashboard Demo                                               |                                                 Mobile App Demo                                                  |
+| :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
+| <a href="https://www.youtube.com/watch?v=18d_POMa8B4"><img src="./assets/1111.webp" width="200" alt="Video"></a> | <a href="https://www.youtube.com/watch?v=ZOBW4kdCsD4"><img src="./assets/1111.webp" width="200" alt="Video"></a> |
+
+## :iphone: Demos: <a id="heading-9"></a>
+
+|                                                                                                                                               Customer App                                                                                                                                                |                                                                                                                                                   Rider App                                                                                                                                                    |                                                                                                                                                       Store App                                                                                                                                                        |                                                   Customer Web                                                   |                                                    Admin Dashboard                                                     |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+|                                                                                          <a href="#heading-9" style="pointer-events: none;"><img src="./assets/customer-app-logo.png" alt="Enatega Logos" width="180"></a>                                                                                           |                                                                                          <a href="#heading-9" style="pointer-events: none;"><img src="./assets/Rider-app-logo.png" alt="Enatega Logos" width="180"></a>                                                                                          |                                                                                            <a href="#heading-9" style="pointer-events: none;"><img src="./assets/Store-app-logo.png" alt="Enatega Logos" width="180"></a>                                                                                            | <a href="http://multivendor.enatega.com/"><img src="./assets/customer-app-logo.png" alt="Enatega Logos" width="180"></a> | <a href="http://multivendor-admin.enatega.com/"><img src="./assets/customer-app-logo.png" alt="Enatega Logos" width="180"></a> |
+| <a href="https://play.google.com/store/apps/details?id=com.enatega.multivendor"><img src="./assets/android_518705.png" alt="Android Logo" width="25"></a> <a href="https://apps.apple.com/pk/app/enatega-multivendor/id1526488093"><img src="./assets/social_10096939.png" alt="iOS Logo" width="25"></a> | <a href="https://play.google.com/store/apps/details?id=com.enatega.multirider"><img src="./assets/android_518705.png" alt="Android Logo" width="25"></a> <a href="https://apps.apple.com/pk/app/enatega-mulitvendor-rider/id1526674511"><img src="./assets/social_10096939.png" alt="iOS Logo" width="25"></a> | <a href="https://play.google.com/store/apps/details?id=multivendor.enatega.restaurant"><img src="./assets/android_518705.png" alt="Android Logo" width="25"></a> <a href="https://apps.apple.com/pk/app/enatega-multivendor-restaurant/id1526672537"><img src="./assets/social_10096939.png" alt="iOS Logo" width="25"></a> |
+
+## :people_holding_hands: Contributors: <a id="heading-10"></a>
+
+<div align="center">
+<br>
+<a href="https://github.com/Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Ninjas-Code-official/Enatega-Multivendor-Food-Delivery-Solution" style="max-width: 50%; height: auto;" />
+</a>
+</div>
+
+## :warning: Disclaimer: <a id="heading-12"></a>
+
+The frontend source code for our solution is completely open source. However, the API and backend is proprietary and can be accessed via a paid license. For further information, contact us on the channels provided below.
+
+## :mailbox_with_mail: Contact Us: <a id="heading-13"></a>
+
+[Check out the Product Page and Pricing and more for Enatega Multivendor Food Delivery Solution](https://enatega.com/?utm_source=github&utm_medium=referral&utm_campaign=github_guide&utm_id=12345678)
+
+## :computer: Project Setup Guide <a id="heading-15"></a>
+
+This section provides detailed instructions for setting up and running each component of the Enatega Multi-vendor Food Delivery Solution.
+
+### Quick Run Matrix
+
+| Module | Development | Production |
+| :--- | :--- | :--- |
+| API | `cd ../enatega-multivendor-api && npm install && npm run start:dev` | `cd ../enatega-multivendor-api && npm install && npm start` |
+| Admin | `cd enatega-multivendor-admin && nvm use && npm install && cp .env.example .env.local && npm run dev` | `cd enatega-multivendor-admin && nvm use && npm install && cp .env.example .env.local && npm run build && npm run start` |
+| Web | `cd enatega-multivendor-web && nvm use && npm install && cp .env.example .env.local && npm run dev` | `cd enatega-multivendor-web && nvm use && npm install && cp .env.example .env.local && npm run build && npm run start` |
+| Customer App | `cd enatega-multivendor-app && nvm use && npm install && npm run ios` or `npm run android` | `cd enatega-multivendor-app && nvm use && npm install && npm run build:production` |
+| Store App | `cd enatega-multivendor-store && nvm use && npm install && npm run ios` or `npm run android` | `cd enatega-multivendor-store && nvm use && npm install && eas build --profile production -p all` |
+| Rider App | `cd enatega-multivendor-rider && nvm use && npm install && npm run ios` or `npm run android` | `cd enatega-multivendor-rider && nvm use && npm install && eas build --profile production -p all` |
+
+### Recommended local full-stack order
+
+1. Start the API from `../enatega-multivendor-api`
+2. Start `enatega-multivendor-admin` or `enatega-multivendor-web`
+3. Start the mobile app you need from `enatega-multivendor-app`, `enatega-multivendor-store`, or `enatega-multivendor-rider`
+
+### Enatega Admin Dashboard (Next.js)
+
+The admin dashboard allows you to manage restaurants, orders, riders, and more.
+
+```bash
+# Navigate to the admin dashboard directory
+cd enatega-multivendor-admin
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+After running these commands, open your browser and navigate to [http://localhost:3000](http://localhost:3000) to access the admin dashboard. You can also CTRL+click on the localhost link that appears in your terminal.
+
+### Enatega Customer Web (React.js)
+
+The customer web application allows users to browse restaurants and place orders through a web browser.
+
+```bash
+# Navigate to the customer web directory
+cd enatega-multivendor-web
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
+```
+
+After running these commands, the application will be available at [http://localhost:3000](http://localhost:3000) in your web browser.
+
+### Enatega Customer App (React Native)
+
+The customer mobile application allows users to browse restaurants and place orders on their mobile devices.
+
+```bash
+# Navigate to the customer app directory
+cd enatega-multivendor-app
+
+# Install dependencies
+npm install
+
+# Start the Expo development server
+npx expo start -c
+# OR
+npm start -c
+```
+
+#### Testing on a Physical Device with Expo Go
+
+1. Press `s` in the terminal to switch to Expo Go mode
+2. Scan the QR code displayed in the terminal:
+   - Android: Open the Expo Go app and scan the QR code
+   - iOS: Use the device's camera app to scan the QR code
+
+### Enatega Rider App (React Native)
+
+The rider app allows delivery personnel to manage and complete deliveries.
+
+```bash
+# Navigate to the rider app directory
+cd enatega-multivendor-rider
+
+# Install dependencies
+npm install
+
+# Start the Expo development server
+npx expo start -c
+# OR
+npm start -c
+```
+
+#### Testing on a Physical Device with Expo Go
+
+1. Press `s` in the terminal to switch to Expo Go mode
+2. Scan the QR code displayed in the terminal:
+   - Android: Open the Expo Go app and scan the QR code
+   - iOS: Use the device's camera app to scan the QR code
+
+### Enatega Restaurant App (React Native)
+
+The restaurant app allows restaurant owners to manage orders and their menu.
+
+```bash
+# Navigate to the restaurant app directory
+cd enatega-multivendor-restaurant
+
+# Install dependencies
+npm install
+
+# Start the Expo development server
+npx expo start -c
+# OR
+npm start -c
+```
+
+#### Testing on a Physical Device with Expo Go
+
+1. Press `s` in the terminal to switch to Expo Go mode
+2. Scan the QR code displayed in the terminal:
+   - Android: Open the Expo Go app and scan the QR code
+   - iOS: Use the device's camera app to scan the QR code
+
+### Building Development Versions
+
+For all mobile apps (Customer, Rider, and Restaurant), you can create development builds using EAS Build.
+
+#### Configure EAS Build
+
+```bash
+# From the app directory (customer, rider, or restaurant)
+eas build:configure
+```
+
+Select your desired platform:
+- android
+- ios
+- all
+
+#### Build for Android
+
+```bash
+eas build --platform android --profile development
+```
+
+This will create an APK file that you can install directly on your Android device.
+
+#### Build for iOS
+
+```bash
+eas build --platform ios --profile development
+```
+
+For iOS simulator builds, modify the `eas.json` file to include:
+
+```json
+"development": {
+  "developmentClient": true,
+  "distribution": "internal",
+  "channel": "development",
+  "ios": {
+    "simulator": true
+  },
+  "android": {
+    "buildType": "apk"
+  }
+}
+```
+
+Then run:
+
+```bash
+eas build --platform ios --profile development
+```

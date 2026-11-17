@@ -1,0 +1,31 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import { Dispatch, SetStateAction } from "react";
+import { IGlobalProviderProps } from "./global.interface";
+
+export interface ILoginInitialValues {
+  username: string;
+  password: string;
+}
+
+export interface IAuthContext {
+  isInitialized: boolean;
+  token: string;
+  setTokenAsync: (token: string) => Promise<void>;
+  logout: () => void;
+  isSelected: string;
+  setIsSelected: Dispatch<SetStateAction<string>>;
+}
+
+export interface IAuthProviderProps extends IGlobalProviderProps {
+  client: ApolloClient<NormalizedCacheObject>;
+}
+
+interface IStoreLoginResponse {
+  token: string;
+  restaurantId: string;
+}
+
+export interface IStoreLoginCompleteResponse {
+  restaurantLogin: IStoreLoginResponse;
+}

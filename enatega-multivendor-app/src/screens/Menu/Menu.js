@@ -1,0 +1,948 @@
+/* eslint-disable react/display-name */
+import React, { useRef, useContext, useLayoutEffect, useState, useEffect, useCallback } from 'react'
+import { View, TouchableOpacity, Animated, StatusBar, Platform, RefreshControl, FlatList, Dimensions, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { SimpleLineIcons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { useQuery, useMutation } from '@apollo/client'
+import { useCollapsibleSubHeader } from 'react-navigation-collapsible'
+import gql from 'graphql-tag'
+import { useLocation } from '../../ui/hooks'
+import UserContext from '../../context/User'
+import { getCuisines, RestaurantCuisines } from '../../apollo/queries'
+import { selectAddress } from '../../apollo/mutations'
+import { scale } from '../../utils/scaling'
+import styles from './styles'
+import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native'
+import ThemeContext from '../../ui/ThemeContext/ThemeContext'
+import { theme } from '../../utils/themeColors'
+import navigationOptions from './navigationOptions'
+import TextDefault from '../../components/Text/TextDefault/TextDefault'
+import { LocationContext } from '../../context/Location'
+import analytics from '../../utils/analytics'
+import { useTranslation } from 'react-i18next'
+import { FILTER_TYPE } from '../../utils/enums'
+import CustomHomeIcon from '../../assets/SVG/imageComponents/CustomHomeIcon'
+import CustomOtherIcon from '../../assets/SVG/imageComponents/CustomOtherIcon'
+import CustomWorkIcon from '../../assets/SVG/imageComponents/CustomWorkIcon'
+import CustomApartmentIcon from '../../assets/SVG/imageComponents/CustomApartmentIcon'
+import ErrorView from '../../components/ErrorView/ErrorView'
+import { useRestaurantQueries } from '../../ui/hooks/useRestaurantQueries'
+import Spinner from '../../components/Spinner/Spinner'
+import MainModalize from '../../components/Main/Modalize/MainModalize'
+import { useMemo } from 'react'
+import NewRestaurantCard from '../../components/Main/RestaurantCard/NewRestaurantCard'
+import { Modalize } from 'react-native-modalize'
+import Filters from '../../components/Filter/FilterSlider'
+import AppliedFilters from '../../components/Filter/AppliedFilters'
+import NetInfo from '@react-native-community/netinfo'
+import useNetworkStatus from '../../utils/useNetworkStatus'
+import { isOpen, sortRestaurantsByOpenStatus } from '../../utils/customFunctions'
+import useGeocoding from '../../ui/hooks/useGeocoding'
+import { FlashMessage } from '../../ui/FlashMessage/FlashMessage'
+import CollectionCard from '../../components/CollectionCard/CollectionCard'
+import { SectionAction, SectionHeader, SkeletonBlock, useMultivendorTheme } from '../../ui/designSystem'
+
+const SELECT_ADDRESS = gql`
+  ${selectAddress}
+`
+const GET_CUISINES = gql`
+  ${getCuisines}
+`
+const GET_RESTAURANTS_CUISINES = gql`
+  ${RestaurantCuisines}
+`
+
+export const FILTER_VALUES = {
+  Sort: {
+    type: FILTER_TYPE.CHECKBOX,
+    values: ['Relevance (Default)', 'Fast Delivery', 'Distance'],
+    selected: []
+  },
+  Offers: {
+    selected: [],
+    type: FILTER_TYPE.CHECKBOX,
+    values: ['Free Delivery', 'Accept Vouchers', 'Deal']
+  },
+  Rating: {
+    selected: [],
+    type: FILTER_TYPE.CHECKBOX,
+    values: ['3+ Rating', '4+ Rating', '5 star Rating']
+  }
+}
+
+const cloneFilterState = (filters = {}) =>
+  Object.keys(filters).reduce((acc, key) => {
+    const filter = filters[key] || {}
+    acc[key] = {
+      ...filter,
+      values: Array.isArray(filter.values) ? [...filter.values] : [],
+      selected: Array.isArray(filter.selected) ? [...filter.selected] : []
+    }
+    return acc
+  }, {})
+const { height: HEIGHT } = Dimensions.get('window')
+function Menu({ route, props }) {
+  const Analytics = analytics()
+  const selectedType = route.params?.selectedType
+  const queryType = route.params?.queryType
+  const collection = route.params?.collection
+  const isShopType = route.params?.isShopType
+  const { t, i18n } = useTranslation()
+  const { getAddress } = useGeocoding()
+  const [busy, setBusy] = useState(false)
+  const { loadingOrders, isLoggedIn, profile, cartCount } = useContext(UserContext)
+  const { location, setLocation } = useContext(LocationContext)
+  const [filters, setFilters] = useState(() => cloneFilterState(FILTER_VALUES))
+  const [filterSectionApplied, setfilterSectionApplied] = useState(false)
+  const [appliedFilters, setAppliedFilters] = useState(() => cloneFilterState(FILTER_VALUES))
+  const [activeCollection, setActiveCollection] = useState()
+  const [isConnected, setIsConnected] = useState(false)
+  const modalRef = useRef(null)
+  const filtersModalRef = useRef()
+  const flatListRef = useRef(null)
+  const onEndReachedDuringMomentum = useRef(false)
+  const navigation = useNavigation()
+  const routeData = useRoute()
+  const themeContext = useContext(ThemeContext)
+  const { tokens } = useMultivendorTheme()
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      console.log(state.isConnected)
+      setIsConnected(state.isConnected)
+      if (state.isConnected) {
+        refetch()
+        refetchCuisines()
+      }
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  const currentTheme = {
+    isRTL: i18n.dir() === 'rtl',
+    ...theme[themeContext.ThemeValue],
+    ...tokens
+  }
+  const { getCurrentLocation } = useLocation()
+
+  const locationData = location
+  const [filterApplied, setfilterApplied] = useState(false)
+
+  console.log('selected Type ::::', selectedType)
+
+  const {
+    data,
+    refetch,
+    networkStatus,
+    error,
+    restaurantData,
+    setRestaurantData,
+    heading,
+    subHeading,
+    allData,
+    fetchMoreRestaurants,
+    hasMore,
+    isFetchingMore,
+    isNearbyPaginatedQuery,
+    isInitialLoading,
+    isRefreshing
+  } = useRestaurantQueries(queryType, location, selectedType)
+  const [mutate, { loading: mutationLoading }] = useMutation(SELECT_ADDRESS, {
+    onError
+  })
+
+  // QUAL-012: Only offer the "Free Delivery" / "Accept Vouchers" filters when at
+  // least one restaurant in the current list actually has that flag. Otherwise
+  // selecting them would always clear the list (the backend can return these
+  // fields as false/null for every restaurant). This is self-healing: as soon as
+  // the backend serves restaurants with the flag set, the option reappears.
+  const availableOffers = useMemo(() => {
+    const list = allData || []
+    return FILTER_VALUES.Offers.values.filter((offer) => {
+      if (offer === 'Free Delivery') return list.some((r) => r?.freeDelivery)
+      if (offer === 'Accept Vouchers') return list.some((r) => r?.acceptVouchers)
+      return true // other offer types are unaffected
+    })
+  }, [allData])
+
+  const displayFilters = useMemo(
+    () => ({
+      ...filters,
+      Offers: { ...filters.Offers, values: availableOffers }
+    }),
+    [filters, availableOffers]
+  )
+
+  const restaurantsCuisinsVariables = isShopType ? { latitude: location.latitude || null, longitude: location.longitude || null, shopType: collection } : {}
+
+  console.log('restaurantsCuisinsVariables::', restaurantsCuisinsVariables)
+
+  const { data: cuisinesData, refetch: refetchCuisines, error: cuisinesError } = useQuery(isShopType ? GET_RESTAURANTS_CUISINES : GET_CUISINES, { variables: restaurantsCuisinsVariables })
+
+  // const allCuisines = useRef(isShopType ? { cuisines: cuisinesData?.nearByRestaurantsCuisines } : cuisinesData).current
+
+  const allCuisines = useMemo(() => {
+    if (isShopType) {
+      return { cuisines: cuisinesData?.nearByRestaurantsCuisines ?? [] }
+    }
+    return cuisinesData ?? { cuisines: [] }
+  }, [isShopType, cuisinesData])
+
+  console.log('allCuisines::restaurants cuisins', cuisinesData?.nearByRestaurantsCuisines, allCuisines, cuisinesError)
+
+  const { onScroll /* Event handler */, containerPaddingTop /* number */, scrollIndicatorInsetTop /* number */ } = useCollapsibleSubHeader()
+
+  const emptyViewDesc = selectedType === 'restaurant' ? t('noRestaurant') : t('noGrocery')
+  const menuPageTitle = heading
+    ? t(heading)
+    : routeData?.params?.menuTitle
+      ? t(routeData.params.menuTitle)
+      : t(
+          routeData?.name === 'Restaurants'
+            ? 'Restaurants'
+            : routeData?.name === 'Store'
+              ? 'All Stores'
+              : 'Restaurants'
+        )
+  const cuisinesHeaderTitle = activeCollection || routeData?.params?.collection || t('BrowseCuisines')
+  const restaurantSectionTitle = t(
+    heading || (
+      routeData?.name === 'Restaurants'
+        ? 'Restaurants'
+        : routeData?.name === 'Store'
+          ? 'All Stores'
+          : 'Restaurants'
+    )
+  )
+  const emptyCuisineTitle = activeCollection
+    ? `No ${activeCollection} ${selectedType === 'grocery' ? 'stores' : 'restaurants'} yet`
+    : !filterApplied
+      ? t('notAvailableinYourArea')
+      : t('noMatchingResults')
+  const emptyCuisineDescription = activeCollection
+    ? `Try another cuisine or clear the selection to explore more ${selectedType === 'grocery' ? 'stores' : 'restaurants'}.`
+    : !filterApplied
+      ? emptyViewDesc
+      : t('noMatchingResultsDesc')
+
+  useFocusEffect(() => {
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(currentTheme.themeBackground)
+    }
+    StatusBar.setBarStyle(themeContext.ThemeValue === 'Dark' ? 'light-content' : 'dark-content')
+  })
+  useEffect(() => {
+    async function Track() {
+      await Analytics.track(Analytics.events.NAVIGATE_TO_MAIN)
+    }
+    Track()
+  }, [])
+  useLayoutEffect(() => {
+    navigation.setOptions(
+      navigationOptions({
+        headerMenuBackground: currentTheme.themeBackground,
+        horizontalLine: currentTheme.headerColor,
+        fontMainColor: currentTheme.darkBgFont,
+        iconColorPink: currentTheme.iconColor,
+        open: onOpen,
+        icon: 'back',
+        haveBackBtn: routeData?.name === 'Menu',
+        onPressFilter: () => filtersModalRef?.current?.open(),
+        onPressMap: () => {
+          if (!isLoggedIn) {
+            FlashMessage({ message: t('mapLoginRequired') })
+            return
+          }
+          navigation.navigate('MapSection', {
+            location,
+            restaurants: restaurantData
+          })
+        },
+        onPressBack: () => navigation.goBack()
+      })
+    )
+  }, [navigation, currentTheme, restaurantData])
+
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      Cuisines: {
+        selected: [],
+        type: FILTER_TYPE.CHECKBOX,
+        values: allCuisines?.cuisines?.map((item) => item.name)
+      }
+    }))
+  }, [allCuisines])
+
+  useEffect(() => {
+    if (collection) {
+      setActiveCollection(collection)
+    } else {
+      setActiveCollection(null)
+    }
+  }, [collection, route])
+
+  useEffect(() => {
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      if (routeData?.name !== 'Store' && routeData?.name !== 'Restaurants') return
+
+      const isStore = routeData?.name === 'Store'
+
+      setActiveCollection(null)
+      setfilterApplied(false)
+      setfilterSectionApplied(false)
+      setAppliedFilters(cloneFilterState(FILTER_VALUES))
+      setFilters(cloneFilterState(FILTER_VALUES))
+
+      navigation.setParams({
+        collection: null,
+        isShopType: false,
+        selectedType: isStore ? 'grocery' : 'restaurant',
+        queryType: isStore ? 'grocery' : 'restaurant',
+        menuTitle: null
+      })
+    })
+
+    return unsubscribeBlur
+  }, [navigation, routeData?.name])
+
+  const onOpen = () => {
+    const modal = modalRef.current
+    if (modal) {
+      modal.open()
+    }
+  }
+
+  function onError(error) {
+    console.log(error)
+  }
+
+  const addressIcons = {
+    House: CustomHomeIcon,
+    Office: CustomWorkIcon,
+    Apartment: CustomApartmentIcon,
+    Other: CustomOtherIcon
+  }
+
+  const setAddressLocation = async (address) => {
+    setLocation({
+      _id: address._id,
+      label: address.label,
+      latitude: Number(address.location.coordinates[1]),
+      longitude: Number(address.location.coordinates[0]),
+      deliveryAddress: address.deliveryAddress,
+      details: address.details
+    })
+    mutate({ variables: { id: address._id } })
+    modalRef.current.close()
+  }
+
+  const cus = new Set()
+  const filterCusinies = () => {
+    if (restaurantData) {
+      for (let cui of restaurantData) {
+        if (cui.cuisine) {
+          for (let cuisine of cui.cuisines) {
+            cus.add(cuisine)
+          }
+        }
+      }
+      let allfilter = allCuisines?.cuisines?.filter((cuisine) => {
+        return cus.has(cuisine.name)
+      })
+      return allfilter
+    }
+  }
+
+  // const collectionData = useMemo(() => {
+  //   if (routeData?.name === 'Restaurants') {
+  //     return allCuisines?.cuisines?.filter(
+  //       (cuisine) => cuisine?.shopType === 'Restaurant'
+  //     )
+  //   } else if (routeData?.name === 'Store') {
+  //     let rtc= allCuisines?.cuisines?.filter(
+  //       (cuisine) => cuisine?.shopType === 'Grocery'
+  //     )
+  //     console.log(rtc)
+  //     return rtc
+  //   } else {
+  //     return filterCusinies() ?? []
+  //   }
+  // }, [routeData, allCuisines])
+
+  const collectionData = useMemo(() => {
+    console.log('allCuisines collection', allCuisines?.cuisines, isShopType)
+    if (isShopType) {
+      return allCuisines?.cuisines
+    }
+
+    const normalizedShopType = (
+      routeData?.params?.shopType ||
+      selectedType ||
+      (routeData?.name === 'Restaurants' ? 'restaurant' : routeData?.name === 'Store' ? 'grocery' : '')
+    )?.toLowerCase()
+
+    if (normalizedShopType === 'restaurant' || normalizedShopType === 'grocery') {
+      return allCuisines?.cuisines?.filter(
+        (cuisine) => cuisine?.shopType?.toLowerCase() === normalizedShopType
+      )
+    }
+
+    return allCuisines?.cuisines
+  }, [allCuisines, isShopType, routeData, selectedType])
+
+  useEffect(() => {
+    if (!collection || !collectionData?.length) return
+
+    const normalizedCollection = collection.trim().toLowerCase()
+    const targetIndex = collectionData.findIndex(
+      (item) => item?.name?.trim().toLowerCase() === normalizedCollection
+    )
+    if (targetIndex < 0) return
+
+    setActiveCollection(collectionData[targetIndex].name)
+    const scrollTimer = setTimeout(() => {
+      flatListRef.current?.scrollToIndex({
+        index: targetIndex,
+        animated: true,
+        viewPosition: 0.5
+      })
+    }, 80)
+
+    return () => clearTimeout(scrollTimer)
+  }, [collection, collectionData])
+
+  const setCurrentLocation = async () => {
+    setBusy(true)
+
+    const { error, coords } = await getCurrentLocation()
+
+    if (!coords || !coords.latitude || !coords.longitude) {
+      console.error('Invalid coordinates:', coords)
+      setBusy(false)
+      return
+    }
+    // Get the address function from the hook
+
+    try {
+      // Fetch the address using the geocoding hook
+      const { formattedAddress, city } = await getAddress(coords.latitude, coords.longitude)
+
+      let address = formattedAddress || 'Unknown Address'
+
+      if (address.length > 21) {
+        address = address.substring(0, 21) + '...'
+      }
+
+      if (error) {
+        navigation.navigate('SelectLocation')
+      } else {
+        modalRef.current?.close()
+        setLocation({
+          label: 'currentLocation',
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          deliveryAddress: address
+        })
+        setBusy(false)
+      }
+    } catch (fetchError) {
+      console.error('Error fetching address using Google Maps API:', fetchError.message)
+    }
+  }
+  // const setCurrentLocation = async () => {
+  //   setBusy(true)
+  //   const { error, coords } = await getCurrentLocation()
+
+  //   const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`
+  //   fetch(apiUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.error) {
+  //         console.log('Reverse geocoding request failed:', data.error)
+  //       } else {
+  //         let address = data.display_name
+  //         if (address.length > 21) {
+  //           address = address.substring(0, 21) + '...'
+  //         }
+
+  //         if (error) navigation.navigate('SelectLocation')
+  //         else {
+  //           modalRef.current.close()
+  //           setLocation({
+  //             label: 'currentLocation',
+  //             latitude: coords.latitude,
+  //             longitude: coords.longitude,
+  //             deliveryAddress: address
+  //           })
+  //           setBusy(false)
+  //         }
+  //         console.log(address)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // console.error('Error fetching reverse geocoding data:', error)
+  //     })
+  // }
+
+  const modalHeader = () => (
+    <View style={[styles().addNewAddressbtn]}>
+      <View style={styles(currentTheme).addressContainer}>
+        <TouchableOpacity style={[styles(currentTheme).addButton]} activeOpacity={0.7} onPress={setCurrentLocation} disabled={busy}>
+          <View style={styles(currentTheme).addressSubContainer}>
+            {busy ? (
+              <Spinner size='small' />
+            ) : (
+              <>
+                <SimpleLineIcons name='target' size={scale(18)} color={currentTheme.black} />
+                <View style={styles().mL5p} />
+                <TextDefault bold textColor={currentTheme.black}>
+                  {t('currentLocation')}
+                </TextDefault>
+              </>
+            )}
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+
+  const emptyView = () => {
+    if (isInitialLoading || mutationLoading || loadingOrders || (restaurantData === null && !error)) return loadingScreen()
+    else {
+      return (
+        <View style={styles().emptyViewContainer}>
+          <View style={styles(currentTheme).emptyViewBox}>
+            {activeCollection ? (
+              <View style={styles(currentTheme).emptyBadge}>
+                <TextDefault small bold textColor={currentTheme.main}>
+                  {cuisinesHeaderTitle}
+                </TextDefault>
+              </View>
+            ) : null}
+            <TextDefault bold H4 center textColor={currentTheme.fontMainColor} style={styles(currentTheme).emptyTitle}>
+              {emptyCuisineTitle}
+            </TextDefault>
+            <TextDefault textColor={currentTheme.fontMainColor} center style={styles(currentTheme).emptyDescription}>
+              {emptyCuisineDescription}
+            </TextDefault>
+          </View>
+        </View>
+      )
+    }
+  }
+
+  const modalFooter = () => (
+    <View style={styles().addNewAddressbtn}>
+      <View style={styles(currentTheme).addressContainer}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles(currentTheme).addButton}
+          onPress={() => {
+            if (isLoggedIn) {
+              navigation.navigate('AddNewAddress', { ...locationData })
+            } else {
+              const modal = modalRef.current
+              modal?.close()
+              navigation.navigate({ name: 'CreateAccount' })
+            }
+          }}
+        >
+          <View style={styles(currentTheme).addressSubContainer}>
+            <AntDesign name='pluscircleo' size={scale(20)} color={currentTheme.black} />
+            <View style={styles().mL5p} />
+            <TextDefault bold textColor={currentTheme.black}>
+              {t('addAddress')}
+            </TextDefault>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles().addressTick}></View>
+    </View>
+  )
+
+  function loadingScreen() {
+    return (
+      <View style={[styles(currentTheme).screenBackground, { paddingHorizontal: scale(12), paddingTop: scale(12), gap: scale(14) }]}>
+        <SkeletonBlock width='42%' height={scale(24)} borderRadius={scale(7)} />
+        <View style={{ flexDirection: 'row', gap: scale(10), overflow: 'hidden' }}>
+          {[0, 1, 2, 3].map((item) => (
+            <View key={item} style={{ width: scale(92), gap: scale(7) }}>
+              <SkeletonBlock width={scale(92)} height={scale(92)} borderRadius={scale(12)} />
+              <SkeletonBlock width='78%' height={scale(12)} borderRadius={scale(6)} />
+            </View>
+          ))}
+        </View>
+        {[0, 1, 2].map((item) => (
+          <View key={item} style={{ borderRadius: scale(16), overflow: 'hidden', backgroundColor: tokens.colors.surface, borderWidth: StyleSheet.hairlineWidth, borderColor: tokens.colors.borderSubtle }}>
+            <SkeletonBlock height={scale(172)} borderRadius={0} />
+            <View style={{ padding: scale(12), gap: scale(10) }}>
+              <SkeletonBlock width='54%' height={scale(20)} borderRadius={scale(6)} />
+              <SkeletonBlock width='82%' height={scale(12)} borderRadius={scale(6)} />
+              <SkeletonBlock width='48%' height={scale(12)} borderRadius={scale(6)} />
+            </View>
+          </View>
+        ))}
+      </View>
+    )
+  }
+
+  const renderedRestaurants = useMemo(
+    () => sortRestaurantsByOpenStatus(restaurantData || []),
+    [restaurantData]
+  )
+
+  const renderRestaurantItem = useCallback(({ item }) => {
+    if (item && item?.image && item?._id) {
+      const restaurantOpen = isOpen(item)
+      return <NewRestaurantCard {...item} fullWidth isOpen={restaurantOpen} />
+    }
+
+    return null
+  }, [])
+
+  const renderListFooter = useCallback(() => {
+    if (!isNearbyPaginatedQuery || !isFetchingMore) return <View style={{ height: 24 }} />
+
+    return (
+      <View style={{ paddingVertical: 12, alignItems: 'center', backgroundColor: 'transparent' }}>
+        <Spinner backColor='transparent' spinnerColor={currentTheme.main} />
+      </View>
+    )
+  }, [currentTheme.main, isFetchingMore, isNearbyPaginatedQuery])
+
+  const { isConnected: connect, setIsConnected: setConnect } = useNetworkStatus()
+
+  // const searchRestaurants = (searchText) => {
+  //   const data = []
+  //   const regex = new RegExp(searchText, 'i')
+  //   restaurantData?.forEach((restaurant) => {
+  //     const resultCatFoods = restaurant.keywords.some((keyword) => {
+  //       const result = keyword.search(regex)
+  //       return result > -1
+  //     })
+  //     if (resultCatFoods) data.push(restaurant)
+  //   })
+  //   return data
+  // }
+
+  // commented sections for now
+  // Flatten the array. That is important for data sequence
+  // const restaurantSections = sectionData?.map((sec) => ({
+  //   ...sec,
+  //   restaurants: sec?.restaurants
+  //     ?.map((id) => restaurantData?.filter((res) => res._id === id))
+  //     .flat()
+  // }))
+
+  const extractRating = (ratingString) => parseInt(ratingString)
+
+  // const onPressCollection = (collection) => {
+  //   if (activeCollection === collection.name) {
+  //     // If the same collection is clicked again, deselect it
+  //     setActiveCollection(null)
+  //     setRestaurantData(allData) // Reset to show all data
+  //   } else {
+  //     // Select the new collection
+  //     setActiveCollection(collection.name)
+  //     const tempData = [...allData]
+  //     const filteredData = tempData?.filter((item) =>
+  //       item?.cuisines?.includes(collection.name)
+  //     )
+  //     setRestaurantData(filteredData)
+  //   }
+  // }
+  const onPressCollection = (collection, index) => {
+    flatListRef.current?.scrollToIndex({
+      index: index,
+      animated: true,
+      viewPosition: 0.5
+    })
+    if (activeCollection === collection.name) {
+      // If the same collection is clicked again, deselect it
+      setActiveCollection(null)
+      setfilterApplied(false)
+    } else {
+      setActiveCollection(collection.name)
+      setfilterApplied(true)
+    }
+  }
+
+  const getItemLayout = (data, index) => ({
+    length: scale(96),
+    offset: scale(96) * index,
+    index
+  })
+
+  const buildVisibleRestaurantData = useCallback(
+    (sourceData = [], nextFilters = appliedFilters, selectedCollection = activeCollection) => {
+      let filteredData = [...(sourceData || [])]
+
+      if (selectedCollection) {
+        if (isShopType) {
+          filteredData = [...filteredData]
+        } else {
+          filteredData = filteredData.filter((item) => item?.cuisines?.includes(selectedCollection))
+        }
+      }
+
+      const ratings = nextFilters.Rating
+      const sort = nextFilters.Sort
+      const offers = nextFilters.Offers
+      const cuisines = nextFilters.Cuisines
+
+      if (ratings?.selected?.length > 0) {
+        const numericRatings = ratings.selected?.map(extractRating)
+        filteredData = filteredData.filter((item) => item?.reviewAverage >= Math.min(...numericRatings))
+      }
+
+      if (sort?.selected?.length > 0) {
+        if (sort.selected[0] === 'Fast Delivery') {
+          filteredData.sort((a, b) => a.deliveryTime - b.deliveryTime)
+        } else if (sort.selected[0] === 'Distance') {
+          filteredData.sort((a, b) => a.distanceWithCurrentLocation - b.distanceWithCurrentLocation)
+        }
+      }
+
+      if (offers?.selected?.length > 0) {
+        if (offers.selected.includes('Free Delivery')) {
+          filteredData = filteredData.filter((item) => item?.freeDelivery)
+        }
+        if (offers.selected.includes('Accept Vouchers')) {
+          filteredData = filteredData.filter((item) => item?.acceptVouchers)
+        }
+      }
+
+      if (cuisines?.selected?.length > 0) {
+        filteredData = filteredData.filter((item) => item.cuisines.some((cuisine) => cuisines?.selected?.includes(cuisine)))
+      }
+
+      return filteredData
+    },
+    [activeCollection, appliedFilters, isShopType]
+  )
+
+  useEffect(() => {
+    const visibleData = buildVisibleRestaurantData(allData, appliedFilters, activeCollection)
+    setRestaurantData(visibleData)
+
+    const anyFilterSelected = Boolean(activeCollection) ||
+      appliedFilters?.Rating?.selected?.length > 0 ||
+      appliedFilters?.Sort?.selected?.length > 0 ||
+      appliedFilters?.Offers?.selected?.length > 0 ||
+      appliedFilters?.Cuisines?.selected?.length > 0
+
+    setfilterApplied(anyFilterSelected)
+    setfilterSectionApplied(anyFilterSelected)
+  }, [activeCollection, allData, appliedFilters, buildVisibleRestaurantData, setRestaurantData])
+
+  const applyFilters = (nextFilters = filters) => {
+    const normalizedFilters = cloneFilterState(nextFilters)
+    const filteredData = buildVisibleRestaurantData(allData, normalizedFilters, activeCollection)
+    const ratings = normalizedFilters.Rating
+    const sort = normalizedFilters.Sort
+    const offers = normalizedFilters.Offers
+    const cuisines = normalizedFilters.Cuisines
+
+    // Set filtered data
+    setRestaurantData(filteredData)
+    filtersModalRef.current.close()
+
+    // Update applied filters state
+    setAppliedFilters(normalizedFilters)
+    setFilters(normalizedFilters)
+
+    // **Check if any filters are applied**
+    const anyFilterSelected = !!activeCollection || ratings?.selected?.length > 0 || sort?.selected?.length > 0 || offers?.selected?.length > 0 || cuisines?.selected?.length > 0
+
+    setfilterApplied(anyFilterSelected)
+    setfilterSectionApplied(anyFilterSelected)
+  }
+
+  const resetFilters = () => {
+    setFilters(appliedFilters) // Reset filters to the last applied state
+  }
+
+  if (!connect) return <ErrorView refetchFunctions={[refetch]} />
+
+  if (isInitialLoading || mutationLoading || loadingOrders || (restaurantData === null && !error)) return loadingScreen()
+
+  const menuHeader = (
+    <View style={styles(tokens).menuHeader}>
+      <SectionHeader
+        style={styles(tokens).menuSectionHeader}
+        title={menuPageTitle}
+        description={cuisinesHeaderTitle}
+        action={<SectionAction
+          label={t('SeeAll')}
+          onPress={() => {
+            const collectionType = selectedType === 'grocery' ? 'Store' : 'Restaurants'
+            navigation.navigate('Collection', {
+              collectionType,
+              title: t('BrowseCuisines'),
+              data: collectionData,
+              showHeader: true
+            })
+          }}
+        />}
+      />
+      <View style={styles(tokens).collectionRail}>
+        <FlatList
+          ref={flatListRef}
+          data={collectionData ?? []}
+          renderItem={({ item, index }) => (
+            <CollectionCard
+              onPress={() => onPressCollection(item, index)}
+              image={item?.image}
+              name={item?.name}
+              selected={activeCollection === item.name}
+            />
+          )}
+          initialScrollIndex={0}
+          keyExtractor={(item) => item?._id}
+          contentContainerStyle={styles(tokens).collectionContainer}
+          ItemSeparatorComponent={() => <View style={styles(tokens).collectionSeparator} />}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          inverted={currentTheme?.isRTL}
+          getItemLayout={getItemLayout}
+          onScrollToIndexFailed={({ index }) => {
+            setTimeout(() => {
+              flatListRef.current?.scrollToIndex({
+                index,
+                animated: true,
+                viewPosition: 0.5
+              })
+            }, 120)
+          }}
+        />
+      </View>
+
+      {restaurantData?.length === 0
+        ? null
+        : <SectionHeader
+            style={styles(tokens).restaurantSectionHeader}
+            title={restaurantSectionTitle}
+            description={t(subHeading || '')}
+          />
+      }
+
+      {filterSectionApplied && <AppliedFilters filters={appliedFilters} />}
+    </View>
+  )
+
+  return (
+    <SafeAreaView edges={['left', 'right']} style={[styles().flex, { backgroundColor: currentTheme.themeBackground }]}>
+      <Animated.FlatList
+        style={[styles(currentTheme).container]}
+        ListHeaderComponent={menuHeader}
+        contentInset={{ top: containerPaddingTop }}
+        contentContainerStyle={{
+          paddingTop: Platform.OS === 'ios' ? 0 : containerPaddingTop,
+          paddingBottom: HEIGHT * 0.34,
+          paddingHorizontal: tokens.spacing.md
+        }}
+        contentOffset={{ y: -containerPaddingTop }}
+        onScroll={onScroll}
+        scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={emptyView()}
+        ListFooterComponent={renderListFooter}
+        keyExtractor={(item, index) => item?._id || index.toString()}
+        refreshControl={
+          <RefreshControl
+            progressViewOffset={containerPaddingTop}
+            colors={[currentTheme.iconColorPink]}
+            refreshing={isRefreshing && !isFetchingMore}
+            onRefresh={() => {
+              if (networkStatus === 7) {
+                refetch()
+              }
+            }}
+          />
+        }
+        data={renderedRestaurants}
+        renderItem={renderRestaurantItem}
+        ItemSeparatorComponent={() => <View style={styles(tokens).restaurantSeparator} />}
+        onEndReached={() => {
+          if (
+            onEndReachedDuringMomentum.current ||
+            !isNearbyPaginatedQuery ||
+            !hasMore ||
+            isFetchingMore ||
+            isRefreshing ||
+            isInitialLoading
+          ) {
+            return
+          }
+
+          onEndReachedDuringMomentum.current = true
+          if (renderedRestaurants.length > 0) {
+            fetchMoreRestaurants()
+          }
+        }}
+        onMomentumScrollBegin={() => {
+          onEndReachedDuringMomentum.current = false
+        }}
+        onScrollBeginDrag={() => {
+          onEndReachedDuringMomentum.current = false
+        }}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={8}
+        maxToRenderPerBatch={8}
+        updateCellsBatchingPeriod={50}
+        windowSize={7}
+        removeClippedSubviews
+      />
+      {cartCount > 0 && (
+        <TouchableOpacity
+          activeOpacity={0.8}
+          accessibilityRole='button'
+          accessibilityLabel={t('viewCart')}
+          style={[
+            styles(currentTheme).floatingCart,
+            { [currentTheme.isRTL ? 'left' : 'right']: scale(20) }
+          ]}
+          onPress={() => navigation.navigate('Cart')}
+        >
+          <MaterialCommunityIcons name='cart-outline' size={scale(26)} color={currentTheme.fontWhite} />
+          <View style={styles(currentTheme).cartBadge}>
+            <TextDefault small bolder center textColor={currentTheme.fontWhite}>
+              {cartCount}
+            </TextDefault>
+          </View>
+        </TouchableOpacity>
+      )}
+      <MainModalize modalRef={modalRef} currentTheme={currentTheme} isLoggedIn={isLoggedIn} addressIcons={addressIcons} modalHeader={modalHeader} modalFooter={modalFooter} setAddressLocation={setAddressLocation} profile={profile} location={location} />
+      <Modalize
+        ref={filtersModalRef}
+        modalStyle={styles(currentTheme).modal}
+        adjustToContentHeight
+        overlayStyle={styles(currentTheme).overlay}
+        handleStyle={styles(currentTheme).handle}
+        handlePosition='inside'
+        openAnimationConfig={{
+          timing: { duration: 400 },
+          spring: { speed: 20, bounciness: 10 }
+        }}
+        closeAnimationConfig={{
+          timing: { duration: 400 },
+          spring: { speed: 20, bounciness: 10 }
+        }}
+      >
+        <Filters
+          filters={displayFilters}
+          setFilters={setFilters}
+          applyFilters={applyFilters}
+          onClose={() => {
+            resetFilters() // Reset filters when modal is closed
+            filtersModalRef.current.close()
+          }}
+        />
+      </Modalize>
+    </SafeAreaView>
+  )
+}
+
+export default Menu

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "505610605704",
+    "project_id": "enatega-b7cd2",
+    "storage_bucket": "enatega-b7cd2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505610605704:android:afcc7d7f2999c6cae6bb3d",
+        "android_client_info": {
+          "package_name": "com.enatega.multivendor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh11TdrC7Ux0kOo7AkipQNrwh3kUPpEzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505610605704:android:813774e02c36eba1e6bb3d",
+        "android_client_info": {
+          "package_name": "multivendor.enatega.restaurant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh11TdrC7Ux0kOo7AkipQNrwh3kUPpEzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,183 @@
+import { useMutation } from '@apollo/client'
+import { useContext, useRef } from 'react'
+import ThemeContext from '../../../ui/ThemeContext/ThemeContext'
+import { theme } from '../../../utils/themeColors'
+import { useTranslation } from 'react-i18next'
+import { UPDATE_USER_CART } from '../../apollo/mutations'
+import { FlashMessage } from '../../../ui/FlashMessage/FlashMessage'
+import useCartStore from '../../stores/useCartStore'
+import UserContext from '../../../context/User'
+import { useNavigation } from '@react-navigation/native'
+import useCartQueueStore from '../../stores/useCartQueueStore'
+import useUpdateUserCartCount from '../../hooks/useUpdateUserCartCount'
+import useCartQueue from '../../hooks/useCartQueue'
+const useAddToCart = ({ foodId, onCartUpdateSuccess }) => {
+  const { t, i18n } = useTranslation()
+  const themeContext = useContext(ThemeContext)
+  const currentTheme = { isRTL: i18n.dir() === 'rtl', ...theme[themeContext.ThemeValue] }
+
+  const { isLoggedIn } = useContext(UserContext)
+  // Select only actions so cards don't re-render on every cart change.
+  const mergeCartFromServer = useCartStore((state) => state.mergeCartFromServer)
+  const addOptimisticCartItem = useCartStore((state) => state.addOptimisticCartItem)
+  const restoreItems = useCartStore((state) => state.restoreItems)
+  const navigation = useNavigation()
+  const { updateUserCartCount } = useUpdateUserCartCount()
+
+  const { enqueueTask } = useCartQueue()
+
+  const onCartUpdateSuccessRef = useRef(onCartUpdateSuccess)
+  const optimisticSnapshotsRef = useRef(new Map())
+  onCartUpdateSuccessRef.current = onCartUpdateSuccess
+
+  const [updateUserCart, { loading: updateUserCartLoading }] = useMutation(UPDATE_USER_CART, {
+    onCompleted: (data) => {
+      const response = data?.userCartData
+
+      if (!response?.success) {
+        optimisticSnapshotsRef.current.forEach((snapshot) => restoreItems(snapshot))
+        optimisticSnapshotsRef.current.clear()
+        if (response?.message) {
+          FlashMessage({ message: response?.message || 'Failed to Add item in cart' })
+        }
+        return
+      }
+
+      // Requests still queued behind this one hold newer local quantities; keep them.
+      const pendingItemIds = useCartQueueStore
+        .getState()
+        .queue.slice(1)
+        .map((task) => task?.__itemId)
+        .filter(Boolean)
+
+      mergeCartFromServer({
+        cartId: response.cartId,
+        cartRevision: response.cartRevision,
+        foods: response.foods,
+        grandTotal: response.discountedGrandTotal,
+        maxOrderAmount: response.maxOrderAmount,
+        minOrderAmount: response.minOrderAmount,
+        isBelowMinimumOrder: response.isBelowMinimumOrder,
+        lowOrderFees: response.lowOrderFees
+      }, pendingItemIds)
+
+      optimisticSnapshotsRef.current.clear()
+
+      FlashMessage({ message: t('itemAddedToCart') })
+      onCartUpdateSuccessRef.current?.(response)
+    },
+    onError: (error) => {
+      console.error('Error updating cart:', error)
+      optimisticSnapshotsRef.current.forEach((snapshot) => restoreItems(snapshot))
+      optimisticSnapshotsRef.current.clear()
+    }
+  })
+
+  const addItemToCart = (foodId, categoryId, variationId, addons, count, orderItems, specialInstructions = '', productInfo = null) => {
+    if (!isLoggedIn) {
+      navigation.navigate('CreateAccount')
+      return false
+    }
+
+    const items = useCartStore.getState().items
+    const existingItem = items?.find((item) => item?.foodId === foodId && Array.isArray(item?.variations) && item.variations.some((v) => v?.variationId === variationId || v?._id === variationId))
+
+    if (existingItem) {
+      const existingVariation = existingItem.variations.find((v) => v?.variationId === variationId || v?._id === variationId)
+
+      const nextCount = typeof count === 'number' ? count : existingVariation?.quantity
+
+      if (typeof nextCount === 'number') {
+        const action = nextCount === 0 ? 'delete' : nextCount > (existingVariation?.quantity || 0) ? 'increase' : 'decrease'
+
+        updateUserCartCount({
+          variation_id: existingVariation?._id || variationId,
+          foodId,
+          categoryId,
+          variationId: existingVariation?.variationId || variationId,
+          action,
+          count: nextCount
+        })
+        return
+      }
+    }
+
+    const itemId = `${foodId}_${variationId}`
+
+    optimisticSnapshotsRef.current.set(itemId, items)
+    const variation = productInfo?.variations?.find((item) => item?.id === variationId)
+    addOptimisticCartItem({
+      foodId,
+      categoryId,
+      variationId,
+      addons,
+      quantity: count,
+      foodTitle: productInfo?.title,
+      foodImage: productInfo?.image,
+      variationTitle: variation?.title,
+      unitPrice: variation?.price || productInfo?.price
+    })
+
+    const singleItemList = [
+      {
+        _id: foodId,
+        categoryId,
+        specialInstructions,
+        variation: {
+          _id: variationId,
+          addons,
+          count
+        }
+      }
+    ]
+
+    // If orderItems is provided (array case), use it; otherwise use single object case
+    const foodArray = orderItems && Array.isArray(orderItems) && orderItems.length > 0 ? orderItems : singleItemList
+
+    enqueueTask(
+      {
+        __itemId: itemId,
+        run: () => {
+          return updateUserCart({
+            variables: {
+              input: {
+                food: foodArray
+              }
+            }
+          })
+        }
+      },
+      itemId
+    )
+  }
+
+  // const addItemToCart = (foodId, categoryId, variationId, addons, count) => {
+  //   if (!isLoggedIn) {
+  //     navigation.navigate('CreateAccount')
+  //   } else {
+  //     const addItemsToCartVariable = {
+  //       input: {
+  //         food: [
+  //           {
+  //             _id: foodId,
+  //             categoryId: '123',
+  //             variation: {
+  //               _id: variationId,
+  //               addons: addons,
+  //               count: count
+  //             }
+  //           }
+  //         ]
+  //       }
+  //     }
+  //     console.log('add Item To Cart:', JSON.stringify(addItemsToCartVariable))
+  //     updateUserCart({
+  //       variables: addItemsToCartVariable
+  //     })
+  //   }
+  // }
+
+  return { currentTheme, t, addItemToCart, updateUserCartLoading }
+}
+
+export default useAddToCart

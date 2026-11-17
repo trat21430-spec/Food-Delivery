@@ -1,0 +1,114 @@
+import { verticalScale, scale } from '../../../utils/scaling'
+import { alignment } from '../../../utils/alignment'
+import { StyleSheet, Dimensions } from 'react-native'
+import { subtleCardShadow } from '../../../utils/cardShadows'
+
+const { width } = Dimensions.get('window')
+const CARD_WIDTH = Math.max(scale(236), Math.min(scale(332), width - scale(30)))
+const CARD_IMAGE_HEIGHT = Math.max(scale(160), Math.min(scale(190), CARD_WIDTH * 0.58))
+const CARD_HEIGHT = CARD_IMAGE_HEIGHT + Math.max(scale(112), CARD_WIDTH * 0.34)
+
+const styles = (props = null) =>
+  StyleSheet.create({
+    mainContainer: {
+      width: CARD_WIDTH,
+      alignItems: 'center',
+      backgroundColor: 'white',
+      ...subtleCardShadow
+    },
+    restaurantContainer: {
+      backgroundColor: props != null ? props?.newheaderBG : 'white',
+      borderColor: props != null ? props?.borderColor : 'grey',
+      borderWidth: scale(1),
+      borderRadius: scale(8),
+      minHeight: CARD_HEIGHT,
+      width: '100%',
+      ...alignment.MBsmall
+    },
+    imageContainer: {
+      position: 'relative',
+      zIndex: 1,
+      alignItems: 'center',
+      width: '100%',
+      height: CARD_IMAGE_HEIGHT
+    },
+    img: {
+      width: '100%',
+      height: '100%',
+
+      borderTopLeftRadius: scale(8),
+      borderTopRightRadius: scale(8)
+    },
+    overlayRestaurantContainer: {
+      position: 'absolute',
+      justifyContent: 'space-between',
+      top: 0,
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      width: '100%'
+    },
+    favOverlay: {
+      position: 'absolute',
+      top: 10,
+      right: 12,
+      width: scale(30),
+      height: scale(30),
+      borderRadius: scale(15),
+      backgroundColor: props != null ? props?.white : 'white',
+      zIndex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    deliveryRestaurantOverlay: {
+      position: 'absolute',
+      bottom: 15,
+      left: 10,
+      width: scale(45),
+      height: scale(20),
+      borderRadius: scale(10),
+      backgroundColor: props != null ? props?.menuBar : 'white',
+      zIndex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    aboutRestaurant: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'flex-end'
+    },
+    descriptionContainer: {
+      width: '100%',
+      padding: scale(12),
+      minHeight: Math.max(scale(104), CARD_WIDTH * 0.31),
+      justifyContent: 'space-between'
+    },
+    offerCategoty: {
+      ...alignment.MTxSmall,
+      ...alignment.MBxSmall
+    },
+    priceRestaurant: {
+      alignItems: 'center',
+      flexDirection: 'row'
+    },
+    verticalLine: {
+      height: '60%',
+      borderRightWidth: StyleSheet.hairlineWidth,
+      borderRightColor: props != null ? props?.horizontalLine : 'black',
+      opacity: 0.6,
+      ...alignment.MLxSmall,
+      ...alignment.MRxSmall
+    },
+    featureOverlay: {
+      height: '90%',
+      position: 'absolute',
+      left: 0,
+      top: 10,
+      backgroundColor: 'rgba(0, 0, 0, 0)'
+    },
+    featureText: {
+      alignSelf: 'flex-start',
+      maxWidth: '100%',
+      backgroundColor: props != null ? props?.tagColor : 'black'
+    }
+  })
+export default styles

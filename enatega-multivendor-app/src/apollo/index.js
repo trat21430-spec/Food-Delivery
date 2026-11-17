@@ -1,0 +1,361 @@
+import { getToken } from '../utils/secureToken'
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloLink,
+  split,
+  Observable
+} from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
+import { RetryLink } from '@apollo/client/link/retry'
+import {
+  getMainDefinition,
+  offsetLimitPagination
+} from '@apollo/client/utilities'
+import { WebSocketLink } from '@apollo/client/link/ws'
+import { calculateDistance } from '../utils/customFunctions'
+import { getValidPublicToken, fetchPublicAccessToken } from '../services/publicAcccessService'
+import { getOrCreateNonce } from '../utils/publicAccessToken'
+import { Platform } from 'react-native'
+import { isJwtTokenExpired } from '../utils/decode-jwt'
+import { invalidateUserSession } from '../utils/session'
+import { FlashMessage } from '../ui/FlashMessage/FlashMessage'
+import i18n from '../../i18next'
+import { APP_MODES } from '../mode/constants'
+
+// React Native's Android HTTP client has no read timeout, so a request sent on a
+// connection the network silently dropped (common after the app has been talking
+// to the other backend for a while) hangs for minutes. Bound every request.
+const QUERY_TIMEOUT_MS = 15000
+const MUTATION_TIMEOUT_MS = 30000
+
+const getOperationType = (operation) => getMainDefinition(operation.query)?.operation
+
+const timeoutLink = new ApolloLink((operation, forward) => {
+  if (typeof AbortController === 'undefined') return forward(operation)
+
+  const controller = new AbortController()
+  const timeoutMs = getOperationType(operation) === 'mutation' ? MUTATION_TIMEOUT_MS : QUERY_TIMEOUT_MS
+  const timer = setTimeout(() => controller.abort(), timeoutMs)
+
+  operation.setContext(({ fetchOptions = {} }) => ({
+    fetchOptions: { ...fetchOptions, signal: controller.signal }
+  }))
+
+  return new Observable((observer) => {
+    const handle = forward(operation).subscribe({
+      next: (value) => observer.next(value),
+      error: (error) => {
+        clearTimeout(timer)
+        observer.error(error)
+      },
+      complete: () => {
+        clearTimeout(timer)
+        observer.complete()
+      }
+    })
+
+    return () => {
+      clearTimeout(timer)
+      handle.unsubscribe()
+    }
+  })
+})
+
+// Retry only queries: they are idempotent, and a retry opens a fresh connection
+// instead of waiting on a dead one. Mutations (orders, payments) never replay.
+const retryLink = new RetryLink({
+  delay: { initial: 300, max: 2000, jitter: true },
+  attempts: {
+    max: 3,
+    retryIf: (error, operation) => Boolean(error) && getOperationType(operation) === 'query'
+  }
+})
+
+const getNextFetchPolicy = (currentFetchPolicy, context) => {
+  if (context?.reason === 'variables-changed') {
+    return context.initialFetchPolicy
+  }
+
+  if (currentFetchPolicy === 'network-only' || currentFetchPolicy === 'cache-and-network') {
+    return 'cache-first'
+  }
+
+  return currentFetchPolicy
+}
+
+const setupApollo = ({
+  GRAPHQL_URL,
+  WS_GRAPHQL_URL,
+  mode = APP_MODES.MULTI,
+  publicAccessRequired = true
+}) => {
+  const publicOperations = new Set(['ForgotPassword', 'VerifyOtp', 'ResetPassword'])
+
+  const cache = new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          _id: {
+            keyArgs: ['string']
+          },
+          orders: offsetLimitPagination()
+        }
+      },
+      Category: {
+        fields: {
+          foods: {
+            merge(_existing, incoming) {
+              return incoming
+            }
+          }
+        }
+      },
+      Food: {
+        fields: {
+          variations: {
+            merge(_existing, incoming) {
+              return incoming
+            }
+          }
+        }
+      },
+      // The backend omits `image` on some legacy order items / restaurants
+      // (it returns undefined rather than null). A `read` policy tells Apollo
+      // the field is optional, which both silences the "Missing field 'image'"
+      // cache warnings and normalizes the absent value to null.
+      Item: {
+        fields: {
+          image: {
+            read(existing = null) {
+              return existing
+            }
+          }
+        }
+      },
+      RestaurantDetail: {
+        fields: {
+          image: {
+            read(existing = null) {
+              return existing
+            }
+          },
+          logo: {
+            read(existing = null) {
+              return existing
+            }
+          }
+        }
+      },
+      RestaurantPreview: {
+        fields: {
+          distanceWithCurrentLocation: {
+            read(_existing, { variables, field, readField }) {
+              const restaurantLocation = readField('location')
+              const distance = calculateDistance(restaurantLocation?.coordinates[0], restaurantLocation?.coordinates[1], variables.latitude, variables.longitude)
+              return distance
+            }
+          }
+        }
+      }
+    }
+  })
+
+  const httpLink = createHttpLink({
+    uri: GRAPHQL_URL
+  })
+
+  const wsLink = new WebSocketLink({
+    uri: WS_GRAPHQL_URL,
+    options: {
+      // Mobile network transitions and backend restarts must not permanently
+      // disable order updates. The client is disposed on mode changes, so a
+      // reconnect can never leak a socket into the other backend.
+      reconnect: true,
+      lazy: true,
+      connectionParams: async() => {
+        const token = await getToken(mode)
+        const hasExpiredUserToken = token && isJwtTokenExpired(token)
+
+        if (hasExpiredUserToken) {
+          await invalidateUserSession({ reason: 'token_expired', mode })
+        }
+
+        return {
+          authorization: token && !hasExpiredUserToken ? `Bearer ${token}` : '',
+          'x-platform': Platform.OS,
+          'accept-language': i18n.language || 'en',
+          'user-agent': `EnategaApp/${Platform.OS}`
+        }
+      }
+    }
+  })
+
+  const request = async operation => {
+    const publicToken = publicAccessRequired
+      ? await getValidPublicToken(GRAPHQL_URL)
+      : null
+    const nonce = publicAccessRequired ? await getOrCreateNonce(GRAPHQL_URL) : null
+    const isPublicOperation = publicOperations.has(operation.operationName)
+    const token = isPublicOperation ? null : await getToken(mode)
+    const hasExpiredUserToken = token && isJwtTokenExpired(token)
+
+    if (hasExpiredUserToken) {
+      await invalidateUserSession({ reason: 'token_expired', mode })
+    }
+
+    operation.setContext({
+      hasUserToken: Boolean(token && !hasExpiredUserToken),
+      headers: {
+        authorization: token && !hasExpiredUserToken ? `Bearer ${token}` : '',
+        ...(publicAccessRequired
+          ? { 'bop-auth': publicToken ? `Bearer ${publicToken}` : '' }
+          : {}),
+        ...(publicAccessRequired ? { nonce } : {}),
+        'user-agent': `EnategaApp/${Platform.OS}`,
+        'accept-language': 'en-US',
+        'x-platform': Platform.OS
+      }
+    })
+  }
+
+  const requestLink = new ApolloLink(
+    (operation, forward) =>
+      new Observable(observer => {
+        let handle
+        Promise.resolve(operation)
+          .then(oper => request(oper))
+          .then(() => {
+            handle = forward(operation).subscribe({
+              next: observer.next.bind(observer),
+              error: observer.error.bind(observer),
+              complete: observer.complete.bind(observer)
+            })
+          })
+          .catch(observer.error.bind(observer))
+
+        return () => {
+          if (handle) handle.unsubscribe()
+        }
+      })
+  )
+
+  // Auth errors tied to the *logged-in user's* JWT — these must log the user
+  // out (handled by invalidateUserSession + the session-expired modal).
+  const USER_SESSION_CODES = new Set([
+    'UNAUTHENTICATED',
+    'TOKEN_EXPIRED',
+    'INVALID_TOKEN'
+  ])
+
+  // Auth failures tied to the *public access token* (bop-auth / MetricsGeneral),
+  // NOT the user's session. The backend reports these as a generic message
+  // (e.g. "Unauthorized: jwt expired") without a user-session extension code.
+  const isPublicTokenAuthMessage = (message = '') =>
+    /unauthorized|unauthenticated|jwt expired|invalid token|forbidden/i.test(message)
+
+  const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+    const gqlErrors = graphQLErrors || []
+
+    const hasInvalidSession = gqlErrors.some((graphQLError) =>
+      USER_SESSION_CODES.has(graphQLError?.extensions?.code)
+    )
+    const hasUnauthorizedNetworkError =
+      networkError?.statusCode === 401 ||
+      networkError?.response?.status === 401
+
+    const hasUserToken = operation.getContext()?.hasUserToken === true
+
+    // Single-vendor has protected operations that can return 401 for guests.
+    // Only invalidate a session when this request actually carried a user JWT.
+    if (hasUserToken && (hasInvalidSession || hasUnauthorizedNetworkError)) {
+      invalidateUserSession({
+        reason: hasUnauthorizedNetworkError ? 'network_unauthorized' : 'graphql_unauthenticated',
+        mode
+      }).catch(() => {})
+      return
+    }
+
+    // Public-token expiry: the user is still logged in (which is why a manual
+    // pull-to-refresh already "fixes" it). Refresh the public token and replay
+    // the request transparently — once per operation — so the user never sees
+    // the raw Apollo/GraphQL "Unauthorized" error.
+    const isPublicTokenError = gqlErrors.some((graphQLError) =>
+      isPublicTokenAuthMessage(graphQLError?.message)
+    )
+
+    if (!publicAccessRequired || !isPublicTokenError) return
+
+    const alreadyRetried = operation.getContext()?.publicTokenRetried
+
+    if (alreadyRetried) {
+      // The silent refresh + retry still failed. Surface a human, non-technical
+      // message instead of the raw GraphQL error string.
+      FlashMessage({ message: i18n.t('sessionRefreshFailed'), duration: 2500 })
+      return
+    }
+
+    return new Observable((observer) => {
+      let handle
+      fetchPublicAccessToken(GRAPHQL_URL)
+        .then(() => {
+          operation.setContext((prev) => ({ ...prev, publicTokenRetried: true }))
+          handle = forward(operation).subscribe({
+            next: observer.next.bind(observer),
+            error: observer.error.bind(observer),
+            complete: observer.complete.bind(observer)
+          })
+        })
+        .catch((refreshError) => {
+          FlashMessage({ message: i18n.t('sessionRefreshFailed'), duration: 2500 })
+          observer.error(refreshError)
+        })
+
+      return () => {
+        if (handle) handle.unsubscribe()
+      }
+    })
+  })
+
+  const terminatingLink = split(
+    ({ query }) => {
+      const { kind, operation } = getMainDefinition(query)
+      return kind === 'OperationDefinition' && operation === 'subscription'
+    },
+    wsLink,
+    ApolloLink.from([retryLink, requestLink, timeoutLink, httpLink])
+  )
+
+  const client = new ApolloClient({
+    link: ApolloLink.from([errorLink, terminatingLink]),
+    cache,
+    resolvers: {},
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-first',
+        nextFetchPolicy: getNextFetchPolicy,
+        notifyOnNetworkStatusChange: false,
+        returnPartialData: true,
+        errorPolicy: 'all'
+      },
+      query: {
+        fetchPolicy: 'cache-first',
+        errorPolicy: 'all'
+      }
+    }
+  })
+
+  client.dispose = () => {
+    try {
+      wsLink.subscriptionClient?.close(true, true)
+    } catch (error) {
+      if (global.__DEV__) console.warn('Failed to close Apollo WebSocket', error)
+    }
+    return client.clearStore()
+  }
+
+  return client
+}
+
+export default setupApollo
