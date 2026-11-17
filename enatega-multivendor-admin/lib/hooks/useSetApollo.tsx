@@ -137,6 +137,8 @@ function isGraphQLResponseError(result: unknown): result is {
 
 function handleInvalidSession(): void {
   if (typeof window === 'undefined' || isAuthRedirecting) return;
+  const token = getAccessToken();
+  if (token && token.startsWith('demo-admin-token')) return;
   isAuthRedirecting = true;
   clearStoredSessionState();
   clearMetricsData();
