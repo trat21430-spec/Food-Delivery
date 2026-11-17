@@ -36,7 +36,7 @@
     "emailjs-com": "^3.2.0",
     "firebase": "^11.8.1",
     "formik": "^2.4.6",
-    "framer-motion": "^12.9.1",
+    "framer-motion": "^14.14.0",
     "graphql": "^16.9.0",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.1",
