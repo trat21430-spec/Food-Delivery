@@ -11,6 +11,10 @@ import controller.MainController;
 import controller.OrderController;
 import controller.RestaurantController;
 import controller.SimulatorController;
+import model.DriverApplication;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import model.Customer;
 import model.Driver;
 import model.DriverStatus;
@@ -51,6 +55,8 @@ public class FoodDeliveryWebServer {
     private HttpServer server;
     private MainController mainController;
     private File webRootDir;
+    private List<OutputStream> sseClients;
+    private ScheduledExecutorService sseHeartbeat;
 
     public FoodDeliveryWebServer() {
         this(8080);
@@ -60,6 +66,7 @@ public class FoodDeliveryWebServer {
         this.port = port;
         this.mainController = new MainController();
         this.webRootDir = new File("web");
+        this.sseClients = new CopyOnWriteArrayList<OutputStream>();
         this.ensureInitialStock();
     }
 
@@ -117,8 +124,24 @@ public class FoodDeliveryWebServer {
         this.server = HttpServer.create(new InetSocketAddress(this.port), 0);
         this.server.setExecutor(Executors.newCachedThreadPool());
 
+        // SSE Heartbeat scheduler (keeps persistent connections alive)
+        this.sseHeartbeat = Executors.newSingleThreadScheduledExecutor();
+        this.sseHeartbeat.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                broadcastEvent("ping", "{\"time\":" + System.currentTimeMillis() + "}");
+            }
+        }, 15, 15, TimeUnit.SECONDS);
+
         // API Contexts
         this.server.createContext("/api/status", new StatusHandler(this));
+        this.server.createContext("/api/events", new EventsHandler(this));
+        this.server.createContext("/api/admin/overview", new AdminOverviewHandler(this));
+        this.server.createContext("/api/admin/driver-applications", new AdminDriverAppsHandler(this));
+        this.server.createContext("/api/admin/driver-applications/approve", new AdminDriverAppApproveHandler(this));
+        this.server.createContext("/api/admin/driver-applications/reject", new AdminDriverAppRejectHandler(this));
+        this.server.createContext("/api/vouchers", new VoucherListHandler(this));
+        this.server.createContext("/api/vouchers/apply", new VoucherApplyHandler(this));
         this.server.createContext("/api/stats", new StatsHandler(this));
         this.server.createContext("/api/auth/demo-accounts", new DemoAccountsHandler(this));
         this.server.createContext("/api/auth/login", new LoginHandler(this));
@@ -158,8 +181,43 @@ public class FoodDeliveryWebServer {
     }
 
     public void stop() {
+        if (this.sseHeartbeat != null) {
+            this.sseHeartbeat.shutdown();
+        }
+        for (OutputStream os : this.sseClients) {
+            try { os.close(); } catch (Exception ignored) {}
+        }
+        this.sseClients.clear();
         if (this.server != null) {
             this.server.stop(0);
+        }
+    }
+
+    public void registerSseClient(OutputStream os) {
+        this.sseClients.add(os);
+    }
+
+    public void removeSseClient(OutputStream os) {
+        this.sseClients.remove(os);
+    }
+
+    public int getSseClientCount() {
+        return this.sseClients.size();
+    }
+
+    public synchronized void broadcastEvent(String eventType, String jsonPayload) {
+        byte[] data = ("event: " + eventType + "\ndata: " + jsonPayload + "\n\n").getBytes(StandardCharsets.UTF_8);
+        List<OutputStream> dead = new ArrayList<>();
+        for (OutputStream os : this.sseClients) {
+            try {
+                os.write(data);
+                os.flush();
+            } catch (Exception ex) {
+                dead.add(os);
+            }
+        }
+        if (!dead.isEmpty()) {
+            this.sseClients.removeAll(dead);
         }
     }
 
@@ -559,6 +617,9 @@ public class FoodDeliveryWebServer {
                 DriverStatus status = DriverStatus.valueOf(statusStr.toUpperCase());
 
                 boolean ok = this.serverRef.getMainController().getDriverController().updateDriverStatus(driverId, status);
+                if (ok) {
+                    this.serverRef.broadcastEvent("driver_status_changed", "{\"driverId\":\"" + escapeJson(driverId) + "\",\"status\":\"" + status.name() + "\"}");
+                }
                 sendJsonResponse(exchange, 200, "{\"success\":" + ok + ",\"driverId\":\"" + escapeJson(driverId) + "\",\"status\":\"" + status.name() + "\"}");
             } catch (Exception e) {
                 sendJsonResponse(exchange, 400, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
@@ -739,6 +800,7 @@ public class FoodDeliveryWebServer {
 
                     OrderController oc = this.serverRef.getMainController().getOrderController();
                     Order order = oc.createCustomerOrder(custId, restId, menuItemId, qty, mech);
+                    this.serverRef.broadcastEvent("order_created", "{\"orderId\":\"" + escapeJson(order.getId()) + "\",\"customerId\":\"" + escapeJson(order.getCustomerId()) + "\",\"restaurantId\":\"" + escapeJson(order.getRestaurantId()) + "\",\"totalAmount\":" + order.getTotalAmount() + ",\"status\":\"" + order.getStatus().name() + "\"}");
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("{");
@@ -791,6 +853,7 @@ public class FoodDeliveryWebServer {
                 }
                 Order updated = oc.confirmOrderByRestaurant(orderId, restId);
                 String driverId = (updated != null && updated.getDriverId() != null) ? updated.getDriverId() : "";
+                this.serverRef.broadcastEvent("order_confirmed", "{\"orderId\":\"" + escapeJson(orderId) + "\",\"restaurantId\":\"" + escapeJson(restId) + "\",\"driverId\":\"" + escapeJson(driverId) + "\",\"status\":\"" + updated.getStatus().name() + "\"}");
 
                 sendJsonResponse(exchange, 200, "{\"success\":true,\"orderId\":\"" + escapeJson(orderId) + "\",\"status\":\"" + updated.getStatus().name() + "\",\"driverId\":\"" + escapeJson(driverId) + "\",\"message\":\"Nha hang da xac nhan don hang!\"}");
             } catch (Exception e) {
@@ -831,6 +894,9 @@ public class FoodDeliveryWebServer {
                     }
                 }
                 boolean ok = oc.rejectOrderByRestaurant(orderId, restId, reason);
+                if (ok) {
+                    this.serverRef.broadcastEvent("order_rejected", "{\"orderId\":\"" + escapeJson(orderId) + "\",\"status\":\"CANCELLED\"}");
+                }
                 sendJsonResponse(exchange, 200, "{\"success\":" + ok + ",\"orderId\":\"" + escapeJson(orderId) + "\",\"message\":\"Don hang da bi tu choi va ton kho da duoc hoan tra!\"}");
             } catch (Exception e) {
                 sendJsonResponse(exchange, 400, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
@@ -862,6 +928,9 @@ public class FoodDeliveryWebServer {
 
                 OrderController oc = this.serverRef.getMainController().getOrderController();
                 boolean ok = oc.markOrderPickedUp(orderId, driverId);
+                if (ok) {
+                    this.serverRef.broadcastEvent("order_dispatched", "{\"orderId\":\"" + escapeJson(orderId) + "\",\"driverId\":\"" + escapeJson(driverId) + "\",\"status\":\"DISPATCHED\"}");
+                }
                 sendJsonResponse(exchange, 200, "{\"success\":" + ok + ",\"orderId\":\"" + escapeJson(orderId) + "\",\"status\":\"DISPATCHED\",\"message\":\"Tai xe da den quan va nhan mon!\"}");
             } catch (Exception e) {
                 sendJsonResponse(exchange, 400, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
@@ -899,6 +968,9 @@ public class FoodDeliveryWebServer {
                     }
                 }
                 boolean ok = oc.markOrderDelivered(orderId, driverId);
+                if (ok) {
+                    this.serverRef.broadcastEvent("order_delivered", "{\"orderId\":\"" + escapeJson(orderId) + "\",\"driverId\":\"" + escapeJson(driverId) + "\",\"status\":\"DELIVERED\"}");
+                }
                 sendJsonResponse(exchange, 200, "{\"success\":" + ok + ",\"orderId\":\"" + escapeJson(orderId) + "\",\"status\":\"DELIVERED\",\"message\":\"Giao hang thanh cong! Tai xe da duoc giai phong ve AVAILABLE.\"}");
             } catch (Exception e) {
                 sendJsonResponse(exchange, 400, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
@@ -936,6 +1008,9 @@ public class FoodDeliveryWebServer {
                     }
                 }
                 boolean ok = oc.cancelOrderByCustomer(orderId, customerId);
+                if (ok) {
+                    this.serverRef.broadcastEvent("order_cancelled", "{\"orderId\":\"" + escapeJson(orderId) + "\",\"status\":\"CANCELLED\"}");
+                }
                 sendJsonResponse(exchange, 200, "{\"success\":" + ok + ",\"orderId\":\"" + escapeJson(orderId) + "\",\"status\":\"CANCELLED\",\"message\":\"Don hang da duoc huy thanh cong va so luong mon da duoc hoan tra vao kho!\"}");
             } catch (Exception e) {
                 sendJsonResponse(exchange, 400, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
@@ -962,6 +1037,7 @@ public class FoodDeliveryWebServer {
             try {
                 OrderController oc = this.serverRef.getMainController().getOrderController();
                 int dispatchedCount = oc.autoDispatchPendingOrders(LockMechanism.OPTIMISTIC);
+                this.serverRef.broadcastEvent("dispatch_completed", "{\"dispatchedCount\":" + dispatchedCount + "}");
                 sendJsonResponse(exchange, 200, "{\"success\":true,\"dispatchedCount\":" + dispatchedCount + ",\"message\":\"Da kich hoat thuat toan dieu phoi! Da ghep thanh cong " + dispatchedCount + " don hang.\"}");
             } catch (Exception e) {
                 sendJsonResponse(exchange, 500, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
@@ -1091,10 +1167,370 @@ public class FoodDeliveryWebServer {
             sb.append("{\"method\":\"POST\",\"path\":\"/api/orders/cancel\",\"summary\":\"Khach hang huy don hang va hoan kho (CANCELLED)\",\"body\":[\"orderId\",\"customerId\"]},");
             sb.append("{\"method\":\"POST\",\"path\":\"/api/dispatch/auto\",\"summary\":\"Kich hoat thuat toan tu dong ghep tai xe gan nhat\"},");
             sb.append("{\"method\":\"POST\",\"path\":\"/api/simulate\",\"summary\":\"Chay kiem thu stress test dong thoi 4 co che khoa\",\"body\":[\"orders\",\"mechanism\"]},");
-            sb.append("{\"method\":\"POST\",\"path\":\"/api/admin/restock\",\"summary\":\"Khoi phuc ton kho 50 suat cho cac quan an\"}");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/admin/restock\",\"summary\":\"Khoi phuc ton kho 50 suat cho cac quan an\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/events\",\"summary\":\"Server-Sent Events (SSE) stream realtime thong bao trang thai don hang\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/admin/overview\",\"summary\":\"Bao cao tai chinh tong the GMV, doanh thu san 20%, tien quan 80%, thu nhap tai xe\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/admin/driver-applications\",\"summary\":\"Lay danh sach ho so tai xe dang cho duyet\"},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/admin/driver-applications/approve\",\"summary\":\"Phe duyet ho so tai xe moi\",\"body\":[\"applicationId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/admin/driver-applications/reject\",\"summary\":\"Tu choi ho so tai xe\",\"body\":[\"applicationId\",\"reason\"]},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/vouchers\",\"summary\":\"Lay danh sach ma giam gia khuyen mai Quy Nhon dang ap dung\"},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/vouchers/apply\",\"summary\":\"Kiem tra va ap dung voucher giam gia vao gio hang\",\"body\":[\"code\",\"totalFoodAmount\",\"deliveryFee\"]}");
             sb.append("]");
             sb.append("}");
             sendJsonResponse(exchange, 200, sb.toString());
+        }
+    }
+
+    // =========================================================================
+    // FULLSTACK ENTERPRISE EXTENSIONS: SSE, ADMIN OVERVIEW, VOUCHERS
+    // =========================================================================
+
+    private class EventsHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public EventsHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            exchange.getResponseHeaders().set("Content-Type", "text/event-stream; charset=UTF-8");
+            exchange.getResponseHeaders().set("Cache-Control", "no-cache, no-transform");
+            exchange.getResponseHeaders().set("Connection", "keep-alive");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.sendResponseHeaders(200, 0);
+
+            OutputStream os = exchange.getResponseBody();
+            this.serverRef.registerSseClient(os);
+
+            try {
+                byte[] init = ("event: connected\ndata: {\"status\":\"CONNECTED\",\"message\":\"Real-time Server-Sent Events (SSE) Bus Active\",\"clients\":" + this.serverRef.getSseClientCount() + ",\"time\":" + System.currentTimeMillis() + "}\n\n").getBytes(StandardCharsets.UTF_8);
+                os.write(init);
+                os.flush();
+            } catch (Exception e) {
+                this.serverRef.removeSseClient(os);
+            }
+        }
+    }
+
+    private class AdminOverviewHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public AdminOverviewHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            try {
+                MainController mc = this.serverRef.getMainController();
+                List<Order> orders = mc.getOrderController().getAllOrders();
+                List<Restaurant> rests = mc.getRestaurantController().getAllRestaurants();
+                List<Driver> drivers = mc.getDriverController().getAllDrivers();
+                List<Customer> custs = mc.getCustomerController().getAllCustomers();
+                List<DriverApplication> pendingApps = mc.getAdminController().getPendingDriverApplications();
+
+                double totalGMV = 0.0;
+                double deliveredGMV = 0.0;
+                double totalFoodDelivered = 0.0;
+                double totalDeliveryFeeDelivered = 0.0;
+
+                int pendingOrders = 0;
+                int confirmedOrders = 0;
+                int dispatchedOrders = 0;
+                int deliveredOrders = 0;
+                int cancelledOrders = 0;
+
+                Map<String, Integer> restOrderCount = new HashMap<>();
+                Map<String, Double> restRevenue = new HashMap<>();
+
+                if (orders != null) {
+                    for (Order o : orders) {
+                        totalGMV += o.getTotalAmount();
+                        if (o.getStatus() == OrderStatus.PENDING) pendingOrders++;
+                        else if (o.getStatus() == OrderStatus.CONFIRMED) confirmedOrders++;
+                        else if (o.getStatus() == OrderStatus.DISPATCHED) dispatchedOrders++;
+                        else if (o.getStatus() == OrderStatus.DELIVERED) {
+                            deliveredOrders++;
+                            deliveredGMV += o.getTotalAmount();
+                            totalFoodDelivered += o.getTotalFoodAmount();
+                            totalDeliveryFeeDelivered += o.getDeliveryFee();
+
+                            String rid = o.getRestaurantId();
+                            restOrderCount.put(rid, restOrderCount.getOrDefault(rid, 0) + 1);
+                            restRevenue.put(rid, restRevenue.getOrDefault(rid, 0.0) + o.getTotalFoodAmount());
+                        } else if (o.getStatus() == OrderStatus.CANCELLED) {
+                            cancelledOrders++;
+                        }
+                    }
+                }
+
+                double platformFee = totalFoodDelivered * 0.20; // 20% platform commission
+                double restaurantPayout = totalFoodDelivered * 0.80; // 80% restaurant payout
+                double driverEarnings = totalDeliveryFeeDelivered; // 100% delivery fee to drivers
+
+                int availDrivers = 0;
+                int busyDrivers = 0;
+                int offlineDrivers = 0;
+                if (drivers != null) {
+                    for (Driver d : drivers) {
+                        if (d.getStatus() == DriverStatus.AVAILABLE) availDrivers++;
+                        else if (d.getStatus() == DriverStatus.BUSY) busyDrivers++;
+                        else offlineDrivers++;
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("{");
+                sb.append("\"totalGMV\":").append(totalGMV).append(",");
+                sb.append("\"deliveredGMV\":").append(deliveredGMV).append(",");
+                sb.append("\"totalFoodDelivered\":").append(totalFoodDelivered).append(",");
+                sb.append("\"totalDeliveryFeeDelivered\":").append(totalDeliveryFeeDelivered).append(",");
+                sb.append("\"platformFee\":").append(platformFee).append(",");
+                sb.append("\"restaurantPayout\":").append(restaurantPayout).append(",");
+                sb.append("\"driverEarnings\":").append(driverEarnings).append(",");
+                sb.append("\"totalOrders\":").append(orders != null ? orders.size() : 0).append(",");
+                sb.append("\"pendingOrders\":").append(pendingOrders).append(",");
+                sb.append("\"confirmedOrders\":").append(confirmedOrders).append(",");
+                sb.append("\"dispatchedOrders\":").append(dispatchedOrders).append(",");
+                sb.append("\"deliveredOrders\":").append(deliveredOrders).append(",");
+                sb.append("\"cancelledOrders\":").append(cancelledOrders).append(",");
+                sb.append("\"totalRestaurants\":").append(rests != null ? rests.size() : 0).append(",");
+                sb.append("\"totalDrivers\":").append(drivers != null ? drivers.size() : 0).append(",");
+                sb.append("\"availableDrivers\":").append(availDrivers).append(",");
+                sb.append("\"busyDrivers\":").append(busyDrivers).append(",");
+                sb.append("\"offlineDrivers\":").append(offlineDrivers).append(",");
+                sb.append("\"totalCustomers\":").append(custs != null ? custs.size() : 0).append(",");
+                sb.append("\"pendingDriverAppsCount\":").append(pendingApps != null ? pendingApps.size() : 0);
+                sb.append("}");
+
+                sendJsonResponse(exchange, 200, sb.toString());
+            } catch (Exception e) {
+                sendErrorResponse(exchange, 500, e.getMessage());
+            }
+        }
+    }
+
+    private class AdminDriverAppsHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public AdminDriverAppsHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            try {
+                AdminController ac = this.serverRef.getMainController().getAdminController();
+                List<DriverApplication> apps = ac.getAllDriverApplications();
+                StringBuilder sb = new StringBuilder();
+                sb.append("[");
+                if (apps != null) {
+                    for (int i = 0; i < apps.size(); i++) {
+                        DriverApplication a = apps.get(i);
+                        if (i > 0) sb.append(",");
+                        sb.append("{");
+                        sb.append("\"id\":\"").append(escapeJson(a.getId())).append("\",");
+                        sb.append("\"username\":\"").append(escapeJson(a.getUsername())).append("\",");
+                        sb.append("\"fullName\":\"").append(escapeJson(a.getFullName())).append("\",");
+                        sb.append("\"phone\":\"").append(escapeJson(a.getPhone())).append("\",");
+                        sb.append("\"licensePlate\":\"").append(escapeJson(a.getLicensePlate())).append("\",");
+                        sb.append("\"vehicleType\":\"").append(escapeJson(a.getVehicleType())).append("\",");
+                        sb.append("\"status\":\"").append(escapeJson(a.getStatus())).append("\",");
+                        sb.append("\"note\":\"").append(escapeJson(a.getNote())).append("\"");
+                        sb.append("}");
+                    }
+                }
+                sb.append("]");
+                sendJsonResponse(exchange, 200, sb.toString());
+            } catch (Exception e) {
+                sendErrorResponse(exchange, 500, e.getMessage());
+            }
+        }
+    }
+
+    private class AdminDriverAppApproveHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public AdminDriverAppApproveHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendErrorResponse(exchange, 405, "Method Not Allowed");
+                return;
+            }
+            try {
+                String body = readBody(exchange);
+                Map<String, String> params = parseJsonSimple(body);
+                String appId = params.get("applicationId");
+                if (appId == null || appId.isEmpty()) appId = params.get("id");
+
+                AdminController ac = this.serverRef.getMainController().getAdminController();
+                User user = ac.approveDriverApplication(appId);
+                if (user != null) {
+                    this.serverRef.broadcastEvent("driver_approved", "{\"applicationId\":\"" + escapeJson(appId) + "\",\"driverId\":\"" + escapeJson(user.getLinkedDriverId()) + "\"}");
+                    sendJsonResponse(exchange, 200, "{\"success\":true,\"applicationId\":\"" + escapeJson(appId) + "\",\"driverId\":\"" + escapeJson(user.getLinkedDriverId()) + "\",\"message\":\"Da phe duyet ho so tai xe thanh cong! Tai khoan: " + escapeJson(user.getUsername()) + "\"}");
+                } else {
+                    sendJsonResponse(exchange, 400, "{\"success\":false,\"message\":\"Khong the phe duyet ho so hoac ho so khong o trang thai PENDING!\"}");
+                }
+            } catch (Exception e) {
+                sendJsonResponse(exchange, 500, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
+            }
+        }
+    }
+
+    private class AdminDriverAppRejectHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public AdminDriverAppRejectHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendErrorResponse(exchange, 405, "Method Not Allowed");
+                return;
+            }
+            try {
+                String body = readBody(exchange);
+                Map<String, String> params = parseJsonSimple(body);
+                String appId = params.get("applicationId");
+                if (appId == null || appId.isEmpty()) appId = params.get("id");
+                String reason = params.get("reason");
+                if (reason == null) reason = "Khong dap ung tieu chuan ho so tai xe.";
+
+                AdminController ac = this.serverRef.getMainController().getAdminController();
+                boolean ok = ac.rejectDriverApplication(appId, reason);
+                sendJsonResponse(exchange, 200, "{\"success\":" + ok + ",\"applicationId\":\"" + escapeJson(appId) + "\",\"message\":\"Da tu choi ho so tai xe!\"}");
+            } catch (Exception e) {
+                sendJsonResponse(exchange, 500, "{\"success\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
+            }
+        }
+    }
+
+    private class VoucherListHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public VoucherListHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            String json = "["
+                    + "{\"code\":\"QUYNHON20\",\"discountPercent\":20,\"maxDiscount\":50000,\"minOrder\":50000,\"title\":\"Khao 20% Am Thuc Quy Nhon\",\"description\":\"Giam 20% toi da 50.000d cho don tu 50.000d\"},"
+                    + "{\"code\":\"FREESHIP\",\"discountPercent\":100,\"maxDiscount\":20000,\"minOrder\":30000,\"title\":\"Freeship Quy Nhon\",\"description\":\"Mien phi ship 100% (toi da 20.000d) cho don tu 30.000d\"},"
+                    + "{\"code\":\"BANHXEO\",\"flatDiscount\":15000,\"minOrder\":40000,\"title\":\"Uu Dai Banh Xeo Tom Nhay\",\"description\":\"Giam ngay 15.000d cho moi don tu 40.000d\"},"
+                    + "{\"code\":\"CHAOMUNG\",\"flatDiscount\":25000,\"minOrder\":60000,\"title\":\"Chao Ban Moi Quy Nhon\",\"description\":\"Giam ngay 25.000d cho don hang tu 60.000d\"}"
+                    + "]";
+            sendJsonResponse(exchange, 200, json);
+        }
+    }
+
+    private class VoucherApplyHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public VoucherApplyHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendErrorResponse(exchange, 405, "Method Not Allowed");
+                return;
+            }
+            try {
+                String body = readBody(exchange);
+                Map<String, String> params = parseJsonSimple(body);
+                String code = params.get("code");
+                if (code != null) code = code.trim().toUpperCase();
+                double foodAmount = parseDouble(params.get("totalFoodAmount"), 0.0);
+                if (foodAmount <= 0) foodAmount = parseDouble(params.get("foodAmount"), 0.0);
+                double deliveryFee = parseDouble(params.get("deliveryFee"), 15000.0);
+
+                if (code == null || code.isEmpty()) {
+                    sendJsonResponse(exchange, 400, "{\"valid\":false,\"message\":\"Vui long nhap ma giam gia!\"}");
+                    return;
+                }
+
+                double discount = 0.0;
+                String desc = "";
+                if ("QUYNHON20".equals(code)) {
+                    if (foodAmount < 50000) {
+                        sendJsonResponse(exchange, 200, "{\"valid\":false,\"message\":\"Ma QUYNHON20 chi ap dung cho don hang co tien mon tu 50.000d tro len!\"}");
+                        return;
+                    }
+                    discount = Math.min(foodAmount * 0.20, 50000.0);
+                    desc = "Giam 20% toi da 50.000d";
+                } else if ("FREESHIP".equals(code)) {
+                    if (foodAmount < 30000) {
+                        sendJsonResponse(exchange, 200, "{\"valid\":false,\"message\":\"Ma FREESHIP chi ap dung cho don tu 30.000d tro len!\"}");
+                        return;
+                    }
+                    discount = Math.min(deliveryFee, 20000.0);
+                    desc = "Mien phi van chuyen (toi da 20.000d)";
+                } else if ("BANHXEO".equals(code)) {
+                    if (foodAmount < 40000) {
+                        sendJsonResponse(exchange, 200, "{\"valid\":false,\"message\":\"Ma BANHXEO chi ap dung cho don tu 40.000d tro len!\"}");
+                        return;
+                    }
+                    discount = 15000.0;
+                    desc = "Giam ngay 15.000d";
+                } else if ("CHAOMUNG".equals(code)) {
+                    if (foodAmount < 60000) {
+                        sendJsonResponse(exchange, 200, "{\"valid\":false,\"message\":\"Ma CHAOMUNG chi ap dung cho don tu 60.000d tro len!\"}");
+                        return;
+                    }
+                    discount = 25000.0;
+                    desc = "Giam ngay 25.000d cho khach hang moi";
+                } else {
+                    sendJsonResponse(exchange, 200, "{\"valid\":false,\"message\":\"Ma giam gia '" + escapeJson(code) + "' khong ton tai hoac da het han!\"}");
+                    return;
+                }
+
+                double finalTotal = Math.max(0.0, (foodAmount + deliveryFee) - discount);
+                StringBuilder sb = new StringBuilder();
+                sb.append("{");
+                sb.append("\"valid\":true,");
+                sb.append("\"code\":\"").append(escapeJson(code)).append("\",");
+                sb.append("\"discountAmount\":").append(discount).append(",");
+                sb.append("\"finalFoodAmount\":").append(foodAmount).append(",");
+                sb.append("\"finalDeliveryFee\":").append(deliveryFee).append(",");
+                sb.append("\"finalTotal\":").append(finalTotal).append(",");
+                sb.append("\"description\":\"").append(escapeJson(desc)).append("\",");
+                sb.append("\"message\":\"Ap dung ma ").append(escapeJson(code)).append(" thanh cong! Tiet kiem ").append((long)discount).append("d.\"");
+                sb.append("}");
+
+                sendJsonResponse(exchange, 200, sb.toString());
+            } catch (Exception e) {
+                sendJsonResponse(exchange, 500, "{\"valid\":false,\"message\":\"" + escapeJson(e.getMessage()) + "\"}");
+            }
         }
     }
 

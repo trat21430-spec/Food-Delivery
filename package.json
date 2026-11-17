@@ -1,0 +1,30 @@
+{
+  "name": "food-delivery-quynhon-fullstack",
+  "version": "2.0.0",
+  "description": "Fullstack Food Delivery System - LAB211 Pure OOP Java Backend & Interactive Modern Web SPA/PWA",
+  "main": "web/index.html",
+  "scripts": {
+    "start": "javac -encoding UTF-8 -d bin -cp bin src/web/FoodDeliveryWebServer.java && java -Dfile.encoding=UTF-8 -cp bin web.FoodDeliveryWebServer",
+    "build": "javac -encoding UTF-8 -d bin src/**/*.java",
+    "compile:server": "javac -encoding UTF-8 -d bin -cp bin src/web/FoodDeliveryWebServer.java",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "test:api": "python test_endpoints.py"
+  },
+  "keywords": [
+    "food-delivery",
+    "lab211",
+    "pure-oop",
+    "java",
+    "fullstack",
+    "realtime-sse",
+    "vietqr",
+    "pwa",
+    "quy-nhon",
+    "concurrency-simulation"
+  ],
+  "author": "Nhom 01 - LAB211 Quy Nhon",
+  "license": "MIT"
+}

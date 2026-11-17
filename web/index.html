@@ -195,6 +195,10 @@
           <i data-lucide="code-2" class="w-3.5 h-3.5 inline mr-1"></i> REST API Docs
           <span class="ml-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.2 rounded-full text-[10px]">v2.0</span>
         </button>
+        <button onclick="switchPortal('admin')" id="tab-admin" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 inline mr-1"></i> Quản Trị
+          <span id="badge-admin-pending" class="ml-1 bg-amber-500 text-slate-950 font-bold px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
+        </button>
         <button onclick="switchPortal('benchmark')" id="tab-benchmark" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
           <i data-lucide="cpu" class="w-3.5 h-3.5 inline mr-1"></i> Simulator
         </button>
@@ -248,6 +252,9 @@
     </button>
     <button onclick="switchPortal('apidocs')" class="mob-tab flex flex-col items-center" id="mob-apidocs">
       <i data-lucide="code-2" class="w-5 h-5 mb-0.5"></i> API Docs
+    </button>
+    <button onclick="switchPortal('admin')" class="mob-tab flex flex-col items-center" id="mob-admin">
+      <i data-lucide="bar-chart-3" class="w-5 h-5 mb-0.5"></i> Admin
     </button>
     <button onclick="switchPortal('benchmark')" class="mob-tab flex flex-col items-center" id="mob-benchmark">
       <i data-lucide="cpu" class="w-5 h-5 mb-0.5"></i> Test
@@ -742,6 +749,169 @@
       </div>
     </article>
 
+      <!-- ========================================================================= -->
+    <!-- PORTAL 7: ENTERPRISE ADMIN & FINANCIAL OVERVIEW (QUẢN TRỊ & TÀI CHÍNH SÀN) -->
+    <!-- ========================================================================= -->
+    <article id="portal-admin" class="space-y-6 hidden">
+      <!-- Admin Header Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 rounded-3xl border border-indigo-900/50 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="relative z-10 max-w-2xl">
+          <div class="inline-flex items-center space-x-2 bg-indigo-500/20 border border-indigo-500/30 px-3 py-1 rounded-full text-xs font-semibold text-indigo-300 mb-2">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-400"></i>
+            <span>Trung Tâm Điều Hành Sàn FDS Quy Nhơn • Phân Hệ Quản Trị Cấp Cao</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Báo Cáo Tài Chính GMV & Vận Hành Đội Xe
+          </h2>
+          <p class="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Theo dõi dòng tiền giao dịch thời gian thực (GMV), phân bổ tự động 20% doanh thu sàn, 80% đối tác quán ăn, và 100% tiền ship tài xế. Phê duyệt hồ sơ tài xế và kiểm soát toàn bộ 200 đối tác nhà hàng.
+          </p>
+        </div>
+
+        <div class="relative z-10 flex flex-wrap gap-2">
+          <button onclick="adminRestockAll()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center space-x-1.5 shadow-lg shadow-indigo-600/30">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            <span>Cấp Lại Kho 50 Suất</span>
+          </button>
+          <button onclick="triggerCentralAutoDispatch()" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center space-x-1.5 shadow-lg shadow-brand-500/30">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Kích Hoạt Ghép Xe</span>
+          </button>
+          <button onclick="loadAdminOverview()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3.5 py-2.5 rounded-xl border border-slate-700 transition flex items-center space-x-1.5">
+            <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            <span>Làm Mới</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Financial KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-lg relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400">Tổng GMV Giao Dịch</span>
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+              <i data-lucide="wallet" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <h3 class="text-2xl font-black text-white mt-2" id="adm-gmv">0 đ</h3>
+          <p class="text-[11px] text-slate-400 mt-1 flex items-center">
+            <span class="text-emerald-400 font-semibold mr-1" id="adm-delivered-gmv">0 đ</span> đã hoàn tất giao
+          </p>
+        </div>
+
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-brand-500/30 shadow-lg relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400">Doanh Thu Sàn (20% Tiền Món)</span>
+            <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center">
+              <i data-lucide="trending-up" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <h3 class="text-2xl font-black text-brand-400 mt-2" id="adm-platform-fee">0 đ</h3>
+          <p class="text-[11px] text-slate-400 mt-1">Phí hoa hồng nền tảng LAB211</p>
+        </div>
+
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-emerald-500/30 shadow-lg relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400">Chi Trả Đối Tác Quán (80%)</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="store" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <h3 class="text-2xl font-black text-emerald-400 mt-2" id="adm-restaurant-payout">0 đ</h3>
+          <p class="text-[11px] text-slate-400 mt-1">Thanh toán tự động cho 200 quán ăn</p>
+        </div>
+
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-cyan-500/30 shadow-lg relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400">Tổng Thu Nhập Tài Xế (100% Ship)</span>
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+              <i data-lucide="bike" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <h3 class="text-2xl font-black text-cyan-400 mt-2" id="adm-driver-earnings">0 đ</h3>
+          <p class="text-[11px] text-slate-400 mt-1">Phí vận chuyển Haversine thực nhận</p>
+        </div>
+      </div>
+
+      <!-- Operational Status Funnel -->
+      <div class="bg-slate-800/70 p-5 rounded-2xl border border-slate-700">
+        <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4 flex items-center">
+          <i data-lucide="pie-chart" class="w-4 h-4 text-brand-500 mr-2"></i> Trạng Thái Vận Hành & Phễu Xử Lý Đơn Hàng
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center text-xs">
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <p class="text-slate-400 text-[11px]">Chờ quán duyệt</p>
+            <p class="text-lg font-black text-amber-400 mt-1" id="adm-cnt-pending">0</p>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <p class="text-slate-400 text-[11px]">Bếp đang nấu</p>
+            <p class="text-lg font-black text-orange-400 mt-1" id="adm-cnt-confirmed">0</p>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <p class="text-slate-400 text-[11px]">Tài xế đang giao</p>
+            <p class="text-lg font-black text-cyan-400 mt-1" id="adm-cnt-dispatched">0</p>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <p class="text-slate-400 text-[11px]">Giao thành công</p>
+            <p class="text-lg font-black text-emerald-400 mt-1" id="adm-cnt-delivered">0</p>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 col-span-2 sm:col-span-1">
+            <p class="text-slate-400 text-[11px]">Tài xế Online/Tổng</p>
+            <p class="text-lg font-black text-indigo-400 mt-1" id="adm-cnt-fleet">0 / 0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 Columns: Driver Applications & Live All Orders -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Driver Applications Approval Column (1 Col) -->
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center">
+              <i data-lucide="user-check" class="w-4 h-4 text-amber-400 mr-2"></i> Hồ Sơ Tài Xế Chờ Duyệt
+            </h4>
+            <span id="adm-apps-count-badge" class="bg-amber-500/20 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-500/30">0 hồ sơ</span>
+          </div>
+
+          <div class="space-y-3 max-h-[460px] overflow-y-auto" id="adm-driver-apps-container">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Live Orders Monitoring Table Column (2 Cols) -->
+        <div class="lg:col-span-2 bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700 pb-3">
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center">
+              <i data-lucide="list-ordered" class="w-4 h-4 text-brand-500 mr-2"></i> Bảng Giám Sát Đơn Hàng Hệ Thống
+            </h4>
+            <div class="flex items-center space-x-2">
+              <input type="text" id="adm-order-search" oninput="filterAdminOrdersTable()" placeholder="Tìm theo mã đơn, khách, quán..." class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 w-48">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto max-h-[460px] overflow-y-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/80 text-slate-400 uppercase text-[10px] sticky top-0 z-10 backdrop-blur">
+                <tr>
+                  <th class="p-2.5">Mã Đơn</th>
+                  <th class="p-2.5">Quán Ăn</th>
+                  <th class="p-2.5">Tài Xế</th>
+                  <th class="p-2.5">Tổng Tiền</th>
+                  <th class="p-2.5">Trạng Thái</th>
+                  <th class="p-2.5 text-right">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="adm-orders-tbody" class="divide-y divide-slate-700/50">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
   </main>
 
   <!-- ========================================================================= -->
@@ -821,6 +991,47 @@
     <div class="flex-1 p-4 overflow-y-auto space-y-3" id="cart-items-container"></div>
 
     <div class="p-5 border-t border-slate-800 bg-slate-800/60 space-y-3">
+      <!-- Voucher Promo Code Box -->
+      <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700/80 space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-slate-200 flex items-center">
+            <i data-lucide="ticket" class="w-3.5 h-3.5 text-amber-400 mr-1.5"></i> Mã Giảm Giá Quy Nhơn
+          </span>
+          <span class="text-[10px] text-amber-400 font-semibold" id="cart-applied-badge"></span>
+        </div>
+        <div class="flex space-x-2">
+          <input type="text" id="voucher-code-input" placeholder="QUYNHON20, FREESHIP..." class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white uppercase placeholder-slate-500 font-mono tracking-wider focus:outline-none focus:border-brand-500">
+          <button type="button" onclick="applyVoucherCode()" id="btn-apply-voucher" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition">Áp Dụng</button>
+        </div>
+        <div id="voucher-result-msg" class="text-[11px] leading-tight hidden"></div>
+      </div>
+
+      <!-- Payment Method Selection -->
+      <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700/80 space-y-2 text-xs">
+        <span class="font-bold text-slate-200 flex items-center">
+          <i data-lucide="credit-card" class="w-3.5 h-3.5 text-cyan-400 mr-1.5"></i> Phương Thức Thanh Toán
+        </span>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="cursor-pointer border border-slate-700 rounded-lg p-2.5 flex items-center space-x-2 hover:border-brand-500 transition bg-slate-800/60 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/10">
+            <input type="radio" name="payment-method" value="COD" checked class="text-brand-500 focus:ring-0">
+            <div>
+              <p class="font-bold text-white text-[11px]">Tiền mặt (COD)</p>
+              <p class="text-[10px] text-slate-400">Trả khi nhận món</p>
+            </div>
+          </label>
+          <label class="cursor-pointer border border-slate-700 rounded-lg p-2.5 flex items-center space-x-2 hover:border-brand-500 transition bg-slate-800/60 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+            <input type="radio" name="payment-method" value="VIETQR" class="text-cyan-500 focus:ring-0">
+            <div>
+              <p class="font-bold text-white text-[11px] flex items-center">
+                VietQR 24/7 <span class="ml-1 text-[9px] bg-cyan-500/20 text-cyan-300 px-1 rounded">Auto</span>
+              </p>
+              <p class="text-[10px] text-slate-400">Quét mã ngân hàng</p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Amount Breakdown -->
       <div class="space-y-1.5 text-xs text-slate-300">
         <div class="flex justify-between">
           <span>Tiền món ăn:</span>
@@ -829,6 +1040,10 @@
         <div class="flex justify-between">
           <span id="cart-shipping-desc">Phí giao hàng Quy Nhơn (Haversine):</span>
           <span class="font-semibold text-white" id="cart-shipping">15.000 đ</span>
+        </div>
+        <div class="flex justify-between text-emerald-400 hidden" id="cart-discount-row">
+          <span id="cart-discount-desc">Giảm giá voucher:</span>
+          <span class="font-bold" id="cart-discount-val">-0 đ</span>
         </div>
         <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-slate-700">
           <span>Tổng thanh toán:</span>
@@ -936,11 +1151,17 @@
       selectedRestaurantId: 'R001',
       menuItems: [],
       cart: {},
+      appliedVoucher: null,
+      discountAmount: 0,
+      paymentMethod: 'COD',
       orders: [],
       activeCustomerOrderId: null,
       drivers: [],
+      driverApplications: [],
+      adminOverview: null,
       map: null,
       mapMarkers: [],
+      driverAnimations: {},
       chartInstance: null,
       apiDocsData: null,
       apiActiveCategory: 'ALL'
@@ -974,7 +1195,7 @@
     function switchPortal(portalId) {
       STATE.activePortal = portalId;
       
-      ['customer', 'kitchen', 'driver', 'dispatch', 'apidocs', 'benchmark'].forEach(p => {
+      ['customer', 'kitchen', 'driver', 'dispatch', 'admin', 'apidocs', 'benchmark'].forEach(p => {
         const el = document.getElementById(`portal-${p}`);
         if (el) el.classList.toggle('hidden', p !== portalId);
         
@@ -1009,6 +1230,7 @@
     async function initApp() {
       try {
         await checkBackendStatus();
+        initSSE();
         await loadDemoAccounts();
         await loadRestaurants();
         await loadDrivers();
@@ -1373,10 +1595,29 @@
       });
 
       const shippingFee = 15000;
-      const total = subtotal + shippingFee;
+      const discount = STATE.discountAmount || 0;
+      const total = Math.max(0, subtotal + shippingFee - discount);
 
       document.getElementById('cart-subtotal').innerText = formatCurrency(subtotal);
       document.getElementById('cart-shipping').innerText = formatCurrency(shippingFee);
+      
+      const discountRow = document.getElementById('cart-discount-row');
+      const discountVal = document.getElementById('cart-discount-val');
+      const discountDesc = document.getElementById('cart-discount-desc');
+      const appliedBadge = document.getElementById('cart-applied-badge');
+
+      if (discountRow && discountVal) {
+        if (discount > 0 && STATE.appliedVoucher) {
+          discountRow.classList.remove('hidden');
+          discountVal.innerText = `-${formatCurrency(discount)}`;
+          if (discountDesc) discountDesc.innerText = `Voucher (${STATE.appliedVoucher.code}):`;
+          if (appliedBadge) appliedBadge.innerText = `✓ Đã áp dụng ${STATE.appliedVoucher.code}`;
+        } else {
+          discountRow.classList.add('hidden');
+          if (appliedBadge) appliedBadge.innerText = '';
+        }
+      }
+
       document.getElementById('cart-total').innerText = formatCurrency(total);
       lucide.createIcons();
     }
@@ -1388,12 +1629,26 @@
       const customerId = STATE.currentUser ? STATE.currentUser.id : 'C0001';
       const itemsPayload = itemIds.map(id => ({ menuItemId: id, quantity: STATE.cart[id] }));
 
+      const payMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+      const paymentMethod = payMethodRadio ? payMethodRadio.value : 'COD';
+
+      let subtotal = 0;
+      itemIds.forEach(id => {
+        const item = STATE.menuItems.find(m => m.id === id);
+        if (item) subtotal += item.price * STATE.cart[id];
+      });
+      const shippingFee = 15000;
+      const discount = STATE.discountAmount || 0;
+      const finalAmount = Math.max(0, subtotal + shippingFee - discount);
+
       const body = {
         customerId: customerId,
         restaurantId: STATE.selectedRestaurantId,
         menuItemId: itemIds[0],
         quantity: STATE.cart[itemIds[0]],
-        items: itemsPayload
+        items: itemsPayload,
+        voucherCode: STATE.appliedVoucher ? STATE.appliedVoucher.code : '',
+        paymentMethod: paymentMethod
       };
 
       try {
@@ -1405,13 +1660,22 @@
         const data = await res.json();
         if (data.success) {
           playSuccessChime();
+          const orderId = data.orderId;
           STATE.cart = {};
+          STATE.appliedVoucher = null;
+          STATE.discountAmount = 0;
           updateCartUI();
           closeCartDrawer();
-          STATE.activeCustomerOrderId = data.orderId;
+          STATE.activeCustomerOrderId = orderId;
           await loadOrders();
           await selectRestaurant(STATE.selectedRestaurantId);
-          alert(`🎉 Đặt hàng thành công! Mã đơn: ${data.orderId}`);
+
+          if (paymentMethod === 'VIETQR') {
+            openVietQrModal(orderId, finalAmount);
+          } else {
+            showToast(`🎉 Đặt hàng thành công! Mã đơn: ${orderId}`, 'success');
+            alert(`🎉 Đặt hàng thành công! Mã đơn: ${orderId}\nPhương thức: Tiền mặt khi nhận hàng (COD). Bếp quán đang chuẩn bị món.`);
+          }
         } else {
           alert(`❌ Đặt hàng thất bại: ${data.message || data.error || 'Lỗi không xác định'}`);
         }
@@ -2199,5 +2463,73 @@
       lucide.createIcons();
     });
   </script>
+
+  <!-- ========================================================================= -->
+  <!-- DYNAMIC VIETQR BANKING PAYMENT MODAL -->
+  <!-- ========================================================================= -->
+  <div id="vietqr-modal-overlay" onclick="closeVietQrModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden transition-opacity"></div>
+  <div id="vietqr-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-4">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+          <i data-lucide="qr-code" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-base">Thanh Toán VietQR Chuẩn Quốc Gia</h3>
+          <p class="text-[11px] text-slate-400">Ngân Hàng Quân Đội MB Bank 24/7</p>
+        </div>
+      </div>
+      <button onclick="closeVietQrModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Dynamic VietQR Image -->
+    <div class="bg-white p-3 rounded-2xl flex flex-col items-center justify-center shadow-inner">
+      <img id="vietqr-image" src="" alt="Mã thanh toán VietQR ngân hàng" class="w-64 h-64 object-contain rounded-lg">
+      <p class="text-[10px] text-slate-600 font-semibold mt-1">Mở ứng dụng ngân hàng hoặc Momo để quét mã</p>
+    </div>
+
+    <!-- Transfer Details with 1-Click Copy -->
+    <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 space-y-2 text-xs">
+      <div class="flex justify-between items-center">
+        <span class="text-slate-400">Số tài khoản:</span>
+        <div class="flex items-center space-x-1.5">
+          <span class="font-mono font-bold text-white text-sm" id="vietqr-account-no">0987654321</span>
+          <button onclick="copyToClipboard('0987654321')" class="text-cyan-400 hover:text-cyan-300 text-[10px] font-semibold underline">Sao chép</button>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-slate-400">Chủ tài khoản:</span>
+        <span class="font-bold text-white">FOOD DELIVERY QUY NHON</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-slate-400">Số tiền chính xác:</span>
+        <span class="font-bold text-brand-400 text-sm" id="vietqr-amount">0 đ</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-slate-400">Nội dung chuyển khoản:</span>
+        <div class="flex items-center space-x-1.5">
+          <span class="font-mono font-bold text-amber-300" id="vietqr-memo">DH123456</span>
+          <button onclick="copyToClipboard(document.getElementById('vietqr-memo').innerText)" class="text-cyan-400 hover:text-cyan-300 text-[10px] font-semibold underline">Sao chép</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SSE Live Pulse -->
+    <div class="flex items-center justify-center space-x-2 text-[11px] text-slate-400">
+      <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+      <span>Hệ thống tự động lắng nghe xác nhận qua SSE Realtime</span>
+    </div>
+
+    <button onclick="confirmVietQrPaid()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/25 transition">
+      <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+      <span>TÔI ĐÃ CHUYỂN KHOẢN XONG</span>
+    </button>
+  </div>
+
+  <!-- Realtime Toast Notifications Container -->
+  <div id="toast-container" class="fixed top-20 right-5 z-50 space-y-2 pointer-events-none max-w-sm"></div>
+
 </body>
 </html>
