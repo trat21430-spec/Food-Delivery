@@ -1,0 +1,34 @@
+id,username,password,phone,fullName,role,linkedCustomerId,linkedDriverId,active
+U0001,admin,admin123,,He Thong Quan Tri (Admin),ADMIN,ADMIN,,true
+U0002,dispatcher,disp123,,Dieu Phoi Vien Trung Tam Quy Nhon,DISPATCHER,DISP01,,true
+U0003,customer1,123,,Nguyen Van An (Khach Hang Quy Nhon),CUSTOMER,C0001,,true
+U0004,customer2,123,,Tran Thi Binh (Khach Hang Quy Nhon),CUSTOMER,C0002,,true
+U0005,restaurant1,123,,Banh Xeo Tom Nhay Gia Vy 101,RESTAURANT,R001,,true
+U0006,restaurant2,123,,Bun Cha Ca Ngoc Lien 102,RESTAURANT,R002,,true
+U0007,driver1,123,,Tai Xe Nguyen Van A (Quy Nhon),DRIVER,,D0001,true
+U0008,driver2,123,,Tai Xe Tran Minh B (Quy Nhon),DRIVER,,D0002,true
+U_CUST_9,test_cust_1794485635385,pass123,0987515208,Khach Hang Test,CUSTOMER,C2001,,true
+U_DRV_10,test_driver_1794485635803,pass123,0975913574,Tai Xe Test,DRIVER,,D0501,true
+U_DRV_11,app_driver_1794485636133,pass123,0989598366,Driver Candidate,DRIVER,,D0502,true
+U_DRV_12,driver_dangky1,123456,0912345678,Le Van Cuong,DRIVER,,D0503,true
+U_13,,,,,CUSTOMER,,,true
+U_CUST_14,thanhtung,123456,0998245325,truong thanh tung,CUSTOMER,C2002,,true
+U_CUST_15,test_cust_1794491372960,pass123,0982360722,Khach Hang Test,CUSTOMER,C2003,,true
+U_DRV_16,test_driver_1794491373042,pass123,0978711957,Tai Xe Test,DRIVER,,D0504,true
+U_DRV_17,app_driver_1794491373083,pass123,0986811660,Driver Candidate,DRIVER,,D0505,true
+U_CUST_18,test_cust_1794492471023,pass123,0986288456,Khach Hang Test,CUSTOMER,C2004,,true
+U_DRV_19,test_driver_1794492471054,pass123,0977895219,Tai Xe Test,DRIVER,,D0506,true
+U_DRV_20,app_driver_1794492471081,pass123,0989902330,Driver Candidate,DRIVER,,D0507,true
+U_CUST_21,test_cust_1794498002401,pass123,0986701259,Khach Hang Test,CUSTOMER,C2005,,true
+U_DRV_22,test_driver_1794498002496,pass123,0976363739,Tai Xe Test,DRIVER,,D0508,true
+U_DRV_23,app_driver_1794498002744,pass123,0982607845,Driver Candidate,DRIVER,,D0509,true
+U_CUST_24,test_cust_1794499598577,pass123,0986827259,Khach Hang Test,CUSTOMER,C2006,,true
+U_DRV_25,test_driver_1794499598700,pass123,0974854224,Tai Xe Test,DRIVER,,D0510,true
+U_DRV_26,app_driver_1794499599099,pass123,0989850202,Driver Candidate,DRIVER,,D0511,true
+U_CUST_27,test_cust_1794572704674,pass123,0988326414,Khach Hang Test,CUSTOMER,C2007,,true
+U_DRV_28,test_driver_1794572704710,pass123,0976794483,Tai Xe Test,DRIVER,,D0508,true
+U_DRV_29,app_driver_1794572704721,pass123,0983069715,Driver Candidate,DRIVER,,D0509,true
+U_CUST_30,test_cust_1794718630190,pass123,0986678884,Khach Hang Test,CUSTOMER,C2008,,true
+U_DRV_31,test_driver_1794718630224,pass123,0975157286,Tai Xe Test,DRIVER,,D0510,true
+U_DRV_32,app_driver_1794718630240,pass123,0987343392,Driver Candidate,DRIVER,,D0511,true
+U_CUST_33,testuser_12345,password123,0905123456,Nguyen Van Test,CUSTOMER,C2009,,true

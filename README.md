@@ -75,14 +75,14 @@ Hệ thống được thiết kế và thực thi theo nguyên tắc **Đồng b
 $$\text{Phát biểu bài toán} \iff \text{51 Use Cases} \iff \text{60 Classes UML} \iff \text{Mã nguồn Java & CSV}$$
 
 ### 📌 Các tài liệu chính thức theo từng thư mục:
-* 📊 **Slide Báo cáo PowerPoint (File PPTX chuẩn 16:9):** [`Bao_Cao_Food_Delivery_LAB211.pptx`](Bao_Cao_Food_Delivery_LAB211.pptx) *(18 Slides chuyên nghiệp, nhúng sơ đồ nét cao, có lời thoại Speaker Notes)*
-* 🌐 **Trình chiếu Slide trực tiếp trên Web (HTML5 Deck):** [`slide_presentation.html`](slide_presentation.html) *(Xem ngay trên trình duyệt, phím `F` toàn màn hình, phím `N` bật lời thoại thuyết trình)*
-* 📘 **Bản Phát biểu bài toán toàn bộ hệ thống (File Word DOCX chính thức):** [`Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx`](Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx) *(Bản lưu trong thư mục Usecase: [`Usecase/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx`](Usecase/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx))*
+* 📊 **Slide Báo cáo PowerPoint (File PPTX chuẩn 16:9):** [`Bao_Cao_Food_Delivery_LAB211.pptx`](Bao_Cao_Food_Delivery_LAB211.pptx) *(Bản lưu trong docs: [`docs/Bao_Cao_Food_Delivery_LAB211.pptx`](docs/Bao_Cao_Food_Delivery_LAB211.pptx))*
+* 🌐 **Trình chiếu Slide trực tiếp trên Web (HTML5 Deck):** [`slide_presentation.html`](slide_presentation.html) *(Bản lưu trong docs: [`docs/slide_presentation.html`](docs/slide_presentation.html))*
+* 📘 **Bản Phát biểu bài toán toàn bộ hệ thống (File Word DOCX chính thức):** [`Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx`](Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx) *(Bản lưu trong docs: [`docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx`](docs/Phat_Bieu_Bai_Toan_Food_Delivery_LAB211.docx))*
 * 📄 **Phát biểu bài toán chi tiết & Đặc tả 51 Use Cases:** [`Usecase/use_case_diagram.md`](Usecase/use_case_diagram.md)
 * 🖼️ **Hình vẽ Use Case Diagram toàn hệ thống:** [`Usecase/Full_UseCase_Diagram.jpg`](Usecase/Full_UseCase_Diagram.jpg) | [`Usecase/Full_UseCase_Diagram.drawio`](Usecase/Full_UseCase_Diagram.drawio)
 * 🌐 **Trình duyệt Web xem Use Case (Pan-Zoom & Tra cứu):** [`Usecase/use_case_view.html`](Usecase/use_case_view.html)
 * 🖼️ **Hình vẽ Class Diagram (60 Classes, đi dây xa lộ rõ ràng):** [`diagram/Full_Class_Diagram.jpg`](diagram/Full_Class_Diagram.jpg) | [`ClassDiagram/Full_Class_Diagram.drawio`](ClassDiagram/Full_Class_Diagram.drawio)
-* 🧩 **Diagram theo 7 Phân hệ chức năng (Subsystems Architecture):** [`diagram/subsystems/Subsystems_Architecture.drawio`](diagram/subsystems/Subsystems_Architecture.drawio) | [`docs/subsystems/subsystems_diagram.md`](docs/subsystems/subsystems_diagram.md)
+* 🧩 **Diagram theo 7 Phân hệ chức năng (Subsystems Architecture):** [`docs/subsystems/Subsystems_Architecture.drawio`](docs/subsystems/Subsystems_Architecture.drawio) | [`docs/subsystems/subsystems_diagram.md`](docs/subsystems/subsystems_diagram.md)
 * 🌐 **Trình duyệt Web tra cứu 7 Phân hệ (Interactive Subsystem View):** [`docs/subsystems/subsystems_view.html`](docs/subsystems/subsystems_view.html) *(Xem theo từng thành viên phụ trách, use case, class và CSV)*
 * 📄 **Đặc tả 60 Class & 112 Quan hệ:** [`ClassDiagram/class_diagram.md`](ClassDiagram/class_diagram.md)
 * 🌐 **Trình duyệt Web xem Class Diagram (Pan-Zoom theo Layer):** [`ClassDiagram/class_diagram_view.html`](ClassDiagram/class_diagram_view.html)

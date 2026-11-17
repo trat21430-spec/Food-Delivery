@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>UML Sequence Diagrams - Food Delivery Network Simulation (LAB211)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 15px;
+        }
+        .diagram-container {
+            max-width: 1300px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        .diagram-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
+        }
+        .diagram-title {
+            color: #f59e0b;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+        }
+        .diagram-desc {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .badge {
+            background-color: #0284c7;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>UML SEQUENCE DIAGRAMS (LƯỢC ĐỒ TUẦN TỰ)</h1>
+        <div class="subtitle">Đề tài: Hệ Thống Mô Phỏng Mạng Lưới Giao Đồ Ăn (Food Delivery Simulation) — LAB211</div>
+    </div>
+
+    <div class="diagram-container">
+        <!-- Diagram 1 -->
+        <div class="diagram-card">
+            <div class="diagram-title">
+                1. Luồng Đặt Hàng & Điều Phối Tài Xế (Order & Dispatch Workflow) 
+                <span class="badge">MVC & Repository Pattern</span>
+            </div>
+            <div class="diagram-desc">
+                Minh họa chu trình từ khi Khách hàng gửi yêu cầu ➔ OrderView ➔ OrderController ➔ OrderRepository. 
+                Đảm bảo phân tách trách nhiệm (Decomposition): View/Controller không gọi trực tiếp thuật toán Haversine mà do Repository phụ trách. 
+                Xử lý kiểm tra tồn kho (Oversell), tính khoảng cách Haversine và cập nhật trạng thái đồng thời giữa Order và Driver trên tệp CSV.
+            </div>
+            <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Customer as Khách hàng (User)
+    participant View as OrderView
+    participant Ctrl as OrderController
+    participant OrderRepo as OrderRepository
+    participant MenuRepo as MenuItemRepository
+    participant RestRepo as RestaurantRepository
+    participant DriverRepo as DriverRepository
+    participant ItemRepo as OrderItemRepository
+    participant CSV as File CSV (Disk)
+
+    Customer->>View: 1. Nhập thông tin đặt hàng (customerId, restaurantId, itemId, quantity)
+    activate View
+    View->>Ctrl: 2. placeOrderAndDispatch(...)
+    activate Ctrl
+    Ctrl->>OrderRepo: 3. processOrderAndDispatch(customerId, restId, itemId, qty, mechanism, ...)
+    activate OrderRepo
+
+    Note over OrderRepo,MenuRepo: Bước 1: Kiểm tra tồn kho & Trừ kho (Tránh Oversell)
+    OrderRepo->>MenuRepo: 4. deductStock(menuItemId, quantity, mechanism)
+    activate MenuRepo
+    alt Hết hàng (Không đủ tồn kho)
+        MenuRepo-->>OrderRepo: false
+        OrderRepo-->>Ctrl: throw OversellException
+        Ctrl-->>View: Báo lỗi hết món
+        View-->>Customer: Hiển thị lỗi đặt hàng
+    else Còn hàng
+        MenuRepo->>CSV: Cập nhật stockQty mới vào menu_items.csv
+        MenuRepo-->>OrderRepo: true
+    end
+    deactivate MenuRepo
+
+    Note over OrderRepo,ItemRepo: Bước 2: Tạo đơn PENDING & Chi tiết OrderItem
+    OrderRepo->>CSV: 5. Ghi Order mới (status: PENDING, driverId: "") vào orders.csv
+    OrderRepo->>ItemRepo: 6. save(OrderItem)
+    activate ItemRepo
+    ItemRepo->>CSV: Ghi order_items.csv
+    ItemRepo-->>OrderRepo: Hoàn tất lưu OrderItem
+    deactivate ItemRepo
+
+    Note over OrderRepo,DriverRepo: Bước 3: Tìm tài xế AVAILABLE gần nhất bằng Haversine
+    OrderRepo->>RestRepo: 7. findById(restaurantId)
+    activate RestRepo
+    RestRepo-->>OrderRepo: return Restaurant (lat, lon)
+    deactivate RestRepo
+
+    OrderRepo->>DriverRepo: 8. findNearestAvailable(restLat, restLon)
+    activate DriverRepo
+    DriverRepo->>DriverRepo: Duyệt danh sách Driver AVAILABLE,<br/>tính khoảng cách Haversine nhỏ nhất
+    DriverRepo-->>OrderRepo: return Driver gần nhất
+    deactivate DriverRepo
+
+    Note over OrderRepo,DriverRepo: Bước 4: Khóa & Gán tài xế (Tránh Double Assignment & Overload)
+    OrderRepo->>OrderRepo: 9. assignDriver(orderId, driverId, mechanism)
+    OrderRepo->>CSV: Cập nhật orders.csv (status: CONFIRMED, driverId)
+    
+    OrderRepo->>DriverRepo: 10. markBusy(driverId, orderId, mechanism)
+    activate DriverRepo
+    DriverRepo->>CSV: Cập nhật drivers.csv (status: BUSY, currentOrderId)
+    DriverRepo-->>OrderRepo: Xác nhận tài xế đã nhận đơn
+    deactivate DriverRepo
+
+    OrderRepo-->>Ctrl: 11. return Order hoàn tất (CONFIRMED)
+    deactivate OrderRepo
+    Ctrl-->>View: 12. Trả Order cho View hiển thị
+    deactivate Ctrl
+    View-->>Customer: 13. Hiển thị thông tin đơn & tài xế thành công
+    deactivate View
+            </div>
+        </div>
+
+        <!-- Diagram 2 -->
+        <div class="diagram-card">
+            <div class="diagram-title">
+                2. Luồng Bộ Mô Phỏng Đồng Thời & Đối Soát CSV (Concurrent Simulator & Post-Verification)
+                <span class="badge">Concurrency & Benchmark</span>
+            </div>
+            <div class="diagram-desc">
+                Minh họa cơ chế mô phỏng tranh chấp tài nguyên thực tế với 2 loại luồng độc lập (CustomerThread & DispatchThread) kích hoạt cùng thời điểm qua CountDownLatch. 
+                Sau khi kết thúc, hệ thống tiến hành đối soát độc lập (Post-verification) trực tiếp trên file CSV vật lý để phát hiện 3 dị thường dữ liệu: Double Assignment, Oversell, và Driver Overload.
+            </div>
+            <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor User as Giảng viên / Tester
+    participant SimView as SimulatorView
+    participant SimCtrl as SimulatorController
+    participant Latch as CountDownLatch
+    participant CustTh as N x CustomerThread
+    participant DispTh as M x DispatchThread
+    participant OrderCtrl as OrderController
+    participant CSV as Physical CSV Files
+    participant RepoLog as SimulationRunRepository
+
+    User->>SimView: 1. Chọn số lượng đơn & Cơ chế khóa (NO_LOCK, SYNCHRONIZED, ...)
+    activate SimView
+    SimView->>SimCtrl: 2. runSimulation(totalOrders, mechanism)
+    activate SimCtrl
+
+    Note over SimCtrl,Latch: Khởi tạo CountDownLatch: startLatch(1), finishLatch(N + M)
+    SimCtrl->>Latch: 3. new CountDownLatch(1) & finishLatch(N)
+    
+    loop Khởi tạo N CustomerThreads
+        SimCtrl->>CustTh: 4. new CustomerThread(startLatch, finishLatch, orderCtrl, ...)
+        SimCtrl->>CustTh: 5. ct.start() (Đứng đợi tại startLatch.await())
+    end
+
+    Note over SimCtrl,DispTh: BẮT ĐẦU ĐUA LUỒNG (TRUE CONCURRENCY)
+    SimCtrl->>Latch: 6. startLatch.countDown() (Bắn súng lệnh xuất phát)
+    
+    par Luồng Customer Thread 1
+        CustTh->>OrderCtrl: 7. placeOrderAndDispatch(...)
+        OrderCtrl->>CSV: Đọc và ghi menu_items.csv
+        CustTh->>Latch: 8. finishLatch.countDown()
+    and Luồng Customer Thread 2 (Tranh mua cùng món)
+        CustTh->>OrderCtrl: 7. placeOrderAndDispatch(...)
+        OrderCtrl->>CSV: Ghi đè stockQty dẫn đến âm kho (Oversell)
+        CustTh->>Latch: 8. finishLatch.countDown()
+    end
+
+    SimCtrl->>Latch: 9. finishLatch.await() (Chờ toàn bộ khách đặt xong)
+
+    loop Khởi tạo M DispatchThreads tranh chấp cùng 1 tập Order
+        SimCtrl->>DispTh: 10. new DispatchThread(...)
+        SimCtrl->>DispTh: 11. dt.start()
+    end
+    SimCtrl->>Latch: 12. dispatchStartLatch.countDown()
+    par Luồng Dispatcher Thread 1
+        DispTh->>OrderCtrl: 13. dispatchPending(orderId, mechanism)
+        DispTh->>OrderCtrl: Ghi Driver 1 vào orders.csv
+        DispTh->>Latch: 14. dispatchFinishLatch.countDown()
+    and Luồng Dispatcher Thread 2 (Tranh gán cùng đơn)
+        DispTh->>OrderCtrl: 13. dispatchPending(orderId, mechanism)
+        DispTh->>OrderCtrl: Ghi đè Driver 2 vào orders.csv (Double Assignment)
+        DispTh->>Latch: 14. dispatchFinishLatch.countDown()
+    end
+    SimCtrl->>Latch: 15. dispatchFinishLatch.await()
+
+    Note over SimCtrl: Đo thời gian chạy durationMs & Tính Throughput (ops/sec)
+
+    Note over SimCtrl,CSV: POST-VERIFICATION (ĐỐI SOÁT TRỰC TIẾP TRÊN FILE CSV)
+    SimCtrl->>CSV: 16. detectDoubleAssignments() -> Quét orders.csv tìm đơn có >1 tài xế
+    SimCtrl->>CSV: 17. detectOversellItems() -> Quét menu_items.csv tìm món stockQty < 0
+    SimCtrl->>CSV: 18. detectDriverOverload() -> Quét drivers.csv tìm tài xế gán >1 đơn
+    
+    SimCtrl->>RepoLog: 19. save(SimulationRun) ghi kết quả vào simulation_runs.csv
+    SimCtrl-->>SimView: 20. Trả về đối tượng SimulationRun
+    deactivate SimCtrl
+
+    SimView-->>User: 21. Xuất Bảng So Sánh Benchmark 8 Cột
+    deactivate SimView
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            sequence: {
+                showSequenceNumbers: true,
+                actorMargin: 50,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35
+            }
+        });
+    </script>
+</body>
+</html>

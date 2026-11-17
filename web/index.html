@@ -430,6 +430,26 @@
           <div id="order-stepper-details">Tài xế: Đang tìm tài xế gần nhất...</div>
           <div class="font-bold text-brand-400" id="order-stepper-total">0 đ</div>
         </div>
+
+        <!-- 4 Decoupled State Machines Badges (Trang 4 Mục 2.3 Master Plan) -->
+        <div class="mt-2 pt-2 border-t border-slate-700/60 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+          <div class="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+            <span class="text-slate-400 block text-[9px] uppercase font-semibold">1. Trạng Thái Đơn:</span>
+            <span id="badge-order-state" class="font-bold text-amber-400">PENDING</span>
+          </div>
+          <div class="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+            <span class="text-slate-400 block text-[9px] uppercase font-semibold">2. Thanh Toán:</span>
+            <span id="badge-payment-state" class="font-bold text-indigo-400">INITIATED</span>
+          </div>
+          <div class="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+            <span class="text-slate-400 block text-[9px] uppercase font-semibold">3. Giao Vận:</span>
+            <span id="badge-delivery-state" class="font-bold text-cyan-400">CREATED</span>
+          </div>
+          <div class="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+            <span class="text-slate-400 block text-[9px] uppercase font-semibold">4. Quyết Toán Sàn:</span>
+            <span id="badge-settlement-state" class="font-bold text-slate-300">OPEN</span>
+          </div>
+        </div>
       </section>
 
     </article>
@@ -933,7 +953,10 @@
                   <th class="p-2.5">Quán Ăn</th>
                   <th class="p-2.5">Tài Xế</th>
                   <th class="p-2.5">Tổng Tiền</th>
-                  <th class="p-2.5">Trạng Thái</th>
+                  <th class="p-2.5">Order State</th>
+                  <th class="p-2.5">Payment State</th>
+                  <th class="p-2.5">Delivery State</th>
+                  <th class="p-2.5">Settlement State</th>
                   <th class="p-2.5 text-right">Thao Tác</th>
                 </tr>
               </thead>
@@ -945,6 +968,75 @@
         </div>
 
       </div>
+
+      <!-- ===================================================================== -->
+      <!-- DOUBLE-ENTRY FINANCIAL LEDGER (SỔ CÁI KẾ TOÁN ĐỐI ỨNG - MASTER PLAN) -->
+      <!-- ===================================================================== -->
+      <div class="bg-slate-800/80 p-5 rounded-2xl border border-indigo-500/30 space-y-4 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-3">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+              <i data-lucide="scale" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white uppercase tracking-wider flex items-center">
+                Sổ Cái Kế Toán Đối Ứng (Double-Entry Financial Ledger)
+              </h4>
+              <p class="text-[11px] text-slate-400">Tuân thủ nguyên tắc kế toán kép: Nợ 111/112 ↔ Có 331_REST (80%), 331_DRV (100% Ship), 511_COMM (20%)</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span id="adm-ledger-balance-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center space-x-1">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 mr-1"></i> Sổ cái 100% Cân đối
+            </span>
+            <button onclick="simulateVietQrWebhook()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center space-x-1 shadow">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>Test Webhook VietQR</span>
+            </button>
+            <button onclick="loadFinancialLedger()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-2.5 py-1.5 rounded-lg transition">
+              <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Ledger KPI Summary -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <span class="text-slate-400 text-[11px]">Tổng Nợ (Total Debit):</span>
+            <p class="text-lg font-black text-cyan-400 mt-1" id="adm-ledger-total-debit">0 đ</p>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <span class="text-slate-400 text-[11px]">Tổng Có (Total Credit):</span>
+            <p class="text-lg font-black text-emerald-400 mt-1" id="adm-ledger-total-credit">0 đ</p>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            <span class="text-slate-400 text-[11px]">Tổng Số Bút Toán Kế Toán:</span>
+            <p class="text-lg font-black text-indigo-400 mt-1" id="adm-ledger-entry-count">0 bút toán</p>
+          </div>
+        </div>
+
+        <!-- Ledger Entries Table -->
+        <div class="overflow-x-auto max-h-[350px] overflow-y-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] sticky top-0 z-10 backdrop-blur">
+              <tr>
+                <th class="p-2.5">ID Bút Toán</th>
+                <th class="p-2.5">Mã Giao Dịch</th>
+                <th class="p-2.5">Mã Đơn</th>
+                <th class="p-2.5">Tài Khoản Kế Toán</th>
+                <th class="p-2.5 text-right">Nợ (Debit)</th>
+                <th class="p-2.5 text-right">Có (Credit)</th>
+                <th class="p-2.5">Thời Gian</th>
+                <th class="p-2.5">Nghiệp Vụ / Diễn Giải</th>
+              </tr>
+            </thead>
+            <tbody id="adm-ledger-tbody" class="divide-y divide-slate-700/50 font-mono text-[11px]">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </article>
 
   </main>
@@ -1253,6 +1345,11 @@
         setTimeout(initOrRefreshMap, 200);
       } else if (portalId === 'kitchen') {
         loadKitchenStock();
+      } else if (portalId === 'admin') {
+        loadAdminOverview();
+        loadFinancialLedger();
+      } else if (portalId === 'driver') {
+        checkDriverOffers();
       } else if (portalId === 'benchmark') {
         setTimeout(initBenchmarkChart, 100);
       } else if (portalId === 'apidocs') {
@@ -1888,6 +1985,33 @@
       const payMethodRadio = document.querySelector('input[name="payment-method"]:checked');
       const paymentMethod = payMethodRadio ? payMethodRadio.value : 'COD';
 
+      // 1. Point-in-time Pricing Quote Locking (Trang 11 Master Plan - API /api/v1/quotes)
+      let quoteId = '';
+      let quoteFinalTotal = 0;
+      try {
+        const quoteRes = await fetch('/api/v1/quotes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerId: customerId,
+            restaurantId: STATE.selectedRestaurantId,
+            menuItemId: itemIds[0],
+            quantity: STATE.cart[itemIds[0]],
+            voucherCode: STATE.appliedVoucher ? STATE.appliedVoucher.code : ''
+          })
+        });
+        const quoteData = await quoteRes.json();
+        if (quoteData && quoteData.success && quoteData.quoteId) {
+          quoteId = quoteData.quoteId;
+          quoteFinalTotal = quoteData.finalTotalVnd;
+        }
+      } catch (qErr) {
+        console.warn('Quote lock fallback', qErr);
+      }
+
+      // 2. 24-Hour Idempotency Key (Trang 11 Master Plan)
+      const idempotencyKey = 'IDEM_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+
       let subtotal = 0;
       itemIds.forEach(id => {
         const item = STATE.menuItems.find(m => m.id === id);
@@ -1895,7 +2019,7 @@
       });
       const shippingFee = 15000;
       const discount = STATE.discountAmount || 0;
-      const finalAmount = Math.max(0, subtotal + shippingFee - discount);
+      const finalAmount = quoteFinalTotal > 0 ? quoteFinalTotal : Math.max(0, subtotal + shippingFee - discount);
 
       const body = {
         customerId: customerId,
@@ -1904,13 +2028,18 @@
         quantity: STATE.cart[itemIds[0]],
         items: itemsPayload,
         voucherCode: STATE.appliedVoucher ? STATE.appliedVoucher.code : '',
-        paymentMethod: paymentMethod
+        paymentMethod: paymentMethod,
+        quoteId: quoteId,
+        idempotencyKey: idempotencyKey
       };
 
       try {
-        const res = await fetch('/api/orders', {
+        const res = await fetch('/api/v1/orders', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Idempotency-Key': idempotencyKey
+          },
           body: JSON.stringify(body)
         });
         const data = await res.json();
@@ -1930,7 +2059,7 @@
             openVietQrModal(orderId, finalAmount);
           } else {
             showToast(`🎉 Đặt hàng thành công! Mã đơn: ${orderId}`, 'success');
-            alert(`🎉 Đặt hàng thành công! Mã đơn: ${orderId}\nPhương thức: Tiền mặt khi nhận hàng (COD). Bếp quán đang chuẩn bị món.`);
+            alert(`🎉 Đặt hàng thành công! Mã đơn: ${orderId}\nPhương thức: Tiền mặt khi nhận hàng (COD). Hệ thống đang kích hoạt phân hệ Điều Phối (Dispatch V2).`);
           }
         } else {
           alert(`❌ Đặt hàng thất bại: ${data.message || data.error || 'Lỗi không xác định'}`);
@@ -1991,6 +2120,15 @@
       }
 
       document.getElementById('order-stepper-details').innerText = detailsText;
+
+      const bOrder = document.getElementById('badge-order-state');
+      const bPay = document.getElementById('badge-payment-state');
+      const bDeliv = document.getElementById('badge-delivery-state');
+      const bSett = document.getElementById('badge-settlement-state');
+      if (bOrder) bOrder.innerText = activeOrder.orderState || activeOrder.status || 'PENDING';
+      if (bPay) bPay.innerText = activeOrder.paymentState || 'INITIATED';
+      if (bDeliv) bDeliv.innerText = activeOrder.deliveryState || 'SEARCHING_DRIVER';
+      if (bSett) bSett.innerText = activeOrder.settlementState || 'OPEN';
     }
 
     async function cancelActiveOrder() {
@@ -2695,7 +2833,398 @@
       try {
         await loadOrders();
         await loadDrivers();
+        if (STATE.currentUser && STATE.currentUser.role === 'DRIVER') {
+          await checkDriverOffers();
+        }
+        if (STATE.activePortal === 'admin') {
+          await loadAdminOverview();
+          await loadFinancialLedger();
+        }
       } catch (e) {}
+    }
+
+    // =========================================================================
+    // ADMIN FINANCIAL OVERVIEW & DOUBLE-ENTRY LEDGER (MASTER PLAN)
+    // =========================================================================
+    async function loadAdminOverview() {
+      try {
+        const res = await fetch('/api/admin/overview');
+        const d = await res.json();
+        if (d) {
+          const gmvEl = document.getElementById('adm-gmv');
+          if (gmvEl) gmvEl.innerText = formatCurrency(d.totalGMV || 0);
+          const delGmvEl = document.getElementById('adm-delivered-gmv');
+          if (delGmvEl) delGmvEl.innerText = formatCurrency(d.deliveredGMV || 0);
+          const feeEl = document.getElementById('adm-platform-fee');
+          if (feeEl) feeEl.innerText = formatCurrency(d.platformFee || d.platformRevenueVnd || 0);
+          const restPayEl = document.getElementById('adm-restaurant-payout');
+          if (restPayEl) restPayEl.innerText = formatCurrency(d.restaurantPayout || d.restaurantPayoutVnd || 0);
+          const drvEarnEl = document.getElementById('adm-driver-earnings');
+          if (drvEarnEl) drvEarnEl.innerText = formatCurrency(d.driverEarnings || d.driverPayoutVnd || 0);
+
+          const pEl = document.getElementById('adm-cnt-pending');
+          if (pEl) pEl.innerText = d.pendingOrders || 0;
+          const cEl = document.getElementById('adm-cnt-confirmed');
+          if (cEl) cEl.innerText = d.confirmedOrders || 0;
+          const dispEl = document.getElementById('adm-cnt-dispatched');
+          if (dispEl) dispEl.innerText = d.dispatchedOrders || 0;
+          const dlvEl = document.getElementById('adm-cnt-delivered');
+          if (dlvEl) dlvEl.innerText = d.deliveredOrders || 0;
+          const fltEl = document.getElementById('adm-cnt-fleet');
+          if (fltEl) fltEl.innerText = `${d.availableDrivers || d.onlineDrivers || 0} / ${d.totalDrivers || 0}`;
+
+          renderDriverApplications(d.pendingApplications || []);
+        }
+        renderAdminOrdersTable();
+      } catch (e) {
+        console.error('Lỗi tải Admin Overview:', e);
+      }
+    }
+
+    function renderDriverApplications(apps) {
+      const container = document.getElementById('adm-driver-apps-container');
+      const badge = document.getElementById('adm-apps-count-badge');
+      if (badge) badge.innerText = `${apps.length} hồ sơ`;
+      if (!container) return;
+      if (apps.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 italic text-center py-6">Không có hồ sơ tài xế nào đang chờ duyệt.</p>`;
+        return;
+      }
+      container.innerHTML = apps.map(app => `
+        <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-xs">${app.fullName || app.id}</span>
+            <span class="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-semibold">${app.vehicleType || 'Xe máy'}</span>
+          </div>
+          <div class="text-[11px] text-slate-300 space-y-0.5">
+            <p>SĐT: <span class="font-mono text-slate-200">${app.phone || 'N/A'}</span> • Biển số: <span class="font-mono text-slate-200">${app.licensePlate || '77L1-XXXX'}</span></p>
+            <p class="text-slate-400">CCCD: ${app.citizenId || 'N/A'}</p>
+          </div>
+          <div class="flex items-center space-x-2 pt-1 border-t border-slate-800">
+            <button onclick="approveDriverApp('${app.id}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1.5 rounded-lg text-[11px] transition shadow">
+              ✓ Phê Duyệt
+            </button>
+            <button onclick="rejectDriverApp('${app.id}')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-1.5 rounded-lg text-[11px] transition border border-slate-700">
+              ✕ Từ Chối
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function approveDriverApp(appId) {
+      try {
+        const res = await fetch('/api/admin/driver-applications/approve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ applicationId: appId })
+        });
+        const d = await res.json();
+        if (d.success) {
+          playSuccessChime();
+          showToast('✓ Đã phê duyệt hồ sơ tài xế thành công!', 'success');
+          await loadAdminOverview();
+          await loadDrivers();
+        } else {
+          alert(d.message || 'Lỗi phê duyệt');
+        }
+      } catch (e) {
+        alert('Lỗi kết nối duyệt hồ sơ');
+      }
+    }
+
+    async function rejectDriverApp(appId) {
+      if (!confirm('Bạn có chắc muốn từ chối hồ sơ này?')) return;
+      try {
+        const res = await fetch('/api/admin/driver-applications/reject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ applicationId: appId })
+        });
+        const d = await res.json();
+        if (d.success) {
+          showToast('Đã từ chối hồ sơ tài xế', 'info');
+          await loadAdminOverview();
+        }
+      } catch (e) {
+        alert('Lỗi kết nối');
+      }
+    }
+
+    function renderAdminOrdersTable() {
+      const tbody = document.getElementById('adm-orders-tbody');
+      if (!tbody) return;
+      const search = (document.getElementById('adm-order-search')?.value || '').toLowerCase().trim();
+      const filtered = (STATE.orders || []).filter(o => {
+        if (!search) return true;
+        return o.id.toLowerCase().includes(search) ||
+               o.customerId.toLowerCase().includes(search) ||
+               o.restaurantId.toLowerCase().includes(search) ||
+               (o.driverId && o.driverId.toLowerCase().includes(search));
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-500 italic">Không tìm thấy đơn hàng nào</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(o => {
+        const orderStateColor = {
+          PENDING: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+          CONFIRMED: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+          PREPARING: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+          READY_FOR_PICKUP: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+          COMPLETED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+          CANCELLED: 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+        }[o.orderState || o.status] || 'bg-slate-700 text-slate-300 border-slate-600';
+
+        const paymentStateColor = {
+          INITIATED: 'bg-slate-700/50 text-slate-300 border-slate-600',
+          AUTHORIZED: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+          CAPTURED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+          FAILED: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
+          REFUNDED: 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+        }[o.paymentState] || 'bg-slate-700 text-slate-300 border-slate-600';
+
+        const deliveryStateColor = {
+          CREATED: 'bg-slate-700/50 text-slate-300 border-slate-600',
+          SEARCHING_DRIVER: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20 animate-pulse',
+          ASSIGNED: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+          ARRIVED_AT_MERCHANT: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+          PICKED_UP: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+          DELIVERED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+        }[o.deliveryState] || 'bg-slate-700 text-slate-300 border-slate-600';
+
+        const settlementStateColor = {
+          OPEN: 'bg-slate-700/50 text-slate-300 border-slate-600',
+          CALCULATED: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
+          APPROVED: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+          PROCESSING: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+          PAID: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+        }[o.settlementState] || 'bg-slate-700 text-slate-300 border-slate-600';
+
+        return `
+          <tr class="hover:bg-slate-800/60 transition text-xs">
+            <td class="p-2.5 font-mono font-bold text-white">#${o.id}</td>
+            <td class="p-2.5 font-medium text-slate-200">${o.restaurantId}</td>
+            <td class="p-2.5 font-mono text-cyan-400">${o.driverId || '<span class="text-slate-500 italic">Chờ ghép</span>'}</td>
+            <td class="p-2.5 font-bold text-emerald-400">${formatCurrency(o.finalAmountVnd || o.totalAmount)}</td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${orderStateColor}">${o.orderState || o.status}</span></td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${paymentStateColor}">${o.paymentState || 'INITIATED'}</span></td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${deliveryStateColor}">${o.deliveryState || 'CREATED'}</span></td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${settlementStateColor}">${o.settlementState || 'OPEN'}</span></td>
+            <td class="p-2.5 text-right">
+              <button onclick="viewOrderSnapshot('${o.id}')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700">
+                Snapshot
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterAdminOrdersTable() {
+      renderAdminOrdersTable();
+    }
+
+    async function loadFinancialLedger() {
+      try {
+        const res = await fetch('/api/v1/finance/ledger');
+        const d = await res.json();
+        if (d && d.success) {
+          const debEl = document.getElementById('adm-ledger-total-debit');
+          if (debEl) debEl.innerText = formatCurrency(d.totalDebitVnd || 0);
+          const creEl = document.getElementById('adm-ledger-total-credit');
+          if (creEl) creEl.innerText = formatCurrency(d.totalCreditVnd || 0);
+          const cntEl = document.getElementById('adm-ledger-entry-count');
+          if (cntEl) cntEl.innerText = `${d.entryCount || 0} bút toán`;
+          
+          const badge = document.getElementById('adm-ledger-balance-badge');
+          if (badge) {
+            if (d.isBalanced) {
+              badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center space-x-1';
+              badge.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 mr-1"></i> Sổ cái 100% Cân đối (Tổng Nợ = Tổng Có)`;
+            } else {
+              badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center space-x-1';
+              badge.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5 mr-1"></i> Phát hiện chênh lệch`;
+            }
+          }
+
+          const tbody = document.getElementById('adm-ledger-tbody');
+          if (tbody) {
+            if (!d.entries || d.entries.length === 0) {
+              tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-500 italic">Chưa có giao dịch phát sinh trong sổ cái</td></tr>`;
+            } else {
+              tbody.innerHTML = d.entries.map(e => `
+                <tr class="hover:bg-slate-800/40">
+                  <td class="p-2.5 text-slate-400">${e.id}</td>
+                  <td class="p-2.5 text-cyan-400 font-bold">${e.transactionRef}</td>
+                  <td class="p-2.5 font-bold text-white">#${e.orderId}</td>
+                  <td class="p-2.5"><span class="bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/20 font-semibold">${e.accountCode}</span></td>
+                  <td class="p-2.5 text-right font-bold ${e.debitVnd > 0 ? 'text-cyan-400' : 'text-slate-600'}">${e.debitVnd > 0 ? formatCurrency(e.debitVnd) : '-'}</td>
+                  <td class="p-2.5 text-right font-bold ${e.creditVnd > 0 ? 'text-emerald-400' : 'text-slate-600'}">${e.creditVnd > 0 ? formatCurrency(e.creditVnd) : '-'}</td>
+                  <td class="p-2.5 text-slate-400">${(e.occurredAt || '').substring(11, 19)}</td>
+                  <td class="p-2.5 text-slate-300 font-sans">${e.note || ''}</td>
+                </tr>
+              `).join('');
+            }
+          }
+          lucide.createIcons();
+        }
+      } catch (e) {
+        console.error('Lỗi tải sổ cái kế toán:', e);
+      }
+    }
+
+    async function simulateVietQrWebhook() {
+      const targetOrder = STATE.orders && STATE.orders.length > 0 ? STATE.orders[0] : null;
+      if (!targetOrder) {
+        alert('Chưa có đơn hàng nào trong hệ thống để mô phỏng webhook!');
+        return;
+      }
+      try {
+        const res = await fetch('/api/v1/webhooks/payment-provider', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: targetOrder.id,
+            transactionRef: 'MB_QR_' + Date.now(),
+            amountVnd: targetOrder.finalAmountVnd || targetOrder.totalAmount,
+            status: 'SUCCESS'
+          })
+        });
+        const d = await res.json();
+        if (d.success) {
+          playSuccessChime();
+          showToast(`⚡ Webhook VietQR MBBank thành công! Đã ghi sổ cái đối ứng cho đơn #${targetOrder.id}`, 'success');
+          await loadFinancialLedger();
+          await loadOrders();
+        } else {
+          alert(d.message || 'Lỗi webhook');
+        }
+      } catch (e) {
+        alert('Lỗi kết nối webhook');
+      }
+    }
+
+    async function viewOrderSnapshot(orderId) {
+      try {
+        const res = await fetch(`/api/v1/orders/snapshot?orderId=${orderId}`);
+        const d = await res.json();
+        if (d && d.success) {
+          alert(`📸 IMMUTABLE ORDER SNAPSHOT (#${d.orderId})\n` +
+                `• Khách hàng: ${d.customerName} (${d.customerPhone})\n` +
+                `• Địa chỉ giao: ${d.deliveryAddress}\n` +
+                `• Nhà hàng: ${d.restaurantName} - ${d.restaurantAddress}\n` +
+                `• Tiền món: ${formatCurrency(d.foodAmountVnd)}\n` +
+                `• Phí vận chuyển: ${formatCurrency(d.deliveryFeeVnd)}\n` +
+                `• Giảm giá Voucher: -${formatCurrency(d.discountAmountVnd)}\n` +
+                `• Tổng thanh toán: ${formatCurrency(d.finalTotalVnd)}\n` +
+                `• Phương thức: ${d.paymentMethod}\n` +
+                `• Thời điểm khóa giá: ${d.snapshotTimestamp}`);
+        } else {
+          alert(d.message || 'Không tìm thấy snapshot cho đơn này');
+        }
+      } catch (e) {
+        alert('Lỗi tải snapshot');
+      }
+    }
+
+    // =========================================================================
+    // DRIVER 20-SECOND TIMED OFFERS (DISPATCH ENGINE V2 - MASTER PLAN)
+    // =========================================================================
+    let activeOfferCountdownTimer = null;
+    let currentOfferId = null;
+
+    async function checkDriverOffers() {
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
+      try {
+        const res = await fetch(`/api/v1/driver/offers?driverId=${drvId}`);
+        const offers = await res.json();
+        if (offers && offers.length > 0) {
+          const offer = offers[0];
+          if (offer.offerId !== currentOfferId && offer.remainingSeconds > 0) {
+            showDriverOfferModal(offer);
+          }
+        }
+      } catch (e) {}
+    }
+
+    function showDriverOfferModal(offer) {
+      currentOfferId = offer.offerId;
+      document.getElementById('offer-rest-name').innerText = offer.restaurantName || 'Nhà hàng Quy Nhơn';
+      document.getElementById('offer-rest-address').innerText = offer.restaurantAddress || 'Quy Nhơn';
+      document.getElementById('offer-delivery-address').innerText = offer.deliveryAddress || 'TP. Quy Nhơn';
+      document.getElementById('offer-distance-text').innerText = `Khoảng cách: ${offer.estimatedDistanceKm || 2.1} km`;
+      document.getElementById('offer-earning-amount').innerText = formatCurrency(offer.deliveryFeeVnd || 18000);
+
+      document.getElementById('driver-offer-modal-overlay').classList.remove('hidden');
+      document.getElementById('driver-offer-modal').classList.remove('hidden');
+      playBeep(880, 'sine', 0.25);
+
+      let remaining = offer.remainingSeconds || 20;
+      const timerSec = document.getElementById('offer-timer-seconds');
+      const bar = document.getElementById('offer-progress-bar');
+
+      if (activeOfferCountdownTimer) clearInterval(activeOfferCountdownTimer);
+      activeOfferCountdownTimer = setInterval(() => {
+        remaining--;
+        if (timerSec) timerSec.innerText = `${remaining}s`;
+        if (bar) bar.style.width = `${(remaining / 20) * 100}%`;
+        if (remaining <= 0) {
+          clearInterval(activeOfferCountdownTimer);
+          closeDriverOfferModal();
+        }
+      }, 1000);
+      lucide.createIcons();
+    }
+
+    function closeDriverOfferModal() {
+      if (activeOfferCountdownTimer) clearInterval(activeOfferCountdownTimer);
+      document.getElementById('driver-offer-modal-overlay')?.classList.add('hidden');
+      document.getElementById('driver-offer-modal')?.classList.add('hidden');
+      currentOfferId = null;
+    }
+
+    async function acceptCurrentDriverOffer() {
+      if (!currentOfferId) return;
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
+      try {
+        const res = await fetch('/api/v1/driver/offers/accept', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ offerId: currentOfferId, driverId: drvId })
+        });
+        const d = await res.json();
+        if (d.success) {
+          playSuccessChime();
+          showToast('🎉 Nhận cuốc thành công! Hãy di chuyển đến quán lấy món.', 'success');
+          closeDriverOfferModal();
+          await loadOrders();
+          renderDriverActiveTrip();
+        } else {
+          alert(d.message || 'Cuốc xe đã hết hạn hoặc được tài xế khác nhận.');
+          closeDriverOfferModal();
+        }
+      } catch (e) {
+        alert('Lỗi kết nối khi nhận cuốc');
+      }
+    }
+
+    async function rejectCurrentDriverOffer() {
+      if (!currentOfferId) return;
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
+      try {
+        await fetch('/api/v1/driver/offers/reject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ offerId: currentOfferId, driverId: drvId })
+        });
+        closeDriverOfferModal();
+        showToast('Đã từ chối cuốc xe. Hệ thống sẽ điều phối tài xế khác.', 'info');
+      } catch (e) {
+        closeDriverOfferModal();
+      }
     }
 
     function formatCurrency(amount) {
@@ -2914,6 +3443,76 @@
     <div class="text-center text-xs text-slate-400 pt-2 border-t border-slate-800">
       Đã có tài khoản? 
       <button onclick="closeRegisterModal(); openLoginModal();" class="text-brand-400 hover:underline font-bold ml-1">Đăng nhập</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: TÀI XẾ NHẬN CUỐC VỚI COUNTDOWN 20 GIÂY (DRIVER OFFER MODAL) -->
+  <!-- ========================================================================= -->
+  <div id="driver-offer-modal-overlay" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden transition-opacity"></div>
+  <div id="driver-offer-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-slate-900 border-2 border-brand-500 rounded-3xl p-6 z-50 hidden shadow-2xl shadow-brand-500/20 space-y-4">
+    <!-- Header with Countdown Badge -->
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-9 h-9 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold">
+          <i data-lucide="bell-ring" class="w-5 h-5 animate-bounce"></i>
+        </div>
+        <div>
+          <h3 class="font-extrabold text-white text-base">ĐƠN HÀNG MỚI CHO BẠN!</h3>
+          <p class="text-[11px] text-slate-400">Thuật toán Dispatch V2 gợi ý vị trí gần nhất</p>
+        </div>
+      </div>
+      <div class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1 rounded-full text-xs font-black flex items-center space-x-1">
+        <i data-lucide="timer" class="w-3.5 h-3.5"></i>
+        <span id="offer-timer-seconds">20s</span>
+      </div>
+    </div>
+
+    <!-- Countdown Progress Bar -->
+    <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+      <div id="offer-progress-bar" class="bg-amber-500 h-2 rounded-full transition-all duration-1000" style="width: 100%"></div>
+    </div>
+
+    <!-- Job Details -->
+    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 space-y-3 text-xs">
+      <div class="flex items-start space-x-2.5">
+        <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 mt-0.5">
+          <i data-lucide="store" class="w-3.5 h-3.5"></i>
+        </div>
+        <div>
+          <span class="text-slate-400 text-[10px] uppercase font-semibold">Lấy món tại:</span>
+          <p class="font-bold text-white text-sm" id="offer-rest-name">Nhà hàng Quy Nhơn</p>
+          <p class="text-slate-300 text-[11px]" id="offer-rest-address">Địa chỉ quán</p>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-700/60 pt-2 flex items-start space-x-2.5">
+        <div class="w-6 h-6 rounded-md bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 mt-0.5">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+        </div>
+        <div>
+          <span class="text-slate-400 text-[10px] uppercase font-semibold">Giao đến:</span>
+          <p class="text-slate-200 text-xs font-medium" id="offer-delivery-address">Địa chỉ khách hàng</p>
+          <p class="text-cyan-400 text-[11px] font-semibold mt-0.5" id="offer-distance-text">Khoảng cách: 2.1 km</p>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-700/60 pt-2 flex items-center justify-between">
+        <span class="text-slate-400 text-xs font-semibold">Thu nhập tài xế:</span>
+        <span class="text-emerald-400 text-base font-black" id="offer-earning-amount">18.000 đ</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="grid grid-cols-2 gap-3 pt-1">
+      <button onclick="rejectCurrentDriverOffer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center space-x-1">
+        <i data-lucide="x" class="w-4 h-4 text-slate-400"></i>
+        <span>Từ Chối</span>
+      </button>
+      <button onclick="acceptCurrentDriverOffer()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 rounded-xl text-xs shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-1.5 animate-pulse">
+        <i data-lucide="check" class="w-4 h-4"></i>
+        <span>NHẬN CUỐC NGAY</span>
+      </button>
     </div>
   </div>
 

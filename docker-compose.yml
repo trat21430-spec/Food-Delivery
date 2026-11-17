@@ -1,6 +1,6 @@
 # ==============================================================================
 # FOOD DELIVERY NETWORK SIMULATION (FDS) - DOCKER COMPOSE CONFIGURATION
-# One-click startup for Fullstack Web Application with Persistent CSV Volumes
+# One-click startup for Fullstack Web Application with PostgreSQL 16 + PostGIS
 # ==============================================================================
 
 version: '3.8'
@@ -19,6 +19,11 @@ services:
       - APP_ENV=production
       - TZ=Asia/Ho_Chi_Minh
       - JAVA_OPTS=-Dfile.encoding=UTF-8 -Xms128m -Xmx512m
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=food_delivery_db
+      - DB_USER=fds_user
+      - DB_PASSWORD=fds_password_2026
     volumes:
       # Mount CSV data directory for transactional persistence across container restarts
       - ./data:/app/data
@@ -30,8 +35,40 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - fds-network
+
+  postgres:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: fds-postgis-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=food_delivery_db
+      - POSTGRES_USER=fds_user
+      - POSTGRES_PASSWORD=fds_password_2026
+      - TZ=Asia/Ho_Chi_Minh
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Auto-run SQL schema & init scripts on initial container startup
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/init.sql:/docker-entrypoint-initdb.d/02_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fds_user -d food_delivery_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - fds-network
+
+volumes:
+  pgdata:
+    driver: local
 
 networks:
   fds-network:

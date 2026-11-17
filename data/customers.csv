@@ -1,0 +1,2010 @@
+id,fullName,phone,ward,latitude,longitude
+C0001,Nguyen Quoc Khanh,0922948885,6 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.778308,109.208196
+C0002,Vo Minh Tien,0952678048,344 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.789927,109.210319
+C0003,Pham Thi Minh,0914307477,131 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.763532,109.213773
+C0004,Le Quoc Quan,0958781170,324 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.753211,109.208173
+C0005,Dang Quoc Quan,0977524444,261 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.780781,109.207823
+C0006,Dang Huu Phuc,0931426606,249 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.757550,109.218245
+C0007,Pham Huu Quan,0953273748,426 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.788037,109.224212
+C0008,Dang Quoc Linh,0983536762,298 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.775255,109.217069
+C0009,Do Thanh Tien,0917173341,133 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.780305,109.227086
+C0010,Vu Minh Hoa,0994308110,382 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.760068,109.218439
+C0011,Vo Dinh Vy,0996135329,23 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.761392,109.232328
+C0012,Bui Minh Phuc,0999459186,378 Dong Da Phuong Thi Nai TP Quy Nhon,13.753708,109.232675
+C0013,Hoang Quoc Vy,0996477103,131 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.768872,109.209768
+C0014,Nguyen Thi Cuong,0977629457,291 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.761357,109.226530
+C0015,Do Thi Dat,0951028762,382 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.767252,109.216631
+C0016,Do Van Yen,0937126776,196 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.756834,109.233189
+C0017,Bui Thanh Yen,0968046189,175 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.761288,109.238862
+C0018,Dang Minh Nam,0940184654,44 Ngo May Phuong Tran Phu TP Quy Nhon,13.770860,109.234230
+C0019,Tran Quoc Dung,0934821688,294 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.773540,109.236330
+C0020,Dang Duc Tuan,0960520139,10 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.760408,109.238678
+C0021,Vo Thi Minh,0924405094,42 Tay Son Phuong Le Loi TP Quy Nhon,13.776367,109.226494
+C0022,Vu Quoc Thang,0964803476,32 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.763590,109.231531
+C0023,Dang Duc Hung,0955180117,391 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.784513,109.229398
+C0024,Vo Quoc Cuong,0937891084,388 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.782930,109.234760
+C0025,Nguyen Van Vy,0968758633,288 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.756108,109.223710
+C0026,Do Hoang Hoa,0926455977,134 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.750610,109.208601
+C0027,Hoang Quoc Son,0947653976,51 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.783898,109.216778
+C0028,Bui Huu Binh,0944706000,294 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.769289,109.225046
+C0029,Pham Thi Hoa,0922539125,307 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.781373,109.215146
+C0030,Bui Hoang Tuan,0980793247,380 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.772876,109.209289
+C0031,Dang Van Cuong,0978529869,427 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.773842,109.233632
+C0032,Tran Minh Hoa,0948031544,389 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.753874,109.236966
+C0033,Dang Minh Giang,0985876518,101 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.773579,109.232272
+C0034,Vo Minh An,0984656704,444 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.769893,109.229118
+C0035,Le Van Nam,0922996350,145 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.771029,109.211195
+C0036,Bui Quoc Thang,0998932984,289 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.751640,109.232915
+C0037,Bui Thanh Yen,0933212394,201 Tay Son Phuong Ngo May TP Quy Nhon,13.770665,109.223735
+C0038,Bui Minh Binh,0971457737,379 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.768187,109.214379
+C0039,Tran Dinh Giang,0914282295,10 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.760426,109.222898
+C0040,Vo Hoang Tuan,0919656565,145 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.782539,109.239493
+C0041,Bui Duc Khanh,0943436536,205 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.787789,109.225645
+C0042,Hoang Quoc Binh,0961869090,154 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.771496,109.207323
+C0043,Nguyen Dinh Thang,0913598324,434 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.763358,109.233292
+C0044,Tran Dinh Thang,0962290480,352 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.788533,109.238049
+C0045,Le Hoang Son,0990099202,66 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.784469,109.219723
+C0046,Tran Huu Son,0942947403,249 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.777833,109.236033
+C0047,Bui Minh Son,0972791089,109 Tay Son Phuong Quang Trung TP Quy Nhon,13.763671,109.219834
+C0048,Bui Ngoc Tuan,0999699017,66 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.787588,109.206945
+C0049,Pham Hoang Tien,0971992185,195 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.755875,109.213524
+C0050,Dang Duc Thang,0991126443,363 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.764541,109.205292
+C0051,Pham Quoc Giang,0919348944,249 Tay Son Phuong Dong Da TP Quy Nhon,13.785568,109.211726
+C0052,Pham Thi Quan,0958321282,350 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.761784,109.227035
+C0053,Pham Van Binh,0931534151,400 Tay Son Phuong Dong Da TP Quy Nhon,13.760464,109.218248
+C0054,Do Dinh Hoa,0997774963,108 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.762537,109.228925
+C0055,Le Van Minh,0973861821,410 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.768467,109.228826
+C0056,Do Dinh Hung,0990885386,251 Tay Son Phuong Quang Trung TP Quy Nhon,13.770771,109.229310
+C0057,Le Dinh Khanh,0915775437,62 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.785152,109.224080
+C0058,Nguyen Thi Giang,0987709835,313 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.776582,109.215387
+C0059,Bui Duc Hung,0954383747,389 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.756895,109.218532
+C0060,Bui Huu Giang,0946289121,101 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.779920,109.227978
+C0061,Do Duc Vy,0956421512,295 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.758298,109.224689
+C0062,Bui Minh Quan,0926291647,425 Ngo May Phuong Quang Trung TP Quy Nhon,13.772592,109.215087
+C0063,Do Dinh Linh,0952297605,17 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.785664,109.221976
+C0064,Dang Hoang Yen,0919656212,131 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.788140,109.220279
+C0065,Tran Van Thang,0922173081,211 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.758879,109.230896
+C0066,Vo Van Nam,0929569314,120 Tay Son Phuong Tran Phu TP Quy Nhon,13.789305,109.234090
+C0067,Hoang Ngoc Cuong,0967185747,272 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.770729,109.217063
+C0068,Le Thanh Dung,0979420665,315 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.784705,109.238006
+C0069,Hoang Ngoc Quan,0971532514,272 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.750323,109.230386
+C0070,Bui Van Linh,0967897877,51 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.778138,109.205383
+C0071,Vu Duc Khanh,0997275501,93 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.784262,109.218683
+C0072,Vu Thi Phuc,0998247376,122 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.762777,109.228655
+C0073,Nguyen Ngoc Tuan,0926030998,257 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.769816,109.214717
+C0074,Hoang Quoc Yen,0956346092,254 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.754989,109.230463
+C0075,Le Huu Dung,0999217414,149 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.778827,109.216237
+C0076,Dang Minh Binh,0968038558,312 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.778866,109.212894
+C0077,Nguyen Dinh Cuong,0952455135,428 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.769167,109.239910
+C0078,Vo Dinh Minh,0964369868,89 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.762545,109.208864
+C0079,Tran Dinh Phuc,0970910944,159 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.772557,109.217116
+C0080,Do Ngoc Quan,0982772472,389 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.771216,109.217779
+C0081,Pham Hoang Hung,0927854794,241 Tay Son Phuong Thi Nai TP Quy Nhon,13.773156,109.217503
+C0082,Tran Huu Tien,0959743827,239 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.759241,109.234036
+C0083,Do Dinh Khanh,0938807823,373 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.770792,109.224836
+C0084,Bui Thanh An,0966047907,387 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.755091,109.236595
+C0085,Vu Thi Dat,0945138719,37 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.755837,109.214126
+C0086,Vo Dinh Binh,0947027263,243 Dong Da Phuong Quang Trung TP Quy Nhon,13.777864,109.225808
+C0087,Vo Hoang An,0968320802,403 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.789661,109.234269
+C0088,Vu Duc Cuong,0982372700,255 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.782925,109.229961
+C0089,Pham Hoang Quan,0993216955,331 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.765259,109.226424
+C0090,Nguyen Hoang Phuc,0950489239,338 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.786743,109.218474
+C0091,Vu Dinh Thang,0947477172,63 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.757058,109.230146
+C0092,Dang Minh Vy,0942811582,162 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.787308,109.226565
+C0093,Hoang Huu Linh,0920983362,324 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.757075,109.226888
+C0094,Le Duc Linh,0955837500,339 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.776520,109.212214
+C0095,Le Thanh Quan,0978572302,27 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.756508,109.218796
+C0096,Nguyen Quoc An,0932936772,395 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.754772,109.205669
+C0097,Do Quoc Yen,0912773773,180 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.767516,109.234917
+C0098,Pham Huu Yen,0981574907,350 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.765447,109.219394
+C0099,Do Dinh Minh,0934416717,106 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.769354,109.226794
+C0100,Hoang Duc Hoa,0944791479,409 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.768356,109.222251
+C0101,Le Huu Dung,0973106347,266 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.786177,109.211170
+C0102,Tran Huu Vy,0958331127,155 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.786202,109.235971
+C0103,Le Duc Tien,0957739081,1 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.760774,109.208971
+C0104,Pham Dinh Vy,0977067891,315 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.786901,109.229427
+C0105,Do Dinh Tuan,0982538672,326 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.779117,109.212024
+C0106,Vo Quoc Tuan,0943120840,354 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.767170,109.227015
+C0107,Nguyen Van Dung,0986204907,248 Tay Son Phuong Dong Da TP Quy Nhon,13.765068,109.236970
+C0108,Tran Van Tuan,0956631274,447 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.759064,109.216516
+C0109,Le Hoang Dung,0955798127,391 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.762708,109.234715
+C0110,Bui Huu Giang,0958509215,361 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.764002,109.206415
+C0111,Bui Thi Linh,0939685628,14 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.788672,109.216479
+C0112,Pham Van Son,0974553883,248 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.753990,109.209611
+C0113,Hoang Duc Giang,0944366167,166 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.765088,109.236254
+C0114,Vo Quoc Minh,0989236035,212 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.770043,109.227051
+C0115,Pham Thi Binh,0935010033,117 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.789826,109.215914
+C0116,Dang Duc Dat,0969108804,63 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.763807,109.233377
+C0117,Dang Van Linh,0958086490,87 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.768054,109.229831
+C0118,Do Huu Linh,0977760030,317 Tay Son Phuong Tran Phu TP Quy Nhon,13.759302,109.236769
+C0119,Nguyen Ngoc Thang,0953416104,389 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.788073,109.228159
+C0120,Vo Duc Vy,0925273488,328 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.786206,109.205398
+C0121,Nguyen Duc Minh,0978577491,94 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.772878,109.222124
+C0122,Pham Thanh Son,0926607636,419 Ngo May Phuong Dong Da TP Quy Nhon,13.773844,109.216284
+C0123,Bui Minh Tuan,0965126842,316 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.784855,109.211594
+C0124,Bui Ngoc Linh,0938876338,161 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.754034,109.215757
+C0125,Hoang Dinh Dung,0916933312,218 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.778399,109.234936
+C0126,Vo Ngoc Cuong,0970023072,209 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.759500,109.237484
+C0127,Vo Ngoc Binh,0997295514,34 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.768907,109.218453
+C0128,Pham Thanh Vy,0984184050,93 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.780052,109.221336
+C0129,Hoang Dinh Binh,0911429137,226 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.780383,109.236869
+C0130,Le Quoc Dat,0923692859,134 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.774988,109.230768
+C0131,Bui Thanh Giang,0979692666,216 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.769924,109.211437
+C0132,Bui Van Nam,0981920748,110 Ngo May Phuong Dong Da TP Quy Nhon,13.782270,109.215906
+C0133,Nguyen Huu Cuong,0984255956,211 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.778261,109.234399
+C0134,Do Dinh Thang,0993147658,86 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.766408,109.222562
+C0135,Nguyen Minh Khanh,0984031492,416 Tay Son Phuong Tran Phu TP Quy Nhon,13.756753,109.230772
+C0136,Le Ngoc Phuc,0962316374,182 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.789860,109.214382
+C0137,Do Thanh Cuong,0954963781,403 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.760982,109.215771
+C0138,Bui Minh Yen,0973039787,345 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.759339,109.226821
+C0139,Dang Quoc Yen,0924937483,32 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.784529,109.205605
+C0140,Tran Duc Thang,0956705011,37 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.788786,109.212736
+C0141,Hoang Dinh Binh,0937036492,217 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.753797,109.220845
+C0142,Vo Huu Dat,0943819454,416 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.774857,109.234928
+C0143,Vu Quoc Vy,0930227082,206 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.755661,109.219987
+C0144,Nguyen Thanh Dat,0937799488,393 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.778638,109.221103
+C0145,Vu Huu Linh,0915656799,77 Tay Son Phuong Le Loi TP Quy Nhon,13.784501,109.226382
+C0146,Do Hoang Tien,0965526306,415 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.768878,109.236340
+C0147,Pham Dinh Tuan,0945146768,137 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.773628,109.229211
+C0148,Tran Thi Dung,0913022690,377 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.767412,109.217373
+C0149,Bui Duc Phuc,0985128876,125 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.778341,109.238759
+C0150,Bui Huu Dat,0988473346,263 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.766536,109.226632
+C0151,Bui Hoang Nam,0927540889,128 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.783820,109.217835
+C0152,Tran Quoc Yen,0927048959,180 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.760924,109.227302
+C0153,Nguyen Thanh Dung,0988976711,25 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.760830,109.224822
+C0154,Le Ngoc Dung,0933287603,187 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.773330,109.238363
+C0155,Do Thi Dat,0985140520,272 Ngo May Phuong Dong Da TP Quy Nhon,13.765615,109.224485
+C0156,Do Van Yen,0971547244,73 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.773609,109.220921
+C0157,Pham Duc Thang,0919764285,298 Tay Son Phuong Ngo May TP Quy Nhon,13.757663,109.220362
+C0158,Dang Dinh An,0911702016,108 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.774745,109.228926
+C0159,Dang Quoc Tien,0921042712,243 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.789941,109.227300
+C0160,Nguyen Thanh An,0922151839,373 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.777396,109.223792
+C0161,Do Quoc Yen,0925658729,186 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.750965,109.229422
+C0162,Dang Ngoc Nam,0926363905,332 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.786068,109.228269
+C0163,Pham Minh Linh,0942052992,201 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.786521,109.207612
+C0164,Bui Van Khanh,0944394179,343 Tay Son Phuong Quang Trung TP Quy Nhon,13.755402,109.210381
+C0165,Dang Thanh Hoa,0954328450,140 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.781093,109.236429
+C0166,Dang Quoc Khanh,0960090200,387 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.764130,109.213184
+C0167,Le Ngoc Dung,0972153343,228 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.755029,109.228191
+C0168,Tran Dinh An,0977396071,435 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.757141,109.230592
+C0169,Hoang Quoc Linh,0957455551,104 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.773199,109.206847
+C0170,Dang Huu Linh,0929027664,31 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.762670,109.233533
+C0171,Tran Dinh Hung,0957255272,1 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.764374,109.231186
+C0172,Bui Duc Vy,0955636345,298 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.781985,109.214245
+C0173,Vu Dinh Hoa,0930392298,347 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.757788,109.205847
+C0174,Bui Minh Thang,0981308494,261 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.763066,109.239611
+C0175,Tran Hoang Vy,0989562410,281 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.774326,109.214579
+C0176,Do Van Nam,0971529085,202 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.767584,109.237036
+C0177,Do Van Giang,0926172569,384 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.764475,109.213204
+C0178,Hoang Dinh Giang,0989531981,291 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.782132,109.223520
+C0179,Pham Hoang Vy,0954091075,239 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.763714,109.229763
+C0180,Dang Ngoc Binh,0922932592,69 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.769972,109.220253
+C0181,Le Quoc Giang,0960025434,330 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.758168,109.236395
+C0182,Do Hoang Vy,0987306477,34 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.788703,109.211246
+C0183,Nguyen Huu An,0914251766,247 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.779401,109.211595
+C0184,Pham Minh Khanh,0944258812,131 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.752067,109.215303
+C0185,Hoang Hoang Hung,0994566024,169 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.756894,109.212627
+C0186,Vo Thanh Dung,0979473174,8 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.770741,109.210823
+C0187,Vu Thanh Minh,0912977800,424 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.770265,109.221015
+C0188,Le Van An,0919305496,250 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.767303,109.227815
+C0189,Hoang Duc Quan,0950715983,170 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.760493,109.214258
+C0190,Vo Minh Linh,0992634741,80 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.784661,109.230761
+C0191,Vo Van Son,0952431608,19 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.760403,109.219079
+C0192,Nguyen Quoc An,0983320604,80 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.775087,109.224868
+C0193,Tran Hoang Thang,0930656200,329 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.769379,109.220843
+C0194,Hoang Duc Minh,0966509267,58 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.788604,109.211642
+C0195,Le Dinh Nam,0940065714,259 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.765765,109.215003
+C0196,Pham Ngoc Phuc,0978352834,231 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.774818,109.207615
+C0197,Dang Dinh Quan,0946703900,250 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.782614,109.234772
+C0198,Nguyen Van An,0951898905,172 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.751388,109.212545
+C0199,Vu Duc Cuong,0972778093,348 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.788463,109.239580
+C0200,Vu Thanh Thang,0975917209,89 Ngo May Phuong Dong Da TP Quy Nhon,13.755190,109.205364
+C0201,Vo Duc Vy,0988805601,161 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.754493,109.231222
+C0202,Nguyen Minh Minh,0996757938,329 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.778827,109.222708
+C0203,Hoang Thi Tuan,0955713429,414 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.752944,109.234039
+C0204,Dang Ngoc Phuc,0917157123,147 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.765474,109.230864
+C0205,Vo Ngoc Linh,0920338983,317 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.778865,109.211900
+C0206,Bui Dinh Minh,0947440498,233 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.769171,109.237592
+C0207,Vo Thi Quan,0958871407,347 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.778261,109.233224
+C0208,Bui Quoc Tien,0913240973,445 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.785525,109.210368
+C0209,Tran Thi Cuong,0914212163,416 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.780417,109.220798
+C0210,Tran Minh Linh,0950550395,190 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.759357,109.232251
+C0211,Vu Huu Binh,0911423529,175 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.750670,109.215667
+C0212,Pham Thi Hoa,0925210529,123 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.761222,109.225734
+C0213,Vu Thanh Quan,0917336050,11 Tay Son Phuong Quang Trung TP Quy Nhon,13.762120,109.223932
+C0214,Tran Duc Yen,0920361462,385 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.758771,109.225779
+C0215,Tran Hoang Linh,0945712193,96 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.769938,109.238019
+C0216,Vo Minh An,0984291692,208 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.754328,109.223017
+C0217,Le Duc Giang,0993245103,106 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.773604,109.238108
+C0218,Pham Ngoc Son,0918736885,207 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.756561,109.227283
+C0219,Nguyen Minh Binh,0960535737,139 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.785704,109.216174
+C0220,Do Huu Dat,0938277644,224 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.765378,109.233462
+C0221,Tran Minh Vy,0925099501,290 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.759061,109.239144
+C0222,Do Dinh Linh,0964290318,243 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.770925,109.221973
+C0223,Vo Minh Tuan,0953105171,13 Ngo May Phuong Quang Trung TP Quy Nhon,13.756228,109.237804
+C0224,Tran Dinh Yen,0951276960,269 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.758063,109.210820
+C0225,Nguyen Duc Thang,0940321098,273 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.755778,109.205264
+C0226,Nguyen Minh Quan,0931817917,141 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.762880,109.231260
+C0227,Bui Van Phuc,0980432532,307 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.781561,109.218594
+C0228,Nguyen Thi Son,0963140411,320 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.786099,109.224627
+C0229,Hoang Van Quan,0953263712,18 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.756146,109.218198
+C0230,Hoang Ngoc Hoa,0913803533,125 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.758026,109.207061
+C0231,Pham Minh Hung,0922733828,156 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.769274,109.238197
+C0232,Bui Ngoc Quan,0924922828,283 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.787158,109.211806
+C0233,Pham Quoc Linh,0922635903,283 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.751281,109.226512
+C0234,Vo Quoc Minh,0991242550,353 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.755703,109.221043
+C0235,Tran Huu Giang,0947952783,8 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.766493,109.211321
+C0236,Dang Hoang Linh,0951157608,1 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.752218,109.234441
+C0237,Do Thanh Phuc,0928537865,402 Dong Da Phuong Le Loi TP Quy Nhon,13.780399,109.216794
+C0238,Hoang Van Son,0973640119,50 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.772175,109.227633
+C0239,Tran Duc Quan,0916053338,321 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.787514,109.239747
+C0240,Bui Thi Giang,0971628143,90 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.760726,109.239792
+C0241,Do Thi Hoa,0922659426,448 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.777738,109.228265
+C0242,Hoang Quoc An,0969310119,256 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.772630,109.207962
+C0243,Vo Quoc Cuong,0950139027,255 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.752223,109.232689
+C0244,Nguyen Dinh Khanh,0961099748,203 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.772508,109.229369
+C0245,Nguyen Dinh Hung,0936877053,269 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.771154,109.207675
+C0246,Vo Hoang Linh,0958355877,265 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.785327,109.235490
+C0247,Le Huu An,0948245918,360 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.762056,109.226214
+C0248,Hoang Van Thang,0946484066,432 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.756235,109.233389
+C0249,Le Thanh Giang,0979824555,75 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.752409,109.224353
+C0250,Vu Hoang Linh,0995189078,197 Dong Da Phuong Quang Trung TP Quy Nhon,13.783417,109.230346
+C0251,Tran Thi Dat,0968292835,82 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.763822,109.229533
+C0252,Le Duc Binh,0987650163,135 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.760330,109.220946
+C0253,Bui Minh An,0976356587,318 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.765879,109.234117
+C0254,Hoang Duc Vy,0947804239,276 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.788943,109.221748
+C0255,Vu Van Tuan,0927149468,32 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.784485,109.222790
+C0256,Nguyen Duc Minh,0927628315,84 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.786746,109.232726
+C0257,Tran Thi Cuong,0934233881,74 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.775098,109.222330
+C0258,Dang Thanh Cuong,0942939412,44 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.770179,109.238902
+C0259,Tran Thanh Hoa,0928196485,369 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.765439,109.239640
+C0260,Le Hoang Giang,0985045274,66 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.755748,109.239992
+C0261,Vo Ngoc Linh,0922324712,187 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.765325,109.239055
+C0262,Tran Quoc Vy,0997988374,157 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.757501,109.230416
+C0263,Pham Minh Binh,0945604270,358 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.753001,109.217681
+C0264,Tran Quoc Giang,0928108707,43 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.775643,109.221739
+C0265,Hoang Duc Vy,0966230410,333 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.757864,109.212920
+C0266,Hoang Ngoc Thang,0935940326,115 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.765985,109.209468
+C0267,Nguyen Dinh Vy,0934545117,11 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.788723,109.209400
+C0268,Hoang Van Tien,0985436532,296 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.767231,109.222069
+C0269,Vo Hoang Binh,0954496909,132 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.785887,109.234795
+C0270,Vo Quoc Giang,0940973506,51 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.782211,109.209307
+C0271,Do Hoang Giang,0995061174,14 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.788159,109.237207
+C0272,Pham Dinh Son,0989796083,193 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.767045,109.223472
+C0273,Hoang Thi An,0958665105,177 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.763589,109.239204
+C0274,Tran Thi Dung,0948987784,41 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.788792,109.218148
+C0275,Le Thanh Nam,0940778007,392 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.762821,109.225000
+C0276,Nguyen Ngoc Quan,0986459875,121 Tay Son Phuong Dong Da TP Quy Nhon,13.760658,109.238224
+C0277,Le Van Dat,0999065524,85 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.764659,109.236412
+C0278,Vo Dinh Binh,0915742360,95 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.771681,109.215498
+C0279,Vo Quoc Dung,0942325000,98 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.778265,109.229456
+C0280,Dang Ngoc Cuong,0946501061,409 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.775515,109.228017
+C0281,Vu Thanh Yen,0922894966,121 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.767691,109.217365
+C0282,Pham Thanh Cuong,0971894176,308 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.778971,109.230469
+C0283,Vo Hoang Tuan,0925960856,41 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.766973,109.214465
+C0284,Bui Quoc Linh,0943132495,4 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.766979,109.238306
+C0285,Le Duc Minh,0964922018,440 Tay Son Phuong Thi Nai TP Quy Nhon,13.776820,109.212318
+C0286,Le Ngoc Minh,0988915651,277 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.760357,109.225636
+C0287,Do Duc Nam,0960009374,193 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.767974,109.239148
+C0288,Vu Dinh Khanh,0961522423,192 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.756665,109.211956
+C0289,Bui Thi Quan,0958937328,113 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.779091,109.233860
+C0290,Vo Ngoc Tien,0945787294,54 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.764623,109.214779
+C0291,Vo Minh Minh,0997657192,263 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.780565,109.207606
+C0292,Pham Huu Hung,0968802583,166 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.775416,109.216989
+C0293,Le Duc Vy,0965396950,210 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.750206,109.206603
+C0294,Le Thanh Phuc,0991058993,176 Ngo May Phuong Thi Nai TP Quy Nhon,13.786651,109.221994
+C0295,Vu Thi Cuong,0976697905,257 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.773470,109.217326
+C0296,Tran Quoc Son,0959545690,315 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.762719,109.224666
+C0297,Do Quoc Tien,0962878097,293 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.778581,109.221552
+C0298,Bui Dinh Yen,0922904872,306 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.779363,109.211812
+C0299,Bui Minh Khanh,0947055241,163 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.762688,109.228996
+C0300,Vo Ngoc Binh,0968717163,406 Tay Son Phuong Thi Nai TP Quy Nhon,13.778890,109.225294
+C0301,Bui Van Yen,0985304982,60 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.784992,109.213477
+C0302,Bui Hoang Binh,0959903567,323 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.756919,109.226178
+C0303,Pham Minh Binh,0964552977,409 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.781737,109.208789
+C0304,Le Ngoc Hung,0968006607,9 Ngo May Phuong Dong Da TP Quy Nhon,13.750751,109.228325
+C0305,Hoang Duc An,0957415250,390 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.775773,109.208823
+C0306,Hoang Huu Tuan,0917707878,60 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.762081,109.209605
+C0307,Nguyen Quoc Minh,0979042811,332 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.753190,109.232820
+C0308,Pham Dinh Binh,0955196957,436 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.759238,109.217104
+C0309,Le Duc Dat,0943290056,376 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.752058,109.209328
+C0310,Tran Quoc Dung,0973273557,138 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.759223,109.227473
+C0311,Dang Ngoc Dung,0948897295,410 Dong Da Phuong Quang Trung TP Quy Nhon,13.774779,109.216693
+C0312,Do Minh Phuc,0972176222,138 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.768171,109.228937
+C0313,Vo Minh Cuong,0975770994,438 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.772004,109.223818
+C0314,Vu Quoc Dat,0938910528,295 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.784676,109.231278
+C0315,Pham Huu Yen,0937300406,229 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.771250,109.212240
+C0316,Hoang Quoc Hoa,0913043198,313 Ngo May Phuong Ngo May TP Quy Nhon,13.785026,109.233691
+C0317,Nguyen Van Cuong,0953240020,61 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.757310,109.234328
+C0318,Vu Huu Hung,0982683291,55 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.772661,109.223031
+C0319,Nguyen Dinh Hung,0948229796,125 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.754237,109.227488
+C0320,Pham Minh Tien,0952585234,260 Dong Da Phuong Thi Nai TP Quy Nhon,13.786297,109.211367
+C0321,Vo Quoc Linh,0921460353,180 Dong Da Phuong Tran Phu TP Quy Nhon,13.750145,109.210860
+C0322,Nguyen Minh Tuan,0912601415,409 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.781919,109.222178
+C0323,Hoang Van Nam,0923448809,307 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.766223,109.213876
+C0324,Le Minh Thang,0928527488,61 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.773476,109.208760
+C0325,Hoang Huu Thang,0928170685,276 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.780362,109.230442
+C0326,Tran Van Dung,0968102576,294 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.775376,109.206616
+C0327,Tran Huu Dung,0933286079,180 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.773443,109.228250
+C0328,Hoang Hoang Vy,0942710955,183 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.776993,109.218671
+C0329,Vo Hoang Thang,0956367483,407 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.752801,109.239871
+C0330,Le Hoang Khanh,0963646444,148 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.755192,109.208152
+C0331,Pham Dinh Hung,0991243348,385 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.782571,109.225893
+C0332,Hoang Hoang Binh,0990242497,189 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.782921,109.233025
+C0333,Hoang Van Linh,0972298109,268 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.758712,109.209751
+C0334,Do Thi An,0958834777,72 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.778025,109.230977
+C0335,Vo Thanh Nam,0994818083,319 Tay Son Phuong Le Loi TP Quy Nhon,13.786210,109.228247
+C0336,Bui Van Cuong,0935187281,269 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.759560,109.209847
+C0337,Dang Quoc Cuong,0920586506,66 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.750996,109.210731
+C0338,Vo Hoang Cuong,0948101479,431 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.763744,109.235147
+C0339,Vo Huu Linh,0913388786,251 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.778419,109.211016
+C0340,Do Huu Vy,0955269696,128 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.778771,109.232988
+C0341,Vo Thi Quan,0980223832,47 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.753893,109.232571
+C0342,Pham Minh Quan,0960580758,164 Tay Son Phuong Le Loi TP Quy Nhon,13.755774,109.227009
+C0343,Bui Hoang Vy,0977391815,12 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.763662,109.217833
+C0344,Tran Ngoc Linh,0986291135,74 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.770438,109.205359
+C0345,Hoang Thanh Dung,0974583538,353 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.767728,109.225701
+C0346,Vo Ngoc Hung,0995451202,55 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.769252,109.239136
+C0347,Bui Minh Dat,0998635681,151 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.766322,109.231350
+C0348,Le Minh Dat,0914113806,317 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.782588,109.211247
+C0349,Do Dinh Vy,0912894520,86 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.761333,109.228611
+C0350,Tran Huu Thang,0915579304,142 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.768678,109.213015
+C0351,Pham Dinh Khanh,0935262849,394 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.787877,109.219526
+C0352,Vu Quoc Dat,0998810760,332 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.768258,109.220010
+C0353,Bui Thanh Dung,0996619126,393 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.758761,109.228335
+C0354,Nguyen Thanh Cuong,0940150469,365 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.759018,109.238456
+C0355,Bui Duc Son,0951590174,423 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.785865,109.228092
+C0356,Le Thi Hung,0915941121,449 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.779455,109.220884
+C0357,Pham Dinh Binh,0981805337,212 Ngo May Phuong Tran Phu TP Quy Nhon,13.756409,109.234994
+C0358,Vu Quoc Phuc,0935872066,185 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.754792,109.226891
+C0359,Nguyen Thanh Tuan,0915331060,29 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.788526,109.211037
+C0360,Pham Duc Son,0931146346,204 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.789039,109.218311
+C0361,Tran Van Quan,0922936363,442 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.758449,109.215901
+C0362,Tran Hoang An,0933191697,436 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.777196,109.214227
+C0363,Vo Duc Quan,0914152505,425 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.768357,109.212884
+C0364,Bui Duc Nam,0961548329,416 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.774374,109.222738
+C0365,Vo Thanh Son,0981438704,29 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.762866,109.225709
+C0366,Dang Duc Hoa,0996065100,74 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.767227,109.225250
+C0367,Dang Hoang Linh,0918841341,416 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.757288,109.239588
+C0368,Vo Quoc Dat,0966197563,87 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.757148,109.206751
+C0369,Tran Van Dat,0981030125,103 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.778860,109.239865
+C0370,Vu Quoc Dung,0999464037,34 Ngo May Phuong Tran Phu TP Quy Nhon,13.782195,109.232550
+C0371,Bui Thi Yen,0995224226,109 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.753046,109.232652
+C0372,Vo Dinh Son,0917008513,423 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.785459,109.231714
+C0373,Do Thanh Binh,0950201765,438 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.780143,109.237612
+C0374,Bui Dinh Hung,0945861781,52 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.773349,109.222816
+C0375,Pham Huu Vy,0936224666,411 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.763586,109.211709
+C0376,Vu Thanh Cuong,0961112752,47 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.754959,109.231535
+C0377,Tran Quoc Minh,0983765840,211 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.760467,109.209778
+C0378,Bui Quoc Linh,0994381639,42 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.789140,109.216108
+C0379,Hoang Van Nam,0940389982,245 Ngo May Phuong Le Loi TP Quy Nhon,13.757563,109.229540
+C0380,Hoang Minh Dat,0969179630,355 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.752506,109.219956
+C0381,Vu Minh Nam,0987161007,270 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.780506,109.233742
+C0382,Tran Thanh Giang,0941979742,231 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.750567,109.230677
+C0383,Bui Thanh Dat,0914531096,168 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.780171,109.206359
+C0384,Hoang Minh Linh,0999590635,16 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.771231,109.216310
+C0385,Hoang Thanh Binh,0927801065,26 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.767643,109.207274
+C0386,Tran Van Thang,0932036543,32 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.782985,109.215277
+C0387,Tran Minh Dat,0964873909,166 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.779693,109.209789
+C0388,Pham Dinh Quan,0965245919,256 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.762965,109.216777
+C0389,Bui Duc Hoa,0992313157,328 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.757215,109.238147
+C0390,Vo Dinh Hung,0944522271,346 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.771830,109.218870
+C0391,Le Quoc Thang,0972801234,417 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.767294,109.234690
+C0392,Hoang Van Yen,0917574243,172 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.777078,109.219360
+C0393,Dang Thanh Phuc,0979519591,210 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.786780,109.230181
+C0394,Vo Duc Linh,0996287529,203 Ngo May Phuong Dong Da TP Quy Nhon,13.780457,109.221142
+C0395,Bui Van Tuan,0979073844,152 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.789991,109.218964
+C0396,Tran Duc An,0916155950,443 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.769435,109.205941
+C0397,Hoang Duc Linh,0941439415,139 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.782240,109.231909
+C0398,Le Huu Linh,0941567696,429 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.755005,109.224040
+C0399,Vu Dinh Yen,0916052224,96 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.784361,109.237224
+C0400,Tran Huu Khanh,0938190002,185 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.788179,109.208311
+C0401,Hoang Ngoc Vy,0917291885,304 Ngo May Phuong Le Loi TP Quy Nhon,13.754097,109.219644
+C0402,Nguyen Ngoc Tien,0932084068,189 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.751127,109.227588
+C0403,Vu Quoc Tuan,0975244387,52 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.786425,109.228364
+C0404,Hoang Thi Vy,0994863323,396 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.754861,109.231714
+C0405,Do Duc Nam,0913984648,179 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.780080,109.227341
+C0406,Nguyen Quoc Vy,0931382967,358 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.759394,109.222312
+C0407,Dang Thi An,0961226619,245 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.785586,109.213387
+C0408,Le Quoc Cuong,0984264796,246 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.761364,109.222426
+C0409,Dang Duc Minh,0952586128,347 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.755012,109.212856
+C0410,Pham Duc Dat,0937098354,213 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.755833,109.232617
+C0411,Tran Van Thang,0919531747,333 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.774299,109.216023
+C0412,Dang Ngoc Vy,0947095931,53 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.783754,109.205821
+C0413,Pham Hoang Thang,0915550592,272 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.759433,109.231026
+C0414,Do Huu An,0933473194,181 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.759553,109.218877
+C0415,Dang Hoang Thang,0949625469,340 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.767371,109.227337
+C0416,Do Van Phuc,0991644933,155 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.789314,109.216882
+C0417,Bui Dinh Hung,0931547180,103 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.771328,109.231838
+C0418,Bui Huu Dat,0996463478,396 Tay Son Phuong Quang Trung TP Quy Nhon,13.764174,109.212131
+C0419,Pham Quoc Dat,0956932903,192 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.780966,109.239072
+C0420,Vo Huu Binh,0927240023,358 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.771389,109.239517
+C0421,Do Duc Tuan,0993319667,431 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.762787,109.232714
+C0422,Nguyen Ngoc Tien,0925857971,266 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.787124,109.234885
+C0423,Do Ngoc Quan,0947806339,258 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.774485,109.212870
+C0424,Vu Quoc Thang,0941387946,183 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.760367,109.232035
+C0425,Tran Hoang Binh,0980156585,259 Dong Da Phuong Le Loi TP Quy Nhon,13.789250,109.223341
+C0426,Vo Duc Yen,0945378966,244 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.766490,109.237762
+C0427,Vu Quoc An,0993424586,264 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.754552,109.223991
+C0428,Hoang Van Quan,0952665461,226 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.786189,109.212022
+C0429,Hoang Dinh Hung,0951711052,96 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.784487,109.238861
+C0430,Nguyen Ngoc Son,0961916851,245 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.782389,109.231935
+C0431,Dang Huu Phuc,0999932835,404 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.757376,109.220139
+C0432,Dang Thanh Phuc,0988401816,424 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.773571,109.224593
+C0433,Bui Quoc Vy,0944710586,394 Ngo May Phuong Ngo May TP Quy Nhon,13.780522,109.225727
+C0434,Vo Van Giang,0960995735,238 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.764948,109.218814
+C0435,Nguyen Minh Minh,0989785550,140 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.768742,109.234669
+C0436,Le Thanh Linh,0966786854,431 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.780524,109.222304
+C0437,Bui Van An,0949582616,222 Dong Da Phuong Le Loi TP Quy Nhon,13.764506,109.214352
+C0438,Hoang Dinh Vy,0959339616,91 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.779358,109.227142
+C0439,Vo Thanh An,0962377242,142 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.765217,109.216470
+C0440,Do Thanh Tuan,0991413113,162 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.767811,109.235625
+C0441,Le Huu Tuan,0940352467,400 Tay Son Phuong Tran Phu TP Quy Nhon,13.767720,109.227879
+C0442,Bui Hoang An,0911459418,307 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.757500,109.234733
+C0443,Nguyen Dinh Yen,0914749516,412 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.761584,109.230239
+C0444,Do Ngoc Nam,0993301689,347 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.789518,109.219143
+C0445,Tran Duc Dat,0995452103,99 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.772894,109.231581
+C0446,Pham Duc Cuong,0993834271,245 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.785017,109.218174
+C0447,Le Duc Thang,0916910473,170 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.779233,109.233475
+C0448,Do Ngoc Cuong,0951518939,387 Ngo May Phuong Thi Nai TP Quy Nhon,13.770613,109.206552
+C0449,Bui Ngoc Linh,0980847397,353 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.784233,109.209543
+C0450,Nguyen Thanh Khanh,0925542390,240 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.784094,109.227143
+C0451,Pham Van Nam,0930664151,325 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.756524,109.229425
+C0452,Do Huu Cuong,0970505078,412 Ngo May Phuong Ngo May TP Quy Nhon,13.771780,109.206101
+C0453,Pham Duc Yen,0968073707,60 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.783089,109.237158
+C0454,Le Dinh Vy,0985871428,66 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.763418,109.226999
+C0455,Le Thanh Tien,0998743411,402 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.780992,109.239132
+C0456,Dang Minh Thang,0945934475,98 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.753839,109.235565
+C0457,Dang Thi Vy,0961770926,236 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.774146,109.224443
+C0458,Pham Hoang Tien,0990585057,188 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.752658,109.235607
+C0459,Nguyen Van Dung,0913400395,185 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.753212,109.209468
+C0460,Pham Thi Thang,0962765704,261 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.784126,109.239591
+C0461,Vu Hoang Binh,0935206531,188 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.776938,109.238960
+C0462,Hoang Van Dung,0985197431,253 Ngo May Phuong Ngo May TP Quy Nhon,13.788819,109.239086
+C0463,Pham Duc Hoa,0995251017,333 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.762185,109.227809
+C0464,Hoang Thanh Thang,0958983850,143 Ngo May Phuong Tran Phu TP Quy Nhon,13.757152,109.235982
+C0465,Tran Dinh Khanh,0919276736,355 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.787564,109.225841
+C0466,Dang Hoang Vy,0923321039,376 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.771800,109.219970
+C0467,Bui Thanh Yen,0957459254,184 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.782092,109.232742
+C0468,Do Van Linh,0939657382,443 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.751901,109.206264
+C0469,Nguyen Ngoc Hung,0987477358,70 Tay Son Phuong Thi Nai TP Quy Nhon,13.785428,109.226206
+C0470,Vu Minh Binh,0959730442,220 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.776514,109.219948
+C0471,Pham Ngoc Hung,0955093407,65 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.750234,109.238940
+C0472,Tran Huu Hoa,0998684560,386 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.758102,109.234609
+C0473,Hoang Ngoc Nam,0913625340,43 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.789860,109.208981
+C0474,Vo Quoc Son,0952073699,220 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.778901,109.228179
+C0475,Do Duc Thang,0970737024,101 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.776039,109.213119
+C0476,Vo Quoc Tuan,0946658839,110 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.753827,109.217955
+C0477,Vo Thi Dung,0990754114,57 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.781449,109.214891
+C0478,Vo Huu Hung,0950170943,96 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.763190,109.219863
+C0479,Le Van Son,0942575457,121 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.760943,109.216699
+C0480,Vo Dinh Vy,0988159819,423 Dong Da Phuong Ngo May TP Quy Nhon,13.766745,109.228896
+C0481,Tran Ngoc Dung,0919581153,420 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.752951,109.225149
+C0482,Pham Hoang Quan,0972698215,109 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.787741,109.223536
+C0483,Do Minh An,0952429514,19 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.759016,109.214580
+C0484,Dang Quoc Vy,0953679899,408 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.761393,109.206684
+C0485,Tran Thanh Cuong,0953484132,40 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.764588,109.226102
+C0486,Dang Van Linh,0956454194,435 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.756821,109.234291
+C0487,Nguyen Ngoc Dung,0963307151,5 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.778169,109.218171
+C0488,Do Minh Dat,0972777802,222 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.764791,109.215411
+C0489,Dang Minh Khanh,0992191180,85 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.768610,109.214865
+C0490,Pham Minh Cuong,0952076306,443 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.775656,109.218889
+C0491,Tran Quoc Khanh,0913111031,260 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.771768,109.214568
+C0492,Nguyen Hoang Binh,0980123246,329 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.772762,109.207222
+C0493,Le Minh Dat,0914994133,286 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.777950,109.214703
+C0494,Vo Quoc Quan,0962237495,117 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.776091,109.222459
+C0495,Vo Dinh Quan,0922586129,132 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.780534,109.217520
+C0496,Tran Hoang Cuong,0984700462,279 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.789283,109.232119
+C0497,Hoang Huu Yen,0994203481,36 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.763807,109.237685
+C0498,Le Dinh Son,0945291192,380 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.750225,109.210250
+C0499,Vo Quoc Phuc,0925436042,53 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.754541,109.224592
+C0500,Dang Quoc Vy,0962739921,347 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.761224,109.224709
+C0501,Vu Duc Tuan,0936173363,154 Tay Son Phuong Dong Da TP Quy Nhon,13.757022,109.210883
+C0502,Dang Duc Phuc,0996392683,362 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.779343,109.231641
+C0503,Dang Duc Cuong,0935080971,94 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.755165,109.223648
+C0504,Dang Dinh Phuc,0911276992,150 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.769425,109.212907
+C0505,Pham Hoang Dat,0990757389,212 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.787983,109.230512
+C0506,Le Thi Phuc,0954877433,396 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.758352,109.223165
+C0507,Tran Ngoc Son,0973191551,247 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.785643,109.225901
+C0508,Vu Dinh Tien,0943574360,252 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.761416,109.232032
+C0509,Dang Dinh Linh,0945979788,420 Ngo May Phuong Tran Phu TP Quy Nhon,13.784512,109.222533
+C0510,Vo Thi Hung,0963788067,191 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.759712,109.224011
+C0511,Bui Duc Tien,0976186521,325 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.770970,109.227895
+C0512,Hoang Thi Vy,0944227950,248 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.758366,109.207753
+C0513,Hoang Hoang Dat,0966809919,180 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.751720,109.229581
+C0514,Bui Van Vy,0940137104,244 Ngo May Phuong Ngo May TP Quy Nhon,13.768791,109.226279
+C0515,Bui Duc Khanh,0921226019,285 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.758788,109.216467
+C0516,Nguyen Ngoc Hung,0995586353,234 Tay Son Phuong Quang Trung TP Quy Nhon,13.785916,109.236118
+C0517,Do Huu Vy,0972719785,205 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.773361,109.222805
+C0518,Do Duc Hung,0916473985,414 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.752538,109.220576
+C0519,Dang Van Yen,0930887089,142 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.779902,109.226705
+C0520,Hoang Van Vy,0936771550,234 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.784895,109.220718
+C0521,Nguyen Ngoc Linh,0973431792,196 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.775719,109.213896
+C0522,Pham Thi Vy,0911415280,404 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.769209,109.216775
+C0523,Hoang Van Hung,0993208689,426 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.788740,109.220234
+C0524,Vu Dinh Phuc,0922286978,446 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.788360,109.237601
+C0525,Dang Quoc Tuan,0960720700,68 Dong Da Phuong Ngo May TP Quy Nhon,13.757513,109.232443
+C0526,Tran Quoc Phuc,0931504980,149 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.781012,109.211510
+C0527,Tran Huu Hung,0932843188,33 Tay Son Phuong Le Loi TP Quy Nhon,13.782504,109.210709
+C0528,Tran Van Thang,0940652455,103 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.772454,109.223303
+C0529,Nguyen Thanh Cuong,0937621357,297 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.766541,109.219307
+C0530,Pham Huu Hung,0938480822,394 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.787035,109.214537
+C0531,Vu Hoang Phuc,0991750202,205 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.784801,109.237169
+C0532,Tran Thi Phuc,0920689005,19 Dong Da Phuong Tran Phu TP Quy Nhon,13.756535,109.232175
+C0533,Vo Quoc Nam,0930951438,311 Dong Da Phuong Thi Nai TP Quy Nhon,13.781032,109.209396
+C0534,Le Duc Thang,0950717443,277 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.776946,109.219511
+C0535,Vu Thanh Binh,0953516206,358 Tay Son Phuong Le Loi TP Quy Nhon,13.776713,109.213020
+C0536,Vu Thanh Cuong,0922725162,210 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.778059,109.207948
+C0537,Do Thi Nam,0999798667,97 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.783683,109.205977
+C0538,Nguyen Dinh Dat,0977200358,225 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.775927,109.223514
+C0539,Tran Ngoc Giang,0915162428,163 Tay Son Phuong Tran Phu TP Quy Nhon,13.788280,109.212135
+C0540,Vo Huu Yen,0973834608,148 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.777677,109.218234
+C0541,Le Huu Thang,0944329672,373 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.766332,109.207389
+C0542,Do Huu Binh,0968602523,66 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.781305,109.233386
+C0543,Dang Quoc Dat,0941684652,416 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.773373,109.222345
+C0544,Nguyen Dinh Quan,0913085865,230 Tay Son Phuong Le Loi TP Quy Nhon,13.760021,109.219398
+C0545,Bui Minh Giang,0986670996,31 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.773261,109.225800
+C0546,Le Huu Tuan,0920402210,36 Tay Son Phuong Ngo May TP Quy Nhon,13.761354,109.205687
+C0547,Do Huu Minh,0968282332,162 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.780902,109.225307
+C0548,Vu Thanh Tuan,0961910803,82 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.765646,109.212992
+C0549,Tran Minh Cuong,0964346982,70 Ngo May Phuong Dong Da TP Quy Nhon,13.781069,109.216379
+C0550,Dang Hoang Dat,0986290477,329 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.776743,109.225846
+C0551,Pham Thanh Binh,0952002210,393 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.761080,109.237339
+C0552,Vu Duc Giang,0996899513,112 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.765745,109.226964
+C0553,Dang Van Vy,0961175007,405 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.764699,109.231160
+C0554,Pham Thi Binh,0977777889,60 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.773791,109.217542
+C0555,Pham Hoang Yen,0942339438,225 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.778477,109.219286
+C0556,Le Minh Hung,0937239743,185 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.752838,109.208621
+C0557,Vu Duc Tien,0957209992,278 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.776803,109.224252
+C0558,Pham Duc Tien,0969416360,336 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.776644,109.205875
+C0559,Pham Duc Khanh,0922273900,362 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.771180,109.228324
+C0560,Tran Duc Vy,0933647157,244 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.764110,109.223211
+C0561,Vo Thi Cuong,0943760237,35 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.775725,109.215880
+C0562,Le Duc Tuan,0979725008,254 Tay Son Phuong Thi Nai TP Quy Nhon,13.772210,109.212094
+C0563,Vu Minh Vy,0925891058,304 Dong Da Phuong Dong Da TP Quy Nhon,13.778367,109.232500
+C0564,Nguyen Minh Dung,0921531196,365 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.764811,109.205177
+C0565,Hoang Quoc Son,0941117757,385 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.780494,109.211620
+C0566,Hoang Huu Cuong,0985432479,107 Tay Son Phuong Ngo May TP Quy Nhon,13.784556,109.214109
+C0567,Nguyen Duc Dat,0951246951,204 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.788650,109.227567
+C0568,Dang Van Hung,0952149457,263 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.754611,109.239799
+C0569,Bui Huu Binh,0946384327,323 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.786977,109.211072
+C0570,Bui Quoc Tien,0988813585,402 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.751829,109.233911
+C0571,Vu Thi Son,0965069284,242 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.760727,109.217975
+C0572,Tran Huu Phuc,0984844936,261 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.751334,109.217898
+C0573,Nguyen Minh Linh,0982806350,444 Dong Da Phuong Thi Nai TP Quy Nhon,13.766483,109.226050
+C0574,Dang Thi Dat,0971042141,244 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.784763,109.235464
+C0575,Do Hoang Yen,0928074489,368 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.773858,109.233527
+C0576,Vo Huu Dat,0945288702,304 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.780389,109.205909
+C0577,Vu Quoc Dung,0914094053,329 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.776284,109.216185
+C0578,Tran Quoc Tien,0940057788,370 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.783073,109.219484
+C0579,Vu Huu Khanh,0926316534,363 Tay Son Phuong Tran Phu TP Quy Nhon,13.765098,109.237614
+C0580,Hoang Thanh Hoa,0977812490,243 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.785445,109.236490
+C0581,Bui Hoang Quan,0950166389,416 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.781497,109.234571
+C0582,Vu Thanh Hoa,0922639854,158 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.758979,109.224591
+C0583,Vu Thanh Cuong,0962739500,24 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.765017,109.216169
+C0584,Vo Thanh Nam,0977639322,138 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.774583,109.213513
+C0585,Dang Van Dung,0992092417,405 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.785064,109.237010
+C0586,Pham Thi Dung,0974933268,187 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.784982,109.217468
+C0587,Hoang Thi Tien,0943147708,58 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.752542,109.218423
+C0588,Hoang Hoang Cuong,0939858234,280 Dong Da Phuong Dong Da TP Quy Nhon,13.759724,109.232636
+C0589,Dang Quoc Yen,0917191348,98 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.770534,109.235341
+C0590,Vu Van Linh,0982478748,289 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.768983,109.216539
+C0591,Tran Duc Cuong,0946310871,87 Tay Son Phuong Le Loi TP Quy Nhon,13.784105,109.221789
+C0592,Dang Van Son,0933611832,170 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.778528,109.235109
+C0593,Nguyen Thanh Phuc,0989625447,78 Tay Son Phuong Le Loi TP Quy Nhon,13.766258,109.234839
+C0594,Dang Thanh Vy,0966829023,224 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.789335,109.205836
+C0595,Pham Dinh Yen,0963088240,367 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.758420,109.214824
+C0596,Pham Quoc Tien,0944730964,279 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.788502,109.206782
+C0597,Pham Van Nam,0937017271,45 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.761362,109.217741
+C0598,Hoang Van Dat,0916814880,152 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.779224,109.207760
+C0599,Bui Dinh Hoa,0971806770,7 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.761547,109.236029
+C0600,Vo Minh Cuong,0989163929,161 Ngo May Phuong Dong Da TP Quy Nhon,13.775898,109.225174
+C0601,Vu Van Cuong,0971854064,411 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.765487,109.217997
+C0602,Le Ngoc Dat,0998039417,322 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.775637,109.226786
+C0603,Tran Ngoc Nam,0923533820,104 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.769266,109.222302
+C0604,Vu Ngoc Phuc,0914240454,5 Ngo May Phuong Ngo May TP Quy Nhon,13.751398,109.218957
+C0605,Vo Duc Yen,0953170251,419 Tay Son Phuong Le Loi TP Quy Nhon,13.773680,109.213968
+C0606,Pham Thi An,0977124939,222 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.774637,109.216482
+C0607,Bui Thanh Tien,0994089017,172 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.787539,109.222356
+C0608,Do Huu Giang,0988977108,48 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.786840,109.234229
+C0609,Tran Hoang Son,0934316316,199 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.762500,109.239394
+C0610,Vu Thanh Vy,0938921422,21 Tay Son Phuong Quang Trung TP Quy Nhon,13.779490,109.230197
+C0611,Bui Duc Hung,0945782507,169 Dong Da Phuong Le Loi TP Quy Nhon,13.772334,109.238132
+C0612,Pham Dinh Vy,0984838940,215 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.770952,109.226487
+C0613,Le Minh Son,0921328207,321 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.767906,109.222368
+C0614,Nguyen Dinh Vy,0990042213,402 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.786477,109.237919
+C0615,Vo Quoc Cuong,0924232828,114 Tay Son Phuong Ngo May TP Quy Nhon,13.786162,109.237675
+C0616,Nguyen Ngoc Giang,0946945092,30 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.773954,109.212696
+C0617,Vo Huu Tien,0962009426,150 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.767279,109.222661
+C0618,Hoang Duc Cuong,0965989990,242 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.783240,109.220589
+C0619,Pham Huu Khanh,0912589078,81 Dong Da Phuong Quang Trung TP Quy Nhon,13.774273,109.225579
+C0620,Hoang Hoang An,0996125106,294 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.788148,109.230572
+C0621,Hoang Huu Hung,0947101735,59 Tay Son Phuong Ngo May TP Quy Nhon,13.752005,109.219209
+C0622,Do Dinh Hoa,0928243712,321 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.785969,109.228190
+C0623,Dang Huu Linh,0935487942,374 Tay Son Phuong Tran Phu TP Quy Nhon,13.752057,109.236419
+C0624,Vo Hoang Nam,0990765406,310 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.777569,109.208140
+C0625,Tran Van Minh,0937233101,9 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.768681,109.234780
+C0626,Dang Huu Quan,0952489339,29 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.762762,109.235456
+C0627,Nguyen Thi Nam,0944140732,55 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.773044,109.211002
+C0628,Vo Minh Vy,0936517459,281 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.789612,109.222547
+C0629,Do Thi Giang,0972386936,108 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.782195,109.214132
+C0630,Vo Ngoc Phuc,0922953013,25 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.783561,109.215974
+C0631,Tran Huu Cuong,0935472619,244 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.761721,109.213562
+C0632,Do Thi Quan,0935851808,134 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.761228,109.229071
+C0633,Vu Quoc Phuc,0949508073,101 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.767452,109.239031
+C0634,Le Thanh Yen,0991458540,253 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.755455,109.208154
+C0635,Tran Dinh Phuc,0929926573,308 Tay Son Phuong Tran Phu TP Quy Nhon,13.763175,109.219888
+C0636,Tran Ngoc Vy,0958102944,369 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.770286,109.209724
+C0637,Hoang Thi Tien,0950596194,281 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.767254,109.233245
+C0638,Vo Van Quan,0996606978,191 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.788707,109.237845
+C0639,Le Thi Yen,0977844719,198 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.766377,109.219992
+C0640,Vu Dinh Binh,0928679801,129 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.777871,109.208937
+C0641,Dang Thi Vy,0935313063,431 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.768324,109.221510
+C0642,Dang Thi Dung,0934517392,126 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.764531,109.206860
+C0643,Pham Quoc Binh,0926735609,396 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.779246,109.206698
+C0644,Bui Minh Binh,0980613676,190 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.752628,109.222243
+C0645,Nguyen Minh Tuan,0998403548,242 Dong Da Phuong Quang Trung TP Quy Nhon,13.765818,109.239005
+C0646,Vo Thi Linh,0992147266,438 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.757817,109.232003
+C0647,Vo Hoang Hoa,0957859184,51 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.782439,109.220550
+C0648,Hoang Hoang Hoa,0923060232,74 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.780353,109.226533
+C0649,Le Dinh Tuan,0981011492,190 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.789791,109.237910
+C0650,Bui Quoc Hoa,0924655447,312 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.764930,109.218814
+C0651,Hoang Huu Phuc,0975834480,203 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.768124,109.237144
+C0652,Hoang Quoc Quan,0925606352,52 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.777763,109.239099
+C0653,Pham Ngoc Khanh,0944194265,110 Ngo May Phuong Tran Phu TP Quy Nhon,13.769908,109.235252
+C0654,Vo Minh Nam,0930028631,409 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.773831,109.213069
+C0655,Tran Minh Son,0949630835,22 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.751019,109.238678
+C0656,Do Quoc Tien,0974687783,435 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.765713,109.221149
+C0657,Pham Dinh An,0994568070,260 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.754008,109.236290
+C0658,Tran Ngoc Giang,0931732874,85 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.772310,109.210612
+C0659,Hoang Huu Giang,0935375358,39 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.765992,109.236621
+C0660,Vu Minh Linh,0982462346,113 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.783980,109.236153
+C0661,Dang Hoang Giang,0960041419,199 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.774450,109.216270
+C0662,Vu Minh Vy,0927292719,44 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.767471,109.217934
+C0663,Pham Thi Dat,0917539136,320 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.785404,109.228713
+C0664,Le Ngoc Minh,0924368351,210 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.784065,109.217405
+C0665,Le Huu Phuc,0958938595,282 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.769006,109.212007
+C0666,Dang Dinh Thang,0939443265,11 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.783242,109.229579
+C0667,Vo Hoang Dat,0956097123,281 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.786250,109.232527
+C0668,Dang Minh Hung,0976306441,332 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.759140,109.238685
+C0669,Bui Hoang Tuan,0918908331,176 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.787286,109.221452
+C0670,Bui Thanh Binh,0988502753,224 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.758179,109.215686
+C0671,Le Van Dung,0926901889,205 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.787318,109.228041
+C0672,Hoang Ngoc Hung,0920888781,330 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.786127,109.232865
+C0673,Pham Ngoc Binh,0986888630,153 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.760342,109.233655
+C0674,Vu Huu Thang,0957729996,33 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.776658,109.233308
+C0675,Le Thanh Minh,0963121590,15 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.777604,109.221445
+C0676,Dang Huu Phuc,0979413009,174 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.768422,109.220774
+C0677,Bui Quoc Vy,0976515540,446 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.773489,109.217023
+C0678,Nguyen Van Binh,0954367746,186 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.760820,109.220762
+C0679,Le Dinh Thang,0961444412,391 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.773603,109.220601
+C0680,Do Minh Hoa,0947458078,48 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.783801,109.228196
+C0681,Nguyen Minh Khanh,0924425475,89 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.771002,109.217155
+C0682,Le Duc Quan,0937412151,305 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.776367,109.216976
+C0683,Dang Quoc Nam,0949013052,96 Ngo May Phuong Tran Phu TP Quy Nhon,13.759248,109.223045
+C0684,Tran Thanh Vy,0933661646,366 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.765106,109.224245
+C0685,Pham Huu Tien,0968226800,239 Tay Son Phuong Tran Phu TP Quy Nhon,13.789703,109.234318
+C0686,Dang Dinh Thang,0995328044,324 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.763428,109.235532
+C0687,Nguyen Quoc Son,0978937665,154 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.779367,109.230043
+C0688,Le Duc Tuan,0914835786,274 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.785126,109.223972
+C0689,Hoang Hoang Khanh,0947094842,311 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.763932,109.219389
+C0690,Nguyen Ngoc Hoa,0960583020,293 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.771963,109.205932
+C0691,Bui Van Phuc,0948952989,33 Tay Son Phuong Tran Phu TP Quy Nhon,13.787179,109.224555
+C0692,Dang Ngoc An,0956998444,386 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.765831,109.224426
+C0693,Le Quoc Giang,0910228369,427 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.786058,109.223180
+C0694,Tran Thanh Tuan,0939965842,212 Ngo May Phuong Dong Da TP Quy Nhon,13.787887,109.206942
+C0695,Dang Van Tuan,0950500352,96 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.784084,109.212693
+C0696,Tran Minh Binh,0974694094,185 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.759771,109.215663
+C0697,Do Quoc Hung,0981843986,37 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.787803,109.206747
+C0698,Dang Duc Nam,0921511454,369 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.783433,109.235888
+C0699,Hoang Van Yen,0927911622,91 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.751848,109.215527
+C0700,Bui Ngoc Hoa,0990709607,27 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.786315,109.232639
+C0701,Bui Duc Minh,0991136206,436 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.757718,109.222202
+C0702,Pham Minh Tien,0943559667,97 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.777573,109.216012
+C0703,Vo Van Thang,0917256647,404 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.779705,109.232271
+C0704,Le Van Cuong,0996760429,187 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.788705,109.237898
+C0705,Le Thi Linh,0922507656,353 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.768489,109.220841
+C0706,Vu Huu Binh,0952642748,176 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.788420,109.231046
+C0707,Pham Dinh Nam,0994835743,367 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.788711,109.215154
+C0708,Pham Van Minh,0929959081,248 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.786762,109.236309
+C0709,Bui Dinh Dung,0993522169,199 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.761433,109.215792
+C0710,Pham Duc Minh,0940034115,439 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.777451,109.220124
+C0711,Le Hoang Tien,0982430935,270 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.785702,109.210083
+C0712,Hoang Quoc Khanh,0996618291,383 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.750101,109.226882
+C0713,Vu Duc Hoa,0944512546,106 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.765504,109.205144
+C0714,Vu Ngoc Hoa,0948302057,23 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.775417,109.229944
+C0715,Le Quoc Giang,0965359686,368 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.789204,109.230916
+C0716,Hoang Thanh Binh,0992334509,19 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.766680,109.235429
+C0717,Do Duc Giang,0993488560,170 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.758181,109.215262
+C0718,Tran Van Hoa,0996213910,59 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.789753,109.229811
+C0719,Tran Huu Linh,0976910596,220 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.783032,109.236955
+C0720,Le Dinh Vy,0982495398,215 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.750497,109.222995
+C0721,Nguyen Dinh Phuc,0984184747,140 Tay Son Phuong Quang Trung TP Quy Nhon,13.760979,109.227731
+C0722,Bui Ngoc Khanh,0916709209,198 Dong Da Phuong Quang Trung TP Quy Nhon,13.763056,109.208487
+C0723,Pham Van Tuan,0910385744,37 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.759361,109.227149
+C0724,Hoang Duc Tien,0980232107,214 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.750434,109.237204
+C0725,Bui Hoang Yen,0979905358,118 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.777618,109.208163
+C0726,Vu Duc Vy,0969753054,441 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.754782,109.206099
+C0727,Vu Thanh Son,0952024785,156 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.770550,109.228360
+C0728,Le Thanh Binh,0999981549,385 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.784557,109.222301
+C0729,Hoang Hoang Dung,0969048550,63 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.757608,109.206549
+C0730,Hoang Hoang Nam,0952557898,345 Ngo May Phuong Ngo May TP Quy Nhon,13.778325,109.227155
+C0731,Do Duc Vy,0961692291,199 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.766137,109.221348
+C0732,Pham Hoang Minh,0980088851,348 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.784091,109.238708
+C0733,Dang Minh Tien,0988130702,241 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.750341,109.220820
+C0734,Vu Duc Cuong,0958195514,165 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.787847,109.209999
+C0735,Hoang Dinh An,0991047202,162 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.777062,109.214873
+C0736,Pham Duc Nam,0961322148,343 Tay Son Phuong Quang Trung TP Quy Nhon,13.750511,109.216661
+C0737,Hoang Quoc Khanh,0927415645,61 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.785368,109.214231
+C0738,Hoang Quoc Tien,0913653131,94 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.782792,109.221851
+C0739,Dang Dinh Yen,0969514677,24 Ngo May Phuong Ngo May TP Quy Nhon,13.771715,109.214677
+C0740,Hoang Thanh Linh,0938350278,188 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.755445,109.210396
+C0741,Tran Quoc Tuan,0949287096,227 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.758207,109.221815
+C0742,Tran Duc Tien,0949365842,426 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.762588,109.230179
+C0743,Bui Van Minh,0943530503,166 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.774345,109.218772
+C0744,Tran Huu Binh,0991452187,225 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.773842,109.205444
+C0745,Le Duc Nam,0995371403,276 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.758877,109.213527
+C0746,Vu Minh Yen,0954509770,412 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.766241,109.231823
+C0747,Tran Ngoc Quan,0970991994,122 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.773090,109.229609
+C0748,Do Quoc Cuong,0976431590,135 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.767370,109.219539
+C0749,Pham Van Quan,0946344306,77 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.761803,109.220019
+C0750,Dang Thi Hung,0990228366,348 Dong Da Phuong Quang Trung TP Quy Nhon,13.760442,109.220582
+C0751,Vu Thi Dung,0992813456,411 Dong Da Phuong Tran Phu TP Quy Nhon,13.781909,109.235478
+C0752,Bui Van Dat,0935801230,184 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.780021,109.212572
+C0753,Do Dinh Tien,0977176150,21 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.780742,109.224546
+C0754,Nguyen Quoc Giang,0983679941,174 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.763891,109.211711
+C0755,Vu Thanh Hung,0935720103,65 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.767642,109.224731
+C0756,Hoang Thanh Giang,0983050208,337 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.782036,109.229435
+C0757,Le Van Vy,0922954740,294 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.781999,109.205414
+C0758,Pham Thanh Dung,0999845584,41 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.777988,109.232377
+C0759,Nguyen Van Vy,0910024877,185 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.779664,109.220343
+C0760,Pham Huu Son,0923591746,284 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.770777,109.217809
+C0761,Le Thanh Yen,0969188073,344 Tay Son Phuong Thi Nai TP Quy Nhon,13.757035,109.219477
+C0762,Le Van Hung,0965892465,316 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.777512,109.231981
+C0763,Le Huu Hoa,0926669803,350 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.788216,109.212152
+C0764,Pham Thanh Vy,0929624844,300 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.767095,109.231701
+C0765,Do Quoc Cuong,0975496919,175 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.765558,109.215919
+C0766,Pham Dinh Linh,0938156406,1 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.784848,109.225041
+C0767,Nguyen Quoc Giang,0933900710,265 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.787522,109.222918
+C0768,Vo Minh Giang,0940693906,90 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.755832,109.235276
+C0769,Le Hoang Tien,0957890294,371 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.770175,109.223297
+C0770,Tran Duc Hung,0993058112,403 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.781397,109.218051
+C0771,Le Hoang Cuong,0958755890,161 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.769769,109.228049
+C0772,Dang Minh Binh,0988993112,383 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.789019,109.235281
+C0773,Do Minh Dung,0924530726,198 Tay Son Phuong Quang Trung TP Quy Nhon,13.773734,109.231598
+C0774,Tran Dinh Khanh,0932915916,329 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.779718,109.215489
+C0775,Nguyen Minh Minh,0910714142,92 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.786060,109.217609
+C0776,Bui Dinh An,0959516892,112 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.760379,109.219126
+C0777,Pham Minh Hung,0971669103,99 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.780407,109.219797
+C0778,Tran Thi Thang,0921907169,129 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.750038,109.223912
+C0779,Bui Dinh Yen,0930869441,367 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.760422,109.207973
+C0780,Vo Van Nam,0933008421,41 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.769724,109.224405
+C0781,Vu Dinh Minh,0948332540,347 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.751644,109.228138
+C0782,Pham Dinh Khanh,0959464647,152 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.784686,109.216798
+C0783,Vu Minh Giang,0987784831,58 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.772967,109.229247
+C0784,Do Minh Dat,0995810578,324 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.765843,109.209425
+C0785,Vo Van Nam,0937670547,197 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.778069,109.208148
+C0786,Nguyen Duc Hung,0919971291,444 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.774078,109.206579
+C0787,Le Van Quan,0989912206,23 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.778299,109.218303
+C0788,Pham Quoc Nam,0912692641,172 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.766468,109.208026
+C0789,Vo Hoang Hoa,0969801106,345 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.778423,109.232109
+C0790,Tran Hoang Minh,0912232493,424 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.757824,109.229021
+C0791,Le Van Tien,0961792781,128 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.775264,109.211057
+C0792,Nguyen Thanh Phuc,0981217421,84 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.763922,109.210758
+C0793,Bui Ngoc Giang,0950320110,235 Tay Son Phuong Tran Phu TP Quy Nhon,13.766640,109.217478
+C0794,Hoang Huu Son,0976559707,325 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.764554,109.228892
+C0795,Pham Hoang Nam,0915150444,11 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.774136,109.221350
+C0796,Vo Dinh Hoa,0983281488,58 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.787066,109.233156
+C0797,Vu Minh Cuong,0948137649,445 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.752365,109.231539
+C0798,Vu Minh An,0925753950,446 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.772630,109.207831
+C0799,Hoang Quoc Phuc,0929766404,378 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.784511,109.218518
+C0800,Pham Hoang Vy,0921492037,318 Ngo May Phuong Le Loi TP Quy Nhon,13.761060,109.231305
+C0801,Do Huu Nam,0977811449,412 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.783525,109.208782
+C0802,Do Dinh Vy,0952124622,134 Dong Da Phuong Dong Da TP Quy Nhon,13.753936,109.237180
+C0803,Vu Thi Quan,0934600347,357 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.763009,109.220339
+C0804,Nguyen Hoang Dung,0960676700,166 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.766406,109.210912
+C0805,Do Duc Tuan,0931133208,66 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.778474,109.231070
+C0806,Nguyen Hoang Cuong,0957994455,411 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.787173,109.222127
+C0807,Dang Quoc An,0996395808,196 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.779327,109.218559
+C0808,Nguyen Minh Tuan,0946295806,372 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.756166,109.236175
+C0809,Dang Quoc Vy,0931288738,127 Tay Son Phuong Thi Nai TP Quy Nhon,13.781534,109.236993
+C0810,Vu Huu Phuc,0949630179,258 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.767375,109.239729
+C0811,Dang Huu Tuan,0970733611,47 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.763158,109.238416
+C0812,Nguyen Ngoc Minh,0989023086,120 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.759703,109.228201
+C0813,Vu Thanh Dung,0964166149,427 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.757205,109.223939
+C0814,Tran Thanh Yen,0983663877,83 Ngo May Phuong Ngo May TP Quy Nhon,13.777786,109.220171
+C0815,Tran Van Thang,0969889143,361 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.752177,109.205857
+C0816,Nguyen Thanh Hoa,0983374765,109 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.787564,109.236038
+C0817,Bui Van Nam,0982243890,332 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.770464,109.224000
+C0818,Bui Huu Nam,0916025008,364 Dong Da Phuong Le Loi TP Quy Nhon,13.778024,109.224606
+C0819,Nguyen Ngoc Son,0938736302,274 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.758182,109.209063
+C0820,Bui Thi Giang,0944858439,280 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.750853,109.207365
+C0821,Tran Duc Cuong,0985751901,435 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.767295,109.237084
+C0822,Le Huu An,0919526420,208 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.753850,109.210830
+C0823,Dang Van Tuan,0986900178,125 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.781824,109.207723
+C0824,Le Quoc Son,0926124802,194 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.751825,109.217379
+C0825,Bui Thi Yen,0974761622,185 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.754682,109.224495
+C0826,Dang Ngoc Khanh,0995592163,56 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.770257,109.214709
+C0827,Pham Duc Tien,0952484475,281 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.780158,109.207646
+C0828,Pham Van Quan,0950882173,42 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.752404,109.233174
+C0829,Bui Dinh Linh,0991129618,146 Tay Son Phuong Dong Da TP Quy Nhon,13.789271,109.239920
+C0830,Dang Minh An,0975851183,319 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.779601,109.239007
+C0831,Tran Minh Thang,0969178688,334 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.761230,109.212067
+C0832,Vu Van Binh,0944635410,16 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.757360,109.214627
+C0833,Do Ngoc An,0950535275,84 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.753929,109.223571
+C0834,Nguyen Thanh Thang,0917793860,173 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.766499,109.235035
+C0835,Le Thi Phuc,0958067952,176 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.789908,109.214733
+C0836,Le Minh Son,0930240866,51 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.778846,109.206591
+C0837,Nguyen Hoang An,0911789313,181 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.751412,109.218934
+C0838,Tran Van Dat,0971245080,250 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.781197,109.221274
+C0839,Nguyen Van Nam,0997437343,345 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.779190,109.228629
+C0840,Vo Thanh Hoa,0972944014,355 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.779035,109.225933
+C0841,Le Duc An,0942754652,153 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.754364,109.205368
+C0842,Do Ngoc An,0913984517,281 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.783139,109.206887
+C0843,Nguyen Dinh Tien,0920733338,33 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.751204,109.212935
+C0844,Bui Van Nam,0984639387,309 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.757550,109.210686
+C0845,Hoang Van Hung,0953798181,437 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.760866,109.218505
+C0846,Pham Minh Tien,0969068741,71 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.786456,109.226781
+C0847,Pham Hoang Yen,0944291524,256 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.782109,109.224560
+C0848,Pham Hoang Minh,0960663344,195 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.760437,109.237365
+C0849,Dang Dinh Son,0979209869,226 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.754756,109.214196
+C0850,Hoang Dinh Vy,0938770603,414 Ngo May Phuong Ngo May TP Quy Nhon,13.769082,109.208622
+C0851,Hoang Thanh Vy,0951708634,43 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.775130,109.219356
+C0852,Bui Thanh Quan,0922339877,316 Dong Da Phuong Quang Trung TP Quy Nhon,13.757364,109.206228
+C0853,Vu Dinh Dung,0971314911,291 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.779925,109.225457
+C0854,Do Dinh Phuc,0983948671,450 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.777237,109.205971
+C0855,Bui Van Minh,0940079179,309 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.775938,109.231860
+C0856,Vu Thanh Giang,0970207371,208 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.783802,109.233015
+C0857,Bui Thanh Minh,0928940852,265 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.767836,109.215645
+C0858,Hoang Ngoc Quan,0982144763,141 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.786966,109.210449
+C0859,Dang Duc Binh,0973488012,137 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.754592,109.236149
+C0860,Pham Thi Dung,0974757735,80 Dong Da Phuong Quang Trung TP Quy Nhon,13.754870,109.229448
+C0861,Pham Hoang Cuong,0993870513,320 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.767451,109.229844
+C0862,Pham Ngoc Dung,0914970380,91 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.774485,109.234583
+C0863,Do Thanh Tien,0938014849,15 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.788270,109.224177
+C0864,Vu Minh Hoa,0935743343,8 Tay Son Phuong Ngo May TP Quy Nhon,13.767597,109.208536
+C0865,Vu Thanh Tien,0983070182,26 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.756808,109.230166
+C0866,Vo Thi Thang,0981430025,220 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.777029,109.210765
+C0867,Bui Duc Quan,0969900216,82 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.788994,109.206670
+C0868,Pham Minh Vy,0988239358,16 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.758291,109.234460
+C0869,Nguyen Ngoc Minh,0993869798,10 Dong Da Phuong Thi Nai TP Quy Nhon,13.785463,109.234461
+C0870,Nguyen Huu Binh,0921614704,37 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.775930,109.205448
+C0871,Tran Hoang Linh,0922093130,9 Ngo May Phuong Quang Trung TP Quy Nhon,13.770588,109.235447
+C0872,Le Hoang Hung,0997872997,224 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.751755,109.205582
+C0873,Vo Thanh Dat,0926599961,405 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.767006,109.231640
+C0874,Bui Duc Hoa,0963932980,445 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.763644,109.231536
+C0875,Vu Thi Son,0912316732,146 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.779064,109.239746
+C0876,Dang Thi Vy,0934371572,272 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.789057,109.227857
+C0877,Nguyen Ngoc Hoa,0947794066,283 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.770881,109.230592
+C0878,Bui Huu Khanh,0991081198,61 Dong Da Phuong Le Loi TP Quy Nhon,13.766442,109.210578
+C0879,Vo Ngoc Binh,0949228313,160 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.780673,109.212911
+C0880,Dang Quoc Tuan,0987458240,34 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.750574,109.209681
+C0881,Pham Minh Dung,0939620615,294 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.752721,109.213424
+C0882,Hoang Dinh Nam,0916956021,330 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.764493,109.225220
+C0883,Tran Van Binh,0950578275,101 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.771837,109.209545
+C0884,Vo Thanh Thang,0967727897,442 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.781032,109.222973
+C0885,Tran Hoang Son,0920206069,408 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.752422,109.227480
+C0886,Le Hoang Minh,0996034333,23 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.781042,109.231048
+C0887,Vo Quoc Quan,0920365155,310 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.763672,109.237159
+C0888,Vu Thi Quan,0982739981,428 Tay Son Phuong Tran Phu TP Quy Nhon,13.754585,109.238785
+C0889,Hoang Hoang Linh,0984666030,363 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.777862,109.217911
+C0890,Pham Thi Vy,0916716137,170 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.773698,109.211129
+C0891,Nguyen Thi Yen,0972047857,11 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.765487,109.219555
+C0892,Nguyen Duc Son,0984473008,151 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.751504,109.207655
+C0893,Vo Duc Linh,0961376738,400 Ngo May Phuong Dong Da TP Quy Nhon,13.759183,109.223066
+C0894,Vo Dinh Vy,0929211345,267 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.786769,109.213860
+C0895,Vu Van Binh,0934374102,231 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.761859,109.233428
+C0896,Do Thanh Son,0923263296,434 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.768985,109.238026
+C0897,Nguyen Thanh Vy,0952233829,159 Tay Son Phuong Quang Trung TP Quy Nhon,13.764149,109.217137
+C0898,Do Hoang Nam,0974416852,235 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.785388,109.206769
+C0899,Vu Hoang Linh,0988752556,195 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.789571,109.207111
+C0900,Dang Ngoc Phuc,0972764874,366 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.771039,109.226910
+C0901,Do Thi Phuc,0992429531,34 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.772137,109.207295
+C0902,Vo Dinh Nam,0973419679,284 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.758317,109.222599
+C0903,Pham Hoang Son,0947630572,438 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.785444,109.231226
+C0904,Bui Duc Linh,0950717618,27 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.780211,109.233319
+C0905,Nguyen Duc An,0971372581,428 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.761567,109.238207
+C0906,Vo Dinh Tuan,0967909147,358 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.787583,109.218774
+C0907,Dang Van Son,0959758164,407 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.787753,109.221732
+C0908,Tran Quoc Quan,0961946675,142 Dong Da Phuong Quang Trung TP Quy Nhon,13.788475,109.221748
+C0909,Tran Van Khanh,0927507151,365 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.755249,109.219414
+C0910,Do Ngoc Phuc,0988156866,280 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.774119,109.211697
+C0911,Vo Quoc Binh,0921541431,399 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.761690,109.228730
+C0912,Dang Dinh Hoa,0918644052,122 Dong Da Phuong Thi Nai TP Quy Nhon,13.771588,109.212497
+C0913,Bui Quoc Son,0939480669,174 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.768793,109.210010
+C0914,Dang Ngoc Thang,0958975431,332 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.784637,109.237297
+C0915,Hoang Quoc Quan,0963563720,328 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.766405,109.228653
+C0916,Do Thi Tuan,0921363029,129 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.777910,109.210927
+C0917,Do Minh Khanh,0917699667,391 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.781915,109.211783
+C0918,Nguyen Thi Hoa,0990730057,203 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.772090,109.217976
+C0919,Vo Thi Hung,0961118460,82 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.780827,109.220409
+C0920,Hoang Hoang Nam,0972077549,448 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.788684,109.232492
+C0921,Vo Quoc Dung,0917317634,177 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.789804,109.211713
+C0922,Vo Thanh Binh,0966097578,266 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.773035,109.233247
+C0923,Tran Quoc Vy,0961131486,166 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.757720,109.232249
+C0924,Le Ngoc Nam,0990763329,173 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.772767,109.231615
+C0925,Vu Thanh Tuan,0952855879,168 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.753290,109.211690
+C0926,Le Duc Giang,0910939047,228 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.756267,109.207449
+C0927,Vu Quoc Tien,0968143388,184 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.759607,109.228275
+C0928,Vo Thanh Binh,0974031275,84 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.761934,109.231779
+C0929,Dang Thanh Son,0974272518,16 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.766401,109.221230
+C0930,Do Huu Hoa,0980450979,393 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.773807,109.208739
+C0931,Vo Duc Hung,0994056563,99 Tay Son Phuong Ngo May TP Quy Nhon,13.760121,109.227269
+C0932,Le Van Phuc,0926769811,182 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.782825,109.227939
+C0933,Tran Van Giang,0976328932,209 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.769918,109.232765
+C0934,Nguyen Quoc Nam,0953141366,65 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.755339,109.217383
+C0935,Hoang Thi Linh,0938124622,388 Ngo May Phuong Dong Da TP Quy Nhon,13.784401,109.220256
+C0936,Dang Minh Dat,0980502375,382 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.781341,109.223325
+C0937,Do Thi Hung,0983372464,65 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.765283,109.219989
+C0938,Dang Quoc Thang,0938108442,342 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.770743,109.220910
+C0939,Nguyen Van An,0984656108,203 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.770989,109.206873
+C0940,Do Hoang Dat,0922878811,249 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.785522,109.208010
+C0941,Tran Van Yen,0939312553,290 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.769261,109.231048
+C0942,Dang Minh Cuong,0920215030,443 Dong Da Phuong Ngo May TP Quy Nhon,13.758084,109.226936
+C0943,Vo Thi Tuan,0970508791,81 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.770293,109.229388
+C0944,Vo Dinh Cuong,0972258759,9 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.774119,109.222223
+C0945,Bui Thi Quan,0974233764,256 Dong Da Phuong Dong Da TP Quy Nhon,13.750521,109.220426
+C0946,Bui Duc Vy,0944278680,34 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.752102,109.237130
+C0947,Nguyen Dinh Hoa,0980435650,179 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.788586,109.226749
+C0948,Pham Hoang Binh,0986251638,251 Dong Da Phuong Ngo May TP Quy Nhon,13.774583,109.222055
+C0949,Vo Van Yen,0955884661,336 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.755589,109.211303
+C0950,Tran Quoc Hung,0935037125,63 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.774821,109.232781
+C0951,Dang Van Tuan,0944588842,191 Tay Son Phuong Ngo May TP Quy Nhon,13.789497,109.235298
+C0952,Hoang Hoang Hoa,0982037525,36 Dong Da Phuong Ngo May TP Quy Nhon,13.755815,109.234585
+C0953,Bui Duc Nam,0944667756,260 Dong Da Phuong Ngo May TP Quy Nhon,13.783868,109.220150
+C0954,Nguyen Hoang Phuc,0987350436,289 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.775996,109.223490
+C0955,Vo Huu Dat,0943832600,110 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.765206,109.210268
+C0956,Dang Dinh Binh,0966343483,153 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.776838,109.223103
+C0957,Le Duc Minh,0928900851,370 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.761069,109.217335
+C0958,Tran Van Cuong,0935408231,110 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.752349,109.219776
+C0959,Hoang Hoang Phuc,0982990817,141 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.772692,109.230133
+C0960,Vo Hoang Vy,0996259780,164 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.768906,109.230099
+C0961,Hoang Ngoc Hoa,0985398704,232 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.761203,109.231883
+C0962,Bui Hoang Thang,0914797461,284 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.776104,109.208032
+C0963,Tran Hoang Linh,0922155738,116 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.775645,109.229536
+C0964,Dang Dinh An,0959923443,70 Tay Son Phuong Ngo May TP Quy Nhon,13.765273,109.214367
+C0965,Le Duc Phuc,0976626375,414 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.773841,109.211423
+C0966,Do Thi An,0977410041,285 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.752048,109.213544
+C0967,Do Dinh Thang,0953514235,136 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.768429,109.231303
+C0968,Vo Thi Quan,0940906700,206 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.777336,109.230008
+C0969,Hoang Ngoc Tuan,0982183288,158 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.753079,109.228333
+C0970,Hoang Hoang Dung,0983884202,406 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.779736,109.227574
+C0971,Hoang Hoang Tien,0965199887,135 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.755423,109.209110
+C0972,Tran Quoc Vy,0989413199,145 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.775527,109.209383
+C0973,Pham Thanh Dat,0973194544,340 Ngo May Phuong Tran Phu TP Quy Nhon,13.754253,109.230649
+C0974,Bui Thi Tuan,0987389844,273 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.770682,109.234858
+C0975,Vu Quoc Dung,0991766858,242 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.780078,109.229477
+C0976,Nguyen Thanh Linh,0998268341,296 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.774224,109.222129
+C0977,Vo Duc Dung,0959497429,438 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.764763,109.222616
+C0978,Le Hoang Dung,0949587543,426 Ngo May Phuong Quang Trung TP Quy Nhon,13.760201,109.220591
+C0979,Dang Thi Giang,0959611977,203 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.771595,109.213814
+C0980,Le Van Linh,0987138082,119 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.754460,109.229368
+C0981,Tran Minh Khanh,0999064025,144 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.772197,109.223027
+C0982,Pham Duc Linh,0972940790,363 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.769783,109.213962
+C0983,Hoang Duc Minh,0922408118,267 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.755506,109.212483
+C0984,Do Minh Khanh,0911178574,57 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.777637,109.222965
+C0985,Tran Quoc Giang,0916336762,67 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.774417,109.215418
+C0986,Vu Huu Dat,0992806149,345 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.776224,109.216721
+C0987,Nguyen Dinh Tien,0993229546,354 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.776239,109.215703
+C0988,Nguyen Thi Vy,0929416305,209 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.768104,109.210124
+C0989,Dang Huu Yen,0955969123,167 Tay Son Phuong Quang Trung TP Quy Nhon,13.755020,109.215289
+C0990,Pham Thanh Giang,0918827515,122 Dong Da Phuong Quang Trung TP Quy Nhon,13.758320,109.222906
+C0991,Vo Minh An,0966774717,95 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.766476,109.212909
+C0992,Pham Duc Dat,0994393711,428 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.754185,109.206173
+C0993,Nguyen Van Tien,0913375017,238 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.752045,109.209654
+C0994,Tran Duc Dung,0937841670,339 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.756261,109.238331
+C0995,Bui Van An,0949016946,68 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.769934,109.224141
+C0996,Tran Huu Dat,0998277350,195 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.767411,109.220642
+C0997,Do Huu Nam,0953073931,438 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.754833,109.218456
+C0998,Vu Thi Vy,0979913989,445 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.756710,109.229456
+C0999,Vu Thanh Binh,0965591294,92 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.762853,109.223460
+C1000,Pham Minh Vy,0935568588,188 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.784222,109.207735
+C1001,Nguyen Hoang Dung,0915809521,278 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.771863,109.209504
+C1002,Vu Thi Son,0912548367,82 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.780683,109.216686
+C1003,Vo Duc Binh,0987323709,371 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.779795,109.211325
+C1004,Dang Dinh Tuan,0998608604,15 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.782877,109.219223
+C1005,Pham Hoang Yen,0967604510,202 Ngo May Phuong Quang Trung TP Quy Nhon,13.774625,109.208679
+C1006,Tran Dinh Cuong,0918242918,195 Tay Son Phuong Ngo May TP Quy Nhon,13.751008,109.220478
+C1007,Pham Huu Binh,0942711812,12 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.779602,109.207283
+C1008,Vu Dinh Cuong,0933566259,339 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.758612,109.231791
+C1009,Le Minh Phuc,0969142934,387 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.765949,109.217743
+C1010,Vo Van Giang,0935451628,62 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.788586,109.238425
+C1011,Do Minh Hung,0948743270,111 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.772626,109.228481
+C1012,Vu Quoc Linh,0947520150,217 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.750648,109.232791
+C1013,Bui Ngoc Phuc,0911493959,450 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.758898,109.237098
+C1014,Do Dinh An,0912897699,201 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.776049,109.229083
+C1015,Nguyen Huu Linh,0923798410,137 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.780307,109.223215
+C1016,Le Thanh Vy,0998692644,209 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.784645,109.212053
+C1017,Le Van Tien,0939329825,18 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.782312,109.209631
+C1018,Vu Thanh Tuan,0974120607,404 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.757399,109.227128
+C1019,Nguyen Thi Phuc,0972993431,148 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.768206,109.217517
+C1020,Vo Minh Binh,0983666548,24 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.764184,109.206191
+C1021,Bui Van Vy,0959008293,81 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.759098,109.235478
+C1022,Bui Dinh Binh,0985944457,45 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.752238,109.233112
+C1023,Tran Ngoc Binh,0988224143,399 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.783577,109.206517
+C1024,Bui Dinh An,0925390182,82 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.754886,109.235585
+C1025,Pham Van Thang,0951054767,54 Dong Da Phuong Thi Nai TP Quy Nhon,13.753363,109.226353
+C1026,Le Quoc Linh,0923942490,355 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.773171,109.229889
+C1027,Le Minh Cuong,0969785965,326 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.778582,109.206069
+C1028,Nguyen Hoang Tien,0961798479,21 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.754749,109.227951
+C1029,Tran Quoc Linh,0978613475,253 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.772478,109.206781
+C1030,Dang Van Hung,0927490448,247 Dong Da Phuong Ngo May TP Quy Nhon,13.764977,109.231504
+C1031,Tran Dinh Giang,0945441342,71 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.770229,109.223874
+C1032,Vo Minh Nam,0912663001,262 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.774304,109.206180
+C1033,Dang Minh Linh,0984752853,369 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.760173,109.238359
+C1034,Dang Huu Binh,0928643863,387 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.754149,109.209097
+C1035,Le Quoc Hung,0987421532,143 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.758146,109.233091
+C1036,Hoang Van Vy,0953272969,94 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.780179,109.221887
+C1037,Hoang Ngoc Phuc,0991681284,124 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.786750,109.211902
+C1038,Vo Quoc Tien,0918461528,23 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.787385,109.237124
+C1039,Pham Thanh Quan,0974785983,396 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.751260,109.205182
+C1040,Bui Thi Nam,0956236753,161 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.785674,109.224815
+C1041,Le Dinh Binh,0978500148,197 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.772513,109.216103
+C1042,Le Thanh Minh,0986692905,395 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.767633,109.231940
+C1043,Pham Minh Tien,0957753776,64 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.784498,109.232459
+C1044,Bui Hoang Dat,0998845703,221 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.781927,109.207050
+C1045,Hoang Duc Khanh,0931645233,230 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.770508,109.205043
+C1046,Hoang Dinh Yen,0949481332,89 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.786285,109.238558
+C1047,Vo Huu Phuc,0922394638,295 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.776591,109.219604
+C1048,Vu Huu Giang,0951031615,54 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.773276,109.234705
+C1049,Pham Duc Phuc,0951097572,407 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.764667,109.215692
+C1050,Le Huu Yen,0962030314,229 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.760105,109.235116
+C1051,Do Ngoc An,0936558333,237 Dong Da Phuong Thi Nai TP Quy Nhon,13.770078,109.207107
+C1052,Dang Dinh Giang,0917487241,275 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.750402,109.233506
+C1053,Nguyen Thi Quan,0915027976,148 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.789443,109.225249
+C1054,Vo Dinh Binh,0922567483,239 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.751488,109.218373
+C1055,Do Hoang Dung,0951361508,200 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.784602,109.228409
+C1056,Vu Dinh An,0992853601,413 Tay Son Phuong Quang Trung TP Quy Nhon,13.764860,109.208448
+C1057,Bui Huu Cuong,0910024740,364 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.787041,109.216931
+C1058,Vu Van Khanh,0938034093,201 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.760652,109.222264
+C1059,Dang Minh Hoa,0990271032,85 Dong Da Phuong Tran Phu TP Quy Nhon,13.764594,109.221191
+C1060,Pham Ngoc Linh,0989867004,222 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.758573,109.221461
+C1061,Nguyen Thanh Yen,0952984076,1 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.788330,109.226593
+C1062,Nguyen Minh Binh,0961511141,154 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.788344,109.210339
+C1063,Tran Ngoc Hoa,0949138638,287 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.752439,109.207087
+C1064,Hoang Van An,0990333749,264 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.771901,109.229748
+C1065,Vu Dinh Hung,0933168859,248 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.773537,109.221270
+C1066,Nguyen Dinh Quan,0958394730,146 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.777661,109.211608
+C1067,Pham Hoang Giang,0927869754,307 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.788218,109.227780
+C1068,Dang Duc Tien,0960442832,222 Ngo May Phuong Ngo May TP Quy Nhon,13.763867,109.211225
+C1069,Pham Thanh Cuong,0972067320,96 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.778803,109.229518
+C1070,Pham Dinh Nam,0919779686,172 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.773584,109.238121
+C1071,Dang Thanh Binh,0928176237,373 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.767111,109.234238
+C1072,Nguyen Van Son,0988667248,22 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.768135,109.207244
+C1073,Dang Thanh Hoa,0910260298,228 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.784719,109.207161
+C1074,Dang Thanh Thang,0981289543,344 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.768801,109.231315
+C1075,Vo Thi Minh,0931968361,417 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.775572,109.239572
+C1076,Tran Van Dung,0966799932,286 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.758343,109.236516
+C1077,Pham Van Linh,0915644004,159 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.772906,109.215820
+C1078,Vu Huu Yen,0927363992,141 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.754440,109.222933
+C1079,Nguyen Duc Yen,0931224531,442 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.757357,109.214745
+C1080,Nguyen Dinh Tien,0946051464,389 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.766369,109.217918
+C1081,Pham Thi An,0995697519,324 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.786758,109.205308
+C1082,Do Thi Giang,0982787801,294 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.784278,109.205071
+C1083,Le Quoc Quan,0984858366,284 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.770494,109.230142
+C1084,Do Dinh Tien,0984883130,95 Ngo May Phuong Tran Phu TP Quy Nhon,13.767145,109.223602
+C1085,Dang Thanh Tuan,0962014439,290 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.762429,109.239797
+C1086,Hoang Thi Cuong,0917599844,284 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.751044,109.227652
+C1087,Tran Thanh Giang,0977424697,25 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.786308,109.234715
+C1088,Tran Huu Phuc,0939407572,95 Ngo May Phuong Quang Trung TP Quy Nhon,13.773583,109.237592
+C1089,Pham Minh Giang,0923595013,289 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.786156,109.231324
+C1090,Le Dinh Hung,0948718304,368 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.783385,109.235369
+C1091,Bui Duc Tuan,0911246338,246 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.751578,109.238213
+C1092,Do Dinh Son,0976641817,205 Dong Da Phuong Le Loi TP Quy Nhon,13.755244,109.213782
+C1093,Tran Ngoc Cuong,0950598805,231 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.764024,109.213042
+C1094,Vo Dinh Minh,0975384964,146 Dong Da Phuong Tran Phu TP Quy Nhon,13.782113,109.214910
+C1095,Tran Thi Thang,0946117651,257 Ngo May Phuong Tran Phu TP Quy Nhon,13.753100,109.225850
+C1096,Le Dinh Quan,0979236323,254 Ngo May Phuong Le Loi TP Quy Nhon,13.768312,109.222079
+C1097,Pham Huu An,0958184930,280 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.782333,109.235532
+C1098,Pham Thi Phuc,0991664305,308 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.763726,109.229937
+C1099,Vo Thanh Tuan,0962759331,273 Tay Son Phuong Le Loi TP Quy Nhon,13.787092,109.213470
+C1100,Hoang Quoc Giang,0989920267,73 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.774817,109.228266
+C1101,Le Thanh Quan,0975253979,240 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.767588,109.216807
+C1102,Le Minh Binh,0924917271,363 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.783431,109.215412
+C1103,Hoang Duc Giang,0968296812,133 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.772694,109.218532
+C1104,Tran Duc Dat,0944569629,242 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.753612,109.214034
+C1105,Hoang Ngoc Binh,0988285216,44 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.782023,109.230324
+C1106,Nguyen Ngoc Minh,0914630335,279 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.760528,109.220942
+C1107,Bui Duc An,0964123610,131 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.767860,109.238099
+C1108,Tran Ngoc An,0944572137,216 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.779277,109.222932
+C1109,Do Hoang Tuan,0994464110,353 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.787988,109.232250
+C1110,Dang Duc An,0947564692,272 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.767138,109.238800
+C1111,Do Van Phuc,0915883588,433 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.760473,109.207650
+C1112,Tran Thanh Cuong,0925731067,285 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.777662,109.227089
+C1113,Bui Dinh Hung,0924245601,41 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.766498,109.226391
+C1114,Vo Thi Quan,0999682719,375 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.789307,109.213398
+C1115,Nguyen Duc Thang,0955263760,406 Ngo May Phuong Le Loi TP Quy Nhon,13.762372,109.238059
+C1116,Do Duc An,0941447932,352 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.784291,109.231693
+C1117,Vu Minh Phuc,0953231275,128 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.754849,109.221646
+C1118,Bui Ngoc Cuong,0949030234,74 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.753608,109.215163
+C1119,Tran Ngoc Giang,0935201142,218 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.785870,109.233403
+C1120,Dang Van Dat,0929878521,312 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.752285,109.212806
+C1121,Vu Thi Phuc,0980050830,215 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.773342,109.217225
+C1122,Vo Minh Linh,0925906399,51 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.766258,109.221600
+C1123,Do Quoc Hung,0994695085,177 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.782394,109.213257
+C1124,Tran Ngoc Linh,0924674492,158 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.756262,109.211040
+C1125,Tran Dinh Nam,0934022335,34 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.753650,109.219444
+C1126,Le Duc Binh,0936102565,265 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.752949,109.225035
+C1127,Le Minh Hoa,0955929528,207 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.781571,109.237764
+C1128,Do Quoc Cuong,0977401392,5 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.766862,109.227176
+C1129,Vu Duc Thang,0966358722,49 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.759555,109.221760
+C1130,Tran Huu Thang,0980958805,94 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.771839,109.207481
+C1131,Bui Thanh Dat,0998944242,419 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.750157,109.234606
+C1132,Dang Hoang Quan,0947639411,1 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.757946,109.236468
+C1133,Le Huu Giang,0961554696,243 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.763001,109.220792
+C1134,Le Hoang Cuong,0940486924,116 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.774759,109.214156
+C1135,Le Quoc Quan,0959784472,301 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.762376,109.217416
+C1136,Vu Thanh Dung,0925419241,394 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.778567,109.227983
+C1137,Nguyen Van Linh,0971141469,196 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.783409,109.228137
+C1138,Vo Thi Thang,0930634198,224 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.780140,109.213791
+C1139,Nguyen Hoang Nam,0986911939,191 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.755017,109.228676
+C1140,Tran Thi Son,0973496207,233 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.777736,109.229058
+C1141,Hoang Ngoc Hoa,0975413815,226 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.756042,109.218049
+C1142,Hoang Van Dat,0949367111,306 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.784946,109.222359
+C1143,Nguyen Dinh Phuc,0932967286,300 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.770198,109.228539
+C1144,Dang Thanh Dung,0997599267,262 Ngo May Phuong Quang Trung TP Quy Nhon,13.787827,109.231592
+C1145,Vo Van Tuan,0980715380,131 Tay Son Phuong Le Loi TP Quy Nhon,13.753736,109.232671
+C1146,Do Ngoc An,0931753080,206 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.773753,109.229938
+C1147,Vo Hoang Tien,0920998668,48 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.776104,109.236193
+C1148,Hoang Ngoc Tuan,0973000988,211 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.772825,109.228459
+C1149,Do Ngoc Yen,0997734166,381 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.768983,109.219069
+C1150,Bui Ngoc Linh,0976303472,276 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.780199,109.239399
+C1151,Vu Hoang Cuong,0937720564,93 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.788476,109.223915
+C1152,Nguyen Minh Tuan,0945362522,317 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.768973,109.207661
+C1153,Pham Thi Nam,0933173519,2 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.778408,109.219493
+C1154,Hoang Ngoc Hung,0916207121,287 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.758344,109.209678
+C1155,Vu Thanh Minh,0976916948,182 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.779612,109.220877
+C1156,Tran Thi Quan,0993059899,47 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.750498,109.223872
+C1157,Dang Ngoc Binh,0961563531,366 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.760717,109.237651
+C1158,Do Ngoc Linh,0959659833,388 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.772258,109.235175
+C1159,Tran Quoc Thang,0923855169,33 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.750394,109.237036
+C1160,Hoang Minh Linh,0917150360,391 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.773803,109.237650
+C1161,Dang Thi Hung,0979577415,418 Dong Da Phuong Thi Nai TP Quy Nhon,13.769167,109.210195
+C1162,Pham Ngoc An,0910791666,277 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.786797,109.219073
+C1163,Hoang Thi Tuan,0995204519,383 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.750811,109.212035
+C1164,Pham Quoc Binh,0956660885,240 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.768074,109.209478
+C1165,Vu Dinh Cuong,0918363949,35 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.769021,109.222725
+C1166,Do Minh Quan,0974923868,320 Tay Son Phuong Tran Phu TP Quy Nhon,13.752545,109.232056
+C1167,Vu Thi Dung,0963830610,154 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.764458,109.237832
+C1168,Hoang Hoang Khanh,0976398955,378 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.750297,109.209479
+C1169,Le Quoc Linh,0968990243,253 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.760442,109.208387
+C1170,Pham Ngoc Tuan,0968562393,268 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.767889,109.236692
+C1171,Hoang Quoc Tien,0921538051,17 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.782457,109.227472
+C1172,Bui Ngoc Son,0991029903,168 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.772633,109.207460
+C1173,Do Huu Yen,0982764127,111 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.757325,109.230876
+C1174,Bui Minh Tien,0919085387,90 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.751192,109.211476
+C1175,Vo Thi Binh,0925521344,165 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.762300,109.206210
+C1176,Do Hoang Quan,0928879063,316 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.760128,109.231652
+C1177,Hoang Huu Tuan,0947853868,101 Tay Son Phuong Ngo May TP Quy Nhon,13.762504,109.222410
+C1178,Nguyen Dinh Giang,0910724390,403 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.786035,109.212300
+C1179,Dang Thi Quan,0952756727,397 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.777048,109.239921
+C1180,Bui Huu Dung,0925395925,124 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.766732,109.228279
+C1181,Bui Thi Giang,0910232670,77 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.769823,109.226000
+C1182,Vo Hoang Vy,0945473208,301 Ngo May Phuong Dong Da TP Quy Nhon,13.752493,109.232841
+C1183,Tran Hoang Yen,0919320336,211 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.750389,109.214485
+C1184,Pham Minh Linh,0968513006,120 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.787582,109.222830
+C1185,Dang Minh Vy,0951460571,433 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.753534,109.205066
+C1186,Do Van Tuan,0964559913,354 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.787427,109.224124
+C1187,Do Thi Yen,0970286879,129 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.782994,109.213597
+C1188,Nguyen Huu An,0929839724,12 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.755530,109.237669
+C1189,Pham Quoc Hoa,0997654661,4 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.775489,109.207230
+C1190,Hoang Thanh Tien,0912531203,99 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.766744,109.222274
+C1191,Bui Van Hung,0973191130,411 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.765656,109.221188
+C1192,Hoang Van Yen,0949790258,228 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.759882,109.234357
+C1193,Dang Duc Son,0996163304,167 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.750593,109.207853
+C1194,Vo Van Thang,0966038697,281 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.772596,109.227192
+C1195,Do Thanh Binh,0952193163,7 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.784685,109.228395
+C1196,Nguyen Minh Son,0939425515,320 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.775312,109.217817
+C1197,Hoang Huu Hung,0992612605,427 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.781000,109.227613
+C1198,Le Huu Vy,0943052910,331 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.758506,109.218677
+C1199,Pham Quoc Thang,0994508198,450 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.755009,109.223775
+C1200,Vo Thanh Tien,0981111258,400 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.758923,109.228226
+C1201,Bui Hoang Yen,0913811246,210 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.779496,109.207221
+C1202,Pham Thanh Dung,0935885297,402 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.755360,109.215240
+C1203,Tran Dinh An,0917598133,357 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.766472,109.219216
+C1204,Pham Quoc An,0976834738,194 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.783429,109.235248
+C1205,Vo Huu Khanh,0930538046,446 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.752568,109.216058
+C1206,Bui Duc Cuong,0982453298,266 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.771263,109.219612
+C1207,Nguyen Minh Linh,0974878441,24 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.758776,109.227708
+C1208,Tran Thi Cuong,0924860447,113 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.764410,109.238007
+C1209,Hoang Van Yen,0981760605,193 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.763598,109.215331
+C1210,Do Ngoc An,0977877963,205 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.788198,109.218705
+C1211,Tran Ngoc Linh,0924695717,181 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.750553,109.222945
+C1212,Vu Minh Hoa,0930217370,294 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.789637,109.217908
+C1213,Nguyen Hoang Phuc,0955665516,128 Tay Son Phuong Thi Nai TP Quy Nhon,13.766676,109.215040
+C1214,Pham Thi Son,0994852150,287 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.788491,109.239522
+C1215,Hoang Dinh Son,0956653005,400 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.778033,109.224433
+C1216,Le Minh Tien,0928146289,415 Tay Son Phuong Tran Phu TP Quy Nhon,13.788402,109.230210
+C1217,Dang Duc Khanh,0915176045,64 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.751481,109.237832
+C1218,Nguyen Thi Cuong,0943120886,356 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.754016,109.226282
+C1219,Do Van Son,0986165730,16 Tay Son Phuong Dong Da TP Quy Nhon,13.788760,109.205547
+C1220,Le Hoang Quan,0954773995,155 Ngo May Phuong Quang Trung TP Quy Nhon,13.768848,109.228947
+C1221,Bui Ngoc Quan,0949791867,294 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.769717,109.211566
+C1222,Do Thi Son,0990841533,383 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.751135,109.212756
+C1223,Vu Van Vy,0995067209,225 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.785853,109.230738
+C1224,Nguyen Thi Thang,0995564421,392 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.781260,109.208612
+C1225,Vu Van Nam,0964972662,14 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.783552,109.236142
+C1226,Bui Ngoc Binh,0998998976,165 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.784327,109.222561
+C1227,Bui Huu Dat,0948182300,238 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.768256,109.221815
+C1228,Pham Minh Linh,0999359450,127 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.775279,109.239701
+C1229,Vu Duc Minh,0944837911,281 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.766548,109.208910
+C1230,Vo Huu Linh,0922999596,146 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.751484,109.213937
+C1231,Dang Van Binh,0999489147,144 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.782457,109.232006
+C1232,Dang Huu Giang,0939980837,18 Dong Da Phuong Le Loi TP Quy Nhon,13.769012,109.229020
+C1233,Hoang Thanh Khanh,0930434288,131 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.777541,109.216750
+C1234,Dang Hoang Minh,0986622354,83 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.763833,109.219234
+C1235,Vu Dinh Yen,0966888635,302 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.771143,109.225244
+C1236,Vo Van Quan,0969333562,60 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.758015,109.224371
+C1237,Hoang Van Son,0918248104,164 Tay Son Phuong Dong Da TP Quy Nhon,13.777939,109.206598
+C1238,Le Thi Dung,0965604768,293 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.783463,109.208141
+C1239,Do Quoc Dung,0917780060,88 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.754265,109.221845
+C1240,Hoang Dinh Hoa,0945272871,383 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.762106,109.236993
+C1241,Do Thanh Hung,0967537660,225 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.772912,109.220025
+C1242,Vu Minh Binh,0925535014,264 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.781417,109.227381
+C1243,Vu Dinh Thang,0948335085,139 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.767966,109.210552
+C1244,Tran Huu Giang,0951982444,190 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.777978,109.208906
+C1245,Bui Thi Hung,0987159890,105 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.786939,109.211161
+C1246,Hoang Ngoc An,0982030974,94 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.789323,109.223408
+C1247,Vo Huu An,0927312380,437 Dong Da Phuong Quang Trung TP Quy Nhon,13.756864,109.215610
+C1248,Le Van Binh,0922253517,111 Tay Son Phuong Le Loi TP Quy Nhon,13.775590,109.236008
+C1249,Vo Quoc Khanh,0929436586,290 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.754178,109.226035
+C1250,Dang Quoc Binh,0939298891,168 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.787536,109.223327
+C1251,Le Dinh Nam,0918465182,334 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.785133,109.216328
+C1252,Bui Ngoc Quan,0958252193,149 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.766295,109.221582
+C1253,Pham Van Nam,0972894762,393 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.774140,109.225155
+C1254,Nguyen Hoang Son,0966408576,301 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.782743,109.228071
+C1255,Nguyen Ngoc Phuc,0929034228,290 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.781875,109.220312
+C1256,Le Dinh Minh,0928939247,180 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.780680,109.208574
+C1257,Tran Van Dung,0922717295,224 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.753118,109.239883
+C1258,Hoang Huu Minh,0913374771,450 Dong Da Phuong Le Loi TP Quy Nhon,13.758028,109.230570
+C1259,Dang Hoang Quan,0986564972,60 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.766234,109.205320
+C1260,Dang Van Minh,0974406201,332 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.764081,109.232778
+C1261,Dang Duc Hung,0914349593,211 Ngo May Phuong Tran Phu TP Quy Nhon,13.781853,109.231932
+C1262,Le Huu Vy,0955482639,243 Dong Da Phuong Quang Trung TP Quy Nhon,13.788334,109.220417
+C1263,Bui Duc Vy,0933289553,430 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.787728,109.213414
+C1264,Nguyen Dinh Cuong,0949033807,103 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.767747,109.227802
+C1265,Dang Van An,0990650492,342 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.769905,109.224046
+C1266,Bui Thanh Quan,0911362269,129 Tay Son Phuong Quang Trung TP Quy Nhon,13.784317,109.220296
+C1267,Do Ngoc Phuc,0953727684,197 Dong Da Phuong Le Loi TP Quy Nhon,13.787271,109.224866
+C1268,Pham Hoang An,0952576504,303 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.783621,109.206455
+C1269,Hoang Ngoc Dat,0968997427,220 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.787186,109.228678
+C1270,Vu Duc Cuong,0977187948,94 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.777548,109.233164
+C1271,Tran Minh Dat,0968619410,66 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.754343,109.218008
+C1272,Le Huu Dat,0937271857,318 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.780703,109.216916
+C1273,Vu Thi Hoa,0992410546,52 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.773141,109.210237
+C1274,Vu Van Linh,0961150945,355 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.750029,109.232949
+C1275,Le Duc Yen,0954781666,58 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.765792,109.234951
+C1276,Vu Ngoc Cuong,0996356042,434 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.767850,109.228842
+C1277,Nguyen Hoang Dat,0925306144,251 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.789068,109.225695
+C1278,Do Huu Giang,0992561383,236 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.768176,109.238571
+C1279,Do Hoang An,0921222353,43 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.783344,109.206034
+C1280,Dang Van Dung,0977398764,172 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.780708,109.233014
+C1281,Vo Duc Vy,0924668482,26 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.764511,109.236931
+C1282,Dang Dinh Son,0940625563,98 Ngo May Phuong Ngo May TP Quy Nhon,13.786707,109.211125
+C1283,Do Huu Vy,0957824725,237 Tay Son Phuong Tran Phu TP Quy Nhon,13.773721,109.211960
+C1284,Tran Minh Thang,0914544909,412 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.776705,109.208204
+C1285,Bui Hoang Tien,0963742565,177 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.779362,109.224409
+C1286,Tran Dinh Vy,0919700163,411 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.776908,109.216514
+C1287,Vo Quoc Thang,0997000386,105 Ngo May Phuong Thi Nai TP Quy Nhon,13.787719,109.210095
+C1288,Dang Quoc Phuc,0946631093,275 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.762586,109.238116
+C1289,Do Duc Binh,0965412308,5 Dong Da Phuong Thi Nai TP Quy Nhon,13.755078,109.232314
+C1290,Do Huu Son,0930879021,102 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.752446,109.229076
+C1291,Tran Minh Son,0932291910,175 Tay Son Phuong Dong Da TP Quy Nhon,13.774859,109.208691
+C1292,Le Van An,0917299843,224 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.772106,109.234474
+C1293,Bui Minh Binh,0974149898,357 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.759442,109.239874
+C1294,Hoang Van Vy,0933909930,96 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.751876,109.233123
+C1295,Hoang Duc Khanh,0993202420,201 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.754341,109.237604
+C1296,Do Quoc Hoa,0966089421,183 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.755648,109.238898
+C1297,Nguyen Minh Minh,0984699685,2 Tay Son Phuong Dong Da TP Quy Nhon,13.780768,109.229565
+C1298,Vo Thanh Quan,0971348049,340 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.784454,109.228071
+C1299,Do Huu Cuong,0916924523,7 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.757035,109.215207
+C1300,Vo Minh Tuan,0915390517,268 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.779820,109.208543
+C1301,Pham Ngoc Tuan,0984277835,10 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.764227,109.207690
+C1302,Le Thanh Thang,0944746721,23 Tay Son Phuong Le Loi TP Quy Nhon,13.788624,109.224677
+C1303,Tran Minh Son,0939946011,330 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.775077,109.217783
+C1304,Hoang Huu Linh,0975600291,169 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.751517,109.228682
+C1305,Nguyen Ngoc An,0958749937,282 Dong Da Phuong Dong Da TP Quy Nhon,13.762174,109.223219
+C1306,Tran Huu Khanh,0930243652,25 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.753012,109.230106
+C1307,Tran Duc Thang,0930663636,65 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.757897,109.224164
+C1308,Hoang Ngoc Linh,0964220907,414 Tay Son Phuong Le Loi TP Quy Nhon,13.788744,109.230427
+C1309,Pham Huu Quan,0986246070,412 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.775229,109.234107
+C1310,Pham Minh Vy,0986805664,134 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.775744,109.216031
+C1311,Hoang Huu Cuong,0926697994,120 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.783660,109.212296
+C1312,Bui Ngoc Phuc,0976397273,436 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.767999,109.226218
+C1313,Vo Dinh Quan,0981805339,193 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.768609,109.234592
+C1314,Vo Hoang Thang,0932949913,286 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.761479,109.218572
+C1315,Do Huu An,0970370569,313 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.760252,109.223173
+C1316,Le Dinh Dat,0964475543,170 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.771443,109.211662
+C1317,Hoang Hoang Tuan,0994092544,360 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.773946,109.221333
+C1318,Pham Duc Thang,0915300685,4 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.752879,109.238814
+C1319,Vo Duc Quan,0943204595,383 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.762971,109.217969
+C1320,Vu Quoc Son,0956121880,45 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.771267,109.210475
+C1321,Nguyen Van Hoa,0918103133,17 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.750727,109.217642
+C1322,Tran Dinh Phuc,0934367123,243 Ngo May Phuong Dong Da TP Quy Nhon,13.787907,109.230978
+C1323,Tran Minh Linh,0923876961,5 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.765963,109.225485
+C1324,Nguyen Huu Khanh,0986938741,330 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.789902,109.227830
+C1325,Tran Hoang Linh,0976891382,448 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.769789,109.206059
+C1326,Bui Duc An,0947850759,413 Ngo May Phuong Tran Phu TP Quy Nhon,13.769440,109.227712
+C1327,Hoang Quoc Son,0950142359,200 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.757200,109.236509
+C1328,Le Dinh Nam,0931855940,175 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.760339,109.223503
+C1329,Vo Van Phuc,0977923161,388 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.758522,109.236947
+C1330,Hoang Huu Tien,0939694807,234 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.771898,109.210550
+C1331,Do Quoc Cuong,0937561814,412 Tay Son Phuong Ngo May TP Quy Nhon,13.757618,109.220098
+C1332,Do Ngoc Giang,0973607253,33 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.780906,109.223313
+C1333,Do Quoc Phuc,0989861473,115 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.783921,109.217624
+C1334,Pham Huu Minh,0971363717,246 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.752243,109.225241
+C1335,Nguyen Huu Vy,0935701432,270 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.784281,109.212438
+C1336,Pham Hoang Dat,0936631807,201 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.756823,109.215462
+C1337,Tran Van Nam,0972823858,320 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.778315,109.229549
+C1338,Vu Ngoc Dung,0927732687,205 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.762689,109.235416
+C1339,Bui Dinh Nam,0939730020,9 Ngo May Phuong Quang Trung TP Quy Nhon,13.767400,109.227665
+C1340,Hoang Huu Phuc,0948767459,1 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.750906,109.222075
+C1341,Vo Minh Cuong,0974211417,305 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.782636,109.234823
+C1342,Pham Dinh Dat,0910137845,432 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.772468,109.231784
+C1343,Bui Duc Hung,0971823233,160 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.761057,109.238814
+C1344,Pham Minh Khanh,0970366234,428 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.775731,109.210049
+C1345,Vo Quoc Yen,0977282233,286 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.752059,109.212043
+C1346,Vu Hoang Khanh,0948002556,2 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.775994,109.212834
+C1347,Tran Thi Dat,0931332470,118 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.757472,109.205758
+C1348,Vo Thi Giang,0914424550,109 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.769630,109.214022
+C1349,Bui Huu Thang,0918180158,285 Dong Da Phuong Thi Nai TP Quy Nhon,13.778865,109.230257
+C1350,Vo Hoang Nam,0952685452,42 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.754770,109.221727
+C1351,Le Thanh Thang,0967161916,323 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.784672,109.205814
+C1352,Tran Ngoc Khanh,0988518457,260 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.788848,109.213066
+C1353,Nguyen Ngoc Khanh,0914915227,263 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.757363,109.223551
+C1354,Do Hoang Hung,0938838089,210 Tay Son Phuong Ngo May TP Quy Nhon,13.750382,109.212856
+C1355,Le Duc Giang,0967439496,112 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.777382,109.206387
+C1356,Vu Thanh Thang,0911107096,75 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.778208,109.221408
+C1357,Hoang Minh Nam,0957748509,345 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.765722,109.217548
+C1358,Do Huu Son,0995431062,42 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.755921,109.230270
+C1359,Nguyen Hoang Khanh,0993666971,134 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.761002,109.217809
+C1360,Dang Quoc Hung,0986540465,228 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.772630,109.222296
+C1361,Pham Thanh Quan,0940409239,123 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.769552,109.227807
+C1362,Vu Van Hoa,0955739607,370 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.783182,109.233918
+C1363,Pham Dinh Son,0938242095,99 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.778508,109.208262
+C1364,Vu Quoc Thang,0970174525,143 Tay Son Phuong Quang Trung TP Quy Nhon,13.751843,109.212804
+C1365,Bui Huu Minh,0993540997,148 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.782078,109.213931
+C1366,Le Ngoc Minh,0942058689,436 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.752980,109.213428
+C1367,Do Ngoc Khanh,0986083951,68 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.760110,109.221435
+C1368,Bui Thi Hoa,0936638899,32 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.780638,109.216191
+C1369,Le Thi Khanh,0950377174,392 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.785757,109.236872
+C1370,Pham Van Son,0978245769,42 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.785925,109.222870
+C1371,Pham Duc Yen,0990871778,35 Ngo May Phuong Le Loi TP Quy Nhon,13.785532,109.236300
+C1372,Vu Thanh Dat,0936467344,32 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.757004,109.232126
+C1373,Pham Minh Phuc,0912561874,162 Ngo May Phuong Thi Nai TP Quy Nhon,13.770169,109.205716
+C1374,Le Quoc Yen,0967152091,318 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.761002,109.223715
+C1375,Pham Van Son,0950108995,261 Dong Da Phuong Dong Da TP Quy Nhon,13.758734,109.227164
+C1376,Tran Minh Binh,0947878115,429 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.780494,109.208864
+C1377,Dang Thanh Dat,0992439996,297 Dong Da Phuong Ngo May TP Quy Nhon,13.771040,109.218969
+C1378,Vu Hoang Cuong,0987004896,30 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.779306,109.226942
+C1379,Bui Dinh Tien,0993199235,127 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.764943,109.225880
+C1380,Le Hoang Dung,0927492914,118 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.763155,109.235219
+C1381,Do Minh Tuan,0973409166,89 Dong Da Phuong Quang Trung TP Quy Nhon,13.765232,109.239112
+C1382,Bui Huu An,0963033119,309 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.780264,109.219007
+C1383,Nguyen Ngoc Quan,0995847188,351 Tay Son Phuong Dong Da TP Quy Nhon,13.789811,109.231869
+C1384,Le Hoang Thang,0973431598,91 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.755380,109.213892
+C1385,Nguyen Quoc Quan,0968333765,367 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.766543,109.227935
+C1386,Do Huu Hung,0954330573,238 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.767694,109.205130
+C1387,Tran Quoc Son,0923353647,142 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.770574,109.209344
+C1388,Nguyen Thanh Nam,0970372334,114 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.789012,109.211506
+C1389,Nguyen Van Tuan,0993937215,418 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.757172,109.233938
+C1390,Le Thi Giang,0965925677,6 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.753044,109.222094
+C1391,Tran Van Nam,0937604328,303 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.759026,109.209883
+C1392,Do Van Tien,0928919465,131 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.770056,109.239427
+C1393,Pham Hoang An,0982528916,139 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.779674,109.211799
+C1394,Tran Dinh An,0975022191,105 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.773157,109.216535
+C1395,Do Van Nam,0978900422,9 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.786170,109.212243
+C1396,Tran Thi Quan,0977904528,445 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.763333,109.223187
+C1397,Dang Van Phuc,0922462553,387 Ngo May Phuong Tran Phu TP Quy Nhon,13.764267,109.237693
+C1398,Do Minh Hung,0922670822,29 Dong Da Phuong Le Loi TP Quy Nhon,13.789906,109.218412
+C1399,Dang Hoang Yen,0968851887,419 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.788392,109.225058
+C1400,Pham Quoc Tuan,0940214693,401 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.781422,109.227116
+C1401,Pham Dinh Nam,0940168934,15 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.756324,109.217975
+C1402,Nguyen Thanh Vy,0910735090,81 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.769029,109.233121
+C1403,Tran Quoc Khanh,0916641619,215 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.764983,109.226828
+C1404,Do Quoc Phuc,0917424076,39 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.760240,109.239499
+C1405,Vu Minh Son,0941991223,275 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.775712,109.216293
+C1406,Vo Van Nam,0935635809,403 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.777955,109.236956
+C1407,Vo Huu Giang,0972881088,138 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.774363,109.228725
+C1408,Bui Van Dat,0971014047,297 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.764578,109.216655
+C1409,Vu Huu Thang,0939733215,172 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.774887,109.228870
+C1410,Pham Ngoc Cuong,0924222598,21 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.755776,109.231934
+C1411,Le Hoang Dat,0950638262,219 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.781890,109.217471
+C1412,Pham Thanh Dat,0957198387,422 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.782739,109.218696
+C1413,Le Dinh An,0995780520,132 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.789285,109.206226
+C1414,Do Thanh Binh,0938866147,157 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.767401,109.210851
+C1415,Le Quoc Khanh,0973346643,288 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.780414,109.223173
+C1416,Pham Thi Hoa,0970466711,341 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.751594,109.213439
+C1417,Do Quoc Cuong,0925177951,144 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.766186,109.228402
+C1418,Bui Dinh Tuan,0983650229,225 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.750273,109.207089
+C1419,Pham Quoc Yen,0973663028,415 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.757497,109.216213
+C1420,Vu Dinh Yen,0930578753,285 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.757160,109.217562
+C1421,Tran Van Hung,0959986263,182 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.779625,109.239715
+C1422,Pham Van Hung,0946437274,162 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.750154,109.239820
+C1423,Tran Duc Linh,0979026777,318 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.769431,109.238348
+C1424,Dang Minh Son,0914153154,250 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.766184,109.229186
+C1425,Vu Thi Linh,0921058672,154 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.766496,109.209764
+C1426,Le Duc Thang,0980346205,325 Nguyen Hue Phuong Nguyen Van Cu TP Quy Nhon,13.770304,109.213491
+C1427,Hoang Hoang Tien,0953148326,427 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.777691,109.234615
+C1428,Pham Thi Phuc,0913531339,108 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.750026,109.227339
+C1429,Dang Hoang Nam,0933671302,391 Tay Son Phuong Tran Phu TP Quy Nhon,13.752504,109.207409
+C1430,Hoang Hoang Tuan,0981138956,273 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.788150,109.231664
+C1431,Vo Thi Quan,0938787538,119 Ngo May Phuong Thi Nai TP Quy Nhon,13.786281,109.235020
+C1432,Pham Dinh Cuong,0989722208,359 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.772513,109.229104
+C1433,Dang Duc Linh,0950729684,173 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.788810,109.238144
+C1434,Vu Huu Dung,0957141501,160 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.751265,109.217454
+C1435,Dang Van Vy,0911976114,405 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.775231,109.209011
+C1436,Nguyen Minh Vy,0944928499,372 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.761236,109.226555
+C1437,Le Van Vy,0920531545,430 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.784596,109.210579
+C1438,Pham Quoc Tuan,0940722136,53 Ngo May Phuong Tran Phu TP Quy Nhon,13.764635,109.218452
+C1439,Dang Hoang Dat,0948383213,352 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.768437,109.228309
+C1440,Tran Thi Vy,0964441872,189 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.765792,109.231615
+C1441,Vo Dinh Cuong,0970190196,326 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.777577,109.205314
+C1442,Bui Ngoc Cuong,0923077765,450 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.764829,109.227296
+C1443,Hoang Minh Dat,0958606153,122 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.769925,109.215354
+C1444,Tran Ngoc Thang,0924855429,29 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.779100,109.219844
+C1445,Hoang Thanh An,0939535204,210 Tay Son Phuong Le Loi TP Quy Nhon,13.765363,109.210696
+C1446,Do Huu Hoa,0919305038,192 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.765931,109.207916
+C1447,Vo Ngoc Tuan,0926417616,220 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.779390,109.226355
+C1448,Vu Thanh Quan,0955187867,400 Dong Da Phuong Tran Phu TP Quy Nhon,13.763362,109.209120
+C1449,Vo Duc Minh,0919145036,330 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.786547,109.239396
+C1450,Vo Minh Phuc,0917307976,124 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.765113,109.208947
+C1451,Vo Duc Tien,0922541698,239 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.778162,109.227681
+C1452,Le Ngoc Quan,0960966044,227 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.775800,109.205083
+C1453,Le Minh An,0952938389,384 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.756441,109.217278
+C1454,Tran Dinh Minh,0929475148,260 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.758537,109.208548
+C1455,Bui Ngoc Tien,0942866086,152 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.766052,109.219956
+C1456,Bui Hoang Cuong,0948377511,14 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.755745,109.237025
+C1457,Vo Thi Thang,0938605156,210 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.751194,109.228711
+C1458,Bui Thi Tuan,0995172822,80 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.753889,109.233629
+C1459,Tran Huu Tuan,0961844358,135 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.752762,109.209208
+C1460,Vu Hoang Minh,0976885569,187 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.774439,109.207104
+C1461,Bui Duc Thang,0918626573,294 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.788165,109.213404
+C1462,Dang Thi Dung,0916171728,384 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.769672,109.231385
+C1463,Dang Duc Vy,0930180192,4 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.761947,109.229509
+C1464,Dang Minh Hoa,0960221823,341 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.779498,109.223846
+C1465,Do Thi Khanh,0982209545,358 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.754840,109.221118
+C1466,Vu Duc Phuc,0978913337,34 Nguyen Thai Hoc Phuong Ghenh Rang TP Quy Nhon,13.776777,109.231251
+C1467,Hoang Ngoc Thang,0913865315,176 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.752008,109.232774
+C1468,Bui Dinh Quan,0967963957,213 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.773622,109.210388
+C1469,Hoang Minh Phuc,0998893544,119 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.778148,109.234466
+C1470,Vu Thi Khanh,0982407871,50 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.759995,109.226608
+C1471,Do Van Tien,0982439171,112 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.787810,109.208591
+C1472,Pham Minh Giang,0920687490,15 Tay Son Phuong Ngo May TP Quy Nhon,13.784682,109.224377
+C1473,Bui Thi Hoa,0923657337,25 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.783482,109.234883
+C1474,Bui Hoang Hoa,0958299924,427 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.761833,109.234454
+C1475,Do Duc Tien,0948129046,326 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.760234,109.207701
+C1476,Vu Van Hung,0961924471,421 Ngo May Phuong Le Loi TP Quy Nhon,13.762574,109.209100
+C1477,Vu Duc Hung,0935013600,249 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.773088,109.225126
+C1478,Pham Quoc Giang,0911260752,361 Ngo May Phuong Quang Trung TP Quy Nhon,13.772559,109.229402
+C1479,Tran Thi Thang,0940068965,112 Ngo May Phuong Quang Trung TP Quy Nhon,13.758093,109.224912
+C1480,Le Ngoc Quan,0955711680,124 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.757155,109.238323
+C1481,Pham Dinh Phuc,0916661364,321 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.763872,109.239919
+C1482,Hoang Hoang Thang,0936489127,27 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.757408,109.216315
+C1483,Dang Ngoc Phuc,0971152229,227 Dong Da Phuong Le Loi TP Quy Nhon,13.765533,109.222193
+C1484,Nguyen Van Linh,0920211572,355 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.752715,109.209738
+C1485,Vo Ngoc Phuc,0949399954,150 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.758696,109.229158
+C1486,Pham Ngoc Khanh,0978321824,205 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.782033,109.234204
+C1487,Nguyen Ngoc Vy,0929914655,313 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.753580,109.222570
+C1488,Hoang Minh An,0964836309,290 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.753050,109.233515
+C1489,Bui Hoang Nam,0984487036,236 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.760019,109.237533
+C1490,Tran Van Linh,0992023781,91 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.782755,109.234251
+C1491,Dang Van Hoa,0943264390,201 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.786432,109.221193
+C1492,Do Minh Giang,0913170149,136 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.770035,109.210455
+C1493,Do Van Minh,0966552469,435 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.755667,109.209794
+C1494,Bui Quoc Vy,0970759359,337 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.775806,109.238242
+C1495,Tran Duc Tien,0984657760,187 Tay Son Phuong Tran Phu TP Quy Nhon,13.769191,109.233864
+C1496,Pham Dinh An,0984517259,407 Tay Son Phuong Ngo May TP Quy Nhon,13.764002,109.206944
+C1497,Vu Dinh Yen,0982575657,117 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.772361,109.233130
+C1498,Vo Huu Dat,0985667159,54 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.781391,109.227324
+C1499,Vo Van Vy,0921332840,332 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.776158,109.230342
+C1500,Bui Dinh Yen,0919066685,15 Ngo May Phuong Le Loi TP Quy Nhon,13.766263,109.206348
+C1501,Vu Huu Quan,0988799784,382 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.762274,109.227281
+C1502,Vu Dinh Giang,0949701719,335 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.776832,109.230873
+C1503,Tran Thanh Binh,0982544834,124 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.758562,109.231639
+C1504,Bui Hoang Dung,0975054093,20 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.759801,109.239388
+C1505,Dang Van Dat,0945251316,394 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.760879,109.210304
+C1506,Nguyen Duc Thang,0931837001,410 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.757819,109.211610
+C1507,Le Thanh Son,0934819216,24 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.754985,109.217870
+C1508,Tran Huu Nam,0912020261,394 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.761664,109.235340
+C1509,Bui Hoang An,0966687939,313 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.778655,109.228819
+C1510,Le Duc Minh,0910548652,49 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.768786,109.213443
+C1511,Bui Ngoc Binh,0984132612,46 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.759316,109.212922
+C1512,Le Minh Tien,0942325097,283 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.774417,109.216275
+C1513,Hoang Dinh An,0974774484,47 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.766501,109.235862
+C1514,Pham Ngoc Binh,0935747868,72 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.754780,109.226094
+C1515,Vu Thi Phuc,0922128915,426 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.771080,109.220967
+C1516,Tran Hoang Vy,0950142927,37 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.763998,109.205296
+C1517,Bui Huu Yen,0910249085,439 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.764691,109.208245
+C1518,Tran Van Tuan,0973086193,241 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.777130,109.209364
+C1519,Nguyen Minh Yen,0977048913,204 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.762984,109.223580
+C1520,Dang Huu Quan,0926290687,280 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.751308,109.208471
+C1521,Vu Duc Linh,0973490360,209 Ngo May Phuong Thi Nai TP Quy Nhon,13.755225,109.209072
+C1522,Do Dinh Yen,0911356158,29 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.785303,109.238610
+C1523,Do Huu Yen,0997641136,171 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.750532,109.209999
+C1524,Dang Van Tien,0994372907,88 Dong Da Phuong Thi Nai TP Quy Nhon,13.754895,109.218934
+C1525,Nguyen Duc Hoa,0936185638,168 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.787415,109.214799
+C1526,Vu Thanh Tuan,0957871325,229 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.787248,109.216764
+C1527,Bui Duc Quan,0937512856,326 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.758541,109.221777
+C1528,Vo Thanh Son,0960402313,347 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.772064,109.235343
+C1529,Nguyen Thi Quan,0971154851,395 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.756544,109.234987
+C1530,Bui Thanh Tien,0951455793,325 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.750607,109.216976
+C1531,Le Thanh Yen,0993989914,401 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.769413,109.226853
+C1532,Pham Thanh An,0947442108,229 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.755761,109.225668
+C1533,Vu Dinh Vy,0964386299,411 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.785455,109.211639
+C1534,Vo Dinh Thang,0971668543,192 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.777111,109.218716
+C1535,Hoang Hoang Son,0927784142,437 Ngo May Phuong Thi Nai TP Quy Nhon,13.787990,109.206821
+C1536,Dang Dinh Khanh,0976529846,160 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.754579,109.221006
+C1537,Vu Dinh Minh,0997433754,263 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.768902,109.208769
+C1538,Nguyen Thanh Giang,0983166184,258 Ngo May Phuong Ngo May TP Quy Nhon,13.776592,109.208596
+C1539,Pham Dinh Minh,0965816285,393 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.788542,109.239709
+C1540,Vo Huu Son,0984040147,47 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.750271,109.223325
+C1541,Bui Thi Giang,0977759646,363 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.788103,109.218235
+C1542,Nguyen Hoang Binh,0966210627,272 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.773180,109.215712
+C1543,Bui Minh Phuc,0971088290,399 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.770974,109.221245
+C1544,Hoang Minh Minh,0983785400,448 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.752873,109.228661
+C1545,Nguyen Thanh Linh,0987037973,161 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.756624,109.222678
+C1546,Pham Van Giang,0954168338,191 Tay Son Phuong Tran Phu TP Quy Nhon,13.789679,109.206698
+C1547,Vo Dinh Binh,0917459630,295 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.785489,109.223662
+C1548,Bui Hoang Yen,0918485079,308 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.772032,109.205754
+C1549,Vo Minh Tien,0968037451,316 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.766206,109.214564
+C1550,Dang Ngoc Quan,0925786328,88 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.755383,109.215849
+C1551,Tran Ngoc Minh,0943564818,257 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.783985,109.232528
+C1552,Le Huu Tien,0949615277,344 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.760451,109.222062
+C1553,Hoang Hoang Minh,0926466592,434 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.777640,109.214618
+C1554,Do Minh An,0957782942,151 Ngo May Phuong Le Loi TP Quy Nhon,13.773505,109.224425
+C1555,Vu Ngoc Linh,0983837123,229 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.771546,109.232906
+C1556,Do Hoang An,0961029583,166 Tay Son Phuong Dong Da TP Quy Nhon,13.752004,109.208370
+C1557,Bui Thi Cuong,0911571189,237 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.781382,109.207378
+C1558,Vo Quoc Yen,0930196612,211 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.773371,109.209165
+C1559,Tran Duc Nam,0944706226,186 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.778758,109.205337
+C1560,Vo Quoc Yen,0937534194,381 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.752807,109.226341
+C1561,Vu Duc Linh,0952470605,33 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.779902,109.217087
+C1562,Pham Duc Phuc,0958306940,151 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.757989,109.217463
+C1563,Pham Thi Minh,0971409674,367 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.777340,109.212015
+C1564,Bui Hoang Phuc,0951876983,345 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.780791,109.208625
+C1565,Bui Hoang Quan,0964692580,27 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.787056,109.230062
+C1566,Do Dinh Minh,0951287472,77 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.782631,109.214084
+C1567,Bui Hoang Dung,0968720928,345 Tay Son Phuong Quang Trung TP Quy Nhon,13.764556,109.217713
+C1568,Dang Hoang Tien,0999452362,249 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.752905,109.235047
+C1569,Pham Duc Nam,0948389296,289 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.778958,109.207628
+C1570,Bui Quoc Dat,0925773549,144 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.762005,109.218742
+C1571,Vo Duc Tuan,0976911127,85 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.775394,109.207118
+C1572,Vu Quoc Tuan,0974997031,99 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.775720,109.230744
+C1573,Tran Van Dat,0910862893,356 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.777404,109.223607
+C1574,Hoang Hoang Tien,0987115022,375 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.767073,109.209079
+C1575,Vu Duc Vy,0928916125,256 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.786665,109.208884
+C1576,Hoang Thi Dat,0969593958,270 Xuan Dieu Phuong Ghenh Rang TP Quy Nhon,13.788560,109.229594
+C1577,Tran Dinh Giang,0999984899,186 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.787450,109.223783
+C1578,Vu Thi Dung,0946061103,62 Tay Son Phuong Le Loi TP Quy Nhon,13.788561,109.205084
+C1579,Do Dinh Khanh,0977427599,420 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.755930,109.223991
+C1580,Vo Minh Yen,0915409952,11 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.773097,109.220225
+C1581,Pham Dinh Cuong,0926989275,337 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.786218,109.210408
+C1582,Tran Ngoc Cuong,0974522767,16 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.770210,109.214072
+C1583,Le Huu Quan,0972921558,1 Tay Son Phuong Ngo May TP Quy Nhon,13.755537,109.212916
+C1584,Do Thanh Thang,0919300093,306 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.789156,109.226713
+C1585,Tran Ngoc Dung,0976063196,279 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.760160,109.234473
+C1586,Pham Minh Tien,0915440053,106 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.780222,109.231718
+C1587,Vo Thi Khanh,0980784942,177 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.781780,109.213139
+C1588,Vo Dinh Nam,0997814677,359 Tran Hung Dao Phuong Ngo May TP Quy Nhon,13.773338,109.221159
+C1589,Hoang Ngoc Phuc,0914367616,235 Xuan Dieu Phuong Quang Trung TP Quy Nhon,13.770735,109.208048
+C1590,Dang Minh Linh,0960348205,245 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.784840,109.220346
+C1591,Hoang Dinh Quan,0963727792,180 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.750306,109.234362
+C1592,Vu Van Yen,0949208075,226 Le Hong Phong Phuong Quang Trung TP Quy Nhon,13.767949,109.209999
+C1593,Hoang Huu Binh,0984443731,317 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.758952,109.207720
+C1594,Nguyen Thanh Dat,0947517420,355 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.759262,109.227490
+C1595,Dang Thanh Hung,0965981727,230 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.785217,109.206696
+C1596,Vo Hoang Nam,0958134821,317 Dong Da Phuong Quang Trung TP Quy Nhon,13.757881,109.226476
+C1597,Hoang Ngoc Yen,0914913463,66 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.759180,109.229193
+C1598,Vu Ngoc Thang,0983302540,352 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.785928,109.236515
+C1599,Le Minh Phuc,0999691289,138 Bui Thi Xuan Phuong Le Loi TP Quy Nhon,13.784958,109.239396
+C1600,Bui Quoc Hoa,0974085279,240 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.782627,109.208260
+C1601,Pham Minh Yen,0929582276,412 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.780845,109.235570
+C1602,Le Thanh Dat,0990977118,42 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.786777,109.223856
+C1603,Nguyen Thi Quan,0989777959,369 Dong Da Phuong Quang Trung TP Quy Nhon,13.772124,109.217003
+C1604,Dang Ngoc An,0984932439,435 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.783075,109.224171
+C1605,Vu Huu Hung,0942984691,61 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.776704,109.220223
+C1606,Vu Quoc Phuc,0990138920,449 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.768116,109.237662
+C1607,Vu Thanh Tuan,0987335761,127 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.785784,109.223078
+C1608,Nguyen Thi Quan,0998624564,236 Tay Son Phuong Ngo May TP Quy Nhon,13.775536,109.223915
+C1609,Vo Dinh Dat,0961763398,393 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.782433,109.227744
+C1610,Vu Quoc Hoa,0950816081,212 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.757753,109.221028
+C1611,Nguyen Thanh Dung,0986984515,156 Dong Da Phuong Dong Da TP Quy Nhon,13.777051,109.208979
+C1612,Tran Duc Hung,0969273031,403 Ngo May Phuong Thi Nai TP Quy Nhon,13.784632,109.238943
+C1613,Dang Hoang Binh,0989559709,384 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.764729,109.214152
+C1614,Pham Huu Phuc,0928867260,287 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.775086,109.233518
+C1615,Dang Thanh Tien,0928432264,335 Dong Da Phuong Quang Trung TP Quy Nhon,13.769162,109.215073
+C1616,Le Huu Tien,0915083589,388 Tay Son Phuong Le Loi TP Quy Nhon,13.766319,109.221792
+C1617,Pham Dinh An,0985874788,96 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.782032,109.234926
+C1618,Vu Duc Son,0926310638,278 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.775138,109.223695
+C1619,Do Thanh Thang,0935895933,101 Dong Da Phuong Dong Da TP Quy Nhon,13.779773,109.225184
+C1620,Dang Quoc An,0965251615,99 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.787293,109.220654
+C1621,Do Ngoc An,0975629797,199 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.760842,109.208563
+C1622,Pham Minh Cuong,0968375355,420 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.789188,109.234709
+C1623,Do Duc Dung,0931548341,393 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.768637,109.207625
+C1624,Vo Ngoc Vy,0932217235,239 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.762929,109.212981
+C1625,Pham Minh Tien,0947753364,302 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.751307,109.227348
+C1626,Vu Van Khanh,0930998400,291 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.783944,109.238374
+C1627,Pham Ngoc Tuan,0924162476,293 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.750583,109.209655
+C1628,Bui Dinh Son,0943073493,260 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.750925,109.212569
+C1629,Vo Minh Yen,0941366175,440 Dong Da Phuong Dong Da TP Quy Nhon,13.751651,109.234677
+C1630,Bui Thi Binh,0916254547,43 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.752070,109.237289
+C1631,Nguyen Van Tuan,0975608359,354 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.764728,109.225382
+C1632,Vu Huu Hung,0990852803,142 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.764638,109.212427
+C1633,Do Thanh Hoa,0973885476,156 Hoang Hoa Tham Phuong Dong Da TP Quy Nhon,13.786365,109.219256
+C1634,Vu Thanh An,0952763229,308 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.776565,109.209864
+C1635,Vu Quoc Nam,0987433340,430 Tay Son Phuong Tran Phu TP Quy Nhon,13.764651,109.217935
+C1636,Vo Hoang Son,0998329569,407 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.789421,109.209719
+C1637,Hoang Dinh Cuong,0928640712,164 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.767380,109.238026
+C1638,Pham Thi Linh,0949607409,78 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.751212,109.211324
+C1639,Pham Minh Cuong,0923262359,271 Dong Da Phuong Dong Da TP Quy Nhon,13.785838,109.233887
+C1640,Pham Van Binh,0996223693,31 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.755582,109.209444
+C1641,Bui Thanh Vy,0934677047,374 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.759316,109.210796
+C1642,Hoang Duc Hung,0930372714,202 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.750686,109.217136
+C1643,Hoang Quoc Minh,0969682461,195 Tran Hung Dao Phuong Tran Hung Dao TP Quy Nhon,13.756505,109.224778
+C1644,Do Ngoc Tien,0947041563,145 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.766543,109.235154
+C1645,Pham Minh Binh,0911071998,177 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.759897,109.208317
+C1646,Pham Huu Hung,0983106420,375 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.773920,109.214028
+C1647,Le Thi Son,0992695707,65 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.767880,109.214365
+C1648,Hoang Hoang Cuong,0967498727,207 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.770807,109.208750
+C1649,Tran Van Dung,0987673598,366 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.756632,109.214296
+C1650,Nguyen Hoang Son,0969193352,276 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.754314,109.212520
+C1651,Vu Duc Linh,0950918009,86 Nguyen Hue Phuong Ghenh Rang TP Quy Nhon,13.750053,109.233959
+C1652,Dang Van Giang,0952378240,224 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.756311,109.235168
+C1653,Nguyen Thi Khanh,0935484268,146 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.750844,109.205574
+C1654,Vo Van Son,0991236647,379 Tay Son Phuong Tran Phu TP Quy Nhon,13.780572,109.218682
+C1655,Hoang Thi Son,0947788164,390 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.758789,109.216156
+C1656,Le Duc Yen,0965484593,102 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.756902,109.219935
+C1657,Do Thanh Hoa,0997344008,253 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.760750,109.237410
+C1658,Do Thanh Binh,0919715535,22 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.767525,109.226700
+C1659,Bui Dinh Thang,0957359699,148 Hoang Hoa Tham Phuong Nguyen Van Cu TP Quy Nhon,13.756324,109.230209
+C1660,Vo Minh Cuong,0920508344,306 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.771581,109.223260
+C1661,Tran Minh Hoa,0928396342,387 Tran Hung Dao Phuong Dong Da TP Quy Nhon,13.759199,109.212996
+C1662,Nguyen Van Tuan,0975798247,392 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.762685,109.213057
+C1663,Bui Hoang Tien,0932899615,142 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.757979,109.214357
+C1664,Le Van Dung,0995559244,183 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.766305,109.222236
+C1665,Tran Quoc Vy,0932870321,406 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.774608,109.223223
+C1666,Pham Huu An,0918074670,8 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.765403,109.206352
+C1667,Vu Duc Binh,0947097323,172 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.773592,109.233591
+C1668,Vu Duc Dung,0973361615,323 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.760341,109.206905
+C1669,Tran Van Phuc,0961174743,265 Dong Da Phuong Dong Da TP Quy Nhon,13.771292,109.210446
+C1670,Vu Thanh An,0969382417,282 Ngo May Phuong Thi Nai TP Quy Nhon,13.767317,109.207512
+C1671,Dang Hoang Linh,0950944191,36 Le Hong Phong Phuong Le Loi TP Quy Nhon,13.770288,109.222912
+C1672,Do Hoang Binh,0935677835,377 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.784778,109.233723
+C1673,Vu Quoc Minh,0997593036,442 Nguyen Tat Thanh Phuong Ly Thuong Kiet TP Quy Nhon,13.757519,109.228312
+C1674,Vu Huu Dat,0941083194,223 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.785695,109.225782
+C1675,Le Minh Binh,0998135013,237 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.754879,109.229564
+C1676,Nguyen Quoc Nam,0912199420,321 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.789005,109.228880
+C1677,Hoang Hoang Dung,0928181206,319 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.772596,109.213807
+C1678,Bui Thanh Tien,0976489440,119 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.770889,109.231355
+C1679,Vo Thanh Hung,0988985817,436 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.771970,109.207264
+C1680,Do Hoang Khanh,0984089664,303 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.760381,109.205832
+C1681,Le Van Vy,0931896470,136 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.768000,109.231423
+C1682,Do Thi Son,0910278656,258 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.754803,109.215166
+C1683,Hoang Ngoc Khanh,0950097617,112 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.755104,109.217941
+C1684,Vu Huu Minh,0987656769,344 Dong Da Phuong Ly Thuong Kiet TP Quy Nhon,13.766427,109.217184
+C1685,Nguyen Huu Linh,0961003954,266 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.751988,109.229331
+C1686,Le Ngoc Tien,0931440768,103 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.752842,109.236775
+C1687,Le Quoc Minh,0922254396,348 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.760939,109.232932
+C1688,Nguyen Duc Son,0971575465,343 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.772964,109.206802
+C1689,Bui Huu Cuong,0941954805,246 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.766818,109.236338
+C1690,Le Huu Hung,0915013243,423 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.770994,109.233378
+C1691,Bui Dinh Nam,0978183443,192 Bui Thi Xuan Phuong Quang Trung TP Quy Nhon,13.789300,109.226183
+C1692,Vo Minh Vy,0959521364,134 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.751092,109.211613
+C1693,Dang Thanh Hoa,0927667758,373 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.776607,109.237344
+C1694,Vu Ngoc Minh,0930737851,338 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.788569,109.205688
+C1695,Dang Ngoc Hoa,0939772901,67 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.759896,109.229344
+C1696,Do Duc Binh,0982016053,175 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.752338,109.223946
+C1697,Bui Minh Hoa,0985193243,415 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.785806,109.237431
+C1698,Vu Duc Khanh,0958459367,207 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.751063,109.222968
+C1699,Bui Quoc Khanh,0942127502,388 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.771732,109.235374
+C1700,Dang Quoc Tuan,0919315594,430 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.761896,109.209244
+C1701,Vu Van Phuc,0922454260,130 Dong Da Phuong Tran Phu TP Quy Nhon,13.784225,109.215521
+C1702,Pham Van Dung,0985887764,256 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.775882,109.233139
+C1703,Vo Hoang Hung,0948566701,300 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.765456,109.239070
+C1704,Hoang Huu Giang,0947841153,382 Dong Da Phuong Dong Da TP Quy Nhon,13.778053,109.222317
+C1705,Hoang Thanh Binh,0978595907,157 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.786048,109.225771
+C1706,Bui Huu Hung,0980193458,398 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.772944,109.225663
+C1707,Pham Thanh Phuc,0952640614,319 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.764611,109.212541
+C1708,Vo Hoang Quan,0948547271,286 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.782657,109.211017
+C1709,Do Thi Dat,0926804393,327 Dong Da Phuong Ngo May TP Quy Nhon,13.778712,109.229125
+C1710,Hoang Van Hoa,0989730425,320 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.786339,109.220937
+C1711,Tran Ngoc Thang,0969230288,321 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.762735,109.222016
+C1712,Pham Thi Phuc,0986677465,421 Dong Da Phuong Thi Nai TP Quy Nhon,13.760503,109.220442
+C1713,Tran Minh Thang,0949456467,182 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.760850,109.227057
+C1714,Pham Thi Yen,0927817348,93 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.783122,109.207407
+C1715,Do Van Yen,0975806193,366 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.787152,109.227930
+C1716,Dang Hoang Vy,0950839322,387 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.766715,109.215704
+C1717,Le Hoang Yen,0956172652,295 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.768531,109.235681
+C1718,Pham Quoc Son,0997118174,106 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.776178,109.233117
+C1719,Vu Minh Binh,0911483943,45 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.771033,109.224618
+C1720,Le Dinh Hung,0967715984,166 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.757188,109.217424
+C1721,Nguyen Quoc Thang,0913170420,275 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.768675,109.236778
+C1722,Tran Hoang Yen,0978327381,252 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.771116,109.205203
+C1723,Pham Huu Linh,0963587453,42 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.751309,109.217638
+C1724,Tran Dinh Thang,0954576078,27 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.751822,109.221156
+C1725,Le Duc Yen,0929780041,120 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.767295,109.226335
+C1726,Tran Van Linh,0972553649,89 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.771862,109.226198
+C1727,Vo Van Minh,0990977352,56 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.756839,109.235041
+C1728,Tran Duc Minh,0964249035,93 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.756399,109.227561
+C1729,Le Thi Cuong,0915068572,174 Han Mac Tu Phuong Quang Trung TP Quy Nhon,13.753770,109.223336
+C1730,Dang Van Linh,0966499579,53 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.758439,109.218616
+C1731,Vo Duc Hoa,0973266975,146 Dong Da Phuong Thi Nai TP Quy Nhon,13.762363,109.212992
+C1732,Vo Minh Phuc,0991683444,148 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.751531,109.239792
+C1733,Pham Dinh Linh,0929896544,7 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.783731,109.220349
+C1734,Le Van Son,0954090395,289 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.774292,109.234044
+C1735,Tran Van Khanh,0977122201,354 Dong Da Phuong Tran Phu TP Quy Nhon,13.778301,109.233834
+C1736,Bui Quoc Vy,0976017549,231 Ngo May Phuong Le Loi TP Quy Nhon,13.771043,109.220703
+C1737,Vo Quoc An,0941355925,283 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.750703,109.233348
+C1738,Vo Huu Phuc,0946560049,86 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.756291,109.232023
+C1739,Hoang Thanh Khanh,0995296758,54 Bui Thi Xuan Phuong Tran Phu TP Quy Nhon,13.759955,109.219001
+C1740,Nguyen Hoang Cuong,0931099914,295 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.782056,109.222390
+C1741,Bui Minh Dat,0932028969,118 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.768917,109.207920
+C1742,Bui Huu An,0971874236,72 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.771287,109.208880
+C1743,Hoang Dinh Thang,0925187162,173 Ngo May Phuong Ngo May TP Quy Nhon,13.766236,109.209895
+C1744,Nguyen Dinh Cuong,0981131822,208 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.787900,109.206456
+C1745,Vu Thanh Dung,0963027501,206 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.772394,109.230297
+C1746,Do Thanh Dat,0938499074,330 Ngo May Phuong Dong Da TP Quy Nhon,13.787936,109.222960
+C1747,Hoang Ngoc Tien,0989044436,369 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.776416,109.223758
+C1748,Vo Thanh Linh,0955607054,327 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.783399,109.226520
+C1749,Vu Duc Hung,0996061643,267 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.751161,109.235090
+C1750,Tran Hoang Son,0984511813,141 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.784776,109.223856
+C1751,Hoang Dinh Dat,0954685048,341 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.785233,109.220881
+C1752,Pham Hoang Yen,0990948054,176 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.754374,109.213451
+C1753,Hoang Quoc Vy,0923990958,372 Dong Da Phuong Ngo May TP Quy Nhon,13.779083,109.208232
+C1754,Tran Van Dat,0920005769,313 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.771303,109.208311
+C1755,Nguyen Hoang Khanh,0921422872,440 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.765557,109.209394
+C1756,Hoang Van Minh,0987894717,195 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.771382,109.205318
+C1757,Tran Minh Giang,0933938595,125 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.788680,109.215712
+C1758,Do Hoang Hoa,0971176820,426 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.760352,109.210802
+C1759,Tran Thi Binh,0998960421,107 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.786575,109.231317
+C1760,Vo Quoc Cuong,0970754473,82 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.783466,109.232070
+C1761,Do Minh Yen,0964150562,263 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.767214,109.206856
+C1762,Vo Ngoc Giang,0982279872,224 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.751542,109.208653
+C1763,Vu Thanh Khanh,0925416231,309 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.756661,109.231427
+C1764,Bui Quoc Nam,0923348902,139 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.755062,109.238782
+C1765,Pham Dinh Yen,0953566700,295 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.751170,109.223015
+C1766,Bui Duc Khanh,0972532979,1 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.789723,109.233837
+C1767,Hoang Van Quan,0958041304,381 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.786392,109.235088
+C1768,Hoang Thanh Phuc,0979449997,161 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.780431,109.229900
+C1769,Pham Ngoc Dung,0914428524,239 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.762072,109.234661
+C1770,Bui Thi Dat,0994725848,198 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.751799,109.218846
+C1771,Vo Ngoc Giang,0988099569,287 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.750921,109.215445
+C1772,Bui Thanh Dat,0988831719,371 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.778285,109.207261
+C1773,Vo Thi Thang,0983322525,9 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.781558,109.237641
+C1774,Vu Minh Hoa,0972182823,245 Tay Son Phuong Thi Nai TP Quy Nhon,13.781860,109.209986
+C1775,Bui Hoang Dat,0928443942,213 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.760898,109.235478
+C1776,Nguyen Hoang Minh,0910759608,168 Dong Da Phuong Le Loi TP Quy Nhon,13.788430,109.223050
+C1777,Le Dinh Tuan,0971959234,407 Nguyen Hue Phuong Le Loi TP Quy Nhon,13.750954,109.235991
+C1778,Vu Duc Hoa,0962307020,363 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.786697,109.231888
+C1779,Vu Hoang Hung,0954386339,442 Ly Thuong Kiet Phuong Tran Phu TP Quy Nhon,13.759110,109.235406
+C1780,Tran Quoc Phuc,0994536508,226 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.785065,109.235829
+C1781,Le Huu Dat,0990337968,89 Nguyen Thai Hoc Phuong Ngo May TP Quy Nhon,13.770288,109.227702
+C1782,Pham Duc Thang,0965675771,353 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.760995,109.230792
+C1783,Do Van Linh,0935034506,202 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.766439,109.239950
+C1784,Vo Van Quan,0913751760,314 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.783575,109.232184
+C1785,Tran Ngoc Khanh,0979542677,353 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.765374,109.223092
+C1786,Hoang Minh Giang,0992650601,445 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.753527,109.231913
+C1787,Hoang Huu Hoa,0921293765,32 Ly Thuong Kiet Phuong Dong Da TP Quy Nhon,13.761324,109.230329
+C1788,Pham Thanh Linh,0978564542,312 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.752123,109.227369
+C1789,Dang Duc An,0994164076,47 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.783693,109.213391
+C1790,Bui Ngoc Dung,0981708544,281 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.761432,109.226189
+C1791,Tran Huu Quan,0912616120,360 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.788344,109.214581
+C1792,Le Ngoc Son,0986539396,202 Tay Son Phuong Tran Phu TP Quy Nhon,13.753069,109.223627
+C1793,Pham Quoc An,0974323868,418 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.757348,109.234601
+C1794,Do Hoang Giang,0963060480,65 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.761075,109.219407
+C1795,Vo Thi Tuan,0949227543,35 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.768475,109.212883
+C1796,Bui Duc Giang,0999563956,208 Hoang Hoa Tham Phuong Le Loi TP Quy Nhon,13.756807,109.212952
+C1797,Do Ngoc Dat,0927274069,108 Dong Da Phuong Tran Phu TP Quy Nhon,13.784812,109.238300
+C1798,Vu Huu Son,0944655450,368 Ngo May Phuong Le Loi TP Quy Nhon,13.769670,109.210045
+C1799,Nguyen Minh Dung,0971280740,366 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.787751,109.223934
+C1800,Bui Minh Linh,0994638392,266 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.787252,109.205035
+C1801,Dang Thanh Thang,0933421519,211 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.753178,109.224787
+C1802,Vo Ngoc Cuong,0944018281,210 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.761928,109.220932
+C1803,Tran Quoc Minh,0937631140,118 An Duong Vuong Phuong Tran Hung Dao TP Quy Nhon,13.771047,109.212161
+C1804,Nguyen Minh Son,0979460688,22 Ngo May Phuong Tran Phu TP Quy Nhon,13.772413,109.213948
+C1805,Vu Van Giang,0914588721,289 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.759135,109.235901
+C1806,Do Van Vy,0944293950,363 Le Hong Phong Phuong Ngo May TP Quy Nhon,13.776083,109.221431
+C1807,Nguyen Van Vy,0941952057,256 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.774626,109.208397
+C1808,Vu Thi Tuan,0923682448,359 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.770684,109.219982
+C1809,Vu Duc Tuan,0993704993,4 Han Mac Tu Phuong Ngo May TP Quy Nhon,13.757705,109.234095
+C1810,Bui Van Tien,0953060643,42 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.786223,109.238221
+C1811,Pham Hoang Tien,0913811300,176 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.787317,109.220532
+C1812,Pham Van Linh,0927975023,52 Ngo May Phuong Ngo May TP Quy Nhon,13.768101,109.232163
+C1813,Tran Thi Vy,0981254620,408 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.783535,109.218908
+C1814,Pham Ngoc Nam,0924347149,199 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.761541,109.234144
+C1815,Vu Minh Binh,0928781953,76 Nguyen Hue Phuong Ngo May TP Quy Nhon,13.764357,109.224359
+C1816,Dang Huu Dat,0975617434,310 Han Mac Tu Phuong Ghenh Rang TP Quy Nhon,13.755509,109.237267
+C1817,Le Van Giang,0986407044,279 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.781026,109.220288
+C1818,Hoang Minh Binh,0925707415,18 Le Hong Phong Phuong Ly Thuong Kiet TP Quy Nhon,13.784851,109.219709
+C1819,Vo Thi Thang,0953283878,20 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.753838,109.209284
+C1820,Le Hoang Yen,0985249279,313 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.774162,109.208634
+C1821,Hoang Dinh Thang,0983292472,328 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.766352,109.232982
+C1822,Dang Dinh Nam,0952776139,95 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.787102,109.221408
+C1823,Hoang Thanh Dung,0920866899,253 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.774490,109.235520
+C1824,Tran Duc Phuc,0922646910,193 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.788985,109.207401
+C1825,Do Thanh Khanh,0920968640,440 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.751280,109.239000
+C1826,Hoang Thanh Hung,0941639161,329 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.775552,109.218777
+C1827,Tran Huu Yen,0929769605,364 Xuan Dieu Phuong Le Loi TP Quy Nhon,13.761064,109.217882
+C1828,Hoang Thi Tuan,0972286000,412 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.780406,109.226364
+C1829,Le Quoc Phuc,0975963631,326 An Duong Vuong Phuong Ly Thuong Kiet TP Quy Nhon,13.757594,109.205909
+C1830,Le Duc Tien,0975207389,256 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.781229,109.219309
+C1831,Le Thi Hoa,0946294798,394 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.760883,109.213267
+C1832,Do Quoc Dung,0911909718,391 Ngo May Phuong Quang Trung TP Quy Nhon,13.769938,109.232554
+C1833,Tran Quoc Minh,0967188353,351 Ngo May Phuong Ngo May TP Quy Nhon,13.773003,109.233685
+C1834,Nguyen Minh Linh,0975007571,278 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.775614,109.209566
+C1835,Bui Van An,0987183757,10 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.769654,109.221268
+C1836,Le Quoc Quan,0949908306,245 Nguyen Thai Hoc Phuong Le Loi TP Quy Nhon,13.788396,109.210534
+C1837,Tran Quoc Phuc,0943527215,409 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.785590,109.219754
+C1838,Bui Ngoc Minh,0993985277,149 Tay Son Phuong Nguyen Van Cu TP Quy Nhon,13.785755,109.218262
+C1839,Dang Dinh Son,0958046036,450 Hoang Hoa Tham Phuong Ghenh Rang TP Quy Nhon,13.757038,109.222340
+C1840,Vu Dinh Hung,0935460671,395 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.789446,109.216656
+C1841,Vo Quoc Binh,0928845630,161 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.763017,109.208979
+C1842,Hoang Quoc Vy,0972860382,380 An Duong Vuong Phuong Ghenh Rang TP Quy Nhon,13.762093,109.210251
+C1843,Hoang Van Linh,0985438163,321 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.780021,109.210057
+C1844,Bui Thanh Dat,0968493506,270 Hoang Hoa Tham Phuong Ly Thuong Kiet TP Quy Nhon,13.786817,109.232502
+C1845,Dang Minh Khanh,0942660047,119 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.750809,109.210688
+C1846,Pham Minh Hoa,0989216934,295 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.761426,109.230641
+C1847,Pham Thi Hung,0978192509,439 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.788091,109.238441
+C1848,Nguyen Thanh An,0966926631,235 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.780641,109.205752
+C1849,Dang Huu An,0976138718,82 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.767679,109.214183
+C1850,Do Thanh Dat,0915099754,236 Bui Thi Xuan Phuong Ghenh Rang TP Quy Nhon,13.755488,109.238355
+C1851,Le Dinh Son,0921532282,321 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.773214,109.205879
+C1852,Nguyen Quoc Cuong,0975281663,392 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.788379,109.212204
+C1853,Bui Van Vy,0990176043,197 Ngo May Phuong Quang Trung TP Quy Nhon,13.755885,109.233620
+C1854,Nguyen Huu Khanh,0993244683,249 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.785598,109.232208
+C1855,Vu Van Hoa,0932059173,424 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.767558,109.225864
+C1856,Pham Thi Binh,0945732783,5 Nguyen Thai Hoc Phuong Thi Nai TP Quy Nhon,13.785808,109.226358
+C1857,Vo Thi Tien,0962193049,13 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.774572,109.221870
+C1858,Do Minh Linh,0913515823,371 Ly Thuong Kiet Phuong Ly Thuong Kiet TP Quy Nhon,13.753851,109.231305
+C1859,Bui Van Vy,0975924086,357 Dong Da Phuong Thi Nai TP Quy Nhon,13.761947,109.238580
+C1860,Nguyen Minh Vy,0991608353,74 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.773547,109.221776
+C1861,Hoang Quoc Hoa,0947377295,397 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.754079,109.226761
+C1862,Bui Hoang Thang,0998581790,365 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.751338,109.205341
+C1863,Dang Thanh Cuong,0919427670,105 Bui Thi Xuan Phuong Tran Hung Dao TP Quy Nhon,13.788009,109.221071
+C1864,Hoang Minh Khanh,0933523170,192 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.754571,109.211145
+C1865,Pham Dinh Khanh,0949462709,156 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.779164,109.226806
+C1866,Vu Duc Vy,0986858433,110 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.753830,109.234105
+C1867,Le Huu Tuan,0938037621,97 Ngo May Phuong Nguyen Van Cu TP Quy Nhon,13.776981,109.227514
+C1868,Nguyen Dinh Vy,0986598050,421 Nguyen Thai Hoc Phuong Tran Hung Dao TP Quy Nhon,13.778197,109.229743
+C1869,Le Van Dat,0993216709,116 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.759139,109.212327
+C1870,Nguyen Huu Quan,0920263279,68 Tay Son Phuong Le Loi TP Quy Nhon,13.765428,109.239267
+C1871,Vu Ngoc An,0924490907,194 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.778153,109.234835
+C1872,Bui Dinh Yen,0992152147,182 Le Hong Phong Phuong Nguyen Van Cu TP Quy Nhon,13.764879,109.220321
+C1873,Nguyen Dinh Yen,0989486795,207 Tran Hung Dao Phuong Thi Nai TP Quy Nhon,13.752877,109.233846
+C1874,Hoang Huu Dat,0930916915,400 Xuan Dieu Phuong Ly Thuong Kiet TP Quy Nhon,13.755225,109.239918
+C1875,Tran Dinh Thang,0949966956,398 Han Mac Tu Phuong Nguyen Van Cu TP Quy Nhon,13.779481,109.233975
+C1876,Dang Dinh An,0928674552,326 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.775359,109.229279
+C1877,Pham Quoc Nam,0915657276,103 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.785945,109.226185
+C1878,Pham Minh Vy,0966445196,248 Ngo May Phuong Dong Da TP Quy Nhon,13.781565,109.222295
+C1879,Bui Ngoc Thang,0949893804,435 Nguyen Tat Thanh Phuong Tran Phu TP Quy Nhon,13.781319,109.218660
+C1880,Bui Minh Thang,0941779724,374 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.787084,109.225418
+C1881,Le Thi Giang,0933763707,419 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.758149,109.237106
+C1882,Tran Van Hoa,0955417763,401 Bui Thi Xuan Phuong Dong Da TP Quy Nhon,13.786921,109.213209
+C1883,Vo Minh Son,0980995204,400 Tay Son Phuong Ly Thuong Kiet TP Quy Nhon,13.771789,109.219343
+C1884,Bui Thi Phuc,0958700418,278 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.776260,109.205179
+C1885,Dang Huu Tien,0917232796,324 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.777169,109.206761
+C1886,Do Minh Giang,0975836963,218 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.781876,109.235890
+C1887,Tran Huu Vy,0968283723,163 Han Mac Tu Phuong Le Loi TP Quy Nhon,13.766854,109.206765
+C1888,Vu Duc Binh,0991264957,255 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.769515,109.224044
+C1889,Le Dinh An,0965278740,24 Dong Da Phuong Dong Da TP Quy Nhon,13.752243,109.229821
+C1890,Pham Huu Binh,0968873657,420 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.752637,109.210201
+C1891,Hoang Dinh Binh,0910938360,300 Ngo May Phuong Dong Da TP Quy Nhon,13.786501,109.216820
+C1892,Vu Van Giang,0930115810,429 Xuan Dieu Phuong Tran Phu TP Quy Nhon,13.769029,109.206851
+C1893,Pham Duc Nam,0941811761,334 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.783350,109.227274
+C1894,Dang Quoc Dat,0916914892,357 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.771690,109.223782
+C1895,Le Thi Hung,0926294134,232 Dong Da Phuong Thi Nai TP Quy Nhon,13.780067,109.206284
+C1896,Bui Quoc Thang,0927063448,52 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.779000,109.206114
+C1897,Tran Ngoc Dung,0977594720,150 Tay Son Phuong Tran Phu TP Quy Nhon,13.766081,109.228320
+C1898,Le Dinh Son,0911694842,43 Tay Son Phuong Tran Phu TP Quy Nhon,13.766604,109.221869
+C1899,Tran Duc Vy,0965666954,368 Nguyen Hue Phuong Quang Trung TP Quy Nhon,13.770292,109.238584
+C1900,Do Quoc Vy,0979269317,170 Ngo May Phuong Quang Trung TP Quy Nhon,13.759542,109.215679
+C1901,Dang Quoc Phuc,0997979280,237 Tran Hung Dao Phuong Ghenh Rang TP Quy Nhon,13.770765,109.223174
+C1902,Do Minh Hoa,0961092439,234 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.758055,109.205076
+C1903,Pham Thanh Binh,0986914417,254 Tay Son Phuong Le Loi TP Quy Nhon,13.759681,109.227267
+C1904,Vo Hoang Dung,0998215366,352 Bui Thi Xuan Phuong Ly Thuong Kiet TP Quy Nhon,13.785692,109.221856
+C1905,Tran Dinh Tien,0978879673,162 Tran Hung Dao Phuong Tran Phu TP Quy Nhon,13.774110,109.225040
+C1906,Nguyen Thi Minh,0910318787,331 An Duong Vuong Phuong Quang Trung TP Quy Nhon,13.780984,109.232427
+C1907,Vu Quoc Dung,0995838033,265 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.761993,109.210547
+C1908,Vu Dinh Vy,0989780103,438 Ly Thuong Kiet Phuong Nguyen Van Cu TP Quy Nhon,13.783728,109.233114
+C1909,Dang Van Hung,0916654940,296 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.764879,109.239268
+C1910,Do Thanh Quan,0947074397,108 Ly Thuong Kiet Phuong Ngo May TP Quy Nhon,13.778918,109.235847
+C1911,Nguyen Minh Khanh,0960001054,249 Ly Thuong Kiet Phuong Quang Trung TP Quy Nhon,13.763793,109.229290
+C1912,Bui Dinh Hung,0943185360,449 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.757743,109.215298
+C1913,Vu Quoc Son,0967461870,62 An Duong Vuong Phuong Thi Nai TP Quy Nhon,13.760957,109.220205
+C1914,Bui Thanh Cuong,0972924213,51 Nguyen Thai Hoc Phuong Quang Trung TP Quy Nhon,13.771571,109.216293
+C1915,Nguyen Minh Linh,0916963626,324 Ngo May Phuong Ly Thuong Kiet TP Quy Nhon,13.764595,109.229922
+C1916,Do Duc Binh,0954979644,49 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.775568,109.206800
+C1917,Hoang Ngoc Tuan,0938865445,279 Nguyen Tat Thanh Phuong Ngo May TP Quy Nhon,13.770438,109.223008
+C1918,Hoang Dinh Phuc,0919224598,398 Dong Da Phuong Tran Hung Dao TP Quy Nhon,13.782695,109.237708
+C1919,Hoang Quoc Yen,0980308898,284 Dong Da Phuong Ngo May TP Quy Nhon,13.787596,109.228021
+C1920,Bui Huu Dung,0946900520,381 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.763760,109.214825
+C1921,Hoang Van Linh,0986334831,186 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.756568,109.213670
+C1922,Bui Duc Cuong,0994646160,180 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.754753,109.213597
+C1923,Hoang Dinh Minh,0961835278,278 Nguyen Hue Phuong Dong Da TP Quy Nhon,13.780492,109.210886
+C1924,Do Duc Yen,0966625803,254 Tay Son Phuong Dong Da TP Quy Nhon,13.754268,109.210484
+C1925,Tran Duc Tuan,0984781504,286 Le Hong Phong Phuong Tran Phu TP Quy Nhon,13.758093,109.211551
+C1926,Do Hoang Yen,0957296492,206 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.753756,109.236682
+C1927,Tran Minh Hung,0928924011,106 An Duong Vuong Phuong Le Loi TP Quy Nhon,13.784691,109.220630
+C1928,Nguyen Dinh Minh,0930935511,98 Nguyen Thai Hoc Phuong Ly Thuong Kiet TP Quy Nhon,13.762229,109.212500
+C1929,Dang Minh An,0935544812,357 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.785350,109.227430
+C1930,Tran Huu Vy,0975247685,79 Xuan Dieu Phuong Ngo May TP Quy Nhon,13.755566,109.209108
+C1931,Vu Duc Binh,0955650366,439 Ngo May Phuong Tran Hung Dao TP Quy Nhon,13.755381,109.213630
+C1932,Vu Hoang Nam,0935088456,439 Dong Da Phuong Ghenh Rang TP Quy Nhon,13.756400,109.232328
+C1933,Pham Ngoc Binh,0977150246,120 Nguyen Tat Thanh Phuong Tran Hung Dao TP Quy Nhon,13.772330,109.215447
+C1934,Tran Minh Dung,0982907824,397 Han Mac Tu Phuong Tran Hung Dao TP Quy Nhon,13.758766,109.209647
+C1935,Vo Quoc Phuc,0931859785,299 Tay Son Phuong Dong Da TP Quy Nhon,13.770808,109.237748
+C1936,Nguyen Minh Thang,0976452143,60 Nguyen Thai Hoc Phuong Tran Phu TP Quy Nhon,13.755959,109.232271
+C1937,Do Duc Dat,0988914469,299 Hoang Hoa Tham Phuong Ngo May TP Quy Nhon,13.777201,109.239217
+C1938,Do Duc Tien,0939916093,44 Le Hong Phong Phuong Dong Da TP Quy Nhon,13.753058,109.207436
+C1939,Vo Van Yen,0929305786,305 Han Mac Tu Phuong Thi Nai TP Quy Nhon,13.770511,109.212190
+C1940,Pham Duc An,0971004083,287 Han Mac Tu Phuong Tran Phu TP Quy Nhon,13.764818,109.230493
+C1941,Vo Thanh Nam,0976783388,55 Hoang Hoa Tham Phuong Tran Phu TP Quy Nhon,13.779198,109.207017
+C1942,Dang Ngoc Yen,0913981696,85 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.777665,109.213278
+C1943,Vu Quoc Dung,0922699865,377 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.786268,109.212243
+C1944,Dang Huu Thang,0929801935,168 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.771252,109.209856
+C1945,Vu Hoang Binh,0996436716,318 An Duong Vuong Phuong Nguyen Van Cu TP Quy Nhon,13.776005,109.238462
+C1946,Dang Duc Linh,0985800864,344 Tay Son Phuong Ghenh Rang TP Quy Nhon,13.750579,109.228073
+C1947,Hoang Ngoc Vy,0921294469,139 Han Mac Tu Phuong Dong Da TP Quy Nhon,13.775622,109.225444
+C1948,Tran Thanh Minh,0911857935,50 Nguyen Thai Hoc Phuong Dong Da TP Quy Nhon,13.773910,109.220209
+C1949,Do Thi Tuan,0935051964,140 Le Hong Phong Phuong Thi Nai TP Quy Nhon,13.783710,109.229024
+C1950,Tran Hoang Khanh,0991683864,227 Xuan Dieu Phuong Tran Hung Dao TP Quy Nhon,13.774736,109.233695
+C1951,Nguyen Huu Tien,0936367288,69 Nguyen Hue Phuong Tran Phu TP Quy Nhon,13.754804,109.211282
+C1952,Do Thi Hung,0933506453,68 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.767801,109.208047
+C1953,Vo Huu Minh,0940911510,165 Nguyen Thai Hoc Phuong Nguyen Van Cu TP Quy Nhon,13.765455,109.239743
+C1954,Vo Minh Linh,0989001023,360 Ly Thuong Kiet Phuong Ghenh Rang TP Quy Nhon,13.759703,109.237108
+C1955,Tran Huu Khanh,0980673950,352 Le Hong Phong Phuong Tran Hung Dao TP Quy Nhon,13.762130,109.223695
+C1956,Nguyen Thi Cuong,0916453067,432 Hoang Hoa Tham Phuong Quang Trung TP Quy Nhon,13.753840,109.236233
+C1957,Dang Dinh Linh,0951678790,321 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.764864,109.233238
+C1958,Le Huu Binh,0943519567,138 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.767490,109.212287
+C1959,Le Thi Yen,0970356078,370 Hoang Hoa Tham Phuong Thi Nai TP Quy Nhon,13.752979,109.224321
+C1960,Le Ngoc Hoa,0918662396,85 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.765561,109.225185
+C1961,Hoang Hoang Dat,0941099631,163 Xuan Dieu Phuong Thi Nai TP Quy Nhon,13.770336,109.205898
+C1962,Bui Hoang Hoa,0937678062,326 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.781059,109.213233
+C1963,Do Thanh Minh,0991499319,355 Ngo May Phuong Ghenh Rang TP Quy Nhon,13.777430,109.238269
+C1964,Vo Duc Hung,0983753670,446 Nguyen Hue Phuong Tran Hung Dao TP Quy Nhon,13.756581,109.210731
+C1965,Pham Ngoc Phuc,0951539491,244 Bui Thi Xuan Phuong Ngo May TP Quy Nhon,13.766311,109.234849
+C1966,Le Thi Cuong,0920095745,411 Tay Son Phuong Tran Hung Dao TP Quy Nhon,13.764143,109.205131
+C1967,Vu Duc Phuc,0968282425,326 Tran Hung Dao Phuong Nguyen Van Cu TP Quy Nhon,13.761671,109.217883
+C1968,Vu Thanh Tien,0959450069,201 An Duong Vuong Phuong Tran Phu TP Quy Nhon,13.762416,109.232530
+C1969,Bui Hoang Thang,0918370809,172 Ly Thuong Kiet Phuong Tran Hung Dao TP Quy Nhon,13.757586,109.212076
+C1970,Vo Dinh Hoa,0931491088,432 Nguyen Tat Thanh Phuong Ghenh Rang TP Quy Nhon,13.770953,109.219465
+C1971,Bui Van Phuc,0928327251,217 Ly Thuong Kiet Phuong Thi Nai TP Quy Nhon,13.784260,109.213740
+C1972,Vo Dinh Binh,0937074260,23 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.760232,109.235755
+C1973,Le Thi Vy,0914912026,31 Nguyen Hue Phuong Thi Nai TP Quy Nhon,13.762794,109.236791
+C1974,Hoang Thi Dat,0931309973,203 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.754378,109.222626
+C1975,Nguyen Thi Vy,0991291809,70 Tay Son Phuong Quang Trung TP Quy Nhon,13.788334,109.235871
+C1976,Do Huu Giang,0991084136,442 Tran Hung Dao Phuong Ly Thuong Kiet TP Quy Nhon,13.780140,109.237461
+C1977,Bui Van Son,0999929424,16 Ly Thuong Kiet Phuong Le Loi TP Quy Nhon,13.783124,109.230944
+C1978,Vo Quoc An,0981136746,191 An Duong Vuong Phuong Dong Da TP Quy Nhon,13.771266,109.216323
+C1979,Le Thi Minh,0922443801,256 Dong Da Phuong Le Loi TP Quy Nhon,13.760863,109.211944
+C1980,Le Ngoc Linh,0957356518,395 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.751612,109.212800
+C1981,Vu Van Hoa,0925373744,378 Nguyen Tat Thanh Phuong Nguyen Van Cu TP Quy Nhon,13.762378,109.221452
+C1982,Le Thi Quan,0973256939,58 Nguyen Tat Thanh Phuong Thi Nai TP Quy Nhon,13.773384,109.221847
+C1983,Tran Huu Hoa,0933318964,182 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.780043,109.212899
+C1984,Le Huu Vy,0925013779,353 Nguyen Tat Thanh Phuong Le Loi TP Quy Nhon,13.778630,109.215028
+C1985,Do Dinh Nam,0910169885,366 Hoang Hoa Tham Phuong Tran Hung Dao TP Quy Nhon,13.764471,109.221542
+C1986,Le Minh Tuan,0951605133,180 Nguyen Hue Phuong Ly Thuong Kiet TP Quy Nhon,13.782641,109.228979
+C1987,Vo Thi Dat,0947786402,202 Bui Thi Xuan Phuong Nguyen Van Cu TP Quy Nhon,13.781918,109.215264
+C1988,Le Ngoc Son,0971922630,196 Le Hong Phong Phuong Ghenh Rang TP Quy Nhon,13.787140,109.236962
+C1989,Tran Thi Vy,0986179599,253 Bui Thi Xuan Phuong Thi Nai TP Quy Nhon,13.764451,109.227300
+C1990,Vo Van Thang,0914561615,72 An Duong Vuong Phuong Ngo May TP Quy Nhon,13.779183,109.234111
+C1991,Pham Duc Khanh,0966589489,133 Xuan Dieu Phuong Dong Da TP Quy Nhon,13.787326,109.218155
+C1992,Bui Hoang Minh,0922663102,401 Dong Da Phuong Nguyen Van Cu TP Quy Nhon,13.778428,109.205331
+C1993,Le Quoc Khanh,0968805501,153 Dong Da Phuong Tran Phu TP Quy Nhon,13.779145,109.224296
+C1994,Hoang Minh Dung,0970703770,337 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.760942,109.220862
+C1995,Nguyen Huu Quan,0997654939,304 Xuan Dieu Phuong Nguyen Van Cu TP Quy Nhon,13.780264,109.211689
+C1996,Nguyen Huu Dat,0914767299,365 Nguyen Tat Thanh Phuong Dong Da TP Quy Nhon,13.771992,109.228177
+C1997,Pham Minh Phuc,0939189929,23 Han Mac Tu Phuong Ly Thuong Kiet TP Quy Nhon,13.753518,109.212906
+C1998,Vo Dinh Vy,0933364661,274 Tran Hung Dao Phuong Le Loi TP Quy Nhon,13.763233,109.225255
+C1999,Bui Minh An,0986202899,219 Tran Hung Dao Phuong Quang Trung TP Quy Nhon,13.758767,109.237293
+C2000,Dang Duc Linh,0986420947,4 Nguyen Tat Thanh Phuong Quang Trung TP Quy Nhon,13.771517,109.209250
+C2001,Khach Hang Test,0987515208,123 Le Loi, Quy Nhon,13.775000,109.225000
+C2002,truong thanh tung,0998245325,Điện Biên Phủ,13.775000,109.225000
+C2003,Khach Hang Test,0982360722,123 Le Loi, Quy Nhon,13.775000,109.225000
+C2004,Khach Hang Test,0986288456,123 Le Loi, Quy Nhon,13.775000,109.225000
+C2005,Khach Hang Test,0986701259,123 Le Loi, Quy Nhon,13.775000,109.225000
+C2006,Khach Hang Test,0986827259,123 Le Loi, Quy Nhon,13.775000,109.225000
+C2007,Khach Hang Test,0988326414,123 Le Loi, Quy Nhon,13.775000,109.225000
+1C2008,Khach Hang Test,0986678884,123 Le Loi, Quy Nhon,13.775000,109.225000
+C2009,Nguyen Van Test,0905123456,120 Tran Phu, P. Le Hong Phong, TP. Quy Nhon,13.778000,109.223000
