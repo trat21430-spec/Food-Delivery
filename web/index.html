@@ -204,18 +204,53 @@
         </button>
       </nav>
 
-      <!-- Account Switcher & Cart Action -->
-      <div class="flex items-center space-x-3">
-        <div class="relative">
-          <button onclick="toggleAccountMenu()" class="flex items-center space-x-2 bg-slate-700/70 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-600 transition">
-            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-400"></i>
-            <span id="current-user-name">Đang tải...</span>
-            <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
+      <!-- Account Switcher & Auth Actions -->
+      <div class="flex items-center space-x-2">
+        <!-- Nút Đăng Nhập -->
+        <button onclick="openLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5 shadow-sm">
+          <i data-lucide="log-in" class="w-3.5 h-3.5 text-brand-400"></i>
+          <span class="hidden sm:inline">Đăng Nhập</span>
+        </button>
+
+        <!-- Nút Đăng Ký -->
+        <button onclick="openRegisterModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-brand-500/20">
+          <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Đăng Ký</span>
+        </button>
+
+        <!-- Dropdown Đổi Vai Trò / Tài Khoản -->
+        <div class="relative" id="account-menu-wrapper">
+          <button onclick="toggleAccountMenu(event)" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-medium border border-slate-700 transition">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
+            <span id="current-user-name" class="max-w-[120px] sm:max-w-[170px] truncate font-semibold">Đang tải...</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
           </button>
-          <!-- Dropdown demo accounts -->
-          <div id="account-dropdown" class="hidden absolute right-0 mt-2 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-2 z-50 text-xs">
-            <div class="px-2 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Đổi Tài Khoản Demo</div>
-            <div class="space-y-1 mt-1 max-h-60 overflow-y-auto" id="demo-account-list"></div>
+          
+          <!-- Dropdown menu 5 vai trò -->
+          <div id="account-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-3 z-50 text-xs space-y-2.5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <span class="font-bold text-white text-xs flex items-center">
+                <i data-lucide="users" class="w-3.5 h-3.5 mr-1.5 text-brand-400"></i> Chuyển Đổi Tài Khoản
+              </span>
+              <span class="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full font-mono">5 Vai Trò</span>
+            </div>
+            
+            <div class="space-y-1 max-h-72 overflow-y-auto" id="demo-account-list"></div>
+
+            <div class="pt-2 border-t border-slate-800 space-y-1">
+              <button onclick="openLoginModal(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-2">
+                <i data-lucide="key-round" class="w-3.5 h-3.5 text-brand-400"></i>
+                <span>Đăng nhập tài khoản khác</span>
+              </button>
+              <button onclick="openRegisterModal(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-2">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Đăng ký khách hàng mới</span>
+              </button>
+              <button onclick="logoutCurrentUser(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition flex items-center space-x-2">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                <span>Đăng xuất phiên hiện tại</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1258,7 +1293,7 @@
       }
     }
 
-    async function loadDemoAccounts() {
+        async function loadDemoAccounts() {
       try {
         const res = await fetch('/api/auth/demo-accounts');
         const list = await res.json();
@@ -1266,7 +1301,9 @@
         STATE.demoAccounts = {
           customers: list.filter(a => a.role === 'CUSTOMER').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username })),
           drivers: list.filter(a => a.role === 'DRIVER').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username })),
-          restaurants: list.filter(a => a.role === 'RESTAURANT').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username }))
+          restaurants: list.filter(a => a.role === 'RESTAURANT').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username })),
+          dispatchers: list.filter(a => a.role === 'DISPATCHER').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username })),
+          admins: list.filter(a => a.role === 'ADMIN').map(a => ({ id: a.linkedId, name: a.displayName, username: a.username }))
         };
 
         try {
@@ -1293,69 +1330,288 @@
 
     function renderAccountDropdown() {
       const container = document.getElementById('demo-account-list');
+      if (!container) return;
       container.innerHTML = '';
 
-      // Customers
-      const custHead = document.createElement('div');
-      custHead.className = 'text-[10px] text-brand-400 font-bold px-2 pt-1';
-      custHead.innerText = 'Khách Hàng (Customer)';
-      container.appendChild(custHead);
+      // 1. Khách Hàng (Customer)
+      if (STATE.demoAccounts.customers && STATE.demoAccounts.customers.length > 0) {
+        const h = document.createElement('div');
+        h.className = 'text-[10px] text-brand-400 font-bold px-2 pt-1 flex items-center justify-between';
+        h.innerHTML = '<span>👤 Khách Hàng (Customer)</span><span class="text-slate-500 font-normal">Đặt món</span>';
+        container.appendChild(h);
 
-      STATE.demoAccounts.customers.forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'px-2 py-1.5 hover:bg-slate-700/80 rounded cursor-pointer text-slate-200 flex justify-between items-center';
-        item.onclick = () => { selectUser(c, 'CUSTOMER'); toggleAccountMenu(); };
-        item.innerHTML = `<span>${c.name}</span><span class="text-[10px] text-slate-400">${c.id}</span>`;
-        container.appendChild(item);
-      });
+        STATE.demoAccounts.customers.forEach(c => {
+          const item = document.createElement('div');
+          const isCurrent = STATE.currentUser && STATE.currentUser.username === c.username;
+          item.className = `px-2 py-1.5 hover:bg-slate-800 rounded-lg cursor-pointer text-slate-200 flex justify-between items-center transition ${isCurrent ? 'bg-brand-600/20 border border-brand-500/30' : ''}`;
+          item.onclick = () => { selectUser(c, 'CUSTOMER'); closeAccountMenu(); };
+          item.innerHTML = `<span class="truncate font-medium">${c.name}</span><span class="text-[10px] text-slate-400 font-mono ml-2">${c.id}</span>`;
+          container.appendChild(item);
+        });
+      }
 
-      // Drivers
-      const drvHead = document.createElement('div');
-      drvHead.className = 'text-[10px] text-emerald-400 font-bold px-2 pt-2 border-t border-slate-700/60 mt-1';
-      drvHead.innerText = 'Tài Xế (Driver)';
-      container.appendChild(drvHead);
+      // 2. Bếp Quán Ăn (Kitchen)
+      if (STATE.demoAccounts.restaurants && STATE.demoAccounts.restaurants.length > 0) {
+        const h = document.createElement('div');
+        h.className = 'text-[10px] text-amber-400 font-bold px-2 pt-2 border-t border-slate-800 mt-1 flex items-center justify-between';
+        h.innerHTML = '<span>👨‍🍳 Bếp Nhà Hàng (Kitchen)</span><span class="text-slate-500 font-normal">Chế biến</span>';
+        container.appendChild(h);
 
-      STATE.demoAccounts.drivers.forEach(d => {
-        const item = document.createElement('div');
-        item.className = 'px-2 py-1.5 hover:bg-slate-700/80 rounded cursor-pointer text-slate-200 flex justify-between items-center';
-        item.onclick = () => { selectUser(d, 'DRIVER'); switchPortal('driver'); toggleAccountMenu(); };
-        item.innerHTML = `<span>${d.name}</span><span class="text-[10px] text-slate-400">${d.id}</span>`;
-        container.appendChild(item);
-      });
+        STATE.demoAccounts.restaurants.forEach(r => {
+          const item = document.createElement('div');
+          const isCurrent = STATE.currentUser && STATE.currentUser.username === r.username;
+          item.className = `px-2 py-1.5 hover:bg-slate-800 rounded-lg cursor-pointer text-slate-200 flex justify-between items-center transition ${isCurrent ? 'bg-amber-600/20 border border-amber-500/30' : ''}`;
+          item.onclick = () => { selectUser(r, 'RESTAURANT'); closeAccountMenu(); };
+          item.innerHTML = `<span class="truncate font-medium">${r.name}</span><span class="text-[10px] text-slate-400 font-mono ml-2">${r.id}</span>`;
+          container.appendChild(item);
+        });
+      }
 
-      // Kitchen
-      const restHead = document.createElement('div');
-      restHead.className = 'text-[10px] text-amber-400 font-bold px-2 pt-2 border-t border-slate-700/60 mt-1';
-      restHead.innerText = 'Bếp Nhà Hàng (Kitchen)';
-      container.appendChild(restHead);
+      // 3. Tài Xế Shipper (Driver)
+      if (STATE.demoAccounts.drivers && STATE.demoAccounts.drivers.length > 0) {
+        const h = document.createElement('div');
+        h.className = 'text-[10px] text-emerald-400 font-bold px-2 pt-2 border-t border-slate-800 mt-1 flex items-center justify-between';
+        h.innerHTML = '<span>🛵 Tài Xế (Driver App)</span><span class="text-slate-500 font-normal">Giao hàng</span>';
+        container.appendChild(h);
 
-      STATE.demoAccounts.restaurants.forEach(r => {
-        const item = document.createElement('div');
-        item.className = 'px-2 py-1.5 hover:bg-slate-700/80 rounded cursor-pointer text-slate-200 flex justify-between items-center';
-        item.onclick = () => { selectUser(r, 'RESTAURANT'); switchPortal('kitchen'); toggleAccountMenu(); };
-        item.innerHTML = `<span>${r.name}</span><span class="text-[10px] text-slate-400">${r.id}</span>`;
-        container.appendChild(item);
-      });
+        STATE.demoAccounts.drivers.forEach(d => {
+          const item = document.createElement('div');
+          const isCurrent = STATE.currentUser && STATE.currentUser.username === d.username;
+          item.className = `px-2 py-1.5 hover:bg-slate-800 rounded-lg cursor-pointer text-slate-200 flex justify-between items-center transition ${isCurrent ? 'bg-emerald-600/20 border border-emerald-500/30' : ''}`;
+          item.onclick = () => { selectUser(d, 'DRIVER'); closeAccountMenu(); };
+          item.innerHTML = `<span class="truncate font-medium">${d.name}</span><span class="text-[10px] text-slate-400 font-mono ml-2">${d.id}</span>`;
+          container.appendChild(item);
+        });
+      }
+
+      // 4. Điều Phối Viên Trung Tâm (Dispatcher)
+      if (STATE.demoAccounts.dispatchers && STATE.demoAccounts.dispatchers.length > 0) {
+        const h = document.createElement('div');
+        h.className = 'text-[10px] text-cyan-400 font-bold px-2 pt-2 border-t border-slate-800 mt-1 flex items-center justify-between';
+        h.innerHTML = '<span>📡 Điều Phối Viên (Dispatcher)</span><span class="text-slate-500 font-normal">Radar GPS</span>';
+        container.appendChild(h);
+
+        STATE.demoAccounts.dispatchers.forEach(disp => {
+          const item = document.createElement('div');
+          const isCurrent = STATE.currentUser && STATE.currentUser.username === disp.username;
+          item.className = `px-2 py-1.5 hover:bg-slate-800 rounded-lg cursor-pointer text-slate-200 flex justify-between items-center transition ${isCurrent ? 'bg-cyan-600/20 border border-cyan-500/30' : ''}`;
+          item.onclick = () => { selectUser(disp, 'DISPATCHER'); closeAccountMenu(); };
+          item.innerHTML = `<span class="truncate font-medium">${disp.name}</span><span class="text-[10px] text-slate-400 font-mono ml-2">${disp.id}</span>`;
+          container.appendChild(item);
+        });
+      }
+
+      // 5. Quản Trị Viên (Admin)
+      if (STATE.demoAccounts.admins && STATE.demoAccounts.admins.length > 0) {
+        const h = document.createElement('div');
+        h.className = 'text-[10px] text-indigo-400 font-bold px-2 pt-2 border-t border-slate-800 mt-1 flex items-center justify-between';
+        h.innerHTML = '<span>🛡️ Quản Trị Viên (Admin)</span><span class="text-slate-500 font-normal">Tài chính sàn</span>';
+        container.appendChild(h);
+
+        STATE.demoAccounts.admins.forEach(adm => {
+          const item = document.createElement('div');
+          const isCurrent = STATE.currentUser && STATE.currentUser.username === adm.username;
+          item.className = `px-2 py-1.5 hover:bg-slate-800 rounded-lg cursor-pointer text-slate-200 flex justify-between items-center transition ${isCurrent ? 'bg-indigo-600/20 border border-indigo-500/30' : ''}`;
+          item.onclick = () => { selectUser(adm, 'ADMIN'); closeAccountMenu(); };
+          item.innerHTML = `<span class="truncate font-medium">${adm.name}</span><span class="text-[10px] text-slate-400 font-mono ml-2">${adm.id}</span>`;
+          container.appendChild(item);
+        });
+      }
     }
 
-    function toggleAccountMenu() {
-      document.getElementById('account-dropdown').classList.toggle('hidden');
+    function toggleAccountMenu(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('account-dropdown');
+      if (menu) menu.classList.toggle('hidden');
     }
+
+    function closeAccountMenu() {
+      const menu = document.getElementById('account-dropdown');
+      if (menu) menu.classList.add('hidden');
+    }
+
+    // Dismiss account dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('account-menu-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        closeAccountMenu();
+      }
+    });
 
     function selectUser(userObj, role) {
       STATE.currentUser = { ...userObj, role };
-      document.getElementById('current-user-name').innerText = `${userObj.name} (${role})`;
+      const nameEl = document.getElementById('current-user-name');
+      if (nameEl) nameEl.innerText = `${userObj.name} (${role})`;
       
       if (role === 'CUSTOMER') {
-        document.getElementById('cust-delivery-addr').innerText = `Vị trí nhận: ${userObj.address || '28 Diên Hồng, P. Ngô Mây, Quy Nhơn'}`;
+        const addrEl = document.getElementById('cust-delivery-addr');
+        if (addrEl) addrEl.innerText = `Vị trí nhận: ${userObj.address || '28 Diên Hồng, P. Ngô Mây, Quy Nhơn'}`;
         renderCustomerActiveOrder();
+        switchPortal('customer');
       } else if (role === 'DRIVER') {
-        document.getElementById('drv-name-display').innerText = `Tài Xế: ${userObj.name}`;
-        document.getElementById('drv-sub-display').innerText = `Mã: ${userObj.id} | Biển số: ${userObj.vehicleNumber || '77L1-8899'} | Đánh giá: 4.9 ★`;
+        const drvName = document.getElementById('drv-name-display');
+        if (drvName) drvName.innerText = `Tài Xế: ${userObj.name}`;
+        const drvSub = document.getElementById('drv-sub-display');
+        if (drvSub) drvSub.innerText = `Mã: ${userObj.id} | Biển số: ${userObj.vehicleNumber || '77L1-8899'} | Đánh giá: 4.9 ★`;
         renderDriverActiveTrip();
+        switchPortal('driver');
       } else if (role === 'RESTAURANT') {
         changeKitchenRestaurant(userObj.id);
+        switchPortal('kitchen');
+      } else if (role === 'DISPATCHER') {
+        switchPortal('dispatch');
+      } else if (role === 'ADMIN') {
+        switchPortal('admin');
       }
+      playSuccessChime();
+      showToast(`Đã chuyển sang tài khoản: ${userObj.name} (${role})`, 'info');
+      renderAccountDropdown();
+    }
+
+    // AUTH MODAL HANDLERS
+    function openLoginModal() {
+      document.getElementById('login-modal-overlay')?.classList.remove('hidden');
+      document.getElementById('login-modal')?.classList.remove('hidden');
+      document.getElementById('login-error-msg')?.classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal')?.classList.add('hidden');
+      document.getElementById('login-modal-overlay')?.classList.add('hidden');
+    }
+
+    function openRegisterModal() {
+      document.getElementById('register-modal-overlay')?.classList.remove('hidden');
+      document.getElementById('register-modal')?.classList.remove('hidden');
+      document.getElementById('reg-error-msg')?.classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    function closeRegisterModal() {
+      document.getElementById('register-modal')?.classList.add('hidden');
+      document.getElementById('register-modal-overlay')?.classList.add('hidden');
+    }
+
+    function quickFillLogin(username, password) {
+      const u = document.getElementById('login-username');
+      const p = document.getElementById('login-password');
+      if (u) u.value = username;
+      if (p) p.value = password;
+    }
+
+    async function submitLoginForm(e) {
+      e.preventDefault();
+      const username = document.getElementById('login-username')?.value.trim();
+      const password = document.getElementById('login-password')?.value;
+      const errorEl = document.getElementById('login-error-msg');
+      const btn = document.getElementById('btn-submit-login');
+
+      if (!username || !password) return;
+
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeLoginModal();
+          playSuccessChime();
+          showToast(`🎉 Đăng nhập thành công! Xin chào ${data.displayName}`, 'success');
+
+          const userObj = {
+            id: data.linkedId || data.username,
+            name: data.displayName,
+            username: data.username,
+            role: data.role
+          };
+          selectUser(userObj, data.role);
+        } else {
+          if (errorEl) {
+            errorEl.innerText = `❌ ${data.message || 'Sai tên đăng nhập hoặc mật khẩu!'}`;
+            errorEl.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        if (errorEl) {
+          errorEl.innerText = '❌ Lỗi kết nối đến máy chủ!';
+          errorEl.classList.remove('hidden');
+        }
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    async function submitRegisterForm(e) {
+      e.preventDefault();
+      const username = document.getElementById('reg-username')?.value.trim();
+      const password = document.getElementById('reg-password')?.value;
+      const fullName = document.getElementById('reg-fullname')?.value.trim();
+      const phone = document.getElementById('reg-phone')?.value.trim();
+      const address = document.getElementById('reg-address')?.value.trim();
+      const errorEl = document.getElementById('reg-error-msg');
+      const btn = document.getElementById('btn-submit-reg');
+
+      if (!username || !password || !fullName || !phone || !address) return;
+
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+            fullName: fullName,
+            phone: phone,
+            address: address,
+            lat: 13.775,
+            lon: 109.225
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeRegisterModal();
+          playSuccessChime();
+          showToast(`🎉 Đăng ký thành công! Đã tự động đăng nhập tài khoản ${username}`, 'success');
+
+          // Auto select and login
+          const userObj = {
+            id: data.customerId || ('C_' + username),
+            name: fullName,
+            username: username,
+            address: address,
+            phone: phone,
+            role: 'CUSTOMER'
+          };
+          selectUser(userObj, 'CUSTOMER');
+          await loadDemoAccounts(); // Reload demo accounts list to include new user
+        } else {
+          if (errorEl) {
+            errorEl.innerText = `❌ ${data.message || 'Đăng ký thất bại!'}`;
+            errorEl.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        if (errorEl) {
+          errorEl.innerText = '❌ Lỗi kết nối đến máy chủ!';
+          errorEl.classList.remove('hidden');
+        }
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function logoutCurrentUser() {
+      STATE.currentUser = null;
+      STATE.cart = {};
+      updateCartUI();
+      document.getElementById('current-user-name').innerText = 'Chưa đăng nhập';
+      showToast('Đã đăng xuất phiên làm việc', 'info');
+      openLoginModal();
     }
 
     // Load Restaurants & Menus (CÓ HÌNH ẢNH NHÀ HÀNG & MÓN ĂN)
@@ -2526,6 +2782,139 @@
       <i data-lucide="check-circle-2" class="w-4 h-4"></i>
       <span>TÔI ĐÃ CHUYỂN KHOẢN XONG</span>
     </button>
+  </div>
+
+  
+  <!-- ========================================================================= -->
+  <!-- MODAL: ĐĂNG NHẬP (LOGIN MODAL) -->
+  <!-- ========================================================================= -->
+  <div id="login-modal-overlay" onclick="closeLoginModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <div id="login-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-5">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center">
+          <i data-lucide="log-in" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-base">Đăng Nhập Hệ Thống</h3>
+          <p class="text-[11px] text-slate-400">Food Delivery TP. Quy Nhơn (LAB211)</p>
+        </div>
+      </div>
+      <button onclick="closeLoginModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Quick Role Autofill Buttons -->
+    <div class="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/80 space-y-2">
+      <p class="text-[11px] text-slate-300 font-bold flex items-center">
+        <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400 mr-1.5"></i> Chọn nhanh tài khoản mẫu:
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px]">
+        <button type="button" onclick="quickFillLogin('customer1', '123')" class="bg-slate-900 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 transition text-left">
+          👤 Khách hàng
+        </button>
+        <button type="button" onclick="quickFillLogin('restaurant1', '123')" class="bg-slate-900 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 transition text-left">
+          👨‍🍳 Bếp Gia Vĩ
+        </button>
+        <button type="button" onclick="quickFillLogin('driver1', '123')" class="bg-slate-900 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 transition text-left">
+          🛵 Shipper A
+        </button>
+        <button type="button" onclick="quickFillLogin('dispatcher', 'disp123')" class="bg-slate-900 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 transition text-left">
+          📡 Điều phối
+        </button>
+        <button type="button" onclick="quickFillLogin('admin', 'admin123')" class="bg-slate-900 hover:bg-slate-700 text-slate-200 py-1.5 px-2 rounded-lg border border-slate-700 transition text-left col-span-2 sm:col-span-1">
+          🛡️ Quản trị Admin
+        </button>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form onsubmit="submitLoginForm(event)" class="space-y-3.5 text-xs">
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Tên đăng nhập (Username)</label>
+        <input type="text" id="login-username" required placeholder="Nhập username (vd: customer1, admin...)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+      </div>
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Mật khẩu (Password)</label>
+        <input type="password" id="login-password" required placeholder="Nhập mật khẩu..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+      </div>
+
+      <div id="login-error-msg" class="text-rose-400 text-xs hidden"></div>
+
+      <button type="submit" id="btn-submit-login" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-brand-500/25 transition">
+        <i data-lucide="log-in" class="w-4 h-4"></i>
+        <span>ĐĂNG NHẬP NGAY</span>
+      </button>
+    </form>
+
+    <div class="text-center text-xs text-slate-400 pt-2 border-t border-slate-800">
+      Chưa có tài khoản khách hàng? 
+      <button onclick="closeLoginModal(); openRegisterModal();" class="text-brand-400 hover:underline font-bold ml-1">Đăng ký ngay</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ĐĂNG KÝ KHÁCH HÀNG MỚI (REGISTER MODAL) -->
+  <!-- ========================================================================= -->
+  <div id="register-modal-overlay" onclick="closeRegisterModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <div id="register-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+          <i data-lucide="user-plus" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-base">Đăng Ký Tài Khoản Khách Hàng</h3>
+          <p class="text-[11px] text-slate-400">Trải nghiệm đặt món nhanh tại TP. Quy Nhơn</p>
+        </div>
+      </div>
+      <button onclick="closeRegisterModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Register Form -->
+    <form onsubmit="submitRegisterForm(event)" class="space-y-3 text-xs">
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Tên đăng nhập (Username) *</label>
+        <input type="text" id="reg-username" required placeholder="vd: an_quynhon, hungtran..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+      </div>
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Mật khẩu *</label>
+        <input type="password" id="reg-password" required placeholder="Tối thiểu 3 ký tự" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+      </div>
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Họ và tên khách hàng *</label>
+        <input type="text" id="reg-fullname" required placeholder="vd: Nguyễn Văn Hưng" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+      </div>
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Số điện thoại *</label>
+        <input type="tel" id="reg-phone" required placeholder="vd: 0912345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+      </div>
+      <div>
+        <label class="block font-semibold text-slate-300 mb-1">Địa chỉ giao hàng tại TP. Quy Nhơn *</label>
+        <input type="text" id="reg-address" required placeholder="vd: 120 Trần Phú, P. Lê Hồng Phong, TP. Quy Nhơn" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+        <div class="mt-1 flex flex-wrap gap-1 text-[10px]">
+          <span class="text-slate-500">Gợi ý nhanh:</span>
+          <button type="button" onclick="document.getElementById('reg-address').value = '28 Diên Hồng, P. Ngô Mây, TP. Quy Nhơn'" class="text-brand-400 hover:underline">P. Ngô Mây</button> •
+          <button type="button" onclick="document.getElementById('reg-address').value = '65 Nguyễn Huệ, P. Trần Phú, TP. Quy Nhơn'" class="text-brand-400 hover:underline">P. Trần Phú</button> •
+          <button type="button" onclick="document.getElementById('reg-address').value = '10 An Dương Vương, P. Nguyễn Văn Cừ, TP. Quy Nhơn'" class="text-brand-400 hover:underline">P. Nguyễn Văn Cừ</button>
+        </div>
+      </div>
+
+      <div id="reg-error-msg" class="text-rose-400 text-xs hidden"></div>
+
+      <button type="submit" id="btn-submit-reg" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/25 transition">
+        <i data-lucide="check" class="w-4 h-4"></i>
+        <span>ĐĂNG KÝ TÀI KHOẢN NGAY</span>
+      </button>
+    </form>
+
+    <div class="text-center text-xs text-slate-400 pt-2 border-t border-slate-800">
+      Đã có tài khoản? 
+      <button onclick="closeRegisterModal(); openLoginModal();" class="text-brand-400 hover:underline font-bold ml-1">Đăng nhập</button>
+    </div>
   </div>
 
   <!-- Realtime Toast Notifications Container -->
