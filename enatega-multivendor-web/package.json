@@ -51,7 +51,7 @@
     "react-geocode": "^0.2.2",
     "react-icons": "^5.5.0",
     "react-phone-input-2": "^2.15.1",
-    "react-tooltip": "^5.28.1",
+    "react-tooltip": "^6.0.12",
     "sharp": "^0.34.1",
     "subscriptions-transport-ws": "^0.11.0",
     "tailwind-merge": "^2.5.2",
