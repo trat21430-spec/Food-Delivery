@@ -3,13 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Food Delivery Quy Nhơn - Hệ Thống Điều Phối Thực Tế</title>
-  
-  <!-- PWA Manifest & Meta -->
-  <link rel="manifest" href="/manifest.json">
+
+  <!-- ========================================================================= -->
+  <!-- CHUẨN SEO: TITLE, PRIMARY META TAGS & KEYWORDS -->
+  <!-- ========================================================================= -->
+  <title>Food Delivery Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút</title>
+  <meta name="title" content="Food Delivery Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút">
+  <meta name="description" content="Hệ thống đặt món ăn trực tuyến và điều phối giao hàng thông minh số 1 tại TP. Quy Nhơn, Bình Định. Khám phá 200+ quán ăn đặc sản: Bánh xèo tôm nhảy, Bún chả cá Ngọc Liên, Cơm gà Quê Hương, Hải sản tươi sống giao nhanh trong 20 phút.">
+  <meta name="keywords" content="food delivery quy nhon, dat mon quy nhon, ship do an quy nhon, banh xeo tom nhay quy nhon, bun cha ca ngoc lien, com ga que huong, cha ram tom dat binh dinh, giao do an 20 phut, am thuc quy nhon, quan an ngon quy nhon, lab211 food delivery">
+  <meta name="author" content="Nhóm 01 - LAB211 Food Delivery Quy Nhơn Team">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#ea580c">
+  <link rel="canonical" href="http://localhost:8080/">
+
+  <!-- ========================================================================= -->
+  <!-- OPEN GRAPH (OG) / FACEBOOK / ZALO META TAGS -->
+  <!-- ========================================================================= -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:8080/">
+  <meta property="og:site_name" content="Food Delivery Quy Nhơn - FDS System">
+  <meta property="og:title" content="Food Delivery Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút">
+  <meta property="og:description" content="Thưởng thức đặc sản Bánh xèo tôm nhảy, Bún chả cá, Cơm gà xé Quy Nhơn với mạng lưới hơn 200 quán ăn đối tác uy tín, điều phối tài xế GPS Radar thông minh.">
+  <meta property="og:image" content="http://localhost:8080/images/og_banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mạng lưới đặt món và điều phối giao hàng Quy Nhơn">
+  <meta property="og:locale" content="vi_VN">
+
+  <!-- ========================================================================= -->
+  <!-- TWITTER CARDS META TAGS -->
+  <!-- ========================================================================= -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="http://localhost:8080/">
+  <meta name="twitter:title" content="Food Delivery Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc">
+  <meta name="twitter:description" content="Giao đồ ăn nhanh chóng tại TP Quy Nhơn với 200+ quán ăn đối tác uy tín.">
+  <meta name="twitter:image" content="http://localhost:8080/images/og_banner.png">
+
+  <!-- ========================================================================= -->
+  <!-- SCHEMA.ORG STRUCTURED DATA (JSON-LD) CHO SEO GOOGLE -->
+  <!-- ========================================================================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "http://localhost:8080/#website",
+        "url": "http://localhost:8080/",
+        "name": "Food Delivery Quy Nhơn",
+        "description": "Nền tảng đặt món và điều phối giao đồ ăn thời gian thực tại TP. Quy Nhơn",
+        "inLanguage": "vi-VN"
+      },
+      {
+        "@type": "FoodDeliveryService",
+        "@id": "http://localhost:8080/#service",
+        "name": "Food Delivery Quy Nhơn Express",
+        "url": "http://localhost:8080/",
+        "logo": "http://localhost:8080/icons/icon-512.png",
+        "image": "http://localhost:8080/images/og_banner.png",
+        "telephone": "+84-1900-7799",
+        "priceRange": "15.000đ - 250.000đ",
+        "currenciesAccepted": "VND",
+        "paymentAccepted": "Cash, Mobile Banking, COD",
+        "areaServed": {
+          "@type": "City",
+          "name": "Quy Nhơn",
+          "containedInPlace": {
+            "@type": "AdministrativeArea",
+            "name": "Bình Định"
+          }
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 13.7829,
+          "longitude": 109.2197
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "01 An Dương Vương, P. Nguyễn Văn Cừ",
+          "addressLocality": "Quy Nhơn",
+          "addressRegion": "Bình Định",
+          "addressCountry": "VN"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1250"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
-  
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="shortcut icon" href="/icons/icon-192.png">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -49,20 +140,24 @@
     ::-webkit-scrollbar-thumb:hover { background: #ea580c; }
     .badge-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
-    #radar-map { height: 500px; z-index: 10; border-radius: 0.75rem; }
+    #radar-map { height: 480px; z-index: 10; border-radius: 0.75rem; }
     .leaflet-popup-content-wrapper { background: #1e293b; color: #f8fafc; border: 1px solid #334155; }
     .leaflet-popup-tip { background: #1e293b; }
+    .food-card-img { transition: transform 0.4s ease, filter 0.4s ease; }
+    .food-card:hover .food-card-img { transform: scale(1.06); }
   </style>
 </head>
-<body class="h-full flex flex-col font-sans selection:bg-brand-500 selection:text-white">
+<body class="h-full flex flex-col font-sans selection:bg-brand-500 selection:text-white bg-slate-900 text-slate-100">
 
+  <!-- ========================================================================= -->
   <!-- TOP HEADER & ROLE SWITCHER -->
-  <header class="bg-slate-800/90 backdrop-blur border-b border-slate-700/80 sticky top-0 z-50">
+  <!-- ========================================================================= -->
+  <header role="banner" class="bg-slate-800/90 backdrop-blur border-b border-slate-700/80 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
       <!-- Logo & City Tag -->
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPortal('customer')">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+      <a href="/" onclick="switchPortal('customer'); return false;" class="flex items-center space-x-3 cursor-pointer group" title="Trang chủ Food Delivery Quy Nhơn">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition">
           <i data-lucide="utensils" class="w-5 h-5"></i>
         </div>
         <div>
@@ -72,7 +167,7 @@
           </div>
           <p class="text-[11px] text-slate-400 font-medium">Hệ Thống LAB211 Chuẩn Thực Tế</p>
         </div>
-      </div>
+      </a>
 
       <!-- Live Server Status Indicator -->
       <div class="hidden md:flex items-center space-x-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
@@ -81,7 +176,7 @@
       </div>
 
       <!-- Portal Tabs (Desktop) -->
-      <nav class="hidden lg:flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60 text-xs font-semibold">
+      <nav role="navigation" aria-label="Menu Phân Hệ" class="hidden xl:flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60 text-xs font-semibold">
         <button onclick="switchPortal('customer')" id="tab-customer" class="portal-tab px-3 py-1.5 rounded-lg text-white bg-brand-600 shadow">
           <i data-lucide="shopping-bag" class="w-3.5 h-3.5 inline mr-1"></i> Khách Hàng
         </button>
@@ -96,12 +191,16 @@
         <button onclick="switchPortal('dispatch')" id="tab-dispatch" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
           <i data-lucide="radar" class="w-3.5 h-3.5 inline mr-1"></i> Radar GPS
         </button>
+        <button onclick="switchPortal('apidocs')" id="tab-apidocs" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="code-2" class="w-3.5 h-3.5 inline mr-1"></i> REST API Docs
+          <span class="ml-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.2 rounded-full text-[10px]">v2.0</span>
+        </button>
         <button onclick="switchPortal('benchmark')" id="tab-benchmark" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
           <i data-lucide="cpu" class="w-3.5 h-3.5 inline mr-1"></i> Simulator
         </button>
       </nav>
 
-      <!-- Account Switcher & Cart Quick Action -->
+      <!-- Account Switcher & Cart Action -->
       <div class="flex items-center space-x-3">
         <div class="relative">
           <button onclick="toggleAccountMenu()" class="flex items-center space-x-2 bg-slate-700/70 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-600 transition">
@@ -117,13 +216,13 @@
         </div>
 
         <!-- PWA Install Button -->
-        <button id="btn-pwa-install" class="hidden bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition">
+        <button id="btn-pwa-install" class="hidden bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition" title="Cài đặt PWA lên thiết bị">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Cài Đặt App</span>
         </button>
 
         <!-- Cart Icon with Badge -->
-        <button onclick="openCartDrawer()" class="relative p-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-200 transition">
+        <button onclick="openCartDrawer()" class="relative p-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-200 transition" aria-label="Xem giỏ hàng">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
         </button>
@@ -131,8 +230,10 @@
     </div>
   </header>
 
+  <!-- ========================================================================= -->
   <!-- MOBILE BOTTOM NAVIGATION (Fixed) -->
-  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-slate-800 flex justify-around py-2 z-50 text-[10px] font-medium text-slate-400">
+  <!-- ========================================================================= -->
+  <nav role="navigation" aria-label="Thanh điều hướng di động" class="xl:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-slate-800 flex justify-around py-2 z-50 text-[10px] font-medium text-slate-400">
     <button onclick="switchPortal('customer')" class="mob-tab flex flex-col items-center text-brand-500" id="mob-customer">
       <i data-lucide="shopping-bag" class="w-5 h-5 mb-0.5"></i> Món Ăn
     </button>
@@ -145,74 +246,113 @@
     <button onclick="switchPortal('dispatch')" class="mob-tab flex flex-col items-center" id="mob-dispatch">
       <i data-lucide="radar" class="w-5 h-5 mb-0.5"></i> Radar
     </button>
+    <button onclick="switchPortal('apidocs')" class="mob-tab flex flex-col items-center" id="mob-apidocs">
+      <i data-lucide="code-2" class="w-5 h-5 mb-0.5"></i> API Docs
+    </button>
     <button onclick="switchPortal('benchmark')" class="mob-tab flex flex-col items-center" id="mob-benchmark">
       <i data-lucide="cpu" class="w-5 h-5 mb-0.5"></i> Test
     </button>
   </nav>
 
+  <!-- ========================================================================= -->
   <!-- MAIN VIEWPORT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 pb-20 lg:pb-6 overflow-y-auto">
+  <!-- ========================================================================= -->
+  <main role="main" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 pb-20 xl:pb-6 overflow-y-auto">
 
     <!-- ========================================================================= -->
-    <!-- PORTAL 1: CUSTOMER ORDERING (KHÁCH HÀNG ĐẶT MÓN) -->
+    <!-- PORTAL 1: CUSTOMER ORDERING (KHÁCH HÀNG ĐẶT MÓN & CHUẨN SEO) -->
     <!-- ========================================================================= -->
-    <div id="portal-customer" class="space-y-6">
+    <article id="portal-customer" class="space-y-8">
       
-      <!-- Hero Banner & Filter Bar -->
-      <div class="bg-gradient-to-r from-brand-600 via-orange-600 to-amber-600 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+      <!-- Hero Banner với Hình Ảnh & SEO Title -->
+      <section class="bg-gradient-to-r from-brand-600 via-orange-600 to-amber-600 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="relative z-10 max-w-2xl">
           <div class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold mb-3">
             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-200"></i>
             <span id="cust-delivery-addr">Vị trí nhận: 28 Diên Hồng, P. Ngô Mây, TP. Quy Nhơn</span>
           </div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Hôm nay bạn muốn ăn gì ở Quy Nhơn?</h1>
-          <p class="mt-2 text-sm text-orange-100">Bánh xèo tôm nhảy, bún chả cá, cơm gà xé, nem nướng... Giao nhanh trong 20 phút bằng thuật toán điều phối thông minh!</p>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Ẩm Thực Quy Nhơn Giao Tận Nơi Trong 20 Phút
+          </h1>
+          <p class="mt-3 text-sm sm:text-base text-orange-100 leading-relaxed">
+            Thưởng thức đặc sản Bánh xèo tôm nhảy, Bún chả cá Ngọc Liên, Cơm gà Quê Hương, Nem nướng Chợ Huyện... Giao nhanh, giữ nguyên độ nóng giòn bằng thuật toán điều phối thông minh!
+          </p>
+          <div class="mt-5 flex flex-wrap items-center gap-3 text-xs font-semibold">
+            <span class="bg-black/25 px-3 py-1.5 rounded-xl border border-white/20 flex items-center">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300 mr-1.5"></i> 200+ Quán Uy Tín
+            </span>
+            <span class="bg-black/25 px-3 py-1.5 rounded-xl border border-white/20 flex items-center">
+              <i data-lucide="truck" class="w-4 h-4 text-amber-200 mr-1.5"></i> Phí Ship Haversine Chuẩn
+            </span>
+            <span class="bg-black/25 px-3 py-1.5 rounded-xl border border-white/20 flex items-center">
+              <i data-lucide="clock" class="w-4 h-4 text-cyan-200 mr-1.5"></i> Chuẩn Bị & Giao 20 Phút
+            </span>
+          </div>
         </div>
-        <div class="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
-          <i data-lucide="utensils" class="w-72 h-72"></i>
-        </div>
-      </div>
 
-      <!-- Filters & Restaurant Cards Carousel -->
-      <div class="space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <h2 class="text-lg font-bold text-slate-100 flex items-center">
-            <i data-lucide="store" class="w-5 h-5 text-brand-500 mr-2"></i> Danh Sách Quán Ăn Đối Tác
-          </h2>
+        <!-- Hero Food Collage Imagery (SEO Alt Tags) -->
+        <div class="relative z-10 w-full md:w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl border-2 border-white/30">
+          <img 
+            src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop&q=80" 
+            alt="Món ngon đặc sản ẩm thực TP Quy Nhơn - Bánh xèo tôm nhảy giòn rụm" 
+            class="w-full h-full object-cover"
+            onerror="this.src='/images/dish_default.svg'"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
+            <p class="text-xs font-bold text-white drop-shadow">Đặc Sản Xứ Nẫu - Nóng Hổi Mỗi Ngày</p>
+          </div>
+        </div>
+
+        <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none">
+          <i data-lucide="utensils" class="w-80 h-80"></i>
+        </div>
+      </section>
+
+      <!-- Danh Sách Quán Ăn Đối Tác Kèm Hình Ảnh -->
+      <section class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-lg font-bold text-slate-100 flex items-center">
+              <i data-lucide="store" class="w-5 h-5 text-brand-500 mr-2"></i> Danh Sách Quán Ăn Đối Tác Tại Quy Nhơn
+            </h2>
+            <p class="text-xs text-slate-400">Chọn quán để xem hình ảnh và đặt các món ăn đặc sản</p>
+          </div>
           <div class="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
-            <button onclick="filterRestaurantCategory('ALL')" class="category-chip px-3 py-1.5 rounded-full bg-brand-600 text-white font-medium">Tất cả</button>
+            <button onclick="filterRestaurantCategory('ALL')" class="category-chip px-3 py-1.5 rounded-full bg-brand-600 text-white font-medium">Tất cả (200)</button>
             <button onclick="filterRestaurantCategory('Bánh xèo')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Bánh xèo</button>
-            <button onclick="filterRestaurantCategory('Cơm gà')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Cơm gà</button>
             <button onclick="filterRestaurantCategory('Bún chả cá')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Bún cá</button>
+            <button onclick="filterRestaurantCategory('Cơm gà')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Cơm gà</button>
+            <button onclick="filterRestaurantCategory('Hải sản')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Hải sản</button>
             <button onclick="filterRestaurantCategory('Đặc sản')" class="category-chip px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300">Đặc sản</button>
           </div>
         </div>
 
-        <!-- Restaurants Horizontal Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="restaurant-cards-container">
-          <!-- Populated by JS -->
+        <!-- Restaurants Cards Grid Với Hình Ảnh Thực Tế -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="restaurant-cards-container">
+          <!-- Populated by JS with Restaurant Photos -->
         </div>
-      </div>
+      </section>
 
-      <!-- Selected Restaurant's Menu Items Section -->
-      <div class="mt-8 space-y-4">
+      <!-- Thực Đơn Món Ăn Kèm Hình Ảnh Chi Tiết -->
+      <section class="mt-10 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <div>
             <h3 class="text-base font-bold text-white flex items-center" id="selected-restaurant-title">
-              Thực đơn: Bánh Xèo Tôm Nhảy Gia Vĩ
+              Thực đơn: Bánh Xèo Tôm Nhảy Gia Vĩ 101
             </h3>
             <p class="text-xs text-slate-400" id="selected-restaurant-desc">Khoảng cách: 0.8 km | Phí giao dự kiến: 15.000đ</p>
           </div>
           <span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-lg border border-slate-700" id="menu-items-count">0 món</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="menu-items-container">
-          <!-- Populated by JS -->
+        <!-- Menu Grid Với Hình Ảnh Món Ăn -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="menu-items-container">
+          <!-- Populated by JS with Dish Photos -->
         </div>
-      </div>
+      </section>
 
-      <!-- Live Order Tracking Stepper (If customer has active order) -->
-      <div id="customer-active-orders-section" class="mt-8 bg-slate-800/80 rounded-2xl p-5 border border-slate-700/80 hidden">
+      <!-- Live Order Tracking Stepper -->
+      <section id="customer-active-orders-section" class="mt-8 bg-slate-800/80 rounded-2xl p-5 border border-slate-700/80 hidden">
         <div class="flex items-center justify-between mb-4 border-b border-slate-700/60 pb-3">
           <div class="flex items-center space-x-2">
             <span class="w-3 h-3 rounded-full bg-amber-400 badge-pulse"></span>
@@ -224,7 +364,6 @@
           </button>
         </div>
 
-        <!-- Stepper Progress Bar -->
         <div class="relative py-4">
           <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-slate-700">
             <div id="stepper-progress-bar" style="width: 25%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-brand-500 transition-all duration-500"></div>
@@ -249,14 +388,14 @@
           <div id="order-stepper-details">Tài xế: Đang tìm tài xế gần nhất...</div>
           <div class="font-bold text-brand-400" id="order-stepper-total">0 đ</div>
         </div>
-      </div>
+      </section>
 
-    </div>
+    </article>
 
     <!-- ========================================================================= -->
     <!-- PORTAL 2: RESTAURANT KITCHEN (BẾP NHÀ HÀNG) -->
     <!-- ========================================================================= -->
-    <div id="portal-kitchen" class="space-y-6 hidden">
+    <article id="portal-kitchen" class="space-y-6 hidden">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
         <div class="flex items-center space-x-3">
           <div class="w-12 h-12 rounded-xl bg-orange-600/20 text-orange-400 flex items-center justify-center border border-orange-500/30">
@@ -264,7 +403,7 @@
           </div>
           <div>
             <h2 class="text-base font-bold text-white flex items-center">
-              Màn Hình Chế Biến: <span id="kitchen-current-rest-name" class="text-brand-400 ml-1.5">Bánh Xèo Tôm Nhảy Gia Vĩ</span>
+              Màn Hình Chế Biến: <span id="kitchen-current-rest-name" class="text-brand-400 ml-1.5">Bánh Xèo Tôm Nhảy Gia Vĩ 101</span>
             </h2>
             <p class="text-xs text-slate-400">Tự động nhận chuông báo khi có đơn mới từ khách hàng</p>
           </div>
@@ -321,8 +460,8 @@
           <table class="w-full text-left text-xs text-slate-300">
             <thead class="bg-slate-900/60 text-slate-400 uppercase font-semibold text-[11px]">
               <tr>
+                <th class="px-4 py-2.5">Món Ăn</th>
                 <th class="px-4 py-2.5">Mã Món</th>
-                <th class="px-4 py-2.5">Tên Món Ăn</th>
                 <th class="px-4 py-2.5">Giá Bán</th>
                 <th class="px-4 py-2.5">Tồn Kho Hiện Tại</th>
                 <th class="px-4 py-2.5 text-right">Thao Tác Nhập Hàng</th>
@@ -334,12 +473,12 @@
           </table>
         </div>
       </div>
-    </div>
+    </article>
 
     <!-- ========================================================================= -->
     <!-- PORTAL 3: DRIVER MOBILE APP (TÀI XẾ NHẬN CUỐC) -->
     <!-- ========================================================================= -->
-    <div id="portal-driver" class="space-y-6 hidden max-w-xl mx-auto">
+    <article id="portal-driver" class="space-y-6 hidden max-w-xl mx-auto">
       
       <!-- Driver Status Card -->
       <div class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-xl space-y-4">
@@ -349,7 +488,7 @@
               <i data-lucide="bike" class="w-6 h-6"></i>
             </div>
             <div>
-              <h3 class="font-bold text-base text-white" id="drv-name-display">Tài Xế: Nguyễn Văn Tài</h3>
+              <h3 class="font-bold text-base text-white" id="drv-name-display">Tài Xế: Nguyễn Văn A</h3>
               <p class="text-xs text-slate-400" id="drv-sub-display">Biển số: 77L1-8899 | Đánh giá: 4.9 ★</p>
             </div>
           </div>
@@ -388,31 +527,28 @@
           <span class="font-mono text-xs text-slate-300" id="driver-job-order-id">#ORD-9021</span>
         </div>
 
-        <!-- Waypoint: Pickup Restaurant -->
         <div class="flex items-start space-x-3 text-xs">
           <div class="w-6 h-6 rounded-full bg-orange-600/30 text-brand-400 flex items-center justify-center flex-shrink-0 mt-0.5">
             <i data-lucide="store" class="w-3.5 h-3.5"></i>
           </div>
           <div class="flex-1">
             <p class="text-[11px] text-slate-400 uppercase font-semibold">Điểm lấy món (Quán ăn)</p>
-            <p class="font-bold text-white text-sm" id="driver-job-restaurant-name">Bánh Xèo Tôm Nhảy Gia Vĩ</p>
-            <p class="text-slate-300" id="driver-job-restaurant-addr">14 Diên Hồng, P. Lê Hồng Phong, Quy Nhơn</p>
+            <p class="font-bold text-white text-sm" id="driver-job-restaurant-name">Bánh Xèo Tôm Nhảy Gia Vĩ 101</p>
+            <p class="text-slate-300" id="driver-job-restaurant-addr">298 Đống Đa, P. Ngô Mây, Quy Nhơn</p>
           </div>
         </div>
 
-        <!-- Waypoint: Dropoff Customer -->
         <div class="flex items-start space-x-3 text-xs border-t border-slate-700/60 pt-3">
           <div class="w-6 h-6 rounded-full bg-emerald-600/30 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5">
             <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
           </div>
           <div class="flex-1">
             <p class="text-[11px] text-slate-400 uppercase font-semibold">Điểm giao hàng (Khách)</p>
-            <p class="font-bold text-white text-sm" id="driver-job-customer-name">Trần Quang Đạt</p>
-            <p class="text-slate-300" id="driver-job-customer-addr">28 Diên Hồng, P. Ngô Mây, Quy Nhơn</p>
+            <p class="font-bold text-white text-sm" id="driver-job-customer-name">Nguyễn Quốc Khánh</p>
+            <p class="text-slate-300" id="driver-job-customer-addr">6 Bùi Thị Xuân, P. Nguyễn Văn Cừ, Quy Nhơn</p>
           </div>
         </div>
 
-        <!-- Action Step Buttons -->
         <div class="pt-2 flex flex-col gap-2" id="driver-trip-actions">
           <button onclick="driverPickupOrder()" id="btn-driver-pickup" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
             <i data-lucide="package-check" class="w-4 h-4"></i>
@@ -434,12 +570,12 @@
         <p class="text-xs text-slate-400 max-w-xs mx-auto">Bạn đang ở chế độ trực tuyến. Hệ thống sẽ tự động ghép cuốc gần nhất khi quán làm xong món.</p>
       </div>
 
-    </div>
+    </article>
 
     <!-- ========================================================================= -->
     <!-- PORTAL 4: CENTRAL DISPATCHER & GPS RADAR MAP -->
     <!-- ========================================================================= -->
-    <div id="portal-dispatch" class="space-y-6 hidden">
+    <article id="portal-dispatch" class="space-y-6 hidden">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
         <div>
           <h2 class="text-lg font-bold text-white flex items-center">
@@ -448,21 +584,17 @@
           <p class="text-xs text-slate-400 mt-1">Giám sát vị trí thời gian thực của Quán Ăn, Tài Xế và Khách Hàng trên bản đồ OpenStreetMap</p>
         </div>
         
-        <!-- One Click Auto Dispatch Button -->
         <button onclick="triggerAutoDispatch()" class="bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-brand-500/30 flex items-center space-x-2 transition">
           <i data-lucide="zap" class="w-4 h-4"></i>
           <span>TỰ ĐỘNG ĐIỀU PHỐI (AUTO DISPATCH)</span>
         </button>
       </div>
 
-      <!-- Live Radar Map Container -->
       <div class="bg-slate-800 rounded-2xl p-2 border border-slate-700 shadow-2xl">
         <div id="radar-map"></div>
       </div>
 
-      <!-- Unassigned Queue & Metrics Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Live Drivers Status List -->
         <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 space-y-3">
           <div class="flex items-center justify-between border-b border-slate-700 pb-2">
             <h4 class="text-xs font-bold uppercase text-slate-300 flex items-center">
@@ -470,12 +602,9 @@
             </h4>
             <span class="text-[11px] text-emerald-400 font-bold" id="radar-online-drivers-count">0 online</span>
           </div>
-          <div class="space-y-2 max-h-56 overflow-y-auto" id="radar-drivers-list">
-            <!-- Populated by JS -->
-          </div>
+          <div class="space-y-2 max-h-56 overflow-y-auto" id="radar-drivers-list"></div>
         </div>
 
-        <!-- Pending Dispatch Queue (Orders in ACCEPTED) -->
         <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 space-y-3 lg:col-span-2">
           <div class="flex items-center justify-between border-b border-slate-700 pb-2">
             <h4 class="text-xs font-bold uppercase text-slate-300 flex items-center">
@@ -483,17 +612,59 @@
             </h4>
             <span class="text-[11px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-bold" id="radar-pending-orders-count">0 đơn</span>
           </div>
-          <div class="space-y-2 max-h-56 overflow-y-auto" id="radar-pending-orders-list">
-            <!-- Populated by JS -->
+          <div class="space-y-2 max-h-56 overflow-y-auto" id="radar-pending-orders-list"></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ========================================================================= -->
+    <!-- PORTAL 5: INTERACTIVE REST API DOCUMENTATION & EXPLORER (SWAGGER-LIKE) -->
+    <!-- ========================================================================= -->
+    <article id="portal-apidocs" class="space-y-6 hidden">
+      
+      <!-- API Hero Banner -->
+      <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 sm:p-8 rounded-2xl border border-blue-500/30 shadow-xl space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center space-x-2 bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold mb-2">
+              <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+              <span>RESTful API Documentation v2.0</span>
+            </div>
+            <h2 class="text-2xl font-black text-white">Tài Liệu & Bộ Thử Nghiệm API Trực Tiếp</h2>
+            <p class="text-xs text-slate-300 max-w-2xl">
+              Hệ thống cung cấp toàn bộ REST API kết nối trực tiếp với các Java Controller và CsvRepository. Bạn có thể kiểm thử trực tiếp các request ngay trên trình duyệt (Live Try-It-Out) với định dạng JSON chuẩn.
+            </p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <a href="/api/docs" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow">
+              <i data-lucide="external-link" class="w-4 h-4"></i>
+              <span>OpenAPI JSON</span>
+            </a>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- Category Filter Pills for API -->
+      <div class="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
+        <button onclick="filterApiCategory('ALL')" class="api-cat-btn px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold">Tất cả APIs (21)</button>
+        <button onclick="filterApiCategory('AUTH')" class="api-cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Xác Thực (Auth)</button>
+        <button onclick="filterApiCategory('RESTAURANT')" class="api-cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Quán Ăn & Món</button>
+        <button onclick="filterApiCategory('ORDER')" class="api-cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Đơn Hàng & Bếp</button>
+        <button onclick="filterApiCategory('DRIVER')" class="api-cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Tài Xế & Điều Phối</button>
+        <button onclick="filterApiCategory('SIMULATION')" class="api-cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">Kiểm Thử Benchmark</button>
+      </div>
+
+      <!-- API Endpoints Interactive Grid -->
+      <div class="space-y-4" id="api-endpoints-container">
+        <!-- Rendered dynamically by JS with interactive try-it-out -->
+      </div>
+
+    </article>
 
     <!-- ========================================================================= -->
-    <!-- PORTAL 5: CONCURRENCY BENCHMARK SIMULATOR -->
+    <!-- PORTAL 6: CONCURRENCY BENCHMARK SIMULATOR -->
     <!-- ========================================================================= -->
-    <div id="portal-benchmark" class="space-y-6 hidden">
+    <article id="portal-benchmark" class="space-y-6 hidden">
       <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-4">
           <div>
@@ -508,7 +679,6 @@
           </button>
         </div>
 
-        <!-- Simulation Configuration Controls -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Số Lượng Đơn Đặt Song Song</label>
@@ -540,9 +710,7 @@
         </div>
       </div>
 
-      <!-- Live Chart & Benchmark History -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Chart Canvas -->
         <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-3">
           <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center">
             <i data-lucide="bar-chart-3" class="w-4 h-4 text-brand-500 mr-2"></i> Biểu Đồ Thông Lượng (Throughput - Đơn/Giây)
@@ -552,7 +720,6 @@
           </div>
         </div>
 
-        <!-- Benchmark Execution Log Table -->
         <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-3">
           <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center">
             <i data-lucide="table" class="w-4 h-4 text-emerald-400 mr-2"></i> Kết Quả Đo Lường Chi Tiết
@@ -568,38 +735,91 @@
                   <th class="p-2">Lỗi Bán Khống</th>
                 </tr>
               </thead>
-              <tbody id="benchmark-log-tbody" class="divide-y divide-slate-700/50">
-                <!-- Log rows added by JS -->
-              </tbody>
+              <tbody id="benchmark-log-tbody" class="divide-y divide-slate-700/50"></tbody>
             </table>
           </div>
         </div>
       </div>
-    </div>
+    </article>
 
   </main>
 
   <!-- ========================================================================= -->
-  <!-- CART DRAWER (Khách hàng xem giỏ hàng & Đặt đơn) -->
+  <!-- FOOTER CHUẨN SEO: ĐỊA CHỈ, TỪ KHÓA ĐỊA PHƯƠNG QUY NHƠN, BẢN QUYỀN -->
+  <!-- ========================================================================= -->
+  <footer role="contentinfo" class="bg-slate-950 border-t border-slate-800/80 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      
+      <!-- Cột 1: Thông tin hệ thống -->
+      <div class="space-y-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white">
+            <i data-lucide="utensils" class="w-4 h-4"></i>
+          </div>
+          <span class="font-extrabold text-base text-white">Food<span class="text-brand-500">Delivery</span> Quy Nhơn</span>
+        </div>
+        <p class="text-[12px] leading-relaxed text-slate-400">
+          Hệ thống điều phối giao hàng thực tế và mô phỏng tải tương tranh LAB211. Kết nối hơn 200 nhà hàng đối tác uy tín với tài xế tại các phường thuộc TP. Quy Nhơn, Bình Định.
+        </p>
+        <p class="text-[11px] text-slate-500">Bản quyền © 2026 Nhóm 01 LAB211. Bảo lưu mọi quyền.</p>
+      </div>
+
+      <!-- Cột 2: Đặc sản nổi bật -->
+      <div class="space-y-2">
+        <h4 class="font-bold text-slate-200 text-xs uppercase tracking-wider">Đặc Sản Quy Nhơn Nổi Tiếng</h4>
+        <ul class="space-y-1.5 text-[11px]">
+          <li><a href="#" onclick="filterRestaurantCategory('Bánh xèo'); return false;" class="hover:text-brand-400">Bánh xèo tôm nhảy Diên Hồng</a></li>
+          <li><a href="#" onclick="filterRestaurantCategory('Bún chả cá'); return false;" class="hover:text-brand-400">Bún chả cá Ngọc Liên Nguyễn Huệ</a></li>
+          <li><a href="#" onclick="filterRestaurantCategory('Cơm gà'); return false;" class="hover:text-brand-400">Cơm gà Quê Hương Lê Hồng Phong</a></li>
+          <li><a href="#" onclick="filterRestaurantCategory('Hải sản'); return false;" class="hover:text-brand-400">Hải sản tươi sống đường biển Xuân Diệu</a></li>
+          <li><a href="#" onclick="filterRestaurantCategory('Đặc sản'); return false;" class="hover:text-brand-400">Bánh hỏi cháo lòng, Nem Chợ Huyện</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3: Khu vực giao hàng -->
+      <div class="space-y-2">
+        <h4 class="font-bold text-slate-200 text-xs uppercase tracking-wider">Phạm Vi Giao Hàng Siêu Tốc</h4>
+        <p class="text-[11px] leading-relaxed">
+          Giao hàng 20 phút tại tất cả các phường: Ngô Mây, Nguyễn Văn Cừ, Lê Hồng Phong, Trần Phú, Lý Thường Kiệt, Ghềnh Ráng, Đống Đa, Thị Nại, Quang Trung, Hải Cảng...
+        </p>
+        <div class="pt-2 text-[11px] text-slate-300">
+          <p><strong>Hotline:</strong> 1900 7799 (24/7)</p>
+          <p><strong>Email:</strong> hotro@fooddeliveryquynhon.vn</p>
+        </div>
+      </div>
+
+      <!-- Cột 4: Nền tảng công nghệ -->
+      <div class="space-y-2">
+        <h4 class="font-bold text-slate-200 text-xs uppercase tracking-wider">Nền Tảng Kỹ Thuật (LAB211)</h4>
+        <ul class="space-y-1 text-[11px] text-slate-400">
+          <li>• Kiến trúc MVC & 100% Thuần Hướng Đối Tượng (OOP)</li>
+          <li>• HTTP Server Đa Luồng Nhúng Không Cần Thư Viện Ngoài</li>
+          <li>• 4 Cơ Chế Khóa: NoLock, Sync, Optimistic, FileLock</li>
+          <li>• Bản Đồ GPS Radar Leaflet & Progressive Web App (PWA)</li>
+          <li>• Chuẩn SEO Semantic HTML5 & Schema.org JSON-LD</li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- CART DRAWER -->
   <!-- ========================================================================= -->
   <div id="cart-drawer-overlay" onclick="closeCartDrawer()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
-  <div id="cart-drawer" class="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+  <aside id="cart-drawer" class="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <i data-lucide="shopping-cart" class="w-5 h-5 text-brand-500"></i>
         <h3 class="font-bold text-base text-white">Giỏ Hàng Của Bạn</h3>
       </div>
-      <button onclick="closeCartDrawer()" class="p-1 rounded-lg hover:bg-slate-800 text-slate-400">
+      <button onclick="closeCartDrawer()" class="p-1 rounded-lg hover:bg-slate-800 text-slate-400" aria-label="Đóng giỏ hàng">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
 
-    <!-- Cart Item List -->
-    <div class="flex-1 p-4 overflow-y-auto space-y-3" id="cart-items-container">
-      <!-- Populated by JS -->
-    </div>
+    <div class="flex-1 p-4 overflow-y-auto space-y-3" id="cart-items-container"></div>
 
-    <!-- Pricing Summary & Checkout -->
     <div class="p-5 border-t border-slate-800 bg-slate-800/60 space-y-3">
       <div class="space-y-1.5 text-xs text-slate-300">
         <div class="flex justify-between">
@@ -621,11 +841,10 @@
         <span>TIẾN HÀNH ĐẶT MÓN NGAY</span>
       </button>
     </div>
-  </div>
+  </aside>
 
-  <!-- Audio Chimes & Synthesis -->
+  <!-- Web Audio Synthesizer -->
   <script>
-    // Web Audio API Synthesizer for notifications
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq = 587.33, type = 'sine', duration = 0.15) {
       try {
@@ -639,45 +858,97 @@
         gain.connect(audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {
-        console.warn("Audio Context blocked or not ready", e);
-      }
+      } catch (e) {}
     }
     function playSuccessChime() {
       playBeep(523.25, 'triangle', 0.1);
       setTimeout(() => playBeep(659.25, 'triangle', 0.15), 100);
       setTimeout(() => playBeep(783.99, 'triangle', 0.25), 200);
     }
-    function playAlertChime() {
-      playBeep(440, 'sawtooth', 0.15);
-      setTimeout(() => playBeep(880, 'sawtooth', 0.2), 150);
-    }
   </script>
 
-  <!-- APP STATE & BUSINESS LOGIC -->
+  <!-- ========================================================================= -->
+  <!-- APPLICATION CORE LOGIC & IMAGE CATALOG -->
+  <!-- ========================================================================= -->
   <script>
+    // BỘ HÌNH ẢNH MÓN ĂN & NHÀ HÀNG CHUẨN ĐẶC SẢN QUY NHƠN
+    const IMAGE_CATALOG = {
+      defaultDish: '/images/dish_default.svg',
+      defaultRestaurant: '/images/restaurant_default.svg',
+      dishes: {
+        'banh_xeo': 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&auto=format&fit=crop&q=80',
+        'bun_ca': 'https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=600&auto=format&fit=crop&q=80',
+        'com_ga': 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&auto=format&fit=crop&q=80',
+        'cha_ram': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80',
+        'banh_hoi': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80',
+        'hai_san': 'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600&auto=format&fit=crop&q=80',
+        'cua': 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&auto=format&fit=crop&q=80',
+        'muc': 'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=600&auto=format&fit=crop&q=80',
+        'ca_ngu': 'https://images.unsplash.com/photo-1501595091296-3aa970afb3ff?w=600&auto=format&fit=crop&q=80',
+        'banh_mi': 'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=600&auto=format&fit=crop&q=80',
+        'tra_sua': 'https://images.unsplash.com/photo-1558857563-b37cfb8cb016?w=600&auto=format&fit=crop&q=80',
+        'lau': 'https://images.unsplash.com/photo-1547496502-affa22d38842?w=600&auto=format&fit=crop&q=80',
+        'bbq': 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80',
+        'nem': 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80',
+        'che': 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80'
+      },
+      restaurants: [
+        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&auto=format&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=800&auto=format&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&auto=format&fit=crop&q=80',
+        'https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=800&auto=format&fit=crop&q=80'
+      ]
+    };
+
+    function getDishImage(dishName, category) {
+      const lower = (dishName + ' ' + (category || '')).toLowerCase();
+      if (lower.includes('bánh xèo') || lower.includes('banh xeo')) return IMAGE_CATALOG.dishes['banh_xeo'];
+      if (lower.includes('bún chả cá') || lower.includes('bun cha ca') || lower.includes('bún cá')) return IMAGE_CATALOG.dishes['bun_ca'];
+      if (lower.includes('cơm gà') || lower.includes('com ga')) return IMAGE_CATALOG.dishes['com_ga'];
+      if (lower.includes('chả ram') || lower.includes('cha ram')) return IMAGE_CATALOG.dishes['cha_ram'];
+      if (lower.includes('bánh hỏi') || lower.includes('banh hoi')) return IMAGE_CATALOG.dishes['banh_hoi'];
+      if (lower.includes('cua') || lower.includes('huỳnh đế')) return IMAGE_CATALOG.dishes['cua'];
+      if (lower.includes('mực') || lower.includes('muc')) return IMAGE_CATALOG.dishes['muc'];
+      if (lower.includes('cá ngừ') || lower.includes('ca ngu')) return IMAGE_CATALOG.dishes['ca_ngu'];
+      if (lower.includes('hải sản') || lower.includes('hai san')) return IMAGE_CATALOG.dishes['hai_san'];
+      if (lower.includes('bánh mì') || lower.includes('banh mi')) return IMAGE_CATALOG.dishes['banh_mi'];
+      if (lower.includes('trà sữa') || lower.includes('tra sua') || lower.includes('nước')) return IMAGE_CATALOG.dishes['tra_sua'];
+      if (lower.includes('lẩu') || lower.includes('lau')) return IMAGE_CATALOG.dishes['lau'];
+      if (lower.includes('bbq') || lower.includes('nướng') || lower.includes('nuong')) return IMAGE_CATALOG.dishes['bbq'];
+      if (lower.includes('nem')) return IMAGE_CATALOG.dishes['nem'];
+      if (lower.includes('chè') || lower.includes('che')) return IMAGE_CATALOG.dishes['che'];
+      return IMAGE_CATALOG.dishes['hai_san'];
+    }
+
+    function getRestaurantImage(name, index) {
+      const idx = (index || 0) % IMAGE_CATALOG.restaurants.length;
+      return IMAGE_CATALOG.restaurants[idx];
+    }
+
+    // STATE
     const STATE = {
       activePortal: 'customer',
       currentUser: null,
       demoAccounts: { customers: [], restaurants: [], drivers: [] },
       restaurants: [],
-      selectedRestaurantId: 'REST001',
+      selectedRestaurantId: 'R001',
       menuItems: [],
-      cart: {}, // { [menuItemId]: quantity }
+      cart: {},
       orders: [],
       activeCustomerOrderId: null,
       drivers: [],
       map: null,
       mapMarkers: [],
-      mapRouteLine: null,
       chartInstance: null,
-      benchmarkLogs: []
+      apiDocsData: null,
+      apiActiveCategory: 'ALL'
     };
 
-    // Quy Nhon center coordinates
     const QUY_NHON_CENTER = [13.7829, 109.2197];
 
-    // PWA Install Prompt Handler
+    // PWA Install Prompt
     let deferredPrompt = null;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -689,30 +960,24 @@
     document.getElementById('btn-pwa-install')?.addEventListener('click', async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log('PWA prompt outcome:', outcome);
+        await deferredPrompt.userChoice;
         deferredPrompt = null;
         document.getElementById('btn-pwa-install').classList.add('hidden');
       }
     });
 
-    // Register Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('ServiceWorker registered:', reg.scope))
-        .catch(err => console.warn('ServiceWorker registration failed:', err));
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
 
-    // Portal Switcher
+    // Switch Portal
     function switchPortal(portalId) {
       STATE.activePortal = portalId;
       
-      // Toggle views
-      ['customer', 'kitchen', 'driver', 'dispatch', 'benchmark'].forEach(p => {
+      ['customer', 'kitchen', 'driver', 'dispatch', 'apidocs', 'benchmark'].forEach(p => {
         const el = document.getElementById(`portal-${p}`);
         if (el) el.classList.toggle('hidden', p !== portalId);
         
-        // Desktop tabs
         const tab = document.getElementById(`tab-${p}`);
         if (tab) {
           if (p === portalId) {
@@ -722,25 +987,25 @@
           }
         }
 
-        // Mobile tabs
         const mob = document.getElementById(`mob-${p}`);
         if (mob) {
           mob.className = `mob-tab flex flex-col items-center ${p === portalId ? 'text-brand-500' : 'text-slate-400'}`;
         }
       });
 
-      // Special handling per portal
       if (portalId === 'dispatch') {
         setTimeout(initOrRefreshMap, 200);
       } else if (portalId === 'kitchen') {
         loadKitchenStock();
       } else if (portalId === 'benchmark') {
         setTimeout(initBenchmarkChart, 100);
+      } else if (portalId === 'apidocs') {
+        loadApiDocs();
       }
       lucide.createIcons();
     }
 
-    // Initialize application
+    // Initialize App
     async function initApp() {
       try {
         await checkBackendStatus();
@@ -749,13 +1014,11 @@
         await loadDrivers();
         await loadOrders();
         
-        // Auto select first customer as default
-        if (STATE.demoAccounts.customers.length > 0) {
+        if (STATE.demoAccounts.customers && STATE.demoAccounts.customers.length > 0) {
           selectUser(STATE.demoAccounts.customers[0], 'CUSTOMER');
         }
 
-        // Start real-time polling every 3 seconds
-        setInterval(pollLiveData, 3000);
+        setInterval(pollLiveData, 3500);
       } catch (err) {
         console.error("Init Error:", err);
       }
@@ -873,7 +1136,7 @@
       }
     }
 
-    // Load Restaurants & Menus
+    // Load Restaurants & Menus (CÓ HÌNH ẢNH NHÀ HÀNG & MÓN ĂN)
     async function loadRestaurants() {
       const res = await fetch('/api/restaurants');
       STATE.restaurants = await res.json();
@@ -888,27 +1151,57 @@
       const container = document.getElementById('restaurant-cards-container');
       container.innerHTML = '';
 
-      STATE.restaurants.forEach(r => {
+      let list = STATE.restaurants;
+      if (filterCat !== 'ALL') {
+        list = list.filter(r => (r.category && r.category.toLowerCase().includes(filterCat.toLowerCase())) || r.name.toLowerCase().includes(filterCat.toLowerCase()));
+      }
+
+      // Display showcase top 12 for high performance
+      list.slice(0, 12).forEach((r, idx) => {
         const isSelected = r.id === STATE.selectedRestaurantId;
+        const restImg = getRestaurantImage(r.name, idx);
+
         const card = document.createElement('div');
-        card.className = `p-4 rounded-xl border transition cursor-pointer ${
-          isSelected ? 'bg-slate-800 border-brand-500 shadow-lg shadow-brand-500/10' : 'bg-slate-800/60 border-slate-700 hover:border-slate-600'
+        card.className = `food-card rounded-2xl border overflow-hidden transition cursor-pointer flex flex-col justify-between ${
+          isSelected ? 'bg-slate-800 border-brand-500 shadow-xl shadow-brand-500/15 ring-2 ring-brand-500/30' : 'bg-slate-800/80 border-slate-700/80 hover:border-slate-500 hover:shadow-lg'
         }`;
         card.onclick = () => selectRestaurant(r.id);
 
         card.innerHTML = `
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="font-bold text-white text-sm flex items-center">
-                ${r.name}
-              </h4>
-              <p class="text-xs text-slate-400 mt-0.5">${r.address}</p>
+          <div>
+            <div class="h-40 w-full overflow-hidden relative">
+              <img 
+                src="${restImg}" 
+                alt="Nhà hàng ${r.name} tại TP Quy Nhơn" 
+                class="food-card-img w-full h-full object-cover" 
+                loading="lazy" 
+                onerror="this.src='/images/restaurant_default.svg'"
+              />
+              <div class="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur px-2.5 py-1 rounded-lg text-[11px] font-bold text-amber-300 flex items-center shadow">
+                ★ ${r.rating || '4.8'}
+              </div>
+              <div class="absolute top-2.5 right-2.5 bg-brand-600/90 backdrop-blur px-2.5 py-1 rounded-lg text-[10px] font-semibold text-white shadow">
+                ⏱ 15-25 phút
+              </div>
+              <div class="absolute bottom-2 left-2.5 bg-black/70 px-2 py-0.5 rounded text-[10px] text-slate-200">
+                ${r.category || 'Đặc sản Bình Định'}
+              </div>
             </div>
-            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-bold">★ ${r.rating || '4.8'}</span>
+
+            <div class="p-4 space-y-1.5">
+              <h4 class="font-bold text-white text-base tracking-tight line-clamp-1">${r.name}</h4>
+              <p class="text-xs text-slate-400 line-clamp-1 flex items-center">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1 text-slate-500 flex-shrink-0"></i>
+                ${r.address}
+              </p>
+            </div>
           </div>
-          <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
-            <span><i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1 text-slate-500"></i>${r.phone}</span>
-            <span class="text-brand-400 font-semibold">Chọn xem thực đơn →</span>
+
+          <div class="px-4 pb-4 pt-1 flex items-center justify-between text-xs border-t border-slate-700/50">
+            <span class="text-slate-400 font-medium">📍 Gần bạn ~ 0.8 km</span>
+            <span class="text-brand-400 font-bold hover:underline flex items-center">
+              Xem thực đơn <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-0.5"></i>
+            </span>
           </div>
         `;
         container.appendChild(card);
@@ -925,7 +1218,6 @@
       }
       renderRestaurantCards();
 
-      // Fetch Menu
       const res = await fetch(`/api/menu?restaurantId=${restaurantId}`);
       STATE.menuItems = await res.json();
       renderMenuItems();
@@ -934,42 +1226,55 @@
     function renderMenuItems() {
       const container = document.getElementById('menu-items-container');
       container.innerHTML = '';
-      document.getElementById('menu-items-count').innerText = `${STATE.menuItems.length} món`;
+      document.getElementById('menu-items-count').innerText = `${STATE.menuItems.length} món ăn`;
 
       STATE.menuItems.forEach(item => {
         const inCart = STATE.cart[item.id] || 0;
-        const card = document.createElement('div');
-        card.className = 'bg-slate-800/80 rounded-xl p-4 border border-slate-700/80 flex flex-col justify-between hover:border-slate-600 transition';
-
+        const dishImg = getDishImage(item.name, item.category);
         const isOutOfStock = item.stockQty <= 0;
+
+        const card = document.createElement('div');
+        card.className = 'food-card bg-slate-800/80 rounded-2xl border border-slate-700/80 overflow-hidden flex flex-col justify-between hover:border-slate-600 transition shadow-lg';
 
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded">${item.category || 'Món chính'}</span>
-              <span class="text-[11px] font-semibold ${isOutOfStock ? 'text-red-400' : 'text-emerald-400'}">
+            <div class="h-36 w-full overflow-hidden relative">
+              <img 
+                src="${dishImg}" 
+                alt="Món ${item.name} đặc sản Quy Nhơn" 
+                class="food-card-img w-full h-full object-cover" 
+                loading="lazy" 
+                onerror="this.src='/images/dish_default.svg'"
+              />
+              <span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 backdrop-blur text-slate-200 px-2 py-0.5 rounded font-medium">
+                ${item.category || 'Món chính'}
+              </span>
+              <span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${isOutOfStock ? 'bg-red-600/90 text-white' : 'bg-emerald-600/90 text-white'}">
                 ${isOutOfStock ? 'Hết hàng' : `Còn ${item.stockQty} phần`}
               </span>
             </div>
-            <h5 class="font-bold text-white text-sm mt-2">${item.name}</h5>
-            <p class="text-brand-400 font-extrabold text-sm mt-1">${formatCurrency(item.price)}</p>
+
+            <div class="p-3.5 space-y-1">
+              <h5 class="font-bold text-white text-sm line-clamp-1">${item.name}</h5>
+              <p class="text-brand-400 font-extrabold text-sm">${formatCurrency(item.price)}</p>
+            </div>
           </div>
 
-          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between">
+          <div class="p-3.5 pt-0">
             ${isOutOfStock ? `
-              <button disabled class="w-full bg-slate-700 text-slate-500 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed">
+              <button disabled class="w-full bg-slate-700 text-slate-500 py-2 rounded-xl text-xs font-semibold cursor-not-allowed">
                 Tạm hết hàng
               </button>
             ` : inCart === 0 ? `
-              <button onclick="addToCart('${item.id}')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1">
+              <button onclick="addToCart('${item.id}')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 shadow-md shadow-brand-500/20">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 <span>Thêm Vào Giỏ</span>
               </button>
             ` : `
-              <div class="w-full flex items-center justify-between bg-slate-900 rounded-lg p-1 border border-slate-700">
-                <button onclick="changeCartQty('${item.id}', -1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded font-bold flex items-center justify-center text-xs">-</button>
+              <div class="w-full flex items-center justify-between bg-slate-900 rounded-xl p-1 border border-slate-700">
+                <button onclick="changeCartQty('${item.id}', -1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold flex items-center justify-center text-xs">-</button>
                 <span class="font-bold text-xs text-white">${inCart}</span>
-                <button onclick="changeCartQty('${item.id}', 1)" class="w-7 h-7 bg-brand-600 hover:bg-brand-500 text-white rounded font-bold flex items-center justify-center text-xs">+</button>
+                <button onclick="changeCartQty('${item.id}', 1)" class="w-7 h-7 bg-brand-600 hover:bg-brand-500 text-white rounded-lg font-bold flex items-center justify-center text-xs">+</button>
               </div>
             `}
           </div>
@@ -1067,7 +1372,7 @@
         }
       });
 
-      const shippingFee = 15000; // Flat 15k Quy Nhon inner city
+      const shippingFee = 15000;
       const total = subtotal + shippingFee;
 
       document.getElementById('cart-subtotal').innerText = formatCurrency(subtotal);
@@ -1080,12 +1385,14 @@
       const itemIds = Object.keys(STATE.cart);
       if (itemIds.length === 0) return alert('Giỏ hàng trống!');
 
-      const customerId = STATE.currentUser ? STATE.currentUser.id : 'CUST001';
+      const customerId = STATE.currentUser ? STATE.currentUser.id : 'C0001';
       const itemsPayload = itemIds.map(id => ({ menuItemId: id, quantity: STATE.cart[id] }));
 
       const body = {
         customerId: customerId,
         restaurantId: STATE.selectedRestaurantId,
+        menuItemId: itemIds[0],
+        quantity: STATE.cart[itemIds[0]],
         items: itemsPayload
       };
 
@@ -1106,7 +1413,7 @@
           await selectRestaurant(STATE.selectedRestaurantId);
           alert(`🎉 Đặt hàng thành công! Mã đơn: ${data.orderId}`);
         } else {
-          alert(`❌ Đặt hàng thất bại: ${data.error || 'Lỗi không xác định'}`);
+          alert(`❌ Đặt hàng thất bại: ${data.message || data.error || 'Lỗi không xác định'}`);
         }
       } catch (err) {
         alert('Lỗi kết nối khi gửi đơn hàng');
@@ -1125,12 +1432,10 @@
 
     function renderCustomerActiveOrder() {
       const container = document.getElementById('customer-active-orders-section');
-      
-      // Find active order for current user
-      const customerId = STATE.currentUser ? STATE.currentUser.id : 'CUST001';
+      const customerId = STATE.currentUser ? STATE.currentUser.id : 'C0001';
       const activeOrder = STATE.orders.find(o => 
         o.customerId === customerId && 
-        (o.status === 'CREATED' || o.status === 'ACCEPTED' || o.status === 'DISPATCHED')
+        (o.status === 'PENDING' || o.status === 'CONFIRMED' || o.status === 'DISPATCHED')
       );
 
       if (!activeOrder) {
@@ -1145,16 +1450,14 @@
 
       const progressBar = document.getElementById('stepper-progress-bar');
       const nodes = [1, 2, 3, 4].map(n => document.getElementById(`step-node-${n}`));
-
-      // Reset styles
       nodes.forEach(node => node.className = 'step-node text-slate-500');
 
       let detailsText = '';
-      if (activeOrder.status === 'CREATED') {
+      if (activeOrder.status === 'PENDING') {
         progressBar.style.width = '25%';
         nodes[0].className = 'step-node text-brand-400 font-bold';
         detailsText = 'Đang chờ bếp nhà hàng kiểm tra và nhận món...';
-      } else if (activeOrder.status === 'ACCEPTED') {
+      } else if (activeOrder.status === 'CONFIRMED') {
         progressBar.style.width = '50%';
         nodes[0].className = 'step-node text-emerald-400';
         nodes[1].className = 'step-node text-brand-400 font-bold';
@@ -1187,7 +1490,7 @@
           await loadOrders();
           await selectRestaurant(STATE.selectedRestaurantId);
         } else {
-          alert(data.error || 'Không thể hủy đơn này!');
+          alert(data.message || data.error || 'Không thể hủy đơn này!');
         }
       } catch (e) {
         alert('Lỗi hủy đơn');
@@ -1217,23 +1520,20 @@
     }
 
     function renderKitchenTickets() {
-      const restId = document.getElementById('kitchen-rest-select').value || 'REST001';
+      const restId = document.getElementById('kitchen-rest-select')?.value || 'R001';
       const container = document.getElementById('kitchen-tickets-container');
       container.innerHTML = '';
 
-      const relevantOrders = STATE.orders.filter(o => o.restaurantId === restId && (o.status === 'CREATED' || o.status === 'ACCEPTED'));
-
-      // KPIs
-      const pendingCount = relevantOrders.filter(o => o.status === 'CREATED').length;
-      const cookingCount = relevantOrders.filter(o => o.status === 'ACCEPTED').length;
+      const relevantOrders = STATE.orders.filter(o => o.restaurantId === restId && (o.status === 'PENDING' || o.status === 'CONFIRMED'));
+      const pendingCount = relevantOrders.filter(o => o.status === 'PENDING').length;
+      const cookingCount = relevantOrders.filter(o => o.status === 'CONFIRMED').length;
       document.getElementById('kpi-kitchen-pending').innerText = pendingCount;
       document.getElementById('kpi-kitchen-cooking').innerText = cookingCount;
 
       const completedToday = STATE.orders.filter(o => o.restaurantId === restId && o.status === 'DELIVERED');
-      const totalRev = completedToday.reduce((a, b) => a + b.subtotal, 0);
+      const totalRev = completedToday.reduce((a, b) => a + (b.totalAmount - b.deliveryFee), 0);
       document.getElementById('kpi-kitchen-rev').innerText = formatCurrency(totalRev);
 
-      // Badge in header
       const badge = document.getElementById('badge-kitchen-orders');
       if (pendingCount > 0) {
         badge.innerText = pendingCount;
@@ -1254,34 +1554,30 @@
       }
 
       relevantOrders.forEach(o => {
-        const isCreated = o.status === 'CREATED';
+        const isPending = o.status === 'PENDING';
         const card = document.createElement('div');
         card.className = 'bg-slate-800 p-4 rounded-xl border border-slate-700 shadow-lg space-y-3';
         
-        let itemsHtml = (o.items || []).map(i => `
-          <li class="flex justify-between text-xs text-slate-300">
-            <span>• ${i.menuItemId}</span>
-            <span class="font-bold text-white">x${i.quantity}</span>
-          </li>
-        `).join('');
-
         card.innerHTML = `
           <div class="flex items-center justify-between border-b border-slate-700 pb-2">
             <div>
               <span class="font-mono font-bold text-white text-xs">#${o.id}</span>
               <span class="text-[11px] text-slate-400 ml-2">Khách: ${o.customerId}</span>
             </div>
-            <span class="text-[11px] px-2 py-0.5 rounded font-bold ${isCreated ? 'bg-amber-500/20 text-amber-300' : 'bg-brand-500/20 text-brand-300'}">
-              ${isCreated ? '⏳ CHỜ BẾP NHẬN' : '🔥 ĐANG NẤU'}
+            <span class="text-[11px] px-2 py-0.5 rounded font-bold ${isPending ? 'bg-amber-500/20 text-amber-300' : 'bg-brand-500/20 text-brand-300'}">
+              ${isPending ? '⏳ CHỜ BẾP NHẬN' : '🔥 ĐANG NẤU'}
             </span>
           </div>
 
-          <ul class="space-y-1 bg-slate-900/60 p-2.5 rounded-lg">${itemsHtml}</ul>
+          <div class="bg-slate-900/60 p-2.5 rounded-lg text-xs space-y-1">
+            <p class="text-slate-300">Đơn đặt từ quán: <strong>${o.restaurantId}</strong></p>
+            <p class="text-slate-400">Tài xế phân công: <strong>${o.driverId || 'Chưa gán'}</strong></p>
+          </div>
 
           <div class="flex items-center justify-between pt-1">
-            <span class="text-xs text-slate-400">Tạm tính: <strong class="text-white">${formatCurrency(o.subtotal)}</strong></span>
+            <span class="text-xs text-slate-400">Tổng tiền: <strong class="text-white">${formatCurrency(o.totalAmount)}</strong></span>
             
-            ${isCreated ? `
+            ${isPending ? `
               <div class="flex items-center space-x-2">
                 <button onclick="kitchenRejectOrder('${o.id}')" class="px-3 py-1.5 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 rounded-lg text-xs font-semibold">
                   Từ chối
@@ -1314,7 +1610,7 @@
           playSuccessChime();
           await loadOrders();
         } else {
-          alert(data.error);
+          alert(data.message || data.error);
         }
       } catch (e) {
         alert('Lỗi xác nhận đơn');
@@ -1340,7 +1636,7 @@
     }
 
     async function loadKitchenStock() {
-      const restId = document.getElementById('kitchen-rest-select')?.value || 'REST001';
+      const restId = document.getElementById('kitchen-rest-select')?.value || 'R001';
       const res = await fetch(`/api/menu?restaurantId=${restId}`);
       const items = await res.json();
 
@@ -1351,8 +1647,11 @@
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-700/30';
         tr.innerHTML = `
+          <td class="px-4 py-2.5 font-semibold text-white flex items-center space-x-2">
+            <img src="${getDishImage(item.name, item.category)}" class="w-8 h-8 rounded-lg object-cover" onerror="this.src='/images/dish_default.svg'"/>
+            <span>${item.name}</span>
+          </td>
           <td class="px-4 py-2.5 font-mono text-slate-400">${item.id}</td>
-          <td class="px-4 py-2.5 font-semibold text-white">${item.name}</td>
           <td class="px-4 py-2.5 text-slate-300">${formatCurrency(item.price)}</td>
           <td class="px-4 py-2.5">
             <span class="font-bold text-xs ${item.stockQty <= 5 ? 'text-red-400' : 'text-emerald-400'}">
@@ -1388,7 +1687,7 @@
       }
     }
 
-    // DRIVER PORTAL LOGIC
+    // DRIVER PORTAL
     async function loadDrivers() {
       const res = await fetch('/api/drivers');
       STATE.drivers = await res.json();
@@ -1396,8 +1695,8 @@
     }
 
     function renderDriverActiveTrip() {
-      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
-      const activeTrip = STATE.orders.find(o => o.driverId === drvId && (o.status === 'ACCEPTED' || o.status === 'DISPATCHED'));
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
+      const activeTrip = STATE.orders.find(o => o.driverId === drvId && (o.status === 'CONFIRMED' || o.status === 'DISPATCHED'));
 
       const tripCard = document.getElementById('driver-active-trip-card');
       const noJobCard = document.getElementById('driver-no-job-card');
@@ -1413,7 +1712,6 @@
 
       document.getElementById('driver-job-order-id').innerText = `#${activeTrip.id}`;
 
-      // Restaurant & Customer names
       const rest = STATE.restaurants.find(r => r.id === activeTrip.restaurantId);
       document.getElementById('driver-job-restaurant-name').innerText = rest ? rest.name : activeTrip.restaurantId;
       document.getElementById('driver-job-restaurant-addr').innerText = rest ? rest.address : 'Quy Nhơn';
@@ -1422,7 +1720,7 @@
       const btnPickup = document.getElementById('btn-driver-pickup');
       const btnDeliver = document.getElementById('btn-driver-deliver');
 
-      if (activeTrip.status === 'ACCEPTED') {
+      if (activeTrip.status === 'CONFIRMED') {
         btnPickup.classList.remove('hidden');
         btnDeliver.classList.add('hidden');
       } else {
@@ -1432,15 +1730,15 @@
     }
 
     async function toggleDriverOnline() {
-      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
       const drv = STATE.drivers.find(d => d.id === drvId);
-      const nextStatus = drv ? !drv.isAvailable : true;
+      const nextStatus = drv ? (drv.status !== 'AVAILABLE') : true;
 
       try {
         const res = await fetch('/api/drivers/status', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ driverId: drvId, isAvailable: nextStatus })
+          body: JSON.stringify({ driverId: drvId, status: nextStatus ? 'AVAILABLE' : 'OFFLINE' })
         });
         const data = await res.json();
         if (data.success) {
@@ -1462,8 +1760,8 @@
     }
 
     async function driverPickupOrder() {
-      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
-      const activeTrip = STATE.orders.find(o => o.driverId === drvId && o.status === 'ACCEPTED');
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
+      const activeTrip = STATE.orders.find(o => o.driverId === drvId && o.status === 'CONFIRMED');
       if (!activeTrip) return;
 
       try {
@@ -1483,7 +1781,7 @@
     }
 
     async function driverDeliverOrder() {
-      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'DRV001';
+      const drvId = (STATE.currentUser && STATE.currentUser.role === 'DRIVER') ? STATE.currentUser.id : 'D0001';
       const activeTrip = STATE.orders.find(o => o.driverId === drvId && o.status === 'DISPATCHED');
       if (!activeTrip) return;
 
@@ -1491,7 +1789,7 @@
         const res = await fetch('/api/orders/deliver', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ orderId: activeTrip.id })
+          body: JSON.stringify({ orderId: activeTrip.id, driverId: drvId })
         });
         const data = await res.json();
         if (data.success) {
@@ -1504,7 +1802,7 @@
       }
     }
 
-    // DISPATCHER & GPS RADAR MAP
+    // DISPATCHER MAP
     function initOrRefreshMap() {
       if (!STATE.map) {
         STATE.map = L.map('radar-map').setView(QUY_NHON_CENTER, 14);
@@ -1516,12 +1814,10 @@
         STATE.map.invalidateSize();
       }
 
-      // Clear existing markers
       STATE.mapMarkers.forEach(m => STATE.map.removeLayer(m));
       STATE.mapMarkers = [];
 
-      // Add Restaurants (Orange Pin)
-      STATE.restaurants.forEach(r => {
+      STATE.restaurants.slice(0, 30).forEach(r => {
         if (r.latitude && r.longitude) {
           const marker = L.circleMarker([r.latitude, r.longitude], {
             radius: 8,
@@ -1536,10 +1832,9 @@
         }
       });
 
-      // Add Drivers (Green Pin for Available, Gray for Offline, Orange for Busy)
-      STATE.drivers.forEach(d => {
+      STATE.drivers.slice(0, 30).forEach(d => {
         if (d.currentLatitude && d.currentLongitude) {
-          const color = d.isAvailable ? '#10b981' : '#64748b';
+          const color = d.status === 'AVAILABLE' ? '#10b981' : '#64748b';
           const marker = L.circleMarker([d.currentLatitude, d.currentLongitude], {
             radius: 7,
             fillColor: color,
@@ -1548,7 +1843,7 @@
             opacity: 1,
             fillOpacity: 0.9
           }).addTo(STATE.map);
-          marker.bindPopup(`<b>🛵 Tài xế: ${d.name}</b><br>Trạng thái: ${d.isAvailable ? 'Sẵn sàng' : 'Bận/Offline'}`);
+          marker.bindPopup(`<b>🛵 Tài xế: ${d.name}</b><br>Trạng thái: ${d.status}`);
           STATE.mapMarkers.push(marker);
         }
       });
@@ -1559,15 +1854,15 @@
       if (!container) return;
       container.innerHTML = '';
 
-      const onlineCount = STATE.drivers.filter(d => d.isAvailable).length;
+      const onlineCount = STATE.drivers.filter(d => d.status === 'AVAILABLE').length;
       document.getElementById('radar-online-drivers-count').innerText = `${onlineCount} / ${STATE.drivers.length} online`;
 
-      STATE.drivers.forEach(d => {
+      STATE.drivers.slice(0, 15).forEach(d => {
         const item = document.createElement('div');
         item.className = 'flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs';
         item.innerHTML = `
           <div class="flex items-center space-x-2">
-            <span class="w-2 h-2 rounded-full ${d.isAvailable ? 'bg-emerald-400' : 'bg-slate-500'}"></span>
+            <span class="w-2 h-2 rounded-full ${d.status === 'AVAILABLE' ? 'bg-emerald-400' : 'bg-slate-500'}"></span>
             <span class="font-semibold text-white">${d.name}</span>
           </div>
           <span class="text-[10px] text-slate-400 font-mono">${d.currentLatitude?.toFixed(2)}, ${d.currentLongitude?.toFixed(2)}</span>
@@ -1581,7 +1876,7 @@
       if (!container) return;
       container.innerHTML = '';
 
-      const pendingOrders = STATE.orders.filter(o => o.status === 'ACCEPTED' && (!o.driverId || o.driverId === ''));
+      const pendingOrders = STATE.orders.filter(o => o.status === 'CONFIRMED' && (!o.driverId || o.driverId === ''));
       document.getElementById('radar-pending-orders-count').innerText = `${pendingOrders.length} đơn`;
 
       if (pendingOrders.length === 0) {
@@ -1618,19 +1913,169 @@
         const data = await res.json();
         if (data.success) {
           playSuccessChime();
-          alert(`⚡ Điều phối hoàn tất! Đã ghép thành công ${data.assignedCount} cuốc xe cho tài xế gần nhất.`);
+          alert(`⚡ Điều phối hoàn tất! Đã ghép thành công ${data.dispatchedCount} cuốc xe cho tài xế gần nhất.`);
           await loadOrders();
           await loadDrivers();
           initOrRefreshMap();
         } else {
-          alert('Không thể điều phối: ' + (data.error || 'Lỗi'));
+          alert('Không thể điều phối: ' + (data.message || 'Lỗi'));
         }
       } catch (e) {
         alert('Lỗi điều phối');
       }
     }
 
-    // CONCURRENCY BENCHMARK SIMULATOR LOGIC
+    // =========================================================================
+    // PORTAL 5: INTERACTIVE API EXPLORER & SWAGGER-LIKE LIVE RUNNER
+    // =========================================================================
+    const API_DEFINITIONS = [
+      { id: 'status', cat: 'AUTH', method: 'GET', path: '/api/status', summary: 'Kiểm tra trạng thái máy chủ HTTP Backend', params: [], sampleBody: null },
+      { id: 'stats', cat: 'AUTH', method: 'GET', path: '/api/stats', summary: 'Báo cáo tổng quan KPI hệ thống (Doanh thu, Đơn hàng, Quán, Tài xế)', params: [], sampleBody: null },
+      { id: 'demo-acc', cat: 'AUTH', method: 'GET', path: '/api/auth/demo-accounts', summary: 'Lấy danh sách tài khoản mẫu của các phân hệ', params: [], sampleBody: null },
+      { id: 'login', cat: 'AUTH', method: 'POST', path: '/api/auth/login', summary: 'Đăng nhập người dùng vào hệ thống', params: [], sampleBody: { username: 'customer1', password: '123' } },
+      { id: 'register', cat: 'AUTH', method: 'POST', path: '/api/auth/register', summary: 'Đăng ký tài khoản khách hàng mới', params: [], sampleBody: { username: 'testuser', password: '123', fullName: 'Nguyen Van Test', phone: '0987654321', address: '28 Dien Hong, Quy Nhon', lat: 13.78, lon: 109.22 } },
+      { id: 'rests', cat: 'RESTAURANT', method: 'GET', path: '/api/restaurants', summary: 'Lấy danh sách 200 nhà hàng đối tác tại TP. Quy Nhơn', params: [], sampleBody: null },
+      { id: 'menu', cat: 'RESTAURANT', method: 'GET', path: '/api/menu?restaurantId=R001', summary: 'Lấy danh mục thực đơn món ăn và số lượng tồn kho theo quán', params: ['restaurantId=R001'], sampleBody: null },
+      { id: 'stock', cat: 'RESTAURANT', method: 'POST', path: '/api/menu/stock', summary: 'Cập nhật số lượng tồn kho món ăn', params: [], sampleBody: { menuItemId: 'M00001', delta: 10 } },
+      { id: 'drivers', cat: 'DRIVER', method: 'GET', path: '/api/drivers', summary: 'Lấy danh sách tài xế, trạng thái và tọa độ GPS thời gian thực', params: [], sampleBody: null },
+      { id: 'drv-status', cat: 'DRIVER', method: 'POST', path: '/api/drivers/status', summary: 'Bật/tắt trạng thái trực tuyến (AVAILABLE / OFFLINE) của tài xế', params: [], sampleBody: { driverId: 'D0001', status: 'AVAILABLE' } },
+      { id: 'customers', cat: 'ORDER', method: 'GET', path: '/api/customers', summary: 'Lấy danh sách khách hàng và địa chỉ tại các phường TP. Quy Nhơn', params: [], sampleBody: null },
+      { id: 'orders-get', cat: 'ORDER', method: 'GET', path: '/api/orders', summary: 'Truy vấn danh sách đơn hàng toàn hệ thống', params: [], sampleBody: null },
+      { id: 'order-post', cat: 'ORDER', method: 'POST', path: '/api/orders', summary: 'Khách hàng tạo đơn đặt món ăn với cơ chế khóa tương tranh', params: [], sampleBody: { customerId: 'C0001', restaurantId: 'R001', menuItemId: 'M00001', quantity: 2, mechanism: 'OPTIMISTIC' } },
+      { id: 'order-confirm', cat: 'ORDER', method: 'POST', path: '/api/orders/confirm', summary: 'Bếp nhà hàng xác nhận tiếp nhận đơn và bắt đầu nấu (PENDING -> CONFIRMED)', params: [], sampleBody: { orderId: 'O1794850848360_476' } },
+      { id: 'order-reject', cat: 'ORDER', method: 'POST', path: '/api/orders/reject', summary: 'Bếp nhà hàng từ chối đơn hàng và tự động hoàn trả số lượng kho', params: [], sampleBody: { orderId: 'O1794850848360_476', reason: 'Nha hang het nguyen lieu' } },
+      { id: 'order-pickup', cat: 'DRIVER', method: 'POST', path: '/api/orders/pickup', summary: 'Tài xế xác nhận đã đến quán lấy món (CONFIRMED -> DISPATCHED)', params: [], sampleBody: { orderId: 'O1794850848360_476', driverId: 'D0243' } },
+      { id: 'order-deliver', cat: 'DRIVER', method: 'POST', path: '/api/orders/deliver', summary: 'Tài xế xác nhận đã giao hàng tận tay khách (DISPATCHED -> DELIVERED)', params: [], sampleBody: { orderId: 'O1794850848360_476' } },
+      { id: 'order-cancel', cat: 'ORDER', method: 'POST', path: '/api/orders/cancel', summary: 'Khách hàng hủy đơn khi bếp chưa hoàn tất (tự động hoàn kho)', params: [], sampleBody: { orderId: 'O1794850848360_476' } },
+      { id: 'dispatch-auto', cat: 'DRIVER', method: 'POST', path: '/api/dispatch/auto', summary: 'Kích hoạt giải thuật tự động điều phối ghép tài xế gần nhất', params: [], sampleBody: {} },
+      { id: 'simulate', cat: 'SIMULATION', method: 'POST', path: '/api/simulate', summary: 'Chạy kiểm thử tải tương tranh đồng thời đa luồng (Stress Test)', params: [], sampleBody: { orders: 100, mechanism: 'OPTIMISTIC' } },
+      { id: 'restock', cat: 'RESTAURANT', method: 'POST', path: '/api/admin/restock', summary: 'Khôi phục kho hàng ban đầu (50 suất/món)', params: [], sampleBody: {} }
+    ];
+
+    function filterApiCategory(cat) {
+      STATE.apiActiveCategory = cat;
+      document.querySelectorAll('.api-cat-btn').forEach(btn => {
+        if (btn.innerText.toUpperCase().includes(cat) || (cat === 'ALL' && btn.innerText.includes('Tất cả'))) {
+          btn.className = 'api-cat-btn px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold';
+        } else {
+          btn.className = 'api-cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white';
+        }
+      });
+      loadApiDocs();
+    }
+
+    function loadApiDocs() {
+      const container = document.getElementById('api-endpoints-container');
+      container.innerHTML = '';
+
+      let list = API_DEFINITIONS;
+      if (STATE.apiActiveCategory !== 'ALL') {
+        list = list.filter(a => a.cat === STATE.apiActiveCategory);
+      }
+
+      list.forEach(api => {
+        const isGet = api.method === 'GET';
+        const card = document.createElement('div');
+        card.className = 'bg-slate-800/90 rounded-xl border border-slate-700/80 p-4 space-y-3 shadow-lg';
+
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/60 pb-2.5">
+            <div class="flex items-center space-x-2.5">
+              <span class="px-2.5 py-1 rounded text-xs font-black font-mono tracking-wider ${isGet ? 'bg-blue-600 text-white' : 'bg-emerald-600 text-white'}">
+                ${api.method}
+              </span>
+              <span class="font-mono text-sm font-bold text-white">${api.path}</span>
+            </div>
+            <span class="text-[11px] bg-slate-700/60 text-slate-300 px-2 py-0.5 rounded font-medium">
+              ${api.summary}
+            </span>
+          </div>
+
+          ${api.sampleBody ? `
+            <div class="space-y-1">
+              <label class="block text-[11px] font-semibold text-slate-400">Request Body (JSON Payload):</label>
+              <textarea id="body-${api.id}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-xs text-brand-300 focus:outline-none focus:border-blue-500 h-24">${JSON.stringify(api.sampleBody, null, 2)}</textarea>
+            </div>
+          ` : ''}
+
+          <div class="flex items-center justify-between pt-1">
+            <button onclick="executeApiTest('${api.id}')" id="btn-api-${api.id}" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>⚡ Gửi Thử Nghiệm API (Try it out)</span>
+            </button>
+            <span class="text-[11px] text-slate-400" id="timing-${api.id}"></span>
+          </div>
+
+          <div id="result-box-${api.id}" class="hidden space-y-1.5 pt-2 border-t border-slate-700/60">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-300">Live Response:</span>
+              <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold" id="status-badge-${api.id}">200 OK</span>
+            </div>
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-xs text-emerald-400 overflow-x-auto max-h-48 overflow-y-auto" id="resp-code-${api.id}"></pre>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    async function executeApiTest(apiId) {
+      const api = API_DEFINITIONS.find(a => a.id === apiId);
+      if (!api) return;
+
+      const btn = document.getElementById(`btn-api-${apiId}`);
+      btn.disabled = true;
+      btn.innerText = 'Đang gửi...';
+
+      const timingEl = document.getElementById(`timing-${apiId}`);
+      const resultBox = document.getElementById(`result-box-${apiId}`);
+      const statusBadge = document.getElementById(`status-badge-${apiId}`);
+      const respCode = document.getElementById(`resp-code-${apiId}`);
+
+      const startTime = performance.now();
+
+      try {
+        let options = { method: api.method };
+        if (api.method === 'POST') {
+          const bodyText = document.getElementById(`body-${apiId}`)?.value || '{}';
+          options.headers = { 'Content-Type': 'application/json' };
+          options.body = bodyText;
+        }
+
+        const res = await fetch(api.path, options);
+        const elapsed = (performance.now() - startTime).toFixed(1);
+        timingEl.innerText = `Thời gian phản hồi: ${elapsed} ms`;
+
+        let data;
+        try {
+          data = await res.json();
+        } catch (e) {
+          data = { status: res.status, statusText: res.statusText };
+        }
+
+        resultBox.classList.remove('hidden');
+        if (res.ok) {
+          statusBadge.className = 'text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+          statusBadge.innerText = `${res.status} OK`;
+        } else {
+          statusBadge.className = 'text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-red-500/20 text-red-300 border border-red-500/30';
+          statusBadge.innerText = `${res.status} Error`;
+        }
+        respCode.innerText = JSON.stringify(data, null, 2);
+        playBeep(res.ok ? 650 : 300, 'sine', 0.1);
+      } catch (err) {
+        resultBox.classList.remove('hidden');
+        statusBadge.className = 'text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-red-500/20 text-red-300';
+        statusBadge.innerText = 'Network Error';
+        respCode.innerText = `Lỗi kết nối: ${err.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="zap" class="w-3.5 h-3.5 inline mr-1"></i> ⚡ Gửi Thử Nghiệm API`;
+        lucide.createIcons();
+      }
+    }
+
+    // BENCHMARK SIMULATOR
     function initBenchmarkChart() {
       const ctx = document.getElementById('benchmarkChart')?.getContext('2d');
       if (!ctx || STATE.chartInstance) return;
@@ -1648,9 +2093,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { labels: { color: '#cbd5e1' } }
-          },
+          plugins: { legend: { labels: { color: '#cbd5e1' } } },
           scales: {
             y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
             x: { ticks: { color: '#cbd5e1' }, grid: { display: false } }
@@ -1672,33 +2115,31 @@
         const res = await fetch('/api/simulate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ orderCount, strategy })
+          body: JSON.stringify({ orders: orderCount, mechanism: strategy, orderCount, strategy })
         });
         const data = await res.json();
         if (data.success) {
           playSuccessChime();
-          
-          // Update Chart
           const strategyIndex = ['NO_LOCK', 'SYNCHRONIZED', 'OPTIMISTIC', 'FILE_LOCK'].indexOf(strategy);
           if (strategyIndex >= 0 && STATE.chartInstance) {
             STATE.chartInstance.data.datasets[0].data[strategyIndex] = Math.round(data.throughput);
             STATE.chartInstance.update();
           }
 
-          // Add to Log Table
           const tbody = document.getElementById('benchmark-log-tbody');
           const tr = document.createElement('tr');
           tr.className = 'hover:bg-slate-700/30';
+          const anomalies = data.totalAnomalies || data.anomalyCount || 0;
           tr.innerHTML = `
-            <td class="p-2 font-mono font-bold ${data.anomalyCount > 0 ? 'text-red-400' : 'text-emerald-400'}">${strategy}</td>
+            <td class="p-2 font-mono font-bold ${anomalies > 0 ? 'text-red-400' : 'text-emerald-400'}">${strategy}</td>
             <td class="p-2">${orderCount} đơn</td>
-            <td class="p-2">${data.timeMs} ms</td>
+            <td class="p-2">${data.timeMs || data.durationMs} ms</td>
             <td class="p-2 font-bold text-white">${data.throughput.toFixed(1)} ops/s</td>
-            <td class="p-2 ${data.anomalyCount > 0 ? 'text-red-400 font-extrabold' : 'text-emerald-400'}">${data.anomalyCount} lỗi</td>
+            <td class="p-2 ${anomalies > 0 ? 'text-red-400 font-extrabold' : 'text-emerald-400'}">${anomalies} lỗi</td>
           `;
           tbody.prepend(tr);
         } else {
-          alert(data.error || 'Lỗi benchmark');
+          alert(data.message || data.error || 'Lỗi benchmark');
         }
       } catch (e) {
         alert('Lỗi kết nối khi chạy benchmark');
@@ -1730,14 +2171,11 @@
       }
     }
 
-    // Helper: Poll Live Data in background
     async function pollLiveData() {
       try {
         await loadOrders();
         await loadDrivers();
-      } catch (e) {
-        // silent poll catch
-      }
+      } catch (e) {}
     }
 
     function formatCurrency(amount) {
@@ -1756,7 +2194,6 @@
       renderRestaurantCards(cat);
     }
 
-    // Run on startup
     window.addEventListener('DOMContentLoaded', () => {
       initApp();
       lucide.createIcons();

@@ -138,6 +138,7 @@ public class FoodDeliveryWebServer {
         this.server.createContext("/api/dispatch/auto", new AutoDispatchHandler(this));
         this.server.createContext("/api/simulate", new SimulateHandler(this));
         this.server.createContext("/api/admin/restock", new RestockHandler(this));
+        this.server.createContext("/api/docs", new ApiDocsHandler(this));
 
         // Static Files Context (Frontend SPA & PWA)
         this.server.createContext("/", new StaticFileHandler(this));
@@ -1048,6 +1049,55 @@ public class FoodDeliveryWebServer {
         }
     }
 
+    private class ApiDocsHandler implements HttpHandler {
+        private FoodDeliveryWebServer serverRef;
+        public ApiDocsHandler(FoodDeliveryWebServer serverRef) {
+            this.serverRef = serverRef;
+        }
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendResponse(exchange, 204, "");
+                return;
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            sb.append("\"openapi\":\"3.0.1\",");
+            sb.append("\"info\":{");
+            sb.append("\"title\":\"Food Delivery Quy Nhon API\",");
+            sb.append("\"version\":\"2.0.0\",");
+            sb.append("\"description\":\"He thong API RESTful thuc te cho Food Delivery Quy Nhon (LAB211)\"");
+            sb.append("},");
+            sb.append("\"servers\":[{\"url\":\"http://localhost:").append(this.serverRef.getPort()).append("\"}],");
+            sb.append("\"endpoints\":[");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/status\",\"summary\":\"Kiem tra trang thai may chu backend\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/stats\",\"summary\":\"Bao cao KPI tong the he thong\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/auth/demo-accounts\",\"summary\":\"Lay danh sach tai khoan demo cac vai tro\"},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/auth/login\",\"summary\":\"Dang nhap tai khoan\",\"body\":[\"username\",\"password\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/auth/register\",\"summary\":\"Dang ky khach hang moi\",\"body\":[\"username\",\"password\",\"fullName\",\"phone\",\"address\",\"lat\",\"lon\"]},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/restaurants\",\"summary\":\"Lay danh sach nha hang doi tac Quy Nhon\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/menu\",\"summary\":\"Lay thuc don mon an\",\"params\":[\"restaurantId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/menu/stock\",\"summary\":\"Cap nhat ton kho mon an\",\"body\":[\"menuItemId\",\"delta\"]},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/drivers\",\"summary\":\"Lay danh sach tai xe va toa do GPS\"},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/drivers/status\",\"summary\":\"Bat/tat trang thai truc tuyen tai xe\",\"body\":[\"driverId\",\"status\"]},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/customers\",\"summary\":\"Lay danh sach khach hang va dia chi phuong xa Quy Nhon\"},");
+            sb.append("{\"method\":\"GET\",\"path\":\"/api/orders\",\"summary\":\"Truy van danh sach don hang\",\"params\":[\"customerId\",\"restaurantId\",\"driverId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/orders\",\"summary\":\"Khach hang tao don dat mon\",\"body\":[\"customerId\",\"restaurantId\",\"menuItemId\",\"quantity\",\"mechanism\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/orders/confirm\",\"summary\":\"Bep nha hang tiep nhan va bat dau nau\",\"body\":[\"orderId\",\"restaurantId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/orders/reject\",\"summary\":\"Bep nha hang tu choi don va hoan kho\",\"body\":[\"orderId\",\"restaurantId\",\"reason\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/orders/pickup\",\"summary\":\"Tai xe xac nhan da lay mon tu quan (DISPATCHED)\",\"body\":[\"orderId\",\"driverId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/orders/deliver\",\"summary\":\"Tai xe xac nhan da giao hang thanh cong (DELIVERED)\",\"body\":[\"orderId\",\"driverId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/orders/cancel\",\"summary\":\"Khach hang huy don hang va hoan kho (CANCELLED)\",\"body\":[\"orderId\",\"customerId\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/dispatch/auto\",\"summary\":\"Kich hoat thuat toan tu dong ghep tai xe gan nhat\"},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/simulate\",\"summary\":\"Chay kiem thu stress test dong thoi 4 co che khoa\",\"body\":[\"orders\",\"mechanism\"]},");
+            sb.append("{\"method\":\"POST\",\"path\":\"/api/admin/restock\",\"summary\":\"Khoi phuc ton kho 50 suat cho cac quan an\"}");
+            sb.append("]");
+            sb.append("}");
+            sendJsonResponse(exchange, 200, sb.toString());
+        }
+    }
+
     private class StaticFileHandler implements HttpHandler {
         private FoodDeliveryWebServer serverRef;
         public StaticFileHandler(FoodDeliveryWebServer serverRef) {
@@ -1213,6 +1263,9 @@ public class FoodDeliveryWebServer {
         if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
         if (lower.endsWith(".svg")) return "image/svg+xml";
         if (lower.endsWith(".ico")) return "image/x-icon";
+        if (lower.endsWith(".webp")) return "image/webp";
+        if (lower.endsWith(".xml")) return "application/xml; charset=UTF-8";
+        if (lower.endsWith(".txt")) return "text/plain; charset=UTF-8";
         return "application/octet-stream";
     }
 

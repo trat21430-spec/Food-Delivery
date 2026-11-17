@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="restBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="350" fill="url(#restBg)"/>
+  <!-- Awning stripes -->
+  <polygon points="120,80 480,80 520,130 80,130" fill="url(#roofGrad)"/>
+  <g fill="#ffffff" opacity="0.2">
+    <polygon points="140,80 180,80 190,130 145,130"/>
+    <polygon points="240,80 280,80 290,130 245,130"/>
+    <polygon points="340,80 380,80 390,130 345,130"/>
+    <polygon points="440,80 470,80 480,130 445,130"/>
+  </g>
+  <!-- Shop Building Base -->
+  <rect x="110" y="130" width="380" height="150" fill="#1e293b" stroke="#334155" stroke-width="3"/>
+  <!-- Glass Window & Door -->
+  <rect x="140" y="150" width="120" height="110" fill="#0f172a" stroke="#475569" stroke-width="2" rx="4"/>
+  <rect x="340" y="150" width="120" height="110" fill="#0f172a" stroke="#475569" stroke-width="2" rx="4"/>
+  <!-- Door -->
+  <rect x="275" y="170" width="50" height="110" fill="#334155" rx="2"/>
+  <circle cx="315" cy="225" r="3" fill="#ea580c"/>
+  <!-- Signboard -->
+  <rect x="200" y="30" width="200" height="40" rx="8" fill="#ea580c"/>
+  <text x="300" y="55" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="bold">QUÁN ĐỐI TÁC</text>
+  <text x="300" y="320" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="15" font-weight="600">ĐẶC SẢN QUY NHƠN CHÍNH HIỆU</text>
+</svg>

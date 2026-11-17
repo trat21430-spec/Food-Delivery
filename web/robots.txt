@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /manifest.json
+Allow: /api/docs
+Disallow: /api/admin/
+Disallow: /api/simulate
+
+Sitemap: http://localhost:8080/sitemap.xml
