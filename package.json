@@ -1,30 +1,27 @@
 {
-  "name": "food-delivery-quynhon-fullstack",
-  "version": "2.0.0",
-  "description": "Fullstack Food Delivery System - LAB211 Pure OOP Java Backend & Interactive Modern Web SPA/PWA",
-  "main": "web/index.html",
+  "name": "food-delivery-multivendor-platform",
+  "version": "3.0.0",
+  "description": "Enterprise Food Delivery Multi-Vendor Platform (Customer Web, Admin Dashboard, Restaurant Store App, Rider App, Customer Mobile App)",
   "scripts": {
-    "start": "javac -encoding UTF-8 -d bin -cp bin src/web/FoodDeliveryWebServer.java && java -Dfile.encoding=UTF-8 -cp bin web.FoodDeliveryWebServer",
-    "build": "javac -encoding UTF-8 -d bin src/**/*.java",
-    "compile:server": "javac -encoding UTF-8 -d bin -cp bin src/web/FoodDeliveryWebServer.java",
-    "docker:build": "docker compose build",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f",
-    "test:api": "python test_endpoints.py"
+    "start": "cmd /c start_all.bat",
+    "dev": "cmd /c start_all.bat",
+    "dev:all": "cmd /c start_all.bat",
+    "dev:web": "cd enatega-multivendor-web && npm run dev -- -p 3000",
+    "dev:admin": "cd enatega-multivendor-admin && npm run dev -- -p 3001",
+    "dev:store": "cd enatega-multivendor-store && npx expo start",
+    "dev:rider": "cd enatega-multivendor-rider && npx expo start",
+    "dev:app": "cd enatega-multivendor-app && npx expo start",
+    "install:all": "cd enatega-multivendor-web && npm i --legacy-peer-deps && cd ../enatega-multivendor-admin && npm i --legacy-peer-deps && cd ../enatega-multivendor-store && npm i --legacy-peer-deps && cd ../enatega-multivendor-rider && npm i --legacy-peer-deps && cd ../enatega-multivendor-app && npm i --legacy-peer-deps"
   },
   "keywords": [
     "food-delivery",
-    "lab211",
-    "pure-oop",
-    "java",
-    "fullstack",
-    "realtime-sse",
-    "vietqr",
-    "pwa",
-    "quy-nhon",
-    "concurrency-simulation"
+    "multi-vendor",
+    "marketplace",
+    "nextjs",
+    "react-native",
+    "expo",
+    "shopee-food"
   ],
-  "author": "Nhom 01 - LAB211 Quy Nhon",
+  "author": "Nhom 01 - Food Delivery Ecosystem",
   "license": "MIT"
 }
