@@ -104,10 +104,18 @@ public class QuoteService {
                 if (foodAmount >= 40000L) {
                     discount = 15000L;
                 }
-            } else if ("CHAOMUNG".equals(code)) {
-                if (foodAmount >= 60000L) {
-                    discount = 25000L;
+            } else if ("CHAOMUNG".equals(code) || "CHAOBANMOI".equals(code)) {
+                if (foodAmount >= 50000L) {
+                    discount = 30000L;
                 }
+            } else if ("SHOPEE50".equals(code)) {
+                if (foodAmount >= 150000L) {
+                    discount = 50000L;
+                }
+            } else if ("FREESHIP0D".equals(code)) {
+                discount = shippingFee;
+            } else if ("QUANMOI25".equals(code)) {
+                discount = Math.min((long)(foodAmount * 0.25), 40000L);
             }
         }
 

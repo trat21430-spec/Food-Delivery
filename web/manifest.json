@@ -1,12 +1,12 @@
 {
-  "name": "Food Delivery Quy Nhơn - FDS System",
-  "short_name": "FoodDeliveryQN",
+  "name": "ShopeeFood Quy Nhơn - Đặt Món & Giao Siêu Tốc 20 Phút",
+  "short_name": "ShopeeFood",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#0f172a",
-  "theme_color": "#ea580c",
-  "description": "Ứng dụng đặt món trực tuyến và điều phối giao hàng thời gian thực tại TP Quy Nhơn",
+  "theme_color": "#ee4d2d",
+  "description": "Nền tảng đặt đồ ăn trực tuyến ShopeeFood Quy Nhơn, giao hàng siêu tốc 20 phút với hơn 200 quán ăn đối tác uy tín",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -21,25 +21,25 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["food", "lifestyle", "productivity"],
+  "categories": ["food", "shopping", "lifestyle"],
   "shortcuts": [
     {
-      "name": "Đặt món",
+      "name": "ShopeeFood Đặt món",
       "url": "/#customer",
-      "description": "Mở cổng khách hàng đặt món"
+      "description": "Đặt món ăn ngon, trà sữa, cơm trưa"
     },
     {
-      "name": "Tài xế giao hàng",
+      "name": "Tài xế ShopeeFood",
       "url": "/#driver",
-      "description": "Cổng nhận cuốc cho tài xế"
+      "description": "Cổng nhận cuốc cho tài xế ShopeeFood"
     },
     {
-      "name": "Bếp nhà hàng",
+      "name": "Bếp Quán Đối Tác",
       "url": "/#kitchen",
-      "description": "Quản lý đơn chế biến món"
+      "description": "Quản lý đơn chế biến nhà hàng"
     },
     {
-      "name": "Radar Điều phối",
+      "name": "Radar Điều Phối",
       "url": "/#dispatch",
       "description": "Bản đồ radar GPS TP Quy Nhơn"
     }

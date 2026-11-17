@@ -7,13 +7,13 @@
   <!-- ========================================================================= -->
   <!-- CHUẨN SEO: TITLE, PRIMARY META TAGS & KEYWORDS -->
   <!-- ========================================================================= -->
-  <title>Food Delivery Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút</title>
-  <meta name="title" content="Food Delivery Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút">
+  <title>ShopeeFood Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút</title>
+  <meta name="title" content="ShopeeFood Quy Nhơn - Đặt Món Trực Tuyến & Giao Hàng Siêu Tốc 20 Phút">
   <meta name="description" content="Hệ thống đặt món ăn trực tuyến và điều phối giao hàng thông minh số 1 tại TP. Quy Nhơn, Bình Định. Khám phá 200+ quán ăn đặc sản: Bánh xèo tôm nhảy, Bún chả cá Ngọc Liên, Cơm gà Quê Hương, Hải sản tươi sống giao nhanh trong 20 phút.">
   <meta name="keywords" content="food delivery quy nhon, dat mon quy nhon, ship do an quy nhon, banh xeo tom nhay quy nhon, bun cha ca ngoc lien, com ga que huong, cha ram tom dat binh dinh, giao do an 20 phut, am thuc quy nhon, quan an ngon quy nhon, lab211 food delivery">
   <meta name="author" content="Nhóm 01 - LAB211 Food Delivery Quy Nhơn Team">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#ea580c">
+  <meta name="theme-color" content="#ee4d2d">
   <link rel="canonical" href="http://localhost:8080/">
 
   <!-- ========================================================================= -->
@@ -110,11 +110,24 @@
         extend: {
           colors: {
             brand: {
-              50: '#fff7ed',
-              100: '#ffedd5',
-              500: '#f97316',
-              600: '#ea580c',
-              700: '#c2410c'
+              50: '#fff5f1',
+              100: '#ffe8e0',
+              200: '#ffd0c2',
+              300: '#ffaa94',
+              400: '#ff7757',
+              500: '#ee4d2d',
+              600: '#d73211',
+              700: '#b8270c',
+              800: '#94230d',
+              900: '#7a220f'
+            },
+            shopee: {
+              orange: '#ee4d2d',
+              hover: '#f05d40',
+              dark: '#d73211',
+              light: '#fff5f1',
+              green: '#00bfa5',
+              yellow: '#ffbf00'
             }
           }
         }
@@ -150,103 +163,157 @@
 <body class="h-full flex flex-col font-sans selection:bg-brand-500 selection:text-white bg-slate-900 text-slate-100">
 
   <!-- ========================================================================= -->
-  <!-- TOP HEADER & ROLE SWITCHER -->
+  <!-- TOP HEADER & ROLE SWITCHER (SHOPEEFOOD IDENTITY) -->
   <!-- ========================================================================= -->
-  <header role="banner" class="bg-slate-800/90 backdrop-blur border-b border-slate-700/80 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      
+  <!-- Top Announcement Strip -->
+  <div class="bg-[#d73211] text-white text-[11px] py-1 px-4 font-medium border-b border-red-700/60 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3 overflow-hidden text-ellipsis whitespace-nowrap">
+        <span>🛵 <b>ShopeeFood Quy Nhơn</b>: Giao siêu tốc 20 phút</span>
+        <span class="hidden md:inline text-orange-200">•</span>
+        <span class="hidden md:inline">🔥 Mã <b>CHAOBANMOI</b> giảm 30K</span>
+        <span class="hidden md:inline text-orange-200">•</span>
+        <span class="hidden md:inline">🚚 <b>Freeship Xtra 0Đ</b> toàn thành phố</span>
+      </div>
+      <div class="flex items-center space-x-4 text-[11px] flex-shrink-0">
+        <button onclick="openAddressModal()" class="cursor-pointer hover:underline text-yellow-200 flex items-center space-x-1">
+          <i data-lucide="map-pin" class="w-3 h-3"></i>
+          <span>TP. Quy Nhơn</span>
+        </button>
+        <button onclick="switchPortal('apidocs')" class="cursor-pointer hover:underline text-orange-100 hidden sm:inline">REST API</button>
+        <button onclick="switchPortal('admin')" class="cursor-pointer hover:underline text-orange-100 hidden sm:inline">Quản Trị</button>
+      </div>
+    </div>
+  </div>
+
+  <header role="banner" class="bg-gradient-to-r from-[#ee4d2d] via-[#f05423] to-[#ff6633] shadow-md border-b border-orange-600/40 sticky top-[28px] z-50 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-3">
+
       <!-- Logo & City Tag -->
-      <a href="/" onclick="switchPortal('customer'); return false;" class="flex items-center space-x-3 cursor-pointer group" title="Trang chủ Food Delivery Quy Nhơn">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition">
-          <i data-lucide="utensils" class="w-5 h-5"></i>
+      <a href="/" onclick="switchPortal('customer'); return false;" class="flex items-center space-x-2.5 cursor-pointer group flex-shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-white text-[#ee4d2d] flex items-center justify-center shadow-md font-black text-xl border border-orange-200 group-hover:scale-105 transition">
+          <i data-lucide="utensils" class="w-6 h-6 text-[#ee4d2d]"></i>
         </div>
         <div>
-          <div class="flex items-center space-x-2">
-            <span class="font-extrabold text-lg tracking-tight text-white">Food<span class="text-brand-500">Delivery</span></span>
-            <span class="text-xs bg-brand-500/20 text-brand-400 font-semibold px-2 py-0.5 rounded-full border border-brand-500/30">TP. Quy Nhơn</span>
+          <div class="flex items-center space-x-1.5">
+            <span class="font-black text-xl tracking-tight text-white drop-shadow">Shopee<span class="text-amber-300 font-extrabold">Food</span></span>
+            <span class="text-[10px] bg-white/20 text-white font-bold px-1.5 py-0.2 rounded-full border border-white/30 hidden sm:inline">Quy Nhơn</span>
           </div>
-          <p class="text-[11px] text-slate-400 font-medium">Hệ Thống LAB211 Chuẩn Thực Tế</p>
+          <p class="text-[10px] text-orange-100 font-medium tracking-wide">Đặt Món & Giao Siêu Tốc 20 Phút</p>
         </div>
       </a>
 
+      <!-- Location Selector Dropdown -->
+      <div class="hidden lg:flex items-center flex-shrink-0">
+        <button onclick="openAddressModal()" class="flex items-center space-x-1.5 bg-black/20 hover:bg-black/30 text-white px-3 py-1.5 rounded-full text-xs transition border border-white/20">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-300 flex-shrink-0"></i>
+          <span class="text-orange-200">Giao đến:</span>
+          <span id="header-delivery-addr" class="max-w-[140px] truncate font-bold text-white">28 Diên Hồng, P. Ngô Mây</span>
+          <i data-lucide="chevron-down" class="w-3 h-3 text-white/80"></i>
+        </button>
+      </div>
+
+      <!-- Shopee Wide Search Bar -->
+      <div class="flex-1 max-w-xl mx-2 sm:mx-4">
+        <div class="relative">
+          <input
+            type="text"
+            id="shopee-search-input"
+            placeholder="Tìm quán ăn, trà sữa, bánh xèo, bún cá Quy Nhơn..."
+            class="w-full bg-white text-slate-900 placeholder-slate-400 pl-4 pr-20 py-2 rounded-xl text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-300 shadow-md"
+            onkeyup="if(event.key==='Enter') executeShopeeSearch(); else handleShopeeSearchTyping(this.value);"
+          />
+          <button
+            onclick="executeShopeeSearch()"
+            class="absolute right-1 top-1 bottom-1 bg-[#ee4d2d] hover:bg-[#d73211] text-white px-3.5 rounded-lg text-xs font-bold flex items-center space-x-1 transition shadow"
+          >
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Tìm</span>
+          </button>
+        </div>
+        <!-- Quick Search Suggestion Pills -->
+        <div class="hidden sm:flex items-center space-x-3 mt-1 text-[11px] text-orange-100">
+          <span class="text-orange-200/80">Gợi ý:</span>
+          <button onclick="quickSearchFood('Trà sữa')" class="hover:text-white hover:underline">Trà sữa</button>
+          <button onclick="quickSearchFood('Bánh xèo')" class="hover:text-white hover:underline">Bánh xèo</button>
+          <button onclick="quickSearchFood('Cơm gà')" class="hover:text-white hover:underline">Cơm gà</button>
+          <button onclick="quickSearchFood('Bún chả cá')" class="hover:text-white hover:underline">Bún cá</button>
+          <button onclick="quickSearchFood('Hải sản')" class="hover:text-white hover:underline">Hải sản</button>
+          <button onclick="quickSearchFood('Bánh mì')" class="hover:text-white hover:underline">Bánh mì</button>
+        </div>
+      </div>
+
       <!-- Live Server Status Indicator -->
-      <div class="hidden md:flex items-center space-x-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 badge-pulse" id="backend-dot"></span>
-        <span class="text-slate-300 font-medium" id="backend-status">Backend Online :8080</span>
+      <div class="hidden 2xl:flex items-center space-x-2 bg-black/20 px-3 py-1.5 rounded-xl border border-white/20 text-xs">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse" id="backend-dot"></span>
+        <span class="text-orange-100 font-medium" id="backend-status">Backend Online :8080</span>
       </div>
 
       <!-- Portal Tabs (Desktop) -->
-      <nav role="navigation" aria-label="Menu Phân Hệ" class="hidden xl:flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60 text-xs font-semibold">
-        <button onclick="switchPortal('customer')" id="tab-customer" class="portal-tab px-3 py-1.5 rounded-lg text-white bg-brand-600 shadow">
+      <nav role="navigation" aria-label="Menu Phân Hệ" class="hidden xl:flex items-center space-x-1 bg-black/25 p-1 rounded-xl border border-white/20 text-xs font-semibold">
+        <button onclick="switchPortal('customer')" id="tab-customer" class="portal-tab px-2.5 py-1.5 rounded-lg text-white bg-white/20 shadow">
           <i data-lucide="shopping-bag" class="w-3.5 h-3.5 inline mr-1"></i> Khách Hàng
         </button>
-        <button onclick="switchPortal('kitchen')" id="tab-kitchen" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+        <button onclick="switchPortal('kitchen')" id="tab-kitchen" class="portal-tab px-2.5 py-1.5 rounded-lg text-orange-100 hover:text-white">
           <i data-lucide="chef-hat" class="w-3.5 h-3.5 inline mr-1"></i> Bếp Quán
-          <span id="badge-kitchen-orders" class="ml-1 bg-brand-500 text-white px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
+          <span id="badge-kitchen-orders" class="ml-1 bg-amber-400 text-slate-950 font-bold px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
         </button>
-        <button onclick="switchPortal('driver')" id="tab-driver" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
-          <i data-lucide="bike" class="w-3.5 h-3.5 inline mr-1"></i> Tài Xế (App)
-          <span id="badge-driver-orders" class="ml-1 bg-emerald-500 text-white px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
+        <button onclick="switchPortal('driver')" id="tab-driver" class="portal-tab px-2.5 py-1.5 rounded-lg text-orange-100 hover:text-white">
+          <i data-lucide="bike" class="w-3.5 h-3.5 inline mr-1"></i> Tài Xế
+          <span id="badge-driver-orders" class="ml-1 bg-emerald-400 text-slate-950 font-bold px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
         </button>
-        <button onclick="switchPortal('dispatch')" id="tab-dispatch" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+        <button onclick="switchPortal('dispatch')" id="tab-dispatch" class="portal-tab px-2.5 py-1.5 rounded-lg text-orange-100 hover:text-white">
           <i data-lucide="radar" class="w-3.5 h-3.5 inline mr-1"></i> Radar GPS
         </button>
-        <button onclick="switchPortal('apidocs')" id="tab-apidocs" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
-          <i data-lucide="code-2" class="w-3.5 h-3.5 inline mr-1"></i> REST API Docs
-          <span class="ml-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.2 rounded-full text-[10px]">v2.0</span>
-        </button>
-        <button onclick="switchPortal('admin')" id="tab-admin" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
+        <button onclick="switchPortal('admin')" id="tab-admin" class="portal-tab px-2.5 py-1.5 rounded-lg text-orange-100 hover:text-white">
           <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 inline mr-1"></i> Quản Trị
-          <span id="badge-admin-pending" class="ml-1 bg-amber-500 text-slate-950 font-bold px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
-        </button>
-        <button onclick="switchPortal('benchmark')" id="tab-benchmark" class="portal-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white">
-          <i data-lucide="cpu" class="w-3.5 h-3.5 inline mr-1"></i> Simulator
+          <span id="badge-admin-pending" class="ml-1 bg-yellow-300 text-slate-950 font-bold px-1.5 py-0.2 rounded-full text-[10px] hidden">0</span>
         </button>
       </nav>
 
       <!-- Account Switcher & Auth Actions -->
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2 flex-shrink-0">
         <!-- Nút Đăng Nhập -->
-        <button onclick="openLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5 shadow-sm">
-          <i data-lucide="log-in" class="w-3.5 h-3.5 text-brand-400"></i>
+        <button onclick="openLoginModal()" class="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
+          <i data-lucide="log-in" class="w-3.5 h-3.5 text-amber-200"></i>
           <span class="hidden sm:inline">Đăng Nhập</span>
         </button>
 
         <!-- Nút Đăng Ký -->
-        <button onclick="openRegisterModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-brand-500/20">
+        <button onclick="openRegisterModal()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1 shadow transition">
           <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Đăng Ký</span>
         </button>
 
         <!-- Dropdown Đổi Vai Trò / Tài Khoản -->
         <div class="relative" id="account-menu-wrapper">
-          <button onclick="toggleAccountMenu(event)" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-medium border border-slate-700 transition">
+          <button onclick="toggleAccountMenu(event)" class="flex items-center space-x-2 bg-black/25 hover:bg-black/35 text-white border border-white/20 px-3 py-1.5 rounded-xl text-xs transition">
             <span class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
-            <span id="current-user-name" class="max-w-[120px] sm:max-w-[170px] truncate font-semibold">Đang tải...</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+            <span id="current-user-name" class="max-w-[100px] sm:max-w-[140px] truncate font-semibold">Đang tải...</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-white/80"></i>
           </button>
-          
+
           <!-- Dropdown menu 5 vai trò -->
-          <div id="account-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-3 z-50 text-xs space-y-2.5">
+          <div id="account-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-3 z-50 space-y-2 text-slate-100">
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
               <span class="font-bold text-white text-xs flex items-center">
                 <i data-lucide="users" class="w-3.5 h-3.5 mr-1.5 text-brand-400"></i> Chuyển Đổi Tài Khoản
               </span>
               <span class="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full font-mono">5 Vai Trò</span>
             </div>
-            
+
             <div class="space-y-1 max-h-72 overflow-y-auto" id="demo-account-list"></div>
 
             <div class="pt-2 border-t border-slate-800 space-y-1">
-              <button onclick="openLoginModal(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-2">
+              <button onclick="openLoginModal(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 flex items-center space-x-2">
                 <i data-lucide="key-round" class="w-3.5 h-3.5 text-brand-400"></i>
                 <span>Đăng nhập tài khoản khác</span>
               </button>
-              <button onclick="openRegisterModal(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-2">
+              <button onclick="openRegisterModal(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 flex items-center space-x-2">
                 <i data-lucide="user-plus" class="w-3.5 h-3.5 text-emerald-400"></i>
                 <span>Đăng ký khách hàng mới</span>
               </button>
-              <button onclick="logoutCurrentUser(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition flex items-center space-x-2">
+              <button onclick="logoutCurrentUser(); closeAccountMenu();" class="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-red-400 hover:bg-red-500/10 flex items-center space-x-2">
                 <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                 <span>Đăng xuất phiên hiện tại</span>
               </button>
@@ -255,15 +322,15 @@
         </div>
 
         <!-- PWA Install Button -->
-        <button id="btn-pwa-install" class="hidden bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition" title="Cài đặt PWA lên thiết bị">
+        <button id="btn-pwa-install" class="hidden bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow transition">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">Cài Đặt App</span>
+          <span class="hidden sm:inline">Cài App</span>
         </button>
 
         <!-- Cart Icon with Badge -->
-        <button onclick="openCartDrawer()" class="relative p-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-200 transition" aria-label="Xem giỏ hàng">
+        <button onclick="openCartDrawer()" class="relative p-2 rounded-xl bg-white text-[#ee4d2d] hover:bg-orange-50 transition shadow font-bold flex items-center justify-center">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-          <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-yellow-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center hidden shadow border border-white">0</span>
         </button>
       </div>
     </div>
@@ -305,7 +372,213 @@
     <!-- PORTAL 1: CUSTOMER ORDERING (KHÁCH HÀNG ĐẶT MÓN & CHUẨN SEO) -->
     <!-- ========================================================================= -->
     <article id="portal-customer" class="space-y-8">
-      
+
+      <!-- ========================================================================= -->
+      <!-- 10 SHOPEEFOOD CIRCULAR CATEGORY BADGES -->
+      <!-- ========================================================================= -->
+      <section class="bg-slate-800/90 rounded-3xl p-5 border border-slate-700/80 shadow-xl">
+        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-700/60">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">🔥</span>
+            <h2 class="font-extrabold text-sm sm:text-base text-white tracking-wide">Danh Mục Món Ngon ShopeeFood</h2>
+            <span class="bg-[#ee4d2d] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Quy Nhơn</span>
+          </div>
+          <button onclick="filterRestaurantCategory('ALL')" class="text-xs text-brand-400 font-bold hover:underline flex items-center">
+            <span>Tất cả món</span> <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-0.5"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-10 gap-2.5 sm:gap-4 text-center">
+          <!-- 1: Cơm Trưa -->
+          <button onclick="filterRestaurantCategory('Cơm')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/30 border border-amber-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🍚</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Cơm Trưa</span>
+          </button>
+
+          <!-- 2: Trà Sữa -->
+          <button onclick="filterRestaurantCategory('Trà sữa')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/30 border border-pink-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🧋</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Trà Sữa</span>
+          </button>
+
+          <!-- 3: Bún - Phở -->
+          <button onclick="filterRestaurantCategory('Bún')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-amber-500/30 border border-yellow-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🍜</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Bún - Phở</span>
+          </button>
+
+          <!-- 4: Bánh Xèo -->
+          <button onclick="filterRestaurantCategory('Bánh xèo')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/30 border border-orange-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🥞</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Bánh Xèo</span>
+          </button>
+
+          <!-- 5: Bánh Mì -->
+          <button onclick="filterRestaurantCategory('Bánh mì')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-600/20 to-yellow-600/30 border border-amber-600/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🥖</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Bánh Mì</span>
+          </button>
+
+          <!-- 6: Hải Sản -->
+          <button onclick="filterRestaurantCategory('Hải sản')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/30 border border-cyan-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🦐</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Hải Sản</span>
+          </button>
+
+          <!-- 7: Gà Rán BBQ -->
+          <button onclick="filterRestaurantCategory('Gà')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-red-500/20 to-orange-600/30 border border-red-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">🍗</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Gà Rán BBQ</span>
+          </button>
+
+          <!-- 8: Cà Phê -->
+          <button onclick="filterRestaurantCategory('Cà phê')" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/30 border border-emerald-500/40 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-500 transition shadow">
+              <span class="text-2xl sm:text-3xl">☕</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-semibold text-slate-200 group-hover:text-brand-400 transition leading-tight">Cà Phê</span>
+          </button>
+
+          <!-- 9: Deal 0Đ -->
+          <button onclick="filterRestaurantCategory('ALL'); claimShopeeDeal('CHAOBANMOI');" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-yellow-400/30 to-amber-500/40 border border-yellow-400/60 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-yellow-400 transition shadow animate-pulse">
+              <span class="text-2xl sm:text-3xl">⚡</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-bold text-yellow-300 group-hover:text-yellow-200 transition leading-tight">Deal 0Đ</span>
+          </button>
+
+          <!-- 10: Freeship Xtra -->
+          <button onclick="filterRestaurantCategory('ALL'); claimShopeeDeal('FREESHIP0D');" class="shopee-cat-item group flex flex-col items-center focus:outline-none">
+            <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-400/30 to-green-500/40 border border-emerald-400/60 p-2.5 flex items-center justify-center group-hover:scale-110 group-hover:border-emerald-400 transition shadow">
+              <span class="text-2xl sm:text-3xl">🛵</span>
+            </div>
+            <span class="mt-2 text-[11px] sm:text-xs font-bold text-emerald-400 group-hover:text-emerald-300 transition leading-tight">Freeship Xtra</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- ⚡ FLASH SALE CHỚP NHOÁNG SHOPEEFOOD & VOUCHER WALLET -->
+      <!-- ========================================================================= -->
+      <section class="bg-gradient-to-r from-red-600 via-[#ee4d2d] to-orange-500 rounded-3xl p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
+        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/20 pb-4 mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-white text-[#ee4d2d] flex items-center justify-center font-black text-xl shadow">
+              ⚡
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h2 class="text-xl sm:text-2xl font-black uppercase tracking-wider text-white">FLASH SALE CHỚP NHOÁNG</h2>
+                <span class="bg-yellow-400 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full uppercase">HOT</span>
+              </div>
+              <p class="text-xs text-orange-100">Ưu đãi độc quyền ShopeeFood Quy Nhơn kết thúc trong:</p>
+            </div>
+          </div>
+
+          <!-- Live Real-Time Countdown Timer -->
+          <div class="flex items-center space-x-2 bg-black/40 backdrop-blur px-3.5 py-2 rounded-2xl border border-white/20 self-start sm:self-auto">
+            <i data-lucide="clock" class="w-4 h-4 text-yellow-300"></i>
+            <span class="text-xs font-medium text-orange-200">Kết thúc sau:</span>
+            <div class="flex items-center space-x-1 font-mono font-black text-sm">
+              <span class="bg-black/80 px-2 py-1 rounded text-yellow-300" id="shopee-timer-h">02</span>
+              <span>:</span>
+              <span class="bg-black/80 px-2 py-1 rounded text-yellow-300" id="shopee-timer-m">45</span>
+              <span>:</span>
+              <span class="bg-black/80 px-2 py-1 rounded text-yellow-300" id="shopee-timer-s">18</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shopee Voucher Cards Grid -->
+        <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- Voucher 1: CHAOBANMOI -->
+          <div class="bg-white/10 hover:bg-white/15 backdrop-blur rounded-2xl p-3.5 border border-white/25 flex flex-col justify-between transition shadow-sm">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="bg-yellow-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Mã Mới</span>
+                <span class="text-[10px] text-orange-200 font-mono">HSD: Hôm nay</span>
+              </div>
+              <h4 class="font-extrabold text-white text-base">Giảm 30.000đ</h4>
+              <p class="text-[11px] text-orange-100 leading-snug">Đơn tối thiểu từ 50K khi đặt món lần đầu</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between">
+              <span class="font-mono font-bold text-xs text-yellow-300 bg-black/30 px-2 py-1 rounded">CHAOBANMOI</span>
+              <button onclick="claimShopeeDeal('CHAOBANMOI', this)" class="bg-white hover:bg-orange-50 text-[#ee4d2d] font-bold text-xs px-3 py-1.5 rounded-xl shadow transition">
+                Lưu Mã
+              </button>
+            </div>
+          </div>
+
+          <!-- Voucher 2: FREESHIP0D -->
+          <div class="bg-white/10 hover:bg-white/15 backdrop-blur rounded-2xl p-3.5 border border-white/25 flex flex-col justify-between transition shadow-sm">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="bg-emerald-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Freeship Xtra</span>
+                <span class="text-[10px] text-orange-200 font-mono">Toàn TP</span>
+              </div>
+              <h4 class="font-extrabold text-white text-base">Miễn Phí Giao 0Đ</h4>
+              <p class="text-[11px] text-orange-100 leading-snug">Giao tận nơi 0đ bán kính đến 10km Quy Nhơn</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between">
+              <span class="font-mono font-bold text-xs text-yellow-300 bg-black/30 px-2 py-1 rounded">FREESHIP0D</span>
+              <button onclick="claimShopeeDeal('FREESHIP0D', this)" class="bg-white hover:bg-orange-50 text-[#ee4d2d] font-bold text-xs px-3 py-1.5 rounded-xl shadow transition">
+                Lưu Mã
+              </button>
+            </div>
+          </div>
+
+          <!-- Voucher 3: SHOPEE50 -->
+          <div class="bg-white/10 hover:bg-white/15 backdrop-blur rounded-2xl p-3.5 border border-white/25 flex flex-col justify-between transition shadow-sm">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="bg-yellow-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Deal To</span>
+                <span class="text-[10px] text-orange-200 font-mono">Số lượng có hạn</span>
+              </div>
+              <h4 class="font-extrabold text-white text-base">Giảm Ngay 50.000đ</h4>
+              <p class="text-[11px] text-orange-100 leading-snug">Áp dụng cho đơn tiệc nhóm từ 150K</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between">
+              <span class="font-mono font-bold text-xs text-yellow-300 bg-black/30 px-2 py-1 rounded">SHOPEE50</span>
+              <button onclick="claimShopeeDeal('SHOPEE50', this)" class="bg-white hover:bg-orange-50 text-[#ee4d2d] font-bold text-xs px-3 py-1.5 rounded-xl shadow transition">
+                Lưu Mã
+              </button>
+            </div>
+          </div>
+
+          <!-- Voucher 4: QUANMOI25 -->
+          <div class="bg-white/10 hover:bg-white/15 backdrop-blur rounded-2xl p-3.5 border border-white/25 flex flex-col justify-between transition shadow-sm">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="bg-pink-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Quán Mới</span>
+                <span class="text-[10px] text-orange-200 font-mono">Hot Trend</span>
+              </div>
+              <h4 class="font-extrabold text-white text-base">Giảm 25% Đơn Hàng</h4>
+              <p class="text-[11px] text-orange-100 leading-snug">Tối đa 40K cho mọi quán đối tác đặc sản</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between">
+              <span class="font-mono font-bold text-xs text-yellow-300 bg-black/30 px-2 py-1 rounded">QUANMOI25</span>
+              <button onclick="claimShopeeDeal('QUANMOI25', this)" class="bg-white hover:bg-orange-50 text-[#ee4d2d] font-bold text-xs px-3 py-1.5 rounded-xl shadow transition">
+                Lưu Mã
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Hero Banner với Hình Ảnh & SEO Title -->
       <section class="bg-gradient-to-r from-brand-600 via-orange-600 to-amber-600 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="relative z-10 max-w-2xl">
@@ -1724,11 +1997,12 @@
 
     function renderRestaurantCards(filterCat = 'ALL') {
       const container = document.getElementById('restaurant-cards-container');
+      if (!container) return;
       container.innerHTML = '';
 
       let list = STATE.restaurants;
       if (filterCat !== 'ALL') {
-        list = list.filter(r => (r.category && r.category.toLowerCase().includes(filterCat.toLowerCase())) || r.name.toLowerCase().includes(filterCat.toLowerCase()));
+        list = list.filter(r => (r.category && r.category.toLowerCase().includes(filterCat.toLowerCase())) || (r.name && r.name.toLowerCase().includes(filterCat.toLowerCase())));
       }
 
       // Display showcase top 12 for high performance
@@ -1738,13 +2012,13 @@
 
         const card = document.createElement('div');
         card.className = `food-card rounded-2xl border overflow-hidden transition cursor-pointer flex flex-col justify-between ${
-          isSelected ? 'bg-slate-800 border-brand-500 shadow-xl shadow-brand-500/15 ring-2 ring-brand-500/30' : 'bg-slate-800/80 border-slate-700/80 hover:border-slate-500 hover:shadow-lg'
+          isSelected ? 'bg-slate-800 border-[#ee4d2d] shadow-xl shadow-[#ee4d2d]/20 ring-2 ring-[#ee4d2d]/40' : 'bg-slate-800/80 border-slate-700/80 hover:border-slate-500 hover:shadow-lg'
         }`;
         card.onclick = () => selectRestaurant(r.id);
 
         card.innerHTML = `
           <div>
-            <div class="h-40 w-full overflow-hidden relative">
+            <div class="h-44 w-full overflow-hidden relative">
               <img 
                 src="${restImg}" 
                 alt="Nhà hàng ${r.name} tại TP Quy Nhơn" 
@@ -1752,29 +2026,42 @@
                 loading="lazy" 
                 onerror="this.src='/images/restaurant_default.svg'"
               />
-              <div class="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur px-2.5 py-1 rounded-lg text-[11px] font-bold text-amber-300 flex items-center shadow">
-                ★ ${r.rating || '4.8'}
+              <!-- Shopee Quán Uy Tín Badge -->
+              <div class="absolute top-2.5 left-2.5 bg-[#ee4d2d] text-white px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase flex items-center shadow-md">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 mr-1 text-white"></i> Quán Uy Tín
               </div>
-              <div class="absolute top-2.5 right-2.5 bg-brand-600/90 backdrop-blur px-2.5 py-1 rounded-lg text-[10px] font-semibold text-white shadow">
-                ⏱ 15-25 phút
+              <!-- Shopee Freeship Xtra Ribbon -->
+              <div class="absolute top-2.5 right-2.5 bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center shadow-md">
+                <i data-lucide="zap" class="w-3.5 h-3.5 mr-1 text-yellow-300"></i> Freeship Xtra
               </div>
-              <div class="absolute bottom-2 left-2.5 bg-black/70 px-2 py-0.5 rounded text-[10px] text-slate-200">
-                ${r.category || 'Đặc sản Bình Định'}
+              <div class="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[11px] bg-black/75 backdrop-blur px-2.5 py-1 rounded-lg text-white">
+                <span class="text-amber-300 font-bold flex items-center">
+                  ★ ${r.rating || '4.9'} <span class="text-slate-300 text-[10px] font-normal ml-1">(500+)</span>
+                </span>
+                <span class="text-slate-200">⏱ 15-20 phút</span>
+                <span class="text-cyan-300 font-medium">📍 0.8 km</span>
               </div>
             </div>
 
-            <div class="p-4 space-y-1.5">
-              <h4 class="font-bold text-white text-base tracking-tight line-clamp-1">${r.name}</h4>
+            <div class="p-4 space-y-2">
+              <h4 class="font-bold text-white text-base tracking-tight line-clamp-1 hover:text-[#ee4d2d] transition">${r.name}</h4>
               <p class="text-xs text-slate-400 line-clamp-1 flex items-center">
                 <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1 text-slate-500 flex-shrink-0"></i>
                 ${r.address}
               </p>
+
+              <!-- Shopee Promo Tags -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                <span class="bg-red-500/15 text-red-400 border border-red-500/30 px-1.5 py-0.5 rounded text-[10px] font-bold">Mã giảm 25k</span>
+                <span class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded text-[10px] font-bold">Freeship 0Đ</span>
+                <span class="bg-amber-500/15 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded text-[10px] font-bold">Deal 0Đ</span>
+              </div>
             </div>
           </div>
 
           <div class="px-4 pb-4 pt-1 flex items-center justify-between text-xs border-t border-slate-700/50">
-            <span class="text-slate-400 font-medium">📍 Gần bạn ~ 0.8 km</span>
-            <span class="text-brand-400 font-bold hover:underline flex items-center">
+            <span class="text-slate-400 font-medium">Đặc sản: ${r.category || 'Xứ Nẫu'}</span>
+            <span class="text-[#ee4d2d] font-bold hover:underline flex items-center">
               Xem thực đơn <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-0.5"></i>
             </span>
           </div>
@@ -1800,20 +2087,24 @@
 
     function renderMenuItems() {
       const container = document.getElementById('menu-items-container');
+      if (!container) return;
       container.innerHTML = '';
-      document.getElementById('menu-items-count').innerText = `${STATE.menuItems.length} món ăn`;
+      const countEl = document.getElementById('menu-items-count');
+      if (countEl) countEl.innerText = `${STATE.menuItems.length} món ăn đặc sản`;
 
-      STATE.menuItems.forEach(item => {
+      STATE.menuItems.forEach((item, idx) => {
         const inCart = STATE.cart[item.id] || 0;
         const dishImg = getDishImage(item.name, item.category);
         const isOutOfStock = item.stockQty <= 0;
+        const originalPrice = Math.round(item.price * 1.25);
+        const soldCount = 500 + ((idx * 173) % 1800);
 
         const card = document.createElement('div');
         card.className = 'food-card bg-slate-800/80 rounded-2xl border border-slate-700/80 overflow-hidden flex flex-col justify-between hover:border-slate-600 transition shadow-lg';
 
         card.innerHTML = `
           <div>
-            <div class="h-36 w-full overflow-hidden relative">
+            <div class="h-40 w-full overflow-hidden relative">
               <img 
                 src="${dishImg}" 
                 alt="Món ${item.name} đặc sản Quy Nhơn" 
@@ -1821,35 +2112,44 @@
                 loading="lazy" 
                 onerror="this.src='/images/dish_default.svg'"
               />
-              <span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 backdrop-blur text-slate-200 px-2 py-0.5 rounded font-medium">
-                ${item.category || 'Món chính'}
+              <!-- Shopee Social Proof Sold Count -->
+              <span class="absolute top-2 left-2 text-[10px] bg-black/75 backdrop-blur text-yellow-300 font-bold px-2 py-0.5 rounded-md flex items-center shadow">
+                🔥 Đã bán ${(soldCount / 1000).toFixed(1)}k
               </span>
               <span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${isOutOfStock ? 'bg-red-600/90 text-white' : 'bg-emerald-600/90 text-white'}">
                 ${isOutOfStock ? 'Hết hàng' : `Còn ${item.stockQty} phần`}
               </span>
+              <div class="absolute bottom-1.5 left-2 bg-slate-900/80 text-[10px] text-slate-300 px-2 py-0.5 rounded">
+                ${item.category || 'Món đặc sản'}
+              </div>
             </div>
 
-            <div class="p-3.5 space-y-1">
-              <h5 class="font-bold text-white text-sm line-clamp-1">${item.name}</h5>
-              <p class="text-brand-400 font-extrabold text-sm">${formatCurrency(item.price)}</p>
+            <div class="p-3.5 space-y-1.5">
+              <h5 class="font-bold text-white text-sm line-clamp-1 hover:text-[#ee4d2d] transition">${item.name}</h5>
+              <!-- Strikethrough price & Shopee Orange Promo Price -->
+              <div class="flex items-baseline space-x-1.5">
+                <span class="text-xs text-slate-500 line-through">${formatCurrency(originalPrice)}</span>
+                <span class="text-[#ee4d2d] font-black text-base">${formatCurrency(item.price)}</span>
+                <span class="text-[10px] bg-red-500/20 text-red-400 font-bold px-1.5 py-0.2 rounded">-20%</span>
+              </div>
             </div>
           </div>
 
           <div class="p-3.5 pt-0">
             ${isOutOfStock ? `
-              <button disabled class="w-full bg-slate-700 text-slate-500 py-2 rounded-xl text-xs font-semibold cursor-not-allowed">
+              <button disabled class="w-full bg-slate-700 text-slate-500 py-2.5 rounded-xl text-xs font-semibold cursor-not-allowed">
                 Tạm hết hàng
               </button>
             ` : inCart === 0 ? `
-              <button onclick="addToCart('${item.id}')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 shadow-md shadow-brand-500/20">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <button onclick="addToCart('${item.id}')" class="w-full bg-[#ee4d2d] hover:bg-[#d73211] text-white py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-md shadow-orange-500/25">
+                <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>Thêm Vào Giỏ</span>
               </button>
             ` : `
               <div class="w-full flex items-center justify-between bg-slate-900 rounded-xl p-1 border border-slate-700">
                 <button onclick="changeCartQty('${item.id}', -1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold flex items-center justify-center text-xs">-</button>
                 <span class="font-bold text-xs text-white">${inCart}</span>
-                <button onclick="changeCartQty('${item.id}', 1)" class="w-7 h-7 bg-brand-600 hover:bg-brand-500 text-white rounded-lg font-bold flex items-center justify-center text-xs">+</button>
+                <button onclick="changeCartQty('${item.id}', 1)" class="w-7 h-7 bg-[#ee4d2d] hover:bg-[#d73211] text-white rounded-lg font-bold flex items-center justify-center text-xs">+</button>
               </div>
             `}
           </div>
@@ -3243,13 +3543,304 @@
       renderRestaurantCards(cat);
     }
 
+        // =========================================================================
+    // SHOPEEFOOD ENHANCEMENTS: TIMERS, VOUCHERS, SEARCH & ADDRESS PICKER
+    // =========================================================================
+    function initFlashSaleTimer() {
+      let totalSeconds = 2 * 3600 + 45 * 60 + 18;
+      setInterval(() => {
+        if (totalSeconds > 0) {
+          totalSeconds--;
+        } else {
+          totalSeconds = 3 * 3600;
+        }
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        const s = totalSeconds % 60;
+        const hEl = document.getElementById('shopee-timer-h');
+        const mEl = document.getElementById('shopee-timer-m');
+        const sEl = document.getElementById('shopee-timer-s');
+        if (hEl) hEl.innerText = h < 10 ? '0' + h : '' + h;
+        if (mEl) mEl.innerText = m < 10 ? '0' + m : '' + m;
+        if (sEl) sEl.innerText = s < 10 ? '0' + s : '' + s;
+      }, 1000);
+    }
+
+    function claimShopeeDeal(voucherCode, btnElement) {
+      STATE.appliedVoucher = { code: voucherCode };
+      const input = document.getElementById('voucher-code-input');
+      if (input) input.value = voucherCode;
+
+      playBeep(880, 'sine', 0.12);
+
+      if (btnElement) {
+        btnElement.innerText = '✓ Đã Lưu';
+        btnElement.className = 'bg-emerald-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl shadow transition';
+      }
+
+      showToast(`🎉 Đã lưu mã [${voucherCode}]! Tự động áp dụng tại giỏ hàng.`);
+      applyVoucherCode();
+    }
+
+    function applyVoucherCode() {
+      const input = document.getElementById('voucher-code-input');
+      const code = input ? input.value.trim().toUpperCase() : (STATE.appliedVoucher ? STATE.appliedVoucher.code : '');
+      const msgEl = document.getElementById('voucher-result-msg');
+
+      if (!code) {
+        if (msgEl) {
+          msgEl.innerText = 'Vui lòng nhập mã giảm giá!';
+          msgEl.className = 'text-[11px] text-amber-400';
+          msgEl.classList.remove('hidden');
+        }
+        return;
+      }
+
+      let subtotal = 0;
+      Object.keys(STATE.cart).forEach(id => {
+        const item = STATE.menuItems.find(m => m.id === id);
+        if (item) subtotal += item.price * STATE.cart[id];
+      });
+
+      let discount = 0;
+      let valid = false;
+      let successMsg = '';
+
+      if (code === 'CHAOBANMOI' || code === 'CHAOMUNG') {
+        if (subtotal >= 50000 || subtotal === 0) {
+          discount = 30000;
+          valid = true;
+          successMsg = 'Áp dụng mã Chào Bạn Mới: Giảm 30.000đ!';
+        } else {
+          successMsg = 'Mã yêu cầu đơn tối thiểu 50.000đ';
+        }
+      } else if (code === 'FREESHIP0D' || code === 'FREESHIP') {
+        discount = 15000;
+        valid = true;
+        successMsg = 'Áp dụng Freeship: Giảm 15.000đ phí giao hàng!';
+      } else if (code === 'SHOPEE50') {
+        if (subtotal >= 150000 || subtotal === 0) {
+          discount = 50000;
+          valid = true;
+          successMsg = 'Áp dụng mã SHOPEE50: Giảm ngay 50.000đ!';
+        } else {
+          successMsg = 'Mã SHOPEE50 yêu cầu đơn tối thiểu 150.000đ';
+        }
+      } else if (code === 'QUANMOI25' || code === 'QUYNHON20') {
+        const pct = code === 'QUANMOI25' ? 0.25 : 0.20;
+        discount = subtotal > 0 ? Math.min(Math.round(subtotal * pct), 40000) : 25000;
+        valid = true;
+        successMsg = `Áp dụng mã giảm ${Math.round(pct*100)}%: Giảm ${formatCurrency(discount)}!`;
+      } else if (code === 'BANHXEO') {
+        discount = 15000;
+        valid = true;
+        successMsg = 'Áp dụng mã Bánh Xèo: Giảm 15.000đ!';
+      } else {
+        valid = false;
+        successMsg = 'Mã giảm giá không hợp lệ hoặc đã hết hạn!';
+      }
+
+      if (valid) {
+        STATE.appliedVoucher = { code: code };
+        STATE.discountAmount = discount;
+        if (msgEl) {
+          msgEl.innerText = `✓ ${successMsg}`;
+          msgEl.className = 'text-[11px] text-emerald-400 font-semibold';
+          msgEl.classList.remove('hidden');
+        }
+      } else {
+        STATE.appliedVoucher = null;
+        STATE.discountAmount = 0;
+        if (msgEl) {
+          msgEl.innerText = `✕ ${successMsg}`;
+          msgEl.className = 'text-[11px] text-red-400 font-semibold';
+          msgEl.classList.remove('hidden');
+        }
+      }
+
+      renderCartDrawer();
+    }
+
+    function openAddressModal() {
+      const overlay = document.getElementById('address-modal-overlay');
+      const modal = document.getElementById('address-modal');
+      if (overlay) overlay.classList.remove('hidden');
+      if (modal) modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeAddressModal() {
+      const overlay = document.getElementById('address-modal-overlay');
+      const modal = document.getElementById('address-modal');
+      if (overlay) overlay.classList.add('hidden');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function selectDeliveryAddress(addrText, lat, lon) {
+      const custAddr = document.getElementById('cust-delivery-addr');
+      const headerAddr = document.getElementById('header-delivery-addr');
+      if (custAddr) custAddr.innerText = `Vị trí nhận: ${addrText}`;
+      if (headerAddr) headerAddr.innerText = addrText.split(',')[0];
+
+      if (STATE.currentUser) {
+        STATE.currentUser.address = addrText;
+        if (lat && lon) {
+          STATE.currentUser.latitude = lat;
+          STATE.currentUser.longitude = lon;
+        }
+      }
+
+      closeAddressModal();
+      showToast(`📍 Đã cập nhật địa chỉ giao hàng: ${addrText.split(',')[0]}`);
+      playBeep(650, 'sine', 0.1);
+    }
+
+    function handleShopeeSearchTyping(keyword) {
+      if (!keyword || keyword.trim().length === 0) {
+        renderRestaurantCards('ALL');
+      }
+    }
+
+    function quickSearchFood(term) {
+      const input = document.getElementById('shopee-search-input');
+      if (input) input.value = term;
+      executeShopeeSearch();
+    }
+
+    function executeShopeeSearch() {
+      const input = document.getElementById('shopee-search-input');
+      const term = input ? input.value.trim().toLowerCase() : '';
+      if (!term) {
+        renderRestaurantCards('ALL');
+        return;
+      }
+
+      const container = document.getElementById('restaurant-cards-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const matched = STATE.restaurants.filter(r => {
+        const inName = r.name && r.name.toLowerCase().includes(term);
+        const inAddr = r.address && r.address.toLowerCase().includes(term);
+        const inCat = r.category && r.category.toLowerCase().includes(term);
+        return inName || inAddr || inCat;
+      });
+
+      if (matched.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 bg-slate-800/40 rounded-2xl border border-dashed border-slate-700">
+            <span class="text-4xl">🔍</span>
+            <h4 class="mt-2 font-bold text-white text-base">Không tìm thấy quán phù hợp với "${term}"</h4>
+            <p class="text-xs text-slate-500 mt-1">Hãy thử tìm: Trà sữa, Bánh xèo, Cơm gà, Hải sản, Bún cá...</p>
+            <button onclick="document.getElementById('shopee-search-input').value=''; renderRestaurantCards('ALL');" class="mt-4 px-4 py-2 bg-[#ee4d2d] hover:bg-[#d73211] text-white rounded-xl text-xs font-bold shadow">
+              Xem Tất Cả Quán Ăn
+            </button>
+          </div>
+        `;
+      } else {
+        renderRestaurantCards(term);
+      }
+
+      const section = document.getElementById('restaurant-cards-container');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showToast(message) {
+      let toast = document.getElementById('shopee-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'shopee-toast';
+        toast.className = 'fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 bg-[#ee4d2d] text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 text-xs sm:text-sm font-bold border border-orange-400/40';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `
+        <span class="text-lg">🛵</span>
+        <span>${message}</span>
+      `;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initApp();
+      initFlashSaleTimer();
       lucide.createIcons();
     });
   </script>
 
   <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- MODAL: CHỌN ĐỊA CHỈ GIAO HÀNG QUY NHƠN (SHOPEEFOOD ADDRESS SELECTOR) -->
+  <!-- ========================================================================= -->
+  <div id="address-modal-overlay" onclick="closeAddressModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition"></div>
+  <div id="address-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 z-50 hidden shadow-2xl space-y-4">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center">
+          <i data-lucide="map-pin" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-base">Địa Chỉ Giao Hàng</h3>
+          <p class="text-[11px] text-slate-400">Chọn vị trí giao tận nơi tại TP. Quy Nhơn</p>
+        </div>
+      </div>
+      <button onclick="closeAddressModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-2" id="address-preset-list">
+      <button onclick="selectDeliveryAddress('28 Diên Hồng, P. Ngô Mây, TP. Quy Nhơn', 13.775, 109.225)" class="w-full text-left p-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 flex items-center justify-between transition group">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="bg-[#ee4d2d] text-white text-[10px] font-black px-1.5 py-0.2 rounded">MẶC ĐỊNH</span>
+            <h5 class="font-bold text-white text-xs group-hover:text-brand-400">28 Diên Hồng, P. Ngô Mây</h5>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-0.5">Trung tâm TP. Quy Nhơn • Giao nhanh 15 phút</p>
+        </div>
+        <i data-lucide="check" class="w-4 h-4 text-brand-400"></i>
+      </button>
+
+      <button onclick="selectDeliveryAddress('01 An Dương Vương, P. Nguyễn Văn Cừ, TP. Quy Nhơn', 13.782, 109.220)" class="w-full text-left p-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 flex items-center justify-between transition group">
+        <div>
+          <h5 class="font-bold text-white text-xs group-hover:text-brand-400">01 An Dương Vương, P. Nguyễn Văn Cừ</h5>
+          <p class="text-[11px] text-slate-400 mt-0.5">Khu du lịch & Khách sạn Biển Quy Nhơn</p>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-brand-400"></i>
+      </button>
+
+      <button onclick="selectDeliveryAddress('170 Lê Hồng Phong, P. Trần Phú, TP. Quy Nhơn', 13.770, 109.230)" class="w-full text-left p-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 flex items-center justify-between transition group">
+        <div>
+          <h5 class="font-bold text-white text-xs group-hover:text-brand-400">170 Lê Hồng Phong, P. Trần Phú</h5>
+          <p class="text-[11px] text-slate-400 mt-0.5">Phố ẩm thực đêm & Bánh hỏi lòng heo</p>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-brand-400"></i>
+      </button>
+
+      <button onclick="selectDeliveryAddress('Đại Học Quy Nhơn, 170 An Dương Vương, TP. Quy Nhơn', 13.760, 109.215)" class="w-full text-left p-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 flex items-center justify-between transition group">
+        <div>
+          <h5 class="font-bold text-white text-xs group-hover:text-brand-400">Trường Đại Học Quy Nhơn (QNU)</h5>
+          <p class="text-[11px] text-slate-400 mt-0.5">Cổng số 1 An Dương Vương • Điểm hẹn sinh viên</p>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-brand-400"></i>
+      </button>
+
+      <button onclick="selectDeliveryAddress('FPT Software & Đại Học FPT Quy Nhơn, Khu Đô Thị An Phú Thịnh', 13.795, 109.205)" class="w-full text-left p-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 flex items-center justify-between transition group">
+        <div>
+          <h5 class="font-bold text-white text-xs group-hover:text-brand-400">FPT Software / Campus FPT Quy Nhơn</h5>
+          <p class="text-[11px] text-slate-400 mt-0.5">Khu AI & Công nghệ cao Quy Hòa</p>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-brand-400"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- DYNAMIC VIETQR BANKING PAYMENT MODAL -->
   <!-- ========================================================================= -->
   <div id="vietqr-modal-overlay" onclick="closeVietQrModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden transition-opacity"></div>
