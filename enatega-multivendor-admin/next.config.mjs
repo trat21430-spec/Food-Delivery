@@ -4,7 +4,9 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    dangerouslyAllowSVG: false,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
         protocol: 'https',
@@ -53,6 +55,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.s3.*.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.s3.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.amazonaws.com',
       },
       {
         protocol: 'https',
