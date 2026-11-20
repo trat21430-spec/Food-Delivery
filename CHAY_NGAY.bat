@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 >nul
-title FOOD DELIVERY MULTI-VENDOR - KHỞI ĐỘNG HỆ THỐNG
+title FOOD DELIVERY MULTI-VENDOR - KHỞI ĐỘNG TỐC ĐỘ CAO (1 GIÂY)
 
 echo ===============================================================================
-echo            KHỞI ĐỘNG HỆ THỐNG FOOD DELIVERY MULTI-VENDOR
+echo            KHỞI ĐỘNG HỆ THỐNG FOOD DELIVERY MULTI-VENDOR (1-CLICK)
 echo ===============================================================================
 echo.
 
@@ -18,40 +18,36 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "exit ((Get-NetTCPConnect
 set PORT_3001_RUNNING=%ERRORLEVEL%
 
 if %PORT_3000_RUNNING% NEQ 0 (
-    echo [*] Web Khách Hàng (Port 3000) đã đang chạy sẵn trong hệ thống.
+    echo [*] Web Khách Hàng (Port 3000) đã sẵn sàng.
 ) else (
     echo [*] Đang khởi động Web Khách Hàng (Port 3000)...
-    start "FDS - Web Khách Hàng (Port 3000)" cmd /k "cd /d %~dp0enatega-multivendor-web && npm run dev -- -p 3000"
+    start "FDS - Web Khách Hàng (Port 3000)" /min cmd /k "cd /d %~dp0enatega-multivendor-web && npx next start -p 3000"
 )
 
 if %PORT_3001_RUNNING% NEQ 0 (
-    echo [*] Admin Dashboard (Port 3001) đã đang chạy sẵn trong hệ thống.
+    echo [*] Admin Dashboard (Port 3001) đã sẵn sàng.
 ) else (
     echo [*] Đang khởi động Admin Dashboard (Port 3001)...
-    start "FDS - Admin Dashboard (Port 3001)" cmd /k "cd /d %~dp0enatega-multivendor-admin && npm run dev -- -p 3001"
+    start "FDS - Admin Dashboard (Port 3001)" /min cmd /k "cd /d %~dp0enatega-multivendor-admin && npx next start -p 3001"
 )
 
 echo.
-echo [*] Đang kiểm tra trạng thái máy chủ (sẽ tự động mở trình duyệt khi sẵn sàng 100%%)...
-
-:: Chờ tối đa 90 giây cho lần đầu tiên biên dịch (JIT compile)
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $wOk = $false; $aOk = $false; for ($i=1; $i -le 90; $i++) { if (-not $aOk) { try { $r = Invoke-WebRequest -Uri 'http://localhost:3001' -UseBasicParsing -TimeoutSec 2; if ($r.StatusCode -eq 200) { $aOk = $true } } catch {} }; if (-not $wOk) { try { $r = Invoke-WebRequest -Uri 'http://localhost:3000' -UseBasicParsing -TimeoutSec 2; if ($r.StatusCode -eq 200) { $wOk = $true } } catch {} }; if ($aOk -and $wOk) { break }; Write-Host ('   > Dang cho may chu bien dich giay thu ' + $i + '/90 (Admin: ' + ($aOk ? 'San sang' : 'Dang nap...') + ' | Web: ' + ($wOk ? 'San sang' : 'Dang nap...') + ')') -ForegroundColor Cyan; Start-Sleep -Seconds 1 }; if ($aOk -and $wOk) { Write-Host '   [OK] Tat ca may chu da san sang 100%!' -ForegroundColor Green } else { Write-Host '   [!] Hoan tat, dang mo trinh duyet...' -ForegroundColor Yellow } }"
-
-echo.
 echo [*] Đang mở trình duyệt vào Web Khách Hàng và Admin Dashboard...
+timeout /t 2 /nobreak >nul
 start http://localhost:3000
 start http://localhost:3001/authentication/login
 
 echo.
 echo ===============================================================================
-echo [V] HỆ THỐNG ĐÃ SẴN SÀNG SỬ DỤNG!
+echo [V] HỆ THỐNG ĐÃ KHỞI CHẠY THÀNH CÔNG!
 echo ===============================================================================
 echo  1. Web Khách Hàng:       http://localhost:3000
 echo  2. Bảng Quản Trị Admin:  http://localhost:3001/authentication/login
 echo     - Email Đăng Nhập:    admin@enatega.com
 echo     - Mật Khẩu Admin:     enatega123 (hoặc 123456)
 echo.
-echo  * Mẹo: Nếu trang hiển thị chậm trong lần đầu, chỉ cần bấm F5 (Refresh).
+echo  * Cac cua so Terminal may chu da duoc tu dong thu nho (minimize) xuong Taskbar.
+echo  * Khi muon tat he thong, chi can chay file DUNG_SERVER.bat
 echo ===============================================================================
 echo.
 pause
