@@ -44,6 +44,12 @@ let refreshPromise: Promise<string | null> | null = null;
 let accessTokenRefreshPromise: Promise<string | null> | null = null;
 let isAuthRedirecting = false;
 
+function normalizeGraphqlUrl(url?: string): string {
+  if (!url) return '';
+  const clean = url.trim().replace(/\/+$/, '');
+  return clean.endsWith('/graphql') ? clean : `${clean}/graphql`;
+}
+
 type GraphQLErrorLike = {
   message?: string;
   extensions?: { code?: string };
@@ -158,7 +164,7 @@ async function fetchMetricsToken(serverUrl?: string): Promise<string | null> {
       }
 
       const nonce = getNonce();
-      const response = await fetch(`${serverUrl}graphql`, {
+      const response = await fetch(normalizeGraphqlUrl(serverUrl), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -307,10 +313,10 @@ export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
   const cache = new InMemoryCache();
 
   const httpLink = createHttpLink({
-    uri: `${SERVER_URL}graphql`,
+    uri: normalizeGraphqlUrl(SERVER_URL),
   });
 
-  const wsClient = new SubscriptionClient(`${WS_SERVER_URL}graphql`, {
+  const wsClient = new SubscriptionClient(normalizeGraphqlUrl(WS_SERVER_URL), {
     reconnect: true,
     timeout: 30000,
     lazy: true,

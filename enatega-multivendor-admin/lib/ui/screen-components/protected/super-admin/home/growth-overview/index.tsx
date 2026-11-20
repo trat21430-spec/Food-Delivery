@@ -40,10 +40,18 @@ export default function GrowthOverView() {
   const dashboardUsersByYear = useMemo(() => {
     if (!data) return null;
     return {
-      usersCount: data?.getDashboardUsersByYear?.usersCount ?? [],
-      vendorsCount: data?.getDashboardUsersByYear?.vendorsCount ?? [],
-      restaurantsCount: data?.getDashboardUsersByYear?.restaurantsCount ?? [],
-      ridersCount: data?.getDashboardUsersByYear?.ridersCount ?? 0,
+      usersCount: Array.isArray(data?.getDashboardUsersByYear?.usersCount)
+        ? data.getDashboardUsersByYear.usersCount
+        : [],
+      vendorsCount: Array.isArray(data?.getDashboardUsersByYear?.vendorsCount)
+        ? data.getDashboardUsersByYear.vendorsCount
+        : [],
+      restaurantsCount: Array.isArray(data?.getDashboardUsersByYear?.restaurantsCount)
+        ? data.getDashboardUsersByYear.restaurantsCount
+        : [],
+      ridersCount: Array.isArray(data?.getDashboardUsersByYear?.ridersCount)
+        ? data.getDashboardUsersByYear.ridersCount
+        : [],
     };
   }, [data]);
 
